@@ -7,12 +7,12 @@
 class X937Field {
 	protected $fieldNumber;	// the sequential number of the field in the record
 	protected $fieldName;	// the filed name;
-	protected $usage;		// usage, Mandatory or Conditional.
+	protected $usage;	// usage, Mandatory or Conditional.
 	protected $position;	// starting ending location of the field
-	protected $size;		// number of characters within the field
-	protected $type;		// type of characters within the field
+	protected $size;	// number of characters within the field
+	protected $type;	// type of characters within the field
 	
-	protected $value;		// the value of the field;
+	protected $value;	// the value of the field;
 	
 	// Usage Types
 	const MANDATORY   = 'M';
