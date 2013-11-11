@@ -35,7 +35,7 @@ class X937Record {
 	const FILE_CONTROL            = '99';
 
 	// constructor
-	public function X937Record($recordTypeASCII, $recordData) {
+	public function __construct($recordTypeASCII, $recordData) {
 		// input validation
 		if (!is_string($recordData)) { throw new InvalidArgumentException("Bad record: $recordData passed to new X937Record"); }
 		
