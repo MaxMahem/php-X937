@@ -12,7 +12,7 @@ class X937File {
 	private $fileTotalAmount;
 	private $fileItemCount;
 	
-	public function X937File($filename) {
+	public function __construct($filename) {
 		// input validation		
 		// check for existance of our file
 		if (!file_exists($filename)) {

@@ -31,7 +31,7 @@ class X937Field {
 	const NUMERICBLANKSPECIALMICRONUS = 'NBSMOS';
 	const BINARY                      = 'Binary';
 	
-	public function X937Field($fieldNumber, $filedName, $usage, $position, $size, $type) {
+	public function __construct($fieldNumber, $filedName, $usage, $position, $size, $type) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $filedName;
 		$this->usage       = $usage;
@@ -39,7 +39,7 @@ class X937Field {
 		$this->size        = $size;
 		$this->type        = $type;
 	}
-	
+        	
 	// validate?
 	public static function validate() {}
 	
@@ -58,12 +58,12 @@ class X937Field {
 }
 
 class X937FieldRecordType extends X937Field {
-	public function X937FieldRecordType($value) {
-		$this->fieldNumber = 1;						// Always #1 field.
+	public function __construct($value) {
+		$this->fieldNumber = 1;				// Always #1 field.
 		$this->fieldName   = 'Record Type';
 		$this->usage       = X937Field::MANDATORY;	// Always mandatory.
-		$this->position    = '1';                   // Always pos 01-02
-		$this->size        = '2';					// Always 2
+		$this->position    = '1';                       // Always pos 01-02
+		$this->size        = '2';			// Always 2
 		$this->type        = X937Field::NUMERIC;	// Always Numeric
 		
 		$this->value       = $value;
@@ -71,7 +71,7 @@ class X937FieldRecordType extends X937Field {
 }
 
 class X937FieldReserved extends X937Field {
-	public function X937FieldReserved($fieldNumber, $position, $size) {
+	public function __construct($fieldNumber, $position, $size) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = 'Reserved';
 		$this->usage       = X937Field::MANDATORY;
@@ -82,7 +82,7 @@ class X937FieldReserved extends X937Field {
 }
 
 class X937FieldUser extends X937Field {
-	public function X937FieldUser($fieldNumber, $position, $size) {
+	public function __construct($fieldNumber, $position, $size) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = 'User Field';
 		$this->usage       = X937Field::CONDITIONAL;
@@ -93,7 +93,7 @@ class X937FieldUser extends X937Field {
 }
 
 class X937FieldDate extends X937Field {
-	public function X937FieldDate($fieldNumber, $fieldName, $usage, $position) {
+	public function __construct($fieldNumber, $fieldName, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $fieldName;
 		$this->usage       = $usage;
@@ -104,7 +104,7 @@ class X937FieldDate extends X937Field {
 }
 
 class X937FieldTime extends X937Field {
-	public function X937FieldTime($fieldNumber, $fieldName, $usage, $position) {
+	public function __construct($fieldNumber, $fieldName, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $fieldName;
 		$this->usage       = $usage;
@@ -115,7 +115,7 @@ class X937FieldTime extends X937Field {
 }
 
 class X937FieldInstitutionName extends X937Field {
-	public function X937FieldInstitutionName($fieldNumber, $fieldNamePrefix, $usage, $position) {
+	public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $fieldNamePrefix . ' ' . 'Name';
 		$this->usage       = $usage;
@@ -126,7 +126,7 @@ class X937FieldInstitutionName extends X937Field {
 }
 
 class X937FieldContactName extends X937Field {
-	public function X937FieldContactName($fieldNumber, $fieldName, $usage, $position) {
+	public function __construct($fieldNumber, $fieldName, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $fieldName;
 		$this->usage       = $usage;
@@ -137,7 +137,7 @@ class X937FieldContactName extends X937Field {
 }
 
 class X937FieldPhoneNumber extends X937Field {
-	public function X937FieldPhoneNumber($fieldNumber, $fieldNamePrefix, $usage, $position) {
+	public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $fieldNamePrefix . ' ' . 'Phone Number';
 		$this->usage       = $usage;
@@ -148,7 +148,7 @@ class X937FieldPhoneNumber extends X937Field {
 }
 
 class X937FieldRoutingNumber extends X937Field {
-	public function X937FieldRoutingNumber($fieldNumber, $fieldNamePrefix, $usage, $position) {
+	public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $fieldNamePrefix . ' ' . 'Routing Number';
 		$this->usage       = $usage;
@@ -159,7 +159,7 @@ class X937FieldRoutingNumber extends X937Field {
 }
 
 class X937FieldDepositAccountNumber extends X937Field {
-	public function X937FieldDepositAccountNumber($fieldNumber, $usage, $position) {
+	public function __construct($fieldNumber, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = 'Deposit Account Number at BOFD';
 		$this->usage       = X937Field::CONDITIONAL;
@@ -170,7 +170,7 @@ class X937FieldDepositAccountNumber extends X937Field {
 }
 
 class X937FieldItemAmount extends X937Field {
-	public function X937FieldItemAmount($fieldNumber, $position) {
+	public function __construct($fieldNumber, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = 'Item Amount';
 		$this->usage       = X937Field::MANDATORY;
@@ -181,7 +181,7 @@ class X937FieldItemAmount extends X937Field {
 }
 
 class X937FieldItemSequenceNumber extends X937Field {
-	public function X937FieldItemSequenceNumber($fieldNumber, $fieldNamePrefix, $usage, $position) {
+	public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = $fieldNamePrefix . ' ' . 'Item Sequence Number';
 		$this->usage       = $usage;
@@ -192,7 +192,7 @@ class X937FieldItemSequenceNumber extends X937Field {
 }
 
 class X937FieldReturnReason extends X937Field {
-	public function X937FieldReturnReason($fieldNumber, $usage, $position) {
+	public function __construct($fieldNumber, $usage, $position) {
 		$this->fieldNumber = $fieldNumber;
 		$this->fieldName   = 'Return Reason';
 		$this->usage       = $usage;
