@@ -101,18 +101,18 @@ class X937RecordFileHeader  extends X937Record {
 class X937RecordCashLetterHeader  extends X937Record {
 	protected function addFields() {
 		$this->addField(new X937FieldRecordType(X937Record::CASH_LETTER_HEADER));
-		$this->addField(new X937Field(2,  'Collection Type Indicator',                X937Field::MANDATORY,   03, 02, X937Field::NUMERIC));
-		$this->addField(new X937FieldRoutingNumber(3, 'Destination',                  X937Field::MANDATORY,   05));
+		$this->addField(new X937Field(2,  'Collection Type Indicator',                X937Field::MANDATORY,    3,  2, X937Field::NUMERIC));
+		$this->addField(new X937FieldRoutingNumber(3, 'Destination',                  X937Field::MANDATORY,    5));
 		$this->addField(new X937FieldRoutingNumber(4, 'ECE Instituion',               X937Field::MANDATORY,   14));
 		$this->addField(new X937FieldDate(5, 'Cash Letter Business Date',             X937Field::MANDATORY,   23));
 		$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',             X937Field::MANDATORY,   31));		
 		$this->addField(new X937FieldTime(7, 'Cash Letter Creation Time',             X937Field::MANDATORY,   39));
-		$this->addField(new X937Field(8,  'Cash Letter Record Type Indicator',        X937Field::MANDATORY,   43, 01, X937Field::ALPHABETIC));
+		$this->addField(new X937Field(8,  'Cash Letter Record Type Indicator',        X937Field::MANDATORY,   43,  1, X937Field::ALPHABETIC));
 		$this->addField(new X937Field(9,  'Cash Letter Documentation Type Indicator', X937Field::CONDITIONAL, 44, 18, X937Field::ALPHAMERIC));
-		$this->addField(new X937Field(10, 'Cash Letter ID',                           X937Field::CONDITIONAL, 45, 08, X937Field::ALPHAMERIC));
+		$this->addField(new X937Field(10, 'Cash Letter ID',                           X937Field::CONDITIONAL, 45,  8, X937Field::ALPHAMERIC));
 		$this->addField(new X937FieldContactName(11, 'Originator Contact Name',       X937Field::CONDITIONAL, 53));
 		$this->addField(new X937FieldPhoneNumber(12, 'Originator Contact',            X937Field::CONDITIONAL, 67));
-		$this->addField(new X937Field(13, 'Fed Work Type',                            X937Field::CONDITIONAL, 77, 01, X937Field::ALPHAMERIC));
+		$this->addField(new X937Field(13, 'Fed Work Type',                            X937Field::CONDITIONAL, 77,  1, X937Field::ALPHAMERIC));
 		$this->addField(new X937FieldUser(14, 78,  2));
 		$this->addField(new X937FieldReserved(14, 80,  1));
 	}
@@ -292,10 +292,10 @@ class X937RecordNonHitTotalsDetail extends X937Record {
 class X937RecordBundleControl extends X937Record {
 	protected function addFields() {
 		$this->addField(new X937FieldRecordType(X937Record::BUNDLE_CONTROL));
-		$this->addField(new X937Field(2, 'Items Within Bundle Count',  X937Field::MANDATORY,   03, 04, X937Field::NUMERIC));
-		$this->addField(new X937Field(3, 'Bundle Total Amount',        X937Field::MANDATORY,   07, 12, X937Field::NUMERIC));
+		$this->addField(new X937Field(2, 'Items Within Bundle Count',  X937Field::MANDATORY,    3,  4, X937Field::NUMERIC));
+		$this->addField(new X937Field(3, 'Bundle Total Amount',        X937Field::MANDATORY,    7, 12, X937Field::NUMERIC));
 		$this->addField(new X937Field(4, 'MICR Valid Total Amount',    X937Field::CONDITIONAL, 19, 12, X937Field::NUMERIC));
-		$this->addField(new X937Field(5, 'Images within Bundle Count', X937Field::CONDITIONAL, 31, 05, X937Field::NUMERIC));
+		$this->addField(new X937Field(5, 'Images within Bundle Count', X937Field::CONDITIONAL, 31,  5, X937Field::NUMERIC));
 		$this->addField(new X937FieldUser(6, 36, 20));
 		$this->addField(new X937FieldReserved(7, 56, 25));
 	}
@@ -306,9 +306,9 @@ class X937RecordBoxSummary extends X937Record {
 	protected function addFields() {
 		$this->addField(new X937FieldRecordType(X937Record::BOX_SUMMARY));
 		$this->addField(new X937FieldRoutingNumber(2, 'Destination', X937Field::MANDATORY, 03));
-		$this->addField(new X937Field(3, 'Box Sequence Number',      X937Field::MANDATORY, 12, 03, X937Field::NUMERIC));
-		$this->addField(new X937Field(4, 'Box Bundle Count',         X937Field::MANDATORY, 15, 04, X937Field::NUMERIC));
-		$this->addField(new X937Field(5, 'Box Number ID',            X937Field::MANDATORY, 19, 08, X937Field::NUMERIC));
+		$this->addField(new X937Field(3, 'Box Sequence Number',      X937Field::MANDATORY, 12,  3, X937Field::NUMERIC));
+		$this->addField(new X937Field(4, 'Box Bundle Count',         X937Field::MANDATORY, 15,  4, X937Field::NUMERIC));
+		$this->addField(new X937Field(5, 'Box Number ID',            X937Field::MANDATORY, 19,  8, X937Field::NUMERIC));
 		$this->addField(new X937Field(6, 'Box Total Amount',         X937Field::MANDATORY, 27, 14, X937Field::NUMERIC));
 		$this->addField(new X937FieldReserved(7, 41, 40));
 	}
@@ -318,9 +318,9 @@ class X937RecordBoxSummary extends X937Record {
 class X937RecordRoutingNumberSummary extends X937Record {
 	protected function addFields() {
 		$this->addField(new X937FieldRecordType(X937Record::ROUTING_NUMBER_SUMMARY));
-		$this->addField(new X937FieldRoutingNumber(2, 'Within Cash Letter', X937Field::MANDATORY, 03));
+		$this->addField(new X937FieldRoutingNumber(2, 'Within Cash Letter', X937Field::MANDATORY,  3));
 		$this->addField(new X937Field(3, 'Routing Number Total Amount',     X937Field::MANDATORY, 12, 14, X937Field::NUMERIC));
-		$this->addField(new X937Field(4, 'Routing Number Item Count',       X937Field::MANDATORY, 26, 06, X937Field::NUMERIC));
+		$this->addField(new X937Field(4, 'Routing Number Item Count',       X937Field::MANDATORY, 26,  6, X937Field::NUMERIC));
 		$this->addField(new X937FieldUser(5, 32, 24));
 		$this->addField(new X937FieldReserved(6, 56, 25));
 	}
@@ -330,10 +330,10 @@ class X937RecordRoutingNumberSummary extends X937Record {
 class X937RecordCashLetterControl extends X937Record {
 	protected function addFields() {
 		$this->addField(new X937FieldRecordType(X937Record::CASH_LETTER_CONTROL));
-		$this->addField(new X937Field(2, 'Bundle Count',                    X937Field::MANDATORY,   03, 06, X937Field::NUMERIC));
-		$this->addField(new X937Field(3, 'Items Within Cash Letter Count',  X937Field::MANDATORY,   09, 16, X937Field::NUMERIC));
+		$this->addField(new X937Field(2, 'Bundle Count',                    X937Field::MANDATORY,    3,  6, X937Field::NUMERIC));
+		$this->addField(new X937Field(3, 'Items Within Cash Letter Count',  X937Field::MANDATORY,    9, 16, X937Field::NUMERIC));
 		$this->addField(new X937Field(4, 'Cash Letter Total Amount',        X937Field::MANDATORY,   17, 14, X937Field::NUMERIC));
-		$this->addField(new X937Field(5, 'Images Within Cash Letter Count', X937Field::CONDITIONAL, 31, 09, X937Field::ALPHABETIC));
+		$this->addField(new X937Field(5, 'Images Within Cash Letter Count', X937Field::CONDITIONAL, 31,  9, X937Field::ALPHABETIC));
 		$this->addField(new X937FieldInstitutionName(6, 'ECE Institution',  X937Field::CONDITIONAL, 40));
 		$this->addField(new X937FieldDate(7, 'Settlement Date',             X937Field::CONDITIONAL, 58));
 		$this->addField(new X937FieldReserved(8, 66, 15));
@@ -344,9 +344,9 @@ class X937RecordCashLetterControl extends X937Record {
 class X937RecordFileControl extends X937Record {
 	protected function addFields() {
 		$this->addField(new X937FieldRecordType(X937Record::FILE_CONTROL));
-		$this->addField(new X937Field(2, 'Cash Letter Count',                        X937Field::MANDATORY,   03, 06, X937Field::NUMERIC));
-		$this->addField(new X937Field(3, 'Total Record Count',                       X937Field::MANDATORY,   09, 06, X937Field::NUMERIC));
-		$this->addField(new X937Field(4, 'Total Item Count',                         X937Field::MANDATORY,   17, 08, X937Field::NUMERIC));
+		$this->addField(new X937Field(2, 'Cash Letter Count',                        X937Field::MANDATORY,    3,  6, X937Field::NUMERIC));
+		$this->addField(new X937Field(3, 'Total Record Count',                       X937Field::MANDATORY,    9,  6, X937Field::NUMERIC));
+		$this->addField(new X937Field(4, 'Total Item Count',                         X937Field::MANDATORY,   17,  8, X937Field::NUMERIC));
 		$this->addField(new X937Field(5, 'File Total Amount',                        X937Field::MANDATORY,   25, 16, X937Field::NUMERIC));
 		$this->addField(new X937FieldContactName(6, 'Immediate Origin Contact Name', X937Field::CONDITIONAL, 41));
 		$this->addField(new X937FieldPhoneNumber(7, 'Immediate Origin Contact',      X937Field::CONDITIONAL, 55));

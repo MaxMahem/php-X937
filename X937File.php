@@ -1,7 +1,7 @@
 <?php
 
-include_once 'X937Record.php';
-include_once 'X937Field.php';
+require_once 'X937Record.php';
+require_once 'X937Field.php';
 
 class X937File {
 	private $fileHandle;
