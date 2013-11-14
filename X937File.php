@@ -8,6 +8,12 @@ class X937File {
 	private $valid;
 	private $fileInfo;
 	private $records;
+
+        /**
+         * array of records position in the X937 File. Indexed the same as file
+         * @var array
+         */
+        private $recordPosition;
 	
 	private $fileTotalAmount;
 	private $fileItemCount;
@@ -64,25 +70,28 @@ class X937File {
                 }
 	}
 	
-	public function readRecord() {
-		// pull 4 bytes, this should contain our record length.
-		$recordLengthData = fread($this->fileHandle, 4);
+    public function readRecord() {
+        // save our record position
+        $this->recordPosition = ftell($this->fileHandle);
+            
+        // pull 4 bytes, this should contain our record length.
+	$recordLengthData = fread($this->fileHandle, 4);
 		
-		// check to see if we have a value here. If not, we've reached the eof, and just return
-		if (!$recordLengthData) { return false; }
+	// check to see if we have a value here. If not, we've reached the eof, and just return
+	if (!$recordLengthData) { return false; }
 		
-		// unpack our data into an int, unpack should return an with a single value
-		// i.e. array '['int']=>RECORDLENGTH so array shift will get us the raw value.
-		$recordLength = array_shift(unpack("Nint", $recordLengthData));
+	// unpack our data into an int, unpack should return an with a single value
+	// i.e. array '['int']=>RECORDLENGTH so array shift will get us the raw value.
+	$recordLength = array_shift(unpack("Nint", $recordLengthData));
 
-		// read our record, it should be $recordLength long
-		$recordData = fread($this->fileHandle, $recordLength);
+	// read our record, it should be $recordLength long
+	$recordData = fread($this->fileHandle, $recordLength);
 		
-		// build a record from the data
-		$this->records[] = $this->newRecord($recordData);
+	// build a record from the data
+	$this->records[] = $this->newRecord($recordData);
                 
-                return true;
-	}
+        return true;
+    }
 	
 	private function newRecord($recordData) {
 		// the first two characters should be the record type, in EBCDIC. Cut them and convert them.
