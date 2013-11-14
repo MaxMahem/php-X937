@@ -58,8 +58,10 @@ class X937File {
 		$fileControlRecords = $this->getRecordsByType(X937Record::FILE_CONTROL);
 		$fileControlRecord  = array_shift($fileControlRecords);
 		
-		$this->fileTotalAmount = $fileControlRecord->getFieldByNumber(5)->getValue()/100;
-		$this->fileItemCount   = $fileControlRecord->getFieldByNumber(4)->getValue();
+		if ($fileControlRecord instanceof X937RecordFileControl) {
+                    $this->fileTotalAmount = $fileControlRecord->getFieldByNumber(5)->getValue()/100;
+                    $this->fileItemCount   = $fileControlRecord->getFieldByNumber(4)->getValue();
+                }
 	}
 	
 	public function readRecord() {
@@ -67,7 +69,7 @@ class X937File {
 		$recordLengthData = fread($this->fileHandle, 4);
 		
 		// check to see if we have a value here. If not, we've reached the eof, and just return
-		if (!$recordLengthData) { return; }
+		if (!$recordLengthData) { return false; }
 		
 		// unpack our data into an int, unpack should return an with a single value
 		// i.e. array '['int']=>RECORDLENGTH so array shift will get us the raw value.
@@ -78,6 +80,8 @@ class X937File {
 		
 		// build a record from the data
 		$this->records[] = $this->newRecord($recordData);
+                
+                return true;
 	}
 	
 	private function newRecord($recordData) {
