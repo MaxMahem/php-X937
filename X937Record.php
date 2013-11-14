@@ -1,65 +1,139 @@
 <?php
 /**
- * Description of X937Record
- *
- * @author astanley
+ * X937Records represent a single variable length line of a X937 file.
+ * 
+ * @author Austin Stanley <maxtmahem@gmail.com>
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3 (or later)
+ * @copyright Copyright (c) 2013, Austin Stanley
  */
 class X937Record {
-	protected $recordType;
-	protected $recordEBCDIC;
-	protected $recordASCII;
-	protected $fields;
-	protected $fieldsRef;
+    /**
+     * The type of the record. Should be one of the class constants.
+     * @var int
+     */
+    protected $recordType;
+    
+    /**
+     * The record string in EBCDIC format.
+     * @var string
+     */
+    protected $recordEBCDIC;
+    
+    /**
+     * The record string in ASCII format.
+     * @var string
+     */
+    protected $recordASCII;
+    
+    /**
+     * Contains all the field in the record. Indexed by field number, which 
+     * represents the fields position in the record. Starting at 1.
+     * @var array contains all the fields in the record.
+     */
+    protected $fields;
+    
+    /**
+     * Reference array that links field name => filed number.
+     * @var array
+     */
+    protected $fieldsRef;
+    
+    /**
+     * An array of all the possible record types. Built by build record types.
+     * @var array
+     */
+    protected $recordTypes;
 	
-	const FILE_HEADER             = '01';
-	const CASH_LETTER_HEADER      = '10';
-	const BUNDLE_HEADER           = '20';
-	const CHECK_DETAIL            = '25';
-	const CHECK_DETAIL_ADDENDUM_A = '26';
-	const CHECK_DETAIL_ADDENDUM_B = '27';
-	const CHECK_DETAIL_ADDENDUM_C = '28';
-	const RETURN_RECORD           = '31';
-	const RETURN_ADDENDUM_A       = '32';
-	const RETURN_ADDENDUM_B       = '33';
-	const RETURN_ADDENDUM_C       = '34';
-	const RETURN_ADDENDUM_D       = '35';
-	const ACCOUNT_TOTALS_DETAIL   = '40';
-	const NON_HIT_TOTALS_DETAIL   = '41';
-	const IMAGE_VIEW_DETAIL       = '50';
-	const IMAGE_VIEW_DATA         = '52';
-	const IMAGE_VIEW_ANALYSIS     = '54';
-	const BUNDLE_CONTROL          = '70';
-	const BOX_SUMMARY             = '75';
-	const ROUTING_NUMBER_SUMMARY  = '85';
-	const CASH_LETTER_CONTROL     = '90';
-	const FILE_CONTROL            = '99';
+    const FILE_HEADER             = '01';
+    const CASH_LETTER_HEADER      = '10';
+    const BUNDLE_HEADER           = '20';
+    const CHECK_DETAIL            = '25';
+    const CHECK_DETAIL_ADDENDUM_A = '26';
+    const CHECK_DETAIL_ADDENDUM_B = '27';
+    const CHECK_DETAIL_ADDENDUM_C = '28';
+    const RETURN_RECORD           = '31';
+    const RETURN_ADDENDUM_A       = '32';
+    const RETURN_ADDENDUM_B       = '33';
+    const RETURN_ADDENDUM_C       = '34';
+    const RETURN_ADDENDUM_D       = '35';
+    const ACCOUNT_TOTALS_DETAIL   = '40';
+    const NON_HIT_TOTALS_DETAIL   = '41';
+    const IMAGE_VIEW_DETAIL       = '50';
+    const IMAGE_VIEW_DATA         = '52';
+    const IMAGE_VIEW_ANALYSIS     = '54';
+    const BUNDLE_CONTROL          = '70';
+    const BOX_SUMMARY             = '75';
+    const ROUTING_NUMBER_SUMMARY  = '85';
+    const CASH_LETTER_CONTROL     = '90';
+    const FILE_CONTROL            = '99';
 
-	// constructor
-	public function __construct($recordTypeASCII, $recordData) {
-		// input validation
-		if (!is_string($recordData)) { throw new InvalidArgumentException("Bad record: $recordData passed to new X937Record"); }
+    /**
+     * Creates a X937Record. Basic input validation, currently ignores TIFF data.
+     * Calls addFields which should be overriden in a subclass to add all the
+     * fields to the record. And then calls all those fields parseValue function
+     * to parse in the data.
+     * @param type $recordTypeASCII the type of the record, in ASCII. Should be
+     * one of the class constants.
+     * @param type $recordData the raw data for the record. In EBCDIC/Binary 
+     * @throws InvalidArgumentException If given bad input.
+     */
+    public function __construct($recordTypeASCII, $recordData) {
+	// input validation
+        if (!is_string($recordData)) { throw new InvalidArgumentException("Bad record: $recordData passed to new X937Record"); }
 		
-		$this->recordType = $recordTypeASCII;
-		
-		// check for the IMAGE_VIEW_DETAIL Record type. This is a TIFF record, and in this case we only want the first 117 bytes of EBCDIC data,
-		// the rest is TIFF.
-		if ($this->recordType == X937Record::IMAGE_VIEW_DATA) { 
-			$this->recordEBCDIC = substr($recordData, 0, 117);
-			$this->recordASCII  = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
-		} else {
-			$this->recordEBCIDC = $recordData;
-			$this->recordASCII  = iconv('EBCDIC-US', 'ASCII', $recordData);
-		}
-		
-		$this->addFields();
-
-		foreach ($this->fields as $field) {
-			$field->parseValue($this->recordASCII);
-		}
+        $this->recordType = $recordTypeASCII;
+	
+        // check for the IMAGE_VIEW_DETAIL Record type. This is a TIFF record, and in this case we only want the first 117 bytes of EBCDIC data,
+        // the rest is TIFF.
+        if ($this->recordType == X937Record::IMAGE_VIEW_DATA) { 
+            $this->recordEBCDIC = substr($recordData, 0, 117);
+            $this->recordASCII  = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
+	} else {
+            $this->recordEBCIDC = $recordData;
+            $this->recordASCII  = iconv('EBCDIC-US', 'ASCII', $recordData);
 	}
+		
+	$this->addFields();
+		
+        foreach ($this->fields as $field) {
+            $field->parseValue($this->recordASCII);
+	}
+    }
+    
+    /**
+     * Builds record type array.
+     */
+    private function buildRecordTypes() {
+        $this->recordTypes[] = self::FILE_HEADER;
+        $this->recordTypes[] = self::CASH_LETTER_HEADER;
+        $this->recordTypes[] = self::BUNDLE_HEADER;
+        $this->recordTypes[] = self::CHECK_DETAIL;
+        $this->recordTypes[] = self::CHECK_DETAIL_ADDENDUM_A;
+        $this->recordTypes[] = self::CHECK_DETAIL_ADDENDUM_B;
+        $this->recordTypes[] = self::CHECK_DETAIL_ADDENDUM_C;
+        $this->recordTypes[] = self::RETURN_RECORD;
+        $this->recordTypes[] = self::RETURN_ADDENDUM_A;
+        $this->recordTypes[] = self::RETURN_ADDENDUM_B;
+        $this->recordTypes[] = self::RETURN_ADDENDUM_C;
+        $this->recordTypes[] = self::RETURN_ADDENDUM_D;
+        $this->recordTypes[] = self::ACCOUNT_TOTALS_DETAIL;
+        $this->recordTypes[] = self::NON_HIT_TOTALS_DETAIL;
+        $this->recordTypes[] = self::IMAGE_VIEW_DETAIL;
+        $this->recordTypes[] = self::IMAGE_VIEW_DATA;
+        $this->recordTypes[] = self::IMAGE_VIEW_ANALYSIS;
+        $this->recordTypes[] = self::BUNDLE_CONTROL;
+        $this->recordTypes[] = self::BOX_SUMMARY;
+        $this->recordTypes[] = self::ROUTING_NUMBER_SUMMARY;
+        $this->recordTypes[] = self::CASH_LETTER_CONTROL;
+        $this->recordTypes[] = self::FILE_CONTROL;
+    }
 
-	public function getRecordType()   { return $this->recordType; }
-	public function getRecordEBCDIC() { return $this->recordEBCDIC; }
+    /**
+     * @return int The record type of the record. Should be one of the class
+     * constents.
+     */
+    public function getRecordType()   { return $this->recordType; }
+    public function getRecordEBCDIC() { return $this->recordEBCDIC; }
 	public function getRecordASCII()  { return $this->recordASCII; }
 	public function getFields()       { return $this->fields; }
 	
