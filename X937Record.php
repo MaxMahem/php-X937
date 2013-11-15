@@ -14,10 +14,10 @@ class X937Record {
     protected $recordType;
     
     /**
-     * The record string in EBCDIC format.
+     * The raw record string. Generally EBCDIC data.
      * @var string
      */
-    protected $recordEBCDIC;
+    protected $recordData;
     
     /**
      * The record string in ASCII format.
@@ -86,11 +86,11 @@ class X937Record {
         // check for the IMAGE_VIEW_DETAIL Record type. This is a TIFF record, and in this case we only want the first 117 bytes of EBCDIC data,
         // the rest is TIFF.
         if ($this->recordType == X937Record::IMAGE_VIEW_DATA) { 
-            $this->recordEBCDIC = substr($recordData, 0, 117);
-            $this->recordASCII  = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
+            $this->recordData  = substr($recordData, 0, 117);
+            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
 	} else {
-            $this->recordEBCIDC = $recordData;
-            $this->recordASCII  = iconv('EBCDIC-US', 'ASCII', $recordData);
+            $this->recordData  = $recordData;
+            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', $recordData);
 	}
 		
 	$this->addFields();
@@ -133,22 +133,25 @@ class X937Record {
      * constents.
      */
     public function getRecordType()   { return $this->recordType; }
-    public function getRecordEBCDIC() { return $this->recordEBCDIC; }
-	public function getRecordASCII()  { return $this->recordASCII; }
-	public function getFields()       { return $this->fields; }
+    public function getRecordData() { return $this->recordData; }
+    public function getRecordASCII()  { return $this->recordASCII; }
+    public function getFields()       { return $this->fields; }
 	
-	public function getFieldByNumber($fieldNumber)  { return $this->fields[$fieldNumber]; }
-	public function getFieldByName($fieldName)      { return $this->fields[$this->fieldsRef[$fieldName]]; }
+    public function getFieldByNumber($fieldNumber)  { return $this->fields[$fieldNumber]; }
+    public function getFieldByName($fieldName)      { return $this->fields[$this->fieldsRef[$fieldName]]; }
 	
-	protected function addFields() { $this->fields = array(); }
+    protected function addFields() { $this->fields = array(); }
 
-	protected function addField(X937Field $field) {
-		// add field to system.
-		$this->fields[$field->getFieldNumber()]  = $field;
+    /**
+     * Adds a X937Field (or one of it's subclasses) to the Record.
+     * @param X937Field $field
+     */
+    protected function addField(X937Field $field) {
+        $this->fields[$field->getFieldNumber()]  = $field;
 		
-		// update fieldRef with pointer to correct position.
-		$this->fieldsRef[$field->getFieldName()] = $field->getFieldNumber();
-	}
+	// update fieldRef with pointer to correct position.
+	$this->fieldsRef[$field->getFieldName()] = $field->getFieldNumber();
+    }
 }
 
 // File Header Record - Type 01
