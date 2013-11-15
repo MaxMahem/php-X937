@@ -4,9 +4,17 @@ require_once 'X937Record.php';
 require_once 'X937Field.php';
 
 class X937File implements Countable, Iterator {
+    /**
+     * Our FileHandle.
+     * @var resource
+     */
     private $fileHandle;
+    
+    /**
+     * A SplFileInfo object for our file.
+     * @var SplFileInfo
+     */
     private $fileInfo;
-    private $records;
     
     /**
      * Current position of the itterator in the file.
@@ -86,27 +94,9 @@ class X937File implements Countable, Iterator {
     }
 	
     public function getFileInfo()        { return $this->fileInfo; }
-    public function getRecords()         { return $this->records; }
-    public function getRecord($record)   { return $this->records[$record]; }
 
     public function getFileTotalAmount() { return $this->fileTotalAmount; }
     public function getFileItemCount()   { return $this->fileItemCount; }
-	
-    public function getRecordsByType($recordType) {
-	    foreach ($this->records as $record) {
-		    if ($record->getRecordType() === $recordType) {
-			    $records[] = $record;
-		    }
-	    }
-
-	    return $records;
-    }
-
-    public function readAllRecords() {
-	    while (!feof($this->fileHandle)) {
-		    $this->readRecord();
-	    }
-    }
 	
     public function readRecord() {
         // save our record position
