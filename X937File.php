@@ -3,7 +3,7 @@
 require_once 'X937Record.php';
 require_once 'X937Field.php';
 
-class X937File {
+class X937File implements Countable {
     private $fileHandle;
     private $valid;
     private $fileInfo;
@@ -19,7 +19,14 @@ class X937File {
      * array of records position in the X937 File. Indexed the same as file
      * @var array
      */
-    private $recordPosition;
+    private $recordPositions;
+    
+    /**
+     * Count of the number of records in the file. Retrieved from File Control Record.
+     * @var int
+     */
+    private $recordCount; 
+    
     private $fileTotalAmount;
     private $fileItemCount;
 	
@@ -48,40 +55,39 @@ class X937File {
 	
 	// build our file record from this data.
 	$this->fileControlRecord = $this->newRecord($fileControlRecordData);
-	
 	if ($this->fileControlRecord instanceof X937RecordFileControl) {
 	    $this->fileTotalAmount = $this->fileControlRecord->getFieldByNumber(5)->getValue()/100;
 	    $this->fileItemCount   = $this->fileControlRecord->getFieldByNumber(4)->getValue();
-	}
-	
+	    $this->recordCount     = $this->fileControlRecord->getFieldByNumber(3)->getValue();
+	}	
     }
 	
-	public function getFileInfo()        { return $this->fileInfo; }
-	public function getRecords()         { return $this->records; }
-	public function getRecord($record)   { return $this->records[$record]; }
+    public function getFileInfo()        { return $this->fileInfo; }
+    public function getRecords()         { return $this->records; }
+    public function getRecord($record)   { return $this->records[$record]; }
+
+    public function getFileTotalAmount() { return $this->fileTotalAmount; }
+    public function getFileItemCount()   { return $this->fileItemCount; }
 	
-	public function getFileTotalAmount() { return $this->fileTotalAmount; }
-	public function getFileItemCount()   { return $this->fileItemCount; }
-	
-	public function getRecordsByType($recordType) {
-		foreach ($this->records as $record) {
-			if ($record->getRecordType() === $recordType) {
-				$records[] = $record;
-			}
-		}
-		
-		return $records;
-	}
-	
-	public function readAllRecords() {
-		while (!feof($this->fileHandle)) {
-			$this->readRecord();
-		}
-	}
+    public function getRecordsByType($recordType) {
+	    foreach ($this->records as $record) {
+		    if ($record->getRecordType() === $recordType) {
+			    $records[] = $record;
+		    }
+	    }
+
+	    return $records;
+    }
+
+    public function readAllRecords() {
+	    while (!feof($this->fileHandle)) {
+		    $this->readRecord();
+	    }
+    }
 	
     public function readRecord() {
         // save our record position
-        $this->recordPosition = ftell($this->fileHandle);
+        $this->recordPositions = ftell($this->fileHandle);
             
         // pull 4 bytes, this should contain our record length.
 	$recordLengthData = fread($this->fileHandle, 4);
@@ -102,53 +108,62 @@ class X937File {
         return true;
     }
 	
-	private function newRecord($recordData) {
-		// the first two characters should be the record type, in EBCDIC. Cut them and convert them.
-		$recordTypeEBCDIC = substr($recordData, 0, 2);
-		$recordTypeASCII  = iconv('EBCDIC-US', 'ASCII', $recordTypeEBCDIC);
-		
-		switch ($recordTypeASCII) {
-			case X937Record::FILE_HEADER:
-				return new X937RecordFileHeader($recordTypeASCII, $recordData);
-				break;
-			case X937Record::CASH_LETTER_HEADER:
-				return new X937RecordCashLetterHeader($recordTypeASCII, $recordData);
-				break;
-			case X937Record::BUNDLE_HEADER:
-				return new X937RecordBundleHeader($recordTypeASCII, $recordData);
-				break;
-			case X937Record::CHECK_DETAIL:
-				return new X937RecordCheckDetail($recordTypeASCII, $recordData);
-				break;
-			case X937Record::CHECK_DETAIL_ADDENDUM_A:
-				return new X937RecordCheckDetailAddendumA($recordTypeASCII, $recordData);
-				break;
-			
-			// more to be inserted
-			
-			case X937Record::BUNDLE_CONTROL:
-				return new X937RecordBundleControl($recordTypeASCII, $recordData);
-				break;
-			case X937Record::BOX_SUMMARY:
-				return new X937RecordBoxSummary($recordTypeASCII, $recordData);
-				break;
-			case X937Record::ROUTING_NUMBER_SUMMARY:
-				return new X937RecordRoutingNumberSummary($recordTypeASCII, $recordData);
-				break;
-			case X937Record::CASH_LETTER_CONTROL:
-				return new X937RecordCashLetterControl($recordTypeASCII, $recordData);
-				break;
-			case X937Record::FILE_CONTROL:
-				return new X937RecordFileControl($recordTypeASCII, $recordData);
-				break;
-			default:
-				return new X937Record($recordTypeASCII, $recordData);
-				break;
-		}
+    private function newRecord($recordData) {
+	// the first two characters should be the record type, in EBCDIC. Cut them and convert them.
+	$recordTypeEBCDIC = substr($recordData, 0, 2);
+	$recordTypeASCII  = iconv('EBCDIC-US', 'ASCII', $recordTypeEBCDIC);
+
+	switch ($recordTypeASCII) {
+	    case X937Record::FILE_HEADER:
+		return new X937RecordFileHeader($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::CASH_LETTER_HEADER:
+		return new X937RecordCashLetterHeader($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::BUNDLE_HEADER:
+		return new X937RecordBundleHeader($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::CHECK_DETAIL:
+		return new X937RecordCheckDetail($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::CHECK_DETAIL_ADDENDUM_A:
+		return new X937RecordCheckDetailAddendumA($recordTypeASCII, $recordData);
+		break;
+
+	    // more to be inserted
+
+	    case X937Record::BUNDLE_CONTROL:
+		return new X937RecordBundleControl($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::BOX_SUMMARY:
+		return new X937RecordBoxSummary($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::ROUTING_NUMBER_SUMMARY:
+		return new X937RecordRoutingNumberSummary($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::CASH_LETTER_CONTROL:
+		return new X937RecordCashLetterControl($recordTypeASCII, $recordData);
+		break;
+	    case X937Record::FILE_CONTROL:
+		return new X937RecordFileControl($recordTypeASCII, $recordData);
+		break;
+	    default:
+		return new X937Record($recordTypeASCII, $recordData);
+		break;
 	}
-	
-	public function __destruct() {
-		// close our file handle.
-		fclose($this->fileHandle);
-	}
+    }
+
+    /**
+     * Implementation for countable. Returns the number of records.
+     * @return int
+     */
+    public function count() {
+	return $this->recordCount;
+    }
+    
+    public function __destruct() {
+	// close our file handle.
+	fclose($this->fileHandle);
+    }
+
 }

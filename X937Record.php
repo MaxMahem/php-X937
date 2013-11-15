@@ -419,14 +419,14 @@ class X937RecordCashLetterControl extends X937Record {
 
 // File Control Record - Type 99
 class X937RecordFileControl extends X937Record {
-	protected function addFields() {
-		$this->addField(new X937FieldRecordType(X937Record::FILE_CONTROL));
-		$this->addField(new X937Field(2, 'Cash Letter Count',                        X937Field::MANDATORY,    3,  6, X937Field::NUMERIC));
-		$this->addField(new X937Field(3, 'Total Record Count',                       X937Field::MANDATORY,    9,  6, X937Field::NUMERIC));
-		$this->addField(new X937Field(4, 'Total Item Count',                         X937Field::MANDATORY,   17,  8, X937Field::NUMERIC));
-		$this->addField(new X937Field(5, 'File Total Amount',                        X937Field::MANDATORY,   25, 16, X937Field::NUMERIC));
-		$this->addField(new X937FieldContactName(6, 'Immediate Origin Contact Name', X937Field::CONDITIONAL, 41));
-		$this->addField(new X937FieldPhoneNumber(7, 'Immediate Origin Contact',      X937Field::CONDITIONAL, 55));
-		$this->addField(new X937FieldReserved(8, 65, 16));
-	}
+    protected function addFields() {
+	$this->addField(new X937FieldRecordType(X937Record::FILE_CONTROL));
+	$this->addField(new X937Field(2, 'Cash Letter Count',                        X937Field::MANDATORY,    3,  6, X937Field::NUMERIC));
+	$this->addField(new X937Field(3, 'Total Record Count',                       X937Field::MANDATORY,    9,  6, X937Field::NUMERIC));
+	$this->addField(new X937Field(4, 'Total Item Count',                         X937Field::MANDATORY,   17,  8, X937Field::NUMERIC));
+	$this->addField(new X937Field(5, 'File Total Amount',                        X937Field::MANDATORY,   25, 16, X937Field::NUMERIC));
+	$this->addField(new X937FieldContactName(6, 'Immediate Origin Contact Name', X937Field::CONDITIONAL, 41));
+	$this->addField(new X937FieldPhoneNumber(7, 'Immediate Origin Contact',      X937Field::CONDITIONAL, 55));
+	$this->addField(new X937FieldReserved(8, 65, 16));
+    }
 }
