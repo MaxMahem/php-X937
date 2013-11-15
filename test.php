@@ -2,11 +2,8 @@
 
 require_once 'X937File.php';
 
-$file = new X937File("PATHTOX937FILE");
-$file->readAllRecords();
+$file = new X937File("PATHTOTESTFILE");
 
-$record = $file->getRecord(1);
-
-print_r($record);
-
-print_r($file->getRecordsByType(X937Record::FILE_HEADER));
+foreach($file as $record) {
+    echo $file->key() . ' ' . $record->getRecordData() . PHP_EOL;
+}

@@ -18,6 +18,12 @@ class X937Record {
      * @var string
      */
     protected $recordData;
+    
+    /**
+     * The length of the record. In bytes
+     * @var int 
+     */
+    protected $recordLength;
 
     /**
      * The record string in ASCII format.
