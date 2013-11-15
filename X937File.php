@@ -4,40 +4,57 @@ require_once 'X937Record.php';
 require_once 'X937Field.php';
 
 class X937File {
-	private $fileHandle;
-	private $valid;
-	private $fileInfo;
-	private $records;
+    private $fileHandle;
+    private $valid;
+    private $fileInfo;
+    private $records;
+    
+    /**
+     * File Control Record for the File
+     * @var X937RecordFileControl
+     */
+    private $fileControlRecord;
 
-        /**
-         * array of records position in the X937 File. Indexed the same as file
-         * @var array
-         */
-        private $recordPosition;
+    /**
+     * array of records position in the X937 File. Indexed the same as file
+     * @var array
+     */
+    private $recordPosition;
+    private $fileTotalAmount;
+    private $fileItemCount;
 	
-	private $fileTotalAmount;
-	private $fileItemCount;
-	
-	public function __construct($filename) {
-		// input validation		
-		// check for existance of our file
-		if (!file_exists($filename)) {
-			throw new InvalidArgumentException("X937File created with file that does not exist, filename: $filename");
-		}
-		
-		// so we have a file, get info on it.
-		$this->fileInfo = new SplFileInfo($filename);
-		
-//		if (strtoupper($this->fileInfo->getExtension()) !== 'X937') {
-//			throw new InvalidArgumentException("X937File created with file with non X937 file extension, filename: $filename.");
-//		}
-		
-		// open our file for reading in binary mode.
-		$this->fileHandle = fopen($filename, 'rb');
-		
-		// read all our records
-		// $this->readAllRecords();
+    public function __construct($filename) {
+	// input validation		
+	// check for existance of our file
+	if (!file_exists($filename)) {
+	    throw new InvalidArgumentException("X937File created with file that does not exist, filename: $filename");
 	}
+		
+	// so we have a file, get info on it.
+	$this->fileInfo = new SplFileInfo($filename);
+		
+//	if (strtoupper($this->fileInfo->getExtension()) !== 'X937') {
+//	    throw new InvalidArgumentException("X937File created with file with non X937 file extension, filename: $filename.");
+//	}
+		
+	// open our file for reading in binary mode.
+	$this->fileHandle = fopen($filename, 'rb');
+		
+	// seek to 80 characters before the end of file. This SHOULD give us the file control recored.
+	fseek($this->fileHandle, -80, SEEK_END);
+	
+	// read those 80 characters
+	$fileControlRecordData = fread($this->fileHandle, 80);
+	
+	// build our file record from this data.
+	$this->fileControlRecord = $this->newRecord($fileControlRecordData);
+	
+	if ($this->fileControlRecord instanceof X937RecordFileControl) {
+	    $this->fileTotalAmount = $this->fileControlRecord->getFieldByNumber(5)->getValue()/100;
+	    $this->fileItemCount   = $this->fileControlRecord->getFieldByNumber(4)->getValue();
+	}
+	
+    }
 	
 	public function getFileInfo()        { return $this->fileInfo; }
 	public function getRecords()         { return $this->records; }
@@ -60,14 +77,6 @@ class X937File {
 		while (!feof($this->fileHandle)) {
 			$this->readRecord();
 		}
-		
-		$fileControlRecords = $this->getRecordsByType(X937Record::FILE_CONTROL);
-		$fileControlRecord  = array_shift($fileControlRecords);
-		
-		if ($fileControlRecord instanceof X937RecordFileControl) {
-                    $this->fileTotalAmount = $fileControlRecord->getFieldByNumber(5)->getValue()/100;
-                    $this->fileItemCount   = $fileControlRecord->getFieldByNumber(4)->getValue();
-                }
 	}
 	
     public function readRecord() {
