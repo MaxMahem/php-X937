@@ -1,7 +1,7 @@
 <?php
 /**
  * X937Records represent a single variable length line of a X937 file.
- * 
+ *
  * @author Austin Stanley <maxtmahem@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3 (or later)
  * @copyright Copyright (c) 2013, Austin Stanley
@@ -12,38 +12,38 @@ class X937Record {
      * @var int
      */
     protected $recordType;
-    
+
     /**
      * The raw record string. Generally EBCDIC data.
      * @var string
      */
     protected $recordData;
-    
+
     /**
      * The record string in ASCII format.
      * @var string
      */
     protected $recordASCII;
-    
+
     /**
-     * Contains all the field in the record. Indexed by field number, which 
+     * Contains all the field in the record. Indexed by field number, which
      * represents the fields position in the record. Starting at 1.
      * @var array contains all the fields in the record.
      */
     protected $fields;
-    
+
     /**
      * Reference array that links field name => filed number.
      * @var array
      */
     protected $fieldsRef;
-    
+
     /**
      * An array of all the possible record types. Built by build record types.
      * @var array
      */
     protected $recordTypes;
-	
+
     const FILE_HEADER             = '01';
     const CASH_LETTER_HEADER      = '10';
     const BUNDLE_HEADER           = '20';
@@ -74,32 +74,32 @@ class X937Record {
      * to parse in the data.
      * @param type $recordTypeASCII the type of the record, in ASCII. Should be
      * one of the class constants.
-     * @param type $recordData the raw data for the record. In EBCDIC/Binary 
+     * @param type $recordData the raw data for the record. In EBCDIC/Binary
      * @throws InvalidArgumentException If given bad input.
      */
     public function __construct($recordTypeASCII, $recordData) {
 	// input validation
         if (!is_string($recordData)) { throw new InvalidArgumentException("Bad record: $recordData passed to new X937Record"); }
-		
+
         $this->recordType = $recordTypeASCII;
-	
+
         // check for the IMAGE_VIEW_DETAIL Record type. This is a TIFF record, and in this case we only want the first 117 bytes of EBCDIC data,
         // the rest is TIFF.
-        if ($this->recordType == X937Record::IMAGE_VIEW_DATA) { 
+        if ($this->recordType == X937Record::IMAGE_VIEW_DATA) {
             $this->recordData  = substr($recordData, 0, 117);
             $this->recordASCII = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
 	} else {
             $this->recordData  = $recordData;
             $this->recordASCII = iconv('EBCDIC-US', 'ASCII', $recordData);
 	}
-		
+
 	$this->addFields();
-		
+
         foreach ($this->fields as $field) {
             $field->parseValue($this->recordASCII);
 	}
     }
-    
+
     /**
      * Builds record type array.
      */
@@ -129,17 +129,17 @@ class X937Record {
     }
 
     /**
-     * @return int The record type of the record. Should be one of the class
-     * constents.
+     * Get the Record Type, should be one of the class constents.
+     * @return int The record type of the record.
      */
-    public function getRecordType()   { return $this->recordType; }
-    public function getRecordData() { return $this->recordData; }
-    public function getRecordASCII()  { return $this->recordASCII; }
-    public function getFields()       { return $this->fields; }
-	
-    public function getFieldByNumber($fieldNumber)  { return $this->fields[$fieldNumber]; }
-    public function getFieldByName($fieldName)      { return $this->fields[$this->fieldsRef[$fieldName]]; }
-	
+    public function getRecordType()  { return $this->recordType; }
+    public function getRecordData()  { return $this->recordData; }
+    public function getRecordASCII() { return $this->recordASCII; }
+    public function getFields()      { return $this->fields; }
+
+    public function getFieldByNumber($fieldNumber) { return $this->fields[$fieldNumber]; }
+    public function getFieldByName($fieldName)     { return $this->fields[$this->fieldsRef[$fieldName]]; }
+
     protected function addFields() { $this->fields = array(); }
 
     /**
@@ -148,7 +148,7 @@ class X937Record {
      */
     protected function addField(X937Field $field) {
         $this->fields[$field->getFieldNumber()]  = $field;
-		
+	
 	// update fieldRef with pointer to correct position.
 	$this->fieldsRef[$field->getFieldName()] = $field->getFieldNumber();
     }
@@ -156,22 +156,22 @@ class X937Record {
 
 // File Header Record - Type 01
 class X937RecordFileHeader  extends X937Record {
-	protected function addFields() {
-		$this->addField(new X937FieldRecordType(X937Record::FILE_HEADER));
-		$this->addField(new X937Field(2,  'Specification Level',                  X937Field::MANDATORY,    3,  2, X937Field::NUMERIC));
-		$this->addField(new X937Field(3,  'Test File Indicator',                  X937Field::MANDATORY,    5,  1, X937Field::ALPHABETIC));
-		$this->addField(new X937FieldRoutingNumber(4, 'Immediate Destination',    X937Field::MANDATORY,    6));
-		$this->addField(new X937FieldRoutingNumber(5, 'Immediate Origin',         X937Field::MANDATORY,   15));
-		$this->addField(new X937FieldDate(6, 'File Creation Date',                X937Field::MANDATORY,   24));
-		$this->addField(new X937FieldTime(7, 'File Creation Time',                X937Field::MANDATORY,   32));
-		$this->addField(new X937Field(8,  'Resend Indicator',                     X937Field::MANDATORY,   36,  1, X937Field::NUMERIC));
-		$this->addField(new X937FieldInstitutionName( 9, 'Immediate Destination', X937Field::CONDITIONAL, 37));
-		$this->addField(new X937FieldInstitutionName(10, 'Immediate Origin',      X937Field::CONDITIONAL, 55));
-		$this->addField(new X937Field(11, 'File ID Modifer',                      X937Field::CONDITIONAL, 73,  1, X937Field::ALPHAMERIC));
-		$this->addField(new X937Field(12, 'Country Code',                         X937Field::CONDITIONAL, 74,  2, X937Field::ALPHABETIC));
-		$this->addField(new X937FieldUser(13, 76,  4));
-		$this->addField(new X937FieldReserved(14, 80,  1));
-	}
+    protected function addFields() {
+	$this->addField(new X937FieldRecordType(X937Record::FILE_HEADER));
+	$this->addField(new X937Field(2,  'Specification Level',                  X937Field::MANDATORY,    3,  2, X937Field::NUMERIC));
+	$this->addField(new X937Field(3,  'Test File Indicator',                  X937Field::MANDATORY,    5,  1, X937Field::ALPHABETIC));
+	$this->addField(new X937FieldRoutingNumber(4, 'Immediate Destination',    X937Field::MANDATORY,    6));
+	$this->addField(new X937FieldRoutingNumber(5, 'Immediate Origin',         X937Field::MANDATORY,   15));
+	$this->addField(new X937FieldDate(6, 'File Creation Date',                X937Field::MANDATORY,   24));
+	$this->addField(new X937FieldTime(7, 'File Creation Time',                X937Field::MANDATORY,   32));
+	$this->addField(new X937Field(8,  'Resend Indicator',                     X937Field::MANDATORY,   36,  1, X937Field::NUMERIC));
+	$this->addField(new X937FieldInstitutionName( 9, 'Immediate Destination', X937Field::CONDITIONAL, 37));
+	$this->addField(new X937FieldInstitutionName(10, 'Immediate Origin',      X937Field::CONDITIONAL, 55));
+	$this->addField(new X937Field(11, 'File ID Modifer',                      X937Field::CONDITIONAL, 73,  1, X937Field::ALPHAMERIC));
+	$this->addField(new X937Field(12, 'Country Code',                         X937Field::CONDITIONAL, 74,  2, X937Field::ALPHABETIC));
+	$this->addField(new X937FieldUser(13, 76,  4));
+	$this->addField(new X937FieldReserved(14, 80,  1));
+    }
 }
 
 // Cash Letter Header Record - Type 10
@@ -182,7 +182,7 @@ class X937RecordCashLetterHeader  extends X937Record {
 		$this->addField(new X937FieldRoutingNumber(3, 'Destination',                  X937Field::MANDATORY,    5));
 		$this->addField(new X937FieldRoutingNumber(4, 'ECE Instituion',               X937Field::MANDATORY,   14));
 		$this->addField(new X937FieldDate(5, 'Cash Letter Business Date',             X937Field::MANDATORY,   23));
-		$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',             X937Field::MANDATORY,   31));		
+		$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',             X937Field::MANDATORY,   31));
 		$this->addField(new X937FieldTime(7, 'Cash Letter Creation Time',             X937Field::MANDATORY,   39));
 		$this->addField(new X937Field(8,  'Cash Letter Record Type Indicator',        X937Field::MANDATORY,   43,  1, X937Field::ALPHABETIC));
 		$this->addField(new X937Field(9,  'Cash Letter Documentation Type Indicator', X937Field::CONDITIONAL, 44, 18, X937Field::ALPHAMERIC));
