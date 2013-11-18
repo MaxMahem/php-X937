@@ -44,12 +44,6 @@ class X937Record {
      */
     protected $fieldsRef;
 
-    /**
-     * An array of all the possible record types. Built by build record types.
-     * @var array
-     */
-    protected $recordTypes;
-
     const FILE_HEADER             = '01';
     const CASH_LETTER_HEADER      = '10';
     const BUNDLE_HEADER           = '20';
@@ -107,31 +101,33 @@ class X937Record {
     }
 
     /**
-     * Builds record type array.
+     * Returns record type array.
      */
-    private function buildRecordTypes() {
-        $this->recordTypes[] = self::FILE_HEADER;
-        $this->recordTypes[] = self::CASH_LETTER_HEADER;
-        $this->recordTypes[] = self::BUNDLE_HEADER;
-        $this->recordTypes[] = self::CHECK_DETAIL;
-        $this->recordTypes[] = self::CHECK_DETAIL_ADDENDUM_A;
-        $this->recordTypes[] = self::CHECK_DETAIL_ADDENDUM_B;
-        $this->recordTypes[] = self::CHECK_DETAIL_ADDENDUM_C;
-        $this->recordTypes[] = self::RETURN_RECORD;
-        $this->recordTypes[] = self::RETURN_ADDENDUM_A;
-        $this->recordTypes[] = self::RETURN_ADDENDUM_B;
-        $this->recordTypes[] = self::RETURN_ADDENDUM_C;
-        $this->recordTypes[] = self::RETURN_ADDENDUM_D;
-        $this->recordTypes[] = self::ACCOUNT_TOTALS_DETAIL;
-        $this->recordTypes[] = self::NON_HIT_TOTALS_DETAIL;
-        $this->recordTypes[] = self::IMAGE_VIEW_DETAIL;
-        $this->recordTypes[] = self::IMAGE_VIEW_DATA;
-        $this->recordTypes[] = self::IMAGE_VIEW_ANALYSIS;
-        $this->recordTypes[] = self::BUNDLE_CONTROL;
-        $this->recordTypes[] = self::BOX_SUMMARY;
-        $this->recordTypes[] = self::ROUTING_NUMBER_SUMMARY;
-        $this->recordTypes[] = self::CASH_LETTER_CONTROL;
-        $this->recordTypes[] = self::FILE_CONTROL;
+    public static function getRecordTypes() {
+        $recordTypes[] = self::FILE_HEADER;
+        $recordTypes[] = self::CASH_LETTER_HEADER;
+        $recordTypes[] = self::BUNDLE_HEADER;
+        $recordTypes[] = self::CHECK_DETAIL;
+        $recordTypes[] = self::CHECK_DETAIL_ADDENDUM_A;
+        $recordTypes[] = self::CHECK_DETAIL_ADDENDUM_B;
+        $recordTypes[] = self::CHECK_DETAIL_ADDENDUM_C;
+        $recordTypes[] = self::RETURN_RECORD;
+        $recordTypes[] = self::RETURN_ADDENDUM_A;
+        $recordTypes[] = self::RETURN_ADDENDUM_B;
+        $recordTypes[] = self::RETURN_ADDENDUM_C;
+        $recordTypes[] = self::RETURN_ADDENDUM_D;
+        $recordTypes[] = self::ACCOUNT_TOTALS_DETAIL;
+        $recordTypes[] = self::NON_HIT_TOTALS_DETAIL;
+        $recordTypes[] = self::IMAGE_VIEW_DETAIL;
+        $recordTypes[] = self::IMAGE_VIEW_DATA;
+        $recordTypes[] = self::IMAGE_VIEW_ANALYSIS;
+        $recordTypes[] = self::BUNDLE_CONTROL;
+        $recordTypes[] = self::BOX_SUMMARY;
+        $recordTypes[] = self::ROUTING_NUMBER_SUMMARY;
+        $recordTypes[] = self::CASH_LETTER_CONTROL;
+        $recordTypes[] = self::FILE_CONTROL;
+	
+	return $recordTypes;
     }
 
     /**
