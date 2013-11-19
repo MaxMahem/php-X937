@@ -14,7 +14,7 @@ class X937Record {
     protected $recordType;
 
     /**
-     * The raw record string. Generally EBCDIC data.
+     * The raw record string. Generally EBCDIC data, possibly binary or ASCII.
      * @var string
      */
     protected $recordData;
@@ -73,7 +73,7 @@ class X937Record {
      * to parse in the data.
      * @param type $recordTypeASCII the type of the record, in ASCII. Should be
      * one of the class constants.
-     * @param type $recordData the raw data for the record. In EBCDIC/Binary
+     * @param type $recordData the raw data for the record. EBCDIC/Binary/ASCII
      * @throws InvalidArgumentException If given bad input.
      */
     public function __construct($recordTypeASCII, $recordData) {
@@ -100,7 +100,8 @@ class X937Record {
     }
 
     /**
-     * Returns record type array.
+     * Returns an array of valid record types.
+     * @return array A list of valid record types.
      */
     public static function getRecordTypes() {
         $recordTypes[] = self::FILE_HEADER;

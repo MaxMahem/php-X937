@@ -8,6 +8,7 @@
 interface ValidatorInterface {
     public function validate($value);
     public function error();
+    public function permitedValues();
 }
 
 class Validator implements ValidatorInterface {
@@ -36,6 +37,15 @@ class Validator implements ValidatorInterface {
     public function error() {
 	return $this->error();
     }
+    
+    public function permitedValues() {
+	foreach($this->validators as $validator) {
+	    $permitedValues[] = $validator->permitedValues();
+	}
+	
+	$permitedValue = implode(PHP_EOL, $permitedValues);
+	return $permitedValue;
+    }
 }
 
 class FieldValidatorUsageManditory implements ValidatorInterface {
@@ -48,7 +58,11 @@ class FieldValidatorUsageManditory implements ValidatorInterface {
     }
     
     public function error() {
-	return "Field is required.";
+	return "Field usage is mandatory.";
+    }
+    
+    public function permitedValues() {
+	return $this->error();
     }
 }
 
@@ -59,7 +73,11 @@ class FieldValidatorTypeNumeric implements ValidatorInterface {
     
     public function error() {
 	return "Field must be numeric.";
-    }        
+    }
+    
+    public function permitedValues() {
+	return $this->error();
+    }
 }
 
 class FieldValidatorTypeAlphabetic implements ValidatorInterface {
@@ -69,6 +87,10 @@ class FieldValidatorTypeAlphabetic implements ValidatorInterface {
     
     public function error() {
 	return "Field must be Alphabetic";
+    }
+    
+    public function permitedValues() {
+	return $this->error();
     }
 }
 
@@ -80,6 +102,10 @@ class FieldValidatorTypeAlphameric implements ValidatorInterface {
     public function error() {
 	return "Field must be alphanumeric";
     }
+    
+    public function permitedValues() {
+	return $this->error();
+    }
 }
 
 class FieldValidatorTypeBlank implements ValidatorInterface {
@@ -90,6 +116,10 @@ class FieldValidatorTypeBlank implements ValidatorInterface {
     
     public function error() {
 	return "Field must be blank";
+    }
+    
+    public function permitedValues() {
+	return $this->error();
     }
 }
 
@@ -115,6 +145,10 @@ class FieldValidatorSize implements ValidatorInterface {
     public function error() {
 	return "Field must be $this->fieldLength long.";
     }
+    
+    public function permitedValues() {
+	return $this->error();
+    }
 }
 
 class FieldValidatorValueEnumerated implements ValidatorInterface {
@@ -136,5 +170,9 @@ class FieldValidatorValueEnumerated implements ValidatorInterface {
     
     public function error() {
 	return "Field is not a permited value.";
+    }
+    
+    public function permitedValues() {	
+	return 'Permited values:' . ' ' . implode(', ', $this->legalValues);
     }
 }
