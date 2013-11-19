@@ -1,6 +1,6 @@
 <?php
 
-require_once 'FieldValidator.php';
+require_once 'X937FieldValidator.php';
 /**
  * Description of X937Field
  *
@@ -16,7 +16,7 @@ class X937Field {
     
     /**
      * Field Validator used to validate the field.
-     * @var FieldValidator
+     * @var Validator
      */
     protected $validator;
 	
@@ -53,7 +53,7 @@ class X937Field {
     
     protected function addValidators() {
 	// initialize validator
-	$this->validator = new FieldValidator();
+	$this->validator = new Validator();
 	
 	// add validator based on usage.
 	if ($this->usage === X937Field::MANDATORY) {
@@ -91,8 +91,10 @@ class X937Field {
     
     protected function addClassValidators() {}
 
-    // validate?
-    public static function validate() {}
+    // validate
+    public function validate() {
+	return $this->validator->validate($this->value);
+    }
 
     // getters
     public function getFieldName()   { return $this->fieldName; }
@@ -123,133 +125,72 @@ class X937FieldRecordType extends X937Field {
 
 class X937FieldReserved extends X937Field {
     public function __construct($fieldNumber, $position, $size) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = 'Reserved';
-	$this->usage       = X937Field::MANDATORY;
-	$this->position    = $position;
-	$this->size        = $size;
-	$this->type        = X937Field::BLANK;
+	parent::__construct($fieldNumber, 'Reserved', X937Field::MANDATORY, $position, $size, X937Field::BLANK);
     }
 }
 
 class X937FieldUser extends X937Field {
     public function __construct($fieldNumber, $position, $size) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = 'User Field';
-	$this->usage       = X937Field::CONDITIONAL;
-	$this->position    = $position;
-	$this->size        = $size;
-	$this->type        = X937Field::ALPHAMERICSPECIAL;
+	parent::__construct($fieldNumber, 'User Field', X937Field::CONDITIONAL, $position, $size, X937Field::ALPHAMERICSPECIAL);
     }
 }
 
 class X937FieldDate extends X937Field {
     public function __construct($fieldNumber, $fieldName, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $fieldName;
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 8;
-	$this->type        = X937Field::NUMERIC;
+	parent::__construct($fieldNumber, $fieldName, $usage, $position, 8, X937Field::NUMERIC);
     }	
 }
 
 class X937FieldTime extends X937Field {
     public function __construct($fieldNumber, $fieldName, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $fieldName;
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 4;
-	$this->type        = X937Field::NUMERIC;
+	parent::__construct($fieldNumber, $fieldName, $usage, $position, 4, X937Field::NUMERIC);
     }	
 }
 
 class X937FieldInstitutionName extends X937Field {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $fieldNamePrefix . ' ' . 'Name';
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 18;
-	$this->type        = X937Field::ALPHABETIC;
-    }	
+	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Name', $usage, $position, 18, X937Field::ALPHABETIC);
+    }
 }
 
 class X937FieldContactName extends X937Field {
     public function __construct($fieldNumber, $fieldName, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $fieldName;
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 14;
-	$this->type        = X937Field::ALPHAMERICSPECIAL;
+	parent::__construct($fieldNumber, $fieldName, $usage, $position, 14, X937Field::ALPHAMERICSPECIAL);
     }	
 }
 
 class X937FieldPhoneNumber extends X937Field {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $fieldNamePrefix . ' ' . 'Phone Number';
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 10;
-	$this->type        = X937Field::NUMERIC;
+	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Phone Number', $usage, $position, 10, X937Field::NUMERIC);
     }	
 }
 
 class X937FieldRoutingNumber extends X937Field {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $fieldNamePrefix . ' ' . 'Routing Number';
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 9;
-	$this->type        = X937Field::NUMERIC;
+	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Routing Number', $usage, $position, 9, X937Field::NUMERIC);
     }	
 }
 
 class X937FieldDepositAccountNumber extends X937Field {
     public function __construct($fieldNumber, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = 'Deposit Account Number at BOFD';
-	$this->usage       = X937Field::CONDITIONAL;
-	$this->position    = $position;
-	$this->size        = 18;
-	$this->type        = X937Field::ALPHAMERICSPECIAL;
+	parent::__construct($fieldNumber, 'Deposit Account Number at BOFD', X937Field::CONDITIONAL, $position, 18, X937Field::ALPHAMERICSPECIAL);
     }	
 }
 
 class X937FieldItemAmount extends X937Field {
     public function __construct($fieldNumber, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = 'Item Amount';
-	$this->usage       = X937Field::MANDATORY;
-	$this->position    = $position;
-	$this->size        = 10;
-	$this->type        = X937Field::NUMERIC;
+	parent::__construct($fieldNumber, 'Item Amount', X937Field::MANDATORY, $position, 10, X937Field::NUMERIC);
     }	
 }
 
 class X937FieldItemSequenceNumber extends X937Field {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $fieldNamePrefix . ' ' . 'Item Sequence Number';
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 15;
-	$this->type        = X937Field::NUMERICBLANK;
+	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Item Sequence Number', $usage, $position, 15, X937Field::NUMERICBLANK);
     }	
 }
 
 class X937FieldReturnReason extends X937Field {
     public function __construct($fieldNumber, $usage, $position) {
-	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = 'Return Reason';
-	$this->usage       = $usage;
-	$this->position    = $position;
-	$this->size        = 1;
-	$this->type        = X937Field::ALPHAMERIC;
-    }	
+	parent::__construct($fieldNumber, 'Return Reason', $usage, $position, 1, X937Field::ALPHAMERIC);
+    }
 }
-?>

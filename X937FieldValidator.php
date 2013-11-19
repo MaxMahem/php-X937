@@ -5,23 +5,25 @@
  *
  * @author astanley
  */
-interface FieldValidatorInterface {
+interface ValidatorInterface {
     public function validate($value);
     public function error();
 }
 
-class FieldValidator implements FieldValidatorInterface {
+class Validator implements ValidatorInterface {
     /* array of validator objects */
     private $validators;
     private $error;
     
-    public function addValidator(FieldValidatorInterface $validator) {
+    public function addValidator(ValidatorInterface $validator) {
 	$this->validators[] = $validator;
 	return $this;
     }
 
     public function validate($value) {
 	foreach($this->validators as $validator) {
+	    // print_r($validator);
+	    
 	    if ($validator->validate($value) === FALSE) {
 		$this->error = $validator->error();
 		return FALSE;
@@ -36,7 +38,7 @@ class FieldValidator implements FieldValidatorInterface {
     }
 }
 
-class FieldValidatorUsageManditory implements FieldValidatorInterface {
+class FieldValidatorUsageManditory implements ValidatorInterface {
     public function validate($value) {
 	if (is_null($value) === TRUE) {
 	    return FALSE;
@@ -50,7 +52,7 @@ class FieldValidatorUsageManditory implements FieldValidatorInterface {
     }
 }
 
-class FieldValidatorTypeNumeric implements FieldValidatorInterface {
+class FieldValidatorTypeNumeric implements ValidatorInterface {
     public function validate($value) { 
 	return is_numeric($value);
     }
@@ -60,7 +62,7 @@ class FieldValidatorTypeNumeric implements FieldValidatorInterface {
     }        
 }
 
-class FieldValidatorTypeAlphabetic implements FieldValidatorInterface {
+class FieldValidatorTypeAlphabetic implements ValidatorInterface {
     public function validate($value) {
 	return ctype_alpha($value);
     }
@@ -70,7 +72,7 @@ class FieldValidatorTypeAlphabetic implements FieldValidatorInterface {
     }
 }
 
-class FieldValidatorTypeAlphameric implements FieldValidatorInterface {
+class FieldValidatorTypeAlphameric implements ValidatorInterface {
     public function validate($value) {
 	return ctype_alnum($value);
     }
@@ -80,7 +82,7 @@ class FieldValidatorTypeAlphameric implements FieldValidatorInterface {
     }
 }
 
-class FieldValidatorTypeBlank implements FieldValidatorInterface {
+class FieldValidatorTypeBlank implements ValidatorInterface {
     public function validate($value) {
 	$value = trim($value);
 	return empty($value);
@@ -95,7 +97,7 @@ class FieldValidatorTypeBlank implements FieldValidatorInterface {
  * @todo add rest of Validator Type Checks
  */
 
-class FieldValidatorSize implements FieldValidatorInterface {
+class FieldValidatorSize implements ValidatorInterface {
     private $fieldLength;
     
     public function __construct($fieldLength) {
@@ -115,7 +117,7 @@ class FieldValidatorSize implements FieldValidatorInterface {
     }
 }
 
-class FieldValidatorValueEnumerated implements FieldValidatorInterface {
+class FieldValidatorValueEnumerated implements ValidatorInterface {
     private $legalValues;
     
     public function __construct(array $legalValues) {
@@ -136,5 +138,3 @@ class FieldValidatorValueEnumerated implements FieldValidatorInterface {
 	return "Field is not a permited value.";
     }
 }
-
-?>
