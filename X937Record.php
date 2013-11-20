@@ -103,7 +103,7 @@ class X937Record {
      * Returns an array of valid record types.
      * @return array A list of valid record types.
      */
-    public static function getRecordTypes() {
+    public static function defineRecordTypes() {
         $recordTypes[] = self::FILE_HEADER;
         $recordTypes[] = self::CASH_LETTER_HEADER;
         $recordTypes[] = self::BUNDLE_HEADER;
@@ -169,8 +169,8 @@ class X937RecordFileHeader  extends X937Record {
     protected function addFields() {
 	$this->fields = new SplFixedArray(14);
 	$this->addField(new X937FieldRecordType(X937Record::FILE_HEADER));
-	$this->addField(new X937Field(2,  'Specification Level',                  X937Field::MANDATORY,    3,  2, X937Field::NUMERIC));
-	$this->addField(new X937Field(3,  'Test File Indicator',                  X937Field::MANDATORY,    5,  1, X937Field::ALPHABETIC));
+	$this->addField(new X937FieldSpecificationLevel());
+	$this->addField(new X937FieldTestFileIndicator());
 	$this->addField(new X937FieldRoutingNumber(4, 'Immediate Destination',    X937Field::MANDATORY,    6));
 	$this->addField(new X937FieldRoutingNumber(5, 'Immediate Origin',         X937Field::MANDATORY,   15));
 	$this->addField(new X937FieldDate(6, 'File Creation Date',                X937Field::MANDATORY,   24));

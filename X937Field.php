@@ -110,6 +110,35 @@ class X937Field {
     }
 }
 
+abstract class X937FieldWithDefinedTypes extends X937Field {
+    public abstract static function defineValues();
+    
+    protected function addClassValidators() {
+	$legalValues          = array_keys(self::defineValues());
+	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
+	$this->validator->addValidator($legalValuesValidator);
+    }
+    
+    public function translateThisValue() {
+	return self::translate($this->value);
+    }
+    
+    public static function translate($value) {
+	$legalValues = self::defineValues();
+	
+	if (array_key_exists($value, $legalValues)) {
+	    $translatedValue = $legalValues[$legalValues];
+	    if (gettype($translatedValue) !== 'string') {
+		throw new LogicException('Bad data type in X937Field Value table. All values should be strings.');
+	    }
+	} else {
+	    $translatedValue = 'Undefined';
+	}
+	
+	return $translatedValue;
+    }
+}
+
 class X937FieldRecordType extends X937Field {
     public function __construct($value) {
 	parent::__construct(1, 'Record Type', X937Field::MANDATORY, 1, 2, X937Field::NUMERIC);
@@ -118,8 +147,51 @@ class X937FieldRecordType extends X937Field {
     }
     
     protected function addClassValidators() {	
-	$legalRecordTypes = X937Record::getRecordTypes();
+	$legalRecordTypes = X937Record::defineRecordTypes();
 	$this->validator->addValidator(new FieldValidatorValueEnumerated($legalRecordTypes));
+    }
+}
+
+class X937FieldSpecificationLevel extends X937FieldWithDefinedTypes {
+    const X9371994 = 01;
+    const X9372001 = 02;
+    const X9372003 = 03;
+    
+    public function __construct() {
+	parent::__construct(1, 'Specification Level', X937Field::MANDATORY,    3,  2, X937Field::NUMERIC);
+    }
+    
+    public function getSpecificatonLevelName() {
+	$X937FieldSpecificationLevels = self::defineValues();
+	return $X937FieldSpecificationLevels[$this->value];
+    }
+    
+    public static function defineValues() {
+	$X937FieldSpecificationLevels = array(
+	    X937FieldSpecificationLevel::X9371994 => 'X9.37-1994',
+	    X937FieldSpecificationLevel::X9372001 => 'X9.37-2001',
+	    X937FieldSpecificationLevel::X9372003 => 'X9.37-2003'
+	);
+	
+	return $X937FieldSpecificationLevels;
+    }
+}
+
+class X937FieldTestFileIndicator extends X937FieldWithDefinedTypes {
+    const PRODUCTION_FILE = 'P';
+    const TEST_FILE       = 'T';
+    
+    public function __construct() {
+	parent::__construct(3, 'Test File Indicator', X937Field::MANDATORY, 5, 1, X937Field::ALPHABETIC);
+    }
+    
+    public static function defineValues() {
+	$X937FieldTestFileIndicators = array(
+	    X937FieldTestFileIndicator::PRODUCTION_FILE => 'Production File',
+	    X937FieldTestFileIndicator::TEST_FILE       => 'Test File',
+	);
+	
+	return $X937FieldTestFileIndicators;
     }
 }
 
