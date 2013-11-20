@@ -7,8 +7,19 @@
  */
 interface ValidatorInterface {
     public function validate($value);
-    public function error();
-    public function permitedValues();
+    public function getMessages();
+}
+
+abstract class AbstractValidator implements ValidatorInterface {
+    const ERROR = 'ABSTRACT ERROR.';
+    
+    abstract public function validate($value);
+    public static function getMessages() {
+	// a little cleverness here. self::ERROR would always return 'ABSTRACT ERROR'
+	// this classes constant. static::ERROR tatic will return the child classes
+	// overrident constant.
+	return static::ERROR;
+    }
 }
 
 class Validator implements ValidatorInterface {
@@ -26,7 +37,7 @@ class Validator implements ValidatorInterface {
 	    // print_r($validator);
 	    
 	    if ($validator->validate($value) === FALSE) {
-		$this->error = $validator->error();
+		$this->error = $validator->getMessages();
 		return FALSE;
 	    }
 	}
@@ -34,8 +45,8 @@ class Validator implements ValidatorInterface {
 	return TRUE;
     }
     
-    public function error() {
-	return $this->error();
+    public function getMessages() {
+	return $this->getMessages();
     }
     
     public function permitedValues() {
@@ -48,7 +59,9 @@ class Validator implements ValidatorInterface {
     }
 }
 
-class FieldValidatorUsageManditory implements ValidatorInterface {
+class FieldValidatorUsageManditory extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Field is mandatory.';
+    
     public function validate($value) {
 	if (is_null($value) === TRUE) {
 	    return FALSE;
@@ -56,70 +69,38 @@ class FieldValidatorUsageManditory implements ValidatorInterface {
 	
 	return TRUE;
     }
-    
-    public function error() {
-	return "Field usage is mandatory.";
-    }
-    
-    public function permitedValues() {
-	return $this->error();
-    }
 }
 
-class FieldValidatorTypeNumeric implements ValidatorInterface {
+class FieldValidatorTypeNumeric extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Field must be numeric';
+    
     public function validate($value) { 
 	return is_numeric($value);
     }
-    
-    public function error() {
-	return "Field must be numeric.";
-    }
-    
-    public function permitedValues() {
-	return $this->error();
-    }
 }
 
-class FieldValidatorTypeAlphabetic implements ValidatorInterface {
+class FieldValidatorTypeAlphabetic extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Field must be Alphabetic';
+    
     public function validate($value) {
 	return ctype_alpha($value);
     }
-    
-    public function error() {
-	return "Field must be Alphabetic";
-    }
-    
-    public function permitedValues() {
-	return $this->error();
-    }
 }
 
-class FieldValidatorTypeAlphameric implements ValidatorInterface {
+class FieldValidatorTypeAlphameric extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Field must be alphanumeric';
+    
     public function validate($value) {
 	return ctype_alnum($value);
     }
-    
-    public function error() {
-	return "Field must be alphanumeric";
-    }
-    
-    public function permitedValues() {
-	return $this->error();
-    }
 }
 
-class FieldValidatorTypeBlank implements ValidatorInterface {
+class FieldValidatorTypeBlank extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Field must be blank';
+    
     public function validate($value) {
 	$value = trim($value);
 	return empty($value);
-    }
-    
-    public function error() {
-	return "Field must be blank";
-    }
-    
-    public function permitedValues() {
-	return $this->error();
     }
 }
 
@@ -142,12 +123,8 @@ class FieldValidatorSize implements ValidatorInterface {
 	return strlen($value) === $this->fieldLength;
     }
     
-    public function error() {
+    public function getMessages() {
 	return "Field must be $this->fieldLength long.";
-    }
-    
-    public function permitedValues() {
-	return $this->error();
     }
 }
 
@@ -168,11 +145,30 @@ class FieldValidatorValueEnumerated implements ValidatorInterface {
     
     public function getLegalValues() { return $this->legalValues; }
     
-    public function error() {
+    public function getMessages() {
 	return "Field is not a permited value.";
     }
     
     public function permitedValues() {	
 	return 'Permited values:' . ' ' . implode(', ', $this->legalValues);
+    }
+}
+
+class FieldValidatorRoutingNumber extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Field must be a valid ABA routing number';
+
+    public function validate($routingNumber) {
+	// sum the 9 digit routing number via the routing number validation scheme.
+	// Check details here: http://en.wikipedia.org/wiki/Routing_transit_number
+	
+	$validationSum  = 3 * ($routingNumber[0] + $routingNumber[3] + $routingNumber[6]);
+	$validationSum += 7 * ($routingNumber[1] + $routingNumber[4] + $routingNumber[7]);
+	$validationSum += 1 * ($routingNumber[2] + $routingNumber[5] + $routingNumber[8]);
+	
+	if (($validationSum % 10) === 0) {
+	    return TRUE;
+	} else {
+	    return FALSE;
+	}
     }
 }

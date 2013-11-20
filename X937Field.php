@@ -240,7 +240,11 @@ class X937FieldPhoneNumber extends X937Field {
 class X937FieldRoutingNumber extends X937Field {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
 	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Routing Number', $usage, $position, 9, X937Field::NUMERIC);
-    }	
+    }
+    
+    protected function addClassValidators() {
+	$this->validator->addValidator(new FieldValidatorRoutingNumber());
+    }
 }
 
 class X937FieldDepositAccountNumber extends X937Field {
