@@ -200,7 +200,7 @@ class X937RecordCashLetterHeader  extends X937Record {
 	$this->addField(new X937FieldDate(5, 'Cash Letter Business Date',             X937Field::MANDATORY,   23));
 	$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',             X937Field::MANDATORY,   31));
 	$this->addField(new X937FieldTime(7, 'Cash Letter Creation Time',             X937Field::MANDATORY,   39));
-	$this->addField(new X937FieldCashLetterRecordType());
+	$this->addField(new X937FieldCashLetterType());
 	$this->addField(new X937FieldDocType(X937FieldRecordType::CASH_LETTER_HEADER));
 	$this->addField(new X937Field(10, 'Cash Letter ID',                           X937Field::CONDITIONAL, 45,  8, X937Field::ALPHAMERIC));
 	$this->addField(new X937FieldContactName(11, 'Originator Contact Name',       X937Field::CONDITIONAL, 53));

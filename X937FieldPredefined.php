@@ -185,7 +185,7 @@ class X937FieldCollectionType extends X937FieldPredefined {
     }
 }
 
-class X937FieldCashLetterRecordType extends X937FieldPredefined {
+class X937FieldCashLetterType extends X937FieldPredefined {
     const NO_ELECTRONIC_OR_IMAGE_RECORDS                       = 'N';
     const ELECTRONIC_RECORDS_NO_IMAGES                         = 'E';
     const ELECTRONIC_AND_IMAGE_RECORDS                         = 'I';
@@ -200,7 +200,7 @@ class X937FieldCashLetterRecordType extends X937FieldPredefined {
 	    self::NO_ELECTRONIC_OR_IMAGE_RECORDS                       => 'No electronic check records or image records',
 	    self::ELECTRONIC_RECORDS_NO_IMAGES                         => 'Electronic check records with no images',
 	    self::ELECTRONIC_AND_IMAGE_RECORDS                         => 'Electronic check records and image records',
-	    self::ELECTRONIC_AND_IMAGE_RECORDS_PREVIOUS_CORRESPONDANCE => 'Electronic check records and iamge records that corespond with previous cash letter',
+	    self::ELECTRONIC_AND_IMAGE_RECORDS_PREVIOUS_CORRESPONDANCE => 'Electronic check records and image records that corespond with previous cash letter',
 	);
 	
 	return $X937FieldCashLetterRecordTypeIndicators;
