@@ -201,7 +201,7 @@ class X937RecordCashLetterHeader  extends X937Record {
 	$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',             X937Field::MANDATORY,   31));
 	$this->addField(new X937FieldTime(7, 'Cash Letter Creation Time',             X937Field::MANDATORY,   39));
 	$this->addField(new X937FieldCashLetterRecordType());
-	$this->addField(new X937FieldCashLetterDocumentationType());
+	$this->addField(new X937FieldDocType(X937FieldRecordType::CASH_LETTER_HEADER));
 	$this->addField(new X937Field(10, 'Cash Letter ID',                           X937Field::CONDITIONAL, 45,  8, X937Field::ALPHAMERIC));
 	$this->addField(new X937FieldContactName(11, 'Originator Contact Name',       X937Field::CONDITIONAL, 53));
 	$this->addField(new X937FieldPhoneNumber(12, 'Originator Contact',            X937Field::CONDITIONAL, 67));
@@ -242,14 +242,14 @@ class X937RecordCheckDetail extends X937Record {
 	$this->addField(new X937Field( 6, 'On-Us',                                 X937Field::MANDATORY,   28, 20, X937Field::NUMERICBLANKSPECIALMICRONUS));
 	$this->addField(new X937FieldItemAmount(7, 48));
 	$this->addField(new X937FieldItemSequenceNumber(8, 'ECE Institution',      X937Field::MANDATORY, 58));
-	$this->addField(new X937Field( 9, 'Documentation Type Indicator',          X937Field::CONDITIONAL, 73,  1, X937Field::ALPHAMERIC));
+	$this->addField(new X937FieldDocType(X937FieldRecordType::CHECK_DETAIL));
 	$this->addField(new X937Field(10, 'Return Acceptance Indicator',           X937Field::CONDITIONAL, 74,  1, X937Field::ALPHAMERIC));
 	$this->addField(new X937Field(11, 'MICR Valid Indicator',                  X937Field::CONDITIONAL, 75,  1, X937Field::NUMERIC));
 	$this->addField(new X937Field(12, 'BOFD Indicator',                        X937Field::MANDATORY,   76,  1, X937Field::ALPHABETIC));
 	$this->addField(new X937Field(13, 'Check Detail Record Addendum Count',    X937Field::MANDATORY,   77,  2, X937Field::NUMERIC));
 	$this->addField(new X937Field(14, 'Correction Indicator',                  X937Field::CONDITIONAL, 79,  1, X937Field::NUMERIC));
 	$this->addField(new X937Field(14, 'Archive Type Indicator',                X937Field::CONDITIONAL, 80,  1, X937Field::ALPHAMERIC));
-}
+    }
 }
 
 // Check Detail Record - Type 26
@@ -301,7 +301,7 @@ class X937RecordReturnRecord extends X937Record {
 	$this->addField(new X937FieldItemAmount(5, 32));
 	$this->addField(new X937FieldReturnReason(6, X937Field::MANDATORY, 42));
 	$this->addField(new X937Field( 7, 'Return Reason Addendum Count',          X937Field::MANDATORY,   43,  2, X937Field::NUMERIC));
-	$this->addField(new X937Field( 8, 'Return Documentation Type Indicator',   X937Field::CONDITIONAL, 45,  1, X937Field::ALPHAMERIC));
+	$this->addField(new X937FieldDocType(X937FieldRecordType::RETURN_RECORD));
 	$this->addField(new X937FieldDate(9, 'Forward Bundle Date',                X937Field::CONDITIONAL, 46));
 	$this->addField(new X937FieldItemSequenceNumber(10, 'ECE Institution',     X937Field::CONDITIONAL, 54));
 	$this->addField(new X937Field(11, 'External Processing Code',              X937Field::CONDITIONAL, 69,  1, X937Field::ALPHAMERICSPECIAL));

@@ -207,7 +207,7 @@ class X937FieldCashLetterRecordType extends X937FieldPredefined {
     }
 }
 
-class X937FieldCashLetterDocumentationType extends X937FieldPredefined {
+class X937FieldDocType extends X937FieldPredefined {
     const NO_IMAGE_PAPER_SEPERATE                        = 'A';
     const NO_IMAGE_PAPER_SEPERATE_IMAGE_ON_REQUEST       = 'B';
     const IMAGE_SEPERATE_NO_PAPER                        = 'C';
@@ -223,12 +223,51 @@ class X937FieldCashLetterDocumentationType extends X937FieldPredefined {
     const NO_IMAGE_NO_PAPER_ELECTRONIC_CHECK_SEPERATE    = 'M';
     const NOT_SAME_TYPE                                  = 'Z';
     
-    public function __construct() {
-	parent::__construct(8, 'Cash Letter Record Type Indicator', X937Field::MANDATORY, 43, 1, X937Field::ALPHABETIC);
+    /**
+     * The record type of this field, one of X937Field::CASH_LETTER_HEADER,
+     * X937Field::CHECK_DETAIL, or X937Field::RETURN_RECORD
+     * @var string 
+     */
+    private $recordType;
+    
+    /**
+     * Creates new X937FieldDocType
+     * @param  string $recordType The record type of this field: X937Field::CASH_LETTER_HEADER,
+     * X937Field::CHECK_DETAIL, or X937Field::RETURN_RECORD
+     * @throws InvalidArgumentException if Given a bad record type
+     */
+    public function __construct($recordType) {
+	$this->recordType = $recordType;
+	
+	switch ($recordType) {
+	    case X937FieldRecordType::CASH_LETTER_HEADER:
+		$fieldNumber = 8;
+		$fieldName   = 'Cash Letter Documentation Type Indicator';
+		$position    = 44;
+		$usage       = X937Field::MANDATORY;
+		break;
+	    case X937FieldRecordType::CHECK_DETAIL:
+		$fieldNumber = 9;
+		$fieldName   = 'Documentation Type Indicator';
+		$position    = 73;
+		$usage       = X937Field::CONDITIONAL;
+		break;
+	    case X937FieldRecordType::RETURN_RECORD:
+		$fieldNumber = 8;
+		$fieldName   = 'Return Documentation Type Indicator';
+		$position    = 45;
+		$usage       = X937Field::CONDITIONAL;
+		break;
+	    default:
+		throw new InvalidArgumentException('Bad record type.');
+		break;
+	}
+	
+	parent::__construct($fieldNumber, $fieldName, $usage, $position, 1, X937Field::ALPHAMERIC);
     }
 
     public static function defineValues() {
-	$X937FieldCashLetterDocumentationTypeIndicators = array(
+	$legalValues = array(
 	    self::NO_IMAGE_PAPER_SEPERATE                        => 'No image provided, paper provided separately',
 	    self::NO_IMAGE_PAPER_SEPERATE_IMAGE_ON_REQUEST       => 'No image provided, paper provided separetly, image upon request',
 	    self::IMAGE_SEPERATE_NO_PAPER                        => 'Image provided separetly, no paper provided',
@@ -245,6 +284,30 @@ class X937FieldCashLetterDocumentationType extends X937FieldPredefined {
 	    self::NOT_SAME_TYPE                                  => 'Not Same Type',
 	);
 	
-	return $X937FieldCashLetterDocumentationTypeIndicators;
+	return $legalValues;
     }
+    
+    /**
+     * This is overridden because the valid values differs depending upon the record type.
+     */
+    protected function addClassValidators() {
+	$legalValues          = array_keys(self::defineValues());
+	switch ($this->recordType) {
+	    // Check Detail Records can use the default.
+	    case X937FieldRecordType::CASH_LETTER_HEADER:
+		break;
+	    
+	    // Check Detail Records and Return Records do not permit option Z.
+	    case X937FieldRecordType::CHECK_DETAIL:
+	    case X937FieldRecordType::RETURN_RECORD:
+		unset($legalValues[self::NOT_SAME_TYPE]);
+		break;
+		
+	    // we would normaly error check here, but that should be handled in the constructor.
+	}
+	
+	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
+	$this->validator->addValidator($legalValuesValidator);
+    }
+    
 }
