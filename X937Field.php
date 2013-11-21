@@ -110,19 +110,6 @@ class X937Field {
     }
 }
 
-class X937FieldRecordType extends X937Field {
-    public function __construct($value) {
-	parent::__construct(1, 'Record Type', X937Field::MANDATORY, 1, 2, X937Field::NUMERIC);
-	
-	$this->value = $value;
-    }
-    
-    protected function addClassValidators() {	
-	$legalRecordTypes = X937Record::defineRecordTypes();
-	$this->validator->addValidator(new ValidatorValueEnumerated($legalRecordTypes));
-    }
-}
-
 class X937FieldReserved extends X937Field {
     public function __construct($fieldNumber, $position, $size) {
 	parent::__construct($fieldNumber, 'Reserved', X937Field::MANDATORY, $position, $size, X937Field::BLANK);
@@ -132,6 +119,10 @@ class X937FieldReserved extends X937Field {
 class X937FieldUser extends X937Field {
     public function __construct($fieldNumber, $position, $size) {
 	parent::__construct($fieldNumber, 'User Field', X937Field::CONDITIONAL, $position, $size, X937Field::ALPHAMERICSPECIAL);
+    }
+    
+    protected function addClassValidators() {
+	$this->validator->addValidator(new ValidatorDate('Ymd'));
     }
 }
 

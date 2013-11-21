@@ -172,3 +172,27 @@ class ValidatorRoutingNumber extends AbstractValidator implements ValidatorInter
 	}
     }
 }
+
+class ValidatorDate extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Must be a valid date';
+    
+    /**
+     * Date format matching http://www.php.net/manual/en/datetime.formats.date.php
+     * @var string 
+     */
+    private $dateFormat;
+    
+    public function __construct($dateFormat = 'Ymd') {
+	$this->dateFormat = $dateFormat;
+    }
+    
+    public function validate($value) {
+	$date  = DateTime::createFromFormat($this->dateFormat, $value);
+
+	$year  = $date->format('Y');
+	$month = $date->format('m');
+	$day   = $date->format('d');
+	
+	return checkdate($month, $day, $year);
+    }
+}
