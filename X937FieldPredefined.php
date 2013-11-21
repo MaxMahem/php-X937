@@ -97,16 +97,18 @@ class X937FieldSpecificationLevel extends X937FieldPredefined {
     const X9371994 = 01;
     const X9372001 = 02;
     const X9372003 = 03;
+    const X9100180 = 20;
     
     public function __construct() {
-	parent::__construct(1, 'Specification Level', X937Field::MANDATORY,    3,  2, X937Field::NUMERIC);
+	parent::__construct(1, 'Specification Level', X937Field::MANDATORY, 3, 2, X937Field::NUMERIC);
     }
     
     public static function defineValues() {
 	$X937FieldSpecificationLevels = array(
 	    self::X9371994 => 'X9.37-1994',
 	    self::X9372001 => 'X9.37-2001',
-	    self::X9372003 => 'X9.37-2003'
+	    self::X9372003 => 'X9.37-2003',
+	    self::X9100180 => 'X9.100-180',
 	);
 	
 	return $X937FieldSpecificationLevels;
