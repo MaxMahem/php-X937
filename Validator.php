@@ -59,7 +59,7 @@ class Validator implements ValidatorInterface {
     }
 }
 
-class FieldValidatorUsageManditory extends AbstractValidator implements ValidatorInterface {
+class ValidatorUsageManditory extends AbstractValidator implements ValidatorInterface {
     const ERROR = 'Field is mandatory.';
     
     public function validate($value) {
@@ -71,7 +71,7 @@ class FieldValidatorUsageManditory extends AbstractValidator implements Validato
     }
 }
 
-class FieldValidatorTypeNumeric extends AbstractValidator implements ValidatorInterface {
+class ValidatorTypeNumeric extends AbstractValidator implements ValidatorInterface {
     const ERROR = 'Field must be numeric';
     
     public function validate($value) { 
@@ -79,7 +79,7 @@ class FieldValidatorTypeNumeric extends AbstractValidator implements ValidatorIn
     }
 }
 
-class FieldValidatorTypeAlphabetic extends AbstractValidator implements ValidatorInterface {
+class ValidatorTypeAlphabetic extends AbstractValidator implements ValidatorInterface {
     const ERROR = 'Field must be Alphabetic';
     
     public function validate($value) {
@@ -87,7 +87,7 @@ class FieldValidatorTypeAlphabetic extends AbstractValidator implements Validato
     }
 }
 
-class FieldValidatorTypeAlphameric extends AbstractValidator implements ValidatorInterface {
+class ValidatorTypeAlphameric extends AbstractValidator implements ValidatorInterface {
     const ERROR = 'Field must be alphanumeric';
     
     public function validate($value) {
@@ -95,8 +95,8 @@ class FieldValidatorTypeAlphameric extends AbstractValidator implements Validato
     }
 }
 
-class FieldValidatorTypeBlank extends AbstractValidator implements ValidatorInterface {
-    const ERROR = 'Field must be blank';
+class ValidatorTypeBlank extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Must be blank';
     
     public function validate($value) {
 	$value = trim($value);
@@ -108,7 +108,7 @@ class FieldValidatorTypeBlank extends AbstractValidator implements ValidatorInte
  * @todo add rest of Validator Type Checks
  */
 
-class FieldValidatorSize implements ValidatorInterface {
+class ValidatorSize implements ValidatorInterface {
     private $fieldLength;
     
     public function __construct($fieldLength) {
@@ -128,7 +128,7 @@ class FieldValidatorSize implements ValidatorInterface {
     }
 }
 
-class FieldValidatorValueEnumerated implements ValidatorInterface {
+class ValidatorValueEnumerated implements ValidatorInterface {
     private $legalValues;
     
     public function __construct(array $legalValues) {
@@ -154,8 +154,8 @@ class FieldValidatorValueEnumerated implements ValidatorInterface {
     }
 }
 
-class FieldValidatorRoutingNumber extends AbstractValidator implements ValidatorInterface {
-    const ERROR = 'Field must be a valid ABA routing number';
+class ValidatorRoutingNumber extends AbstractValidator implements ValidatorInterface {
+    const ERROR = 'Must be a valid ABA routing number';
 
     public function validate($routingNumber) {
 	// sum the 9 digit routing number via the routing number validation scheme.

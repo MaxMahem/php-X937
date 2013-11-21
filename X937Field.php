@@ -1,6 +1,6 @@
 <?php
 
-require_once 'X937FieldValidator.php';
+require_once 'Validator.php';
 /**
  * Description of X937Field
  *
@@ -57,28 +57,28 @@ class X937Field {
 	
 	// add validator based on usage.
 	if ($this->usage === X937Field::MANDATORY) {
-	    $this->validator->addValidator(new FieldValidatorUsageManditory());
+	    $this->validator->addValidator(new ValidatorUsageManditory());
 	}
 	
 	// add validator based on size.
-	$this->validator->addValidator(new FieldValidatorSize($this->size));
+	$this->validator->addValidator(new ValidatorSize($this->size));
 	
 	// add validator based on type.
 	switch ($this->type) {
 	    case X937Field::ALPHABETIC:
-		$this->validator->addValidator(new FieldValidatorTypeAlphabetic());
+		$this->validator->addValidator(new ValidatorTypeAlphabetic());
 		break;
 	    case X937Field::NUMERIC:
-		$this->validator->addValidator(new FieldValidatorTypeNumeric());
+		$this->validator->addValidator(new ValidatorTypeNumeric());
 		break;
 	    case X937Field::BLANK:
-		$this->validator->addValidator(new FieldValidatorTypeBlank());
+		$this->validator->addValidator(new ValidatorTypeBlank());
 		break;
 	    case X937Field::SPECIAL:
 		// insert validators
 		break;
 	    case X937Field::ALPHAMERIC:
-		$this->validator->addValidator(new FieldValidatorTypeAlphameric());
+		$this->validator->addValidator(new ValidatorTypeAlphameric());
 		break;
 	    /**
 	     * @todo add rest of validators.
@@ -110,35 +110,6 @@ class X937Field {
     }
 }
 
-abstract class X937FieldWithDefinedTypes extends X937Field {
-    public abstract static function defineValues();
-    
-    protected function addClassValidators() {
-	$legalValues          = array_keys(self::defineValues());
-	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
-	$this->validator->addValidator($legalValuesValidator);
-    }
-    
-    public function translateThisValue() {
-	return self::translate($this->value);
-    }
-    
-    public static function translate($value) {
-	$legalValues = self::defineValues();
-	
-	if (array_key_exists($value, $legalValues)) {
-	    $translatedValue = $legalValues[$legalValues];
-	    if (gettype($translatedValue) !== 'string') {
-		throw new LogicException('Bad data type in X937Field Value table. All values should be strings.');
-	    }
-	} else {
-	    $translatedValue = 'Undefined';
-	}
-	
-	return $translatedValue;
-    }
-}
-
 class X937FieldRecordType extends X937Field {
     public function __construct($value) {
 	parent::__construct(1, 'Record Type', X937Field::MANDATORY, 1, 2, X937Field::NUMERIC);
@@ -148,50 +119,7 @@ class X937FieldRecordType extends X937Field {
     
     protected function addClassValidators() {	
 	$legalRecordTypes = X937Record::defineRecordTypes();
-	$this->validator->addValidator(new FieldValidatorValueEnumerated($legalRecordTypes));
-    }
-}
-
-class X937FieldSpecificationLevel extends X937FieldWithDefinedTypes {
-    const X9371994 = 01;
-    const X9372001 = 02;
-    const X9372003 = 03;
-    
-    public function __construct() {
-	parent::__construct(1, 'Specification Level', X937Field::MANDATORY,    3,  2, X937Field::NUMERIC);
-    }
-    
-    public function getSpecificatonLevelName() {
-	$X937FieldSpecificationLevels = self::defineValues();
-	return $X937FieldSpecificationLevels[$this->value];
-    }
-    
-    public static function defineValues() {
-	$X937FieldSpecificationLevels = array(
-	    X937FieldSpecificationLevel::X9371994 => 'X9.37-1994',
-	    X937FieldSpecificationLevel::X9372001 => 'X9.37-2001',
-	    X937FieldSpecificationLevel::X9372003 => 'X9.37-2003'
-	);
-	
-	return $X937FieldSpecificationLevels;
-    }
-}
-
-class X937FieldTestFileIndicator extends X937FieldWithDefinedTypes {
-    const PRODUCTION_FILE = 'P';
-    const TEST_FILE       = 'T';
-    
-    public function __construct() {
-	parent::__construct(3, 'Test File Indicator', X937Field::MANDATORY, 5, 1, X937Field::ALPHABETIC);
-    }
-    
-    public static function defineValues() {
-	$X937FieldTestFileIndicators = array(
-	    X937FieldTestFileIndicator::PRODUCTION_FILE => 'Production File',
-	    X937FieldTestFileIndicator::TEST_FILE       => 'Test File',
-	);
-	
-	return $X937FieldTestFileIndicators;
+	$this->validator->addValidator(new ValidatorValueEnumerated($legalRecordTypes));
     }
 }
 
@@ -243,7 +171,7 @@ class X937FieldRoutingNumber extends X937Field {
     }
     
     protected function addClassValidators() {
-	$this->validator->addValidator(new FieldValidatorRoutingNumber());
+	$this->validator->addValidator(new ValidatorRoutingNumber());
     }
 }
 

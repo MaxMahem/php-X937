@@ -6,6 +6,10 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3 (or later)
  * @copyright Copyright (c) 2013, Austin Stanley
  */
+
+require_once 'X937Field.php';
+require_once 'X937FieldPredefined.php';
+
 class X937Record {
     /**
      * The type of the record. Should be one of the class constants.
@@ -170,12 +174,12 @@ class X937RecordFileHeader  extends X937Record {
 	$this->fields = new SplFixedArray(14);
 	$this->addField(new X937FieldRecordType(X937Record::FILE_HEADER));
 	$this->addField(new X937FieldSpecificationLevel());
-	$this->addField(new X937FieldTestFileIndicator());
+	$this->addField(new X937FieldTestFile());
 	$this->addField(new X937FieldRoutingNumber(4, 'Immediate Destination',    X937Field::MANDATORY,    6));
 	$this->addField(new X937FieldRoutingNumber(5, 'Immediate Origin',         X937Field::MANDATORY,   15));
 	$this->addField(new X937FieldDate(6, 'File Creation Date',                X937Field::MANDATORY,   24));
 	$this->addField(new X937FieldTime(7, 'File Creation Time',                X937Field::MANDATORY,   32));
-	$this->addField(new X937Field(8,  'Resend Indicator',                     X937Field::MANDATORY,   36,  1, X937Field::NUMERIC));
+	$this->addField(new X937FieldResend());
 	$this->addField(new X937FieldInstitutionName( 9, 'Immediate Destination', X937Field::CONDITIONAL, 37));
 	$this->addField(new X937FieldInstitutionName(10, 'Immediate Origin',      X937Field::CONDITIONAL, 55));
 	$this->addField(new X937Field(11, 'File ID Modifer',                      X937Field::CONDITIONAL, 73,  1, X937Field::ALPHAMERIC));
@@ -190,14 +194,14 @@ class X937RecordCashLetterHeader  extends X937Record {
     protected function addFields() {
 	$this->fields = new SplFixedArray(14);
 	$this->addField(new X937FieldRecordType(X937Record::CASH_LETTER_HEADER));
-	$this->addField(new X937Field(2,  'Collection Type Indicator',                X937Field::MANDATORY,    3,  2, X937Field::NUMERIC));
+	$this->addField(new X937FieldCollectionType());
 	$this->addField(new X937FieldRoutingNumber(3, 'Destination',                  X937Field::MANDATORY,    5));
 	$this->addField(new X937FieldRoutingNumber(4, 'ECE Instituion',               X937Field::MANDATORY,   14));
 	$this->addField(new X937FieldDate(5, 'Cash Letter Business Date',             X937Field::MANDATORY,   23));
 	$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',             X937Field::MANDATORY,   31));
 	$this->addField(new X937FieldTime(7, 'Cash Letter Creation Time',             X937Field::MANDATORY,   39));
-	$this->addField(new X937Field(8,  'Cash Letter Record Type Indicator',        X937Field::MANDATORY,   43,  1, X937Field::ALPHABETIC));
-	$this->addField(new X937Field(9,  'Cash Letter Documentation Type Indicator', X937Field::CONDITIONAL, 44, 18, X937Field::ALPHAMERIC));
+	$this->addField(new X937FieldCashLetterRecordType());
+	$this->addField(new X937FieldCashLetterDocumentationType());
 	$this->addField(new X937Field(10, 'Cash Letter ID',                           X937Field::CONDITIONAL, 45,  8, X937Field::ALPHAMERIC));
 	$this->addField(new X937FieldContactName(11, 'Originator Contact Name',       X937Field::CONDITIONAL, 53));
 	$this->addField(new X937FieldPhoneNumber(12, 'Originator Contact',            X937Field::CONDITIONAL, 67));
@@ -212,7 +216,7 @@ class X937RecordBundleHeader extends X937Record {
     protected function addFields() {
 	$this->fields = new SplFixedArray(12);
 	$this->addField(new X937FieldRecordType(X937Record::BUNDLE_HEADER));
-	$this->addField(new X937Field( 2, 'Collection Type Indicator',    X937Field::MANDATORY,    3,  2, X937Field::NUMERIC));
+	$this->addField(new X937FieldCollectionType());
 	$this->addField(new X937FieldRoutingNumber( 3, 'Destination',     X937Field::MANDATORY,    5));
 	$this->addField(new X937FieldRoutingNumber( 4, 'ECE Institution', X937Field::MANDATORY,   14));
 	$this->addField(new X937FieldDate(5, 'Bundle Business Date',      X937Field::MANDATORY,   23));
