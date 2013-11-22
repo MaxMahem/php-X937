@@ -111,37 +111,6 @@ class X937Record implements IteratorAggregate {
     public function getIterator() {
 	return new ArrayIterator($this->fields);
     }
-
-    /**
-     * Returns an array of valid record types.
-     * @return array A list of valid record types.
-     */
-    public static function defineRecordTypes() {
-        $recordTypes[] = self::FILE_HEADER;
-        $recordTypes[] = self::CASH_LETTER_HEADER;
-        $recordTypes[] = self::BUNDLE_HEADER;
-        $recordTypes[] = self::CHECK_DETAIL;
-        $recordTypes[] = self::CHECK_DETAIL_ADDENDUM_A;
-        $recordTypes[] = self::CHECK_DETAIL_ADDENDUM_B;
-        $recordTypes[] = self::CHECK_DETAIL_ADDENDUM_C;
-        $recordTypes[] = self::RETURN_RECORD;
-        $recordTypes[] = self::RETURN_ADDENDUM_A;
-        $recordTypes[] = self::RETURN_ADDENDUM_B;
-        $recordTypes[] = self::RETURN_ADDENDUM_C;
-        $recordTypes[] = self::RETURN_ADDENDUM_D;
-        $recordTypes[] = self::ACCOUNT_TOTALS_DETAIL;
-        $recordTypes[] = self::NON_HIT_TOTALS_DETAIL;
-        $recordTypes[] = self::IMAGE_VIEW_DETAIL;
-        $recordTypes[] = self::IMAGE_VIEW_DATA;
-        $recordTypes[] = self::IMAGE_VIEW_ANALYSIS;
-        $recordTypes[] = self::BUNDLE_CONTROL;
-        $recordTypes[] = self::BOX_SUMMARY;
-        $recordTypes[] = self::ROUTING_NUMBER_SUMMARY;
-        $recordTypes[] = self::CASH_LETTER_CONTROL;
-        $recordTypes[] = self::FILE_CONTROL;
-	
-	return $recordTypes;
-    }
     
     public function validate() {
 	foreach ($this->fields as $field) {
@@ -202,8 +171,8 @@ class X937RecordFileHeader  extends X937Record {
 class X937RecordCashLetterHeader  extends X937Record {
     protected function addFields() {
 	$this->fields = new SplFixedArray(14);
-	$this->addField(new X937FieldRecordType(X937Record::CASH_LETTER_HEADER));
-	$this->addField(new X937FieldCollectionType());
+	$this->addField(new X937FieldRecordType(X937FieldRecordType::CASH_LETTER_HEADER));
+	$this->addField(new X937FieldCollectionType(X937FieldRecordType::CASH_LETTER_HEADER));
 	$this->addField(new X937FieldRoutingNumber(3, 'Destination',            X937Field::MANDATORY,    5));
 	$this->addField(new X937FieldRoutingNumber(4, 'ECE Instituion',         X937Field::MANDATORY,   14));
 	$this->addField(new X937FieldDate(5, 'Cash Letter Business Date',       X937Field::MANDATORY,   23));
@@ -214,7 +183,7 @@ class X937RecordCashLetterHeader  extends X937Record {
 	$this->addField(new X937Field(10, 'Cash Letter ID',                     X937Field::CONDITIONAL, 45,  8, X937Field::ALPHAMERIC));
 	$this->addField(new X937FieldContactName(11, 'Originator Contact Name', X937Field::CONDITIONAL, 53));
 	$this->addField(new X937FieldPhoneNumber(12, 'Originator Contact',      X937Field::CONDITIONAL, 67));
-	$this->addField(new X937Field(13, 'Fed Work Type',                      X937Field::CONDITIONAL, 77,  1, X937Field::ALPHAMERIC));
+	$this->addField(new X937FieldFedWorkType());
 	$this->addField(new X937FieldUser(14, 78,  2));
 	$this->addField(new X937FieldReserved(14, 80,  1));
     }
@@ -224,8 +193,8 @@ class X937RecordCashLetterHeader  extends X937Record {
 class X937RecordBundleHeader extends X937Record {
     protected function addFields() {
 	$this->fields = new SplFixedArray(12);
-	$this->addField(new X937FieldRecordType(X937Record::BUNDLE_HEADER));
-	$this->addField(new X937FieldCollectionType());
+	$this->addField(new X937FieldRecordType(X937FieldRecordType::BUNDLE_HEADER));
+	$this->addField(new X937FieldCollectionType(X937FieldRecordType::BUNDLE_HEADER));
 	$this->addField(new X937FieldRoutingNumber( 3, 'Destination',     X937Field::MANDATORY,    5));
 	$this->addField(new X937FieldRoutingNumber( 4, 'ECE Institution', X937Field::MANDATORY,   14));
 	$this->addField(new X937FieldDate(5, 'Bundle Business Date',      X937Field::MANDATORY,   23));

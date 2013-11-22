@@ -163,7 +163,20 @@ class X937FieldCollectionType extends X937FieldPredefined {
     const NO_DETAIL                               = 20;
     const BUNDLES_NOT_SAME                        = 99;
     
-    public function __construct() {
+    /**
+     * The record type of this field, one of X937Field::CASH_LETTER_HEADER, or
+     * X937Field::BUNDLE_HEADER
+     * @var string 
+     */
+    private $recordType;
+    
+    public function __construct($recordType) {
+	$this->recordType = $recordType;
+	
+	if (($recordType !== X937FieldRecordType::CASH_LETTER_HEADER) OR ($recordType !== X937FieldRecordType::BUNDLE_HEADER)) {
+	    throw new InvalidArgumentException('Bad record type');
+	}
+	
 	parent::__construct(2, 'Collection Type Indicator', X937Field::MANDATORY, 3, 2, X937Field::NUMERIC);
     }
 
@@ -183,6 +196,31 @@ class X937FieldCollectionType extends X937FieldPredefined {
 	
 	return $X937FieldCollectionTypeIndicators;
     }
+    
+    /**
+     * This is overridden because the valid values differs depending upon the record type.
+     */
+    protected function addClassValidators() {
+	$legalValues = array_keys(self::defineValues());
+	
+	switch ($this->recordType) {
+	    // Check Letter Header can use the default.
+	    case X937FieldRecordType::CASH_LETTER_HEADER:
+		break;
+	    
+	    // Bundle Header Records do not permit option 10, 20, and 99.
+	    case X937FieldRecordType::BUNDLE_HEADER:
+		unset($legalValues[self::ACCOUNT_TOTALS]);
+		unset($legalValues[self::NO_DETAIL]);
+		unset($legalValues[self::BUNDLES_NOT_SAME]);
+		break;
+		
+	    // we would normaly error check here, but that should be handled in the constructor.
+	}
+	
+	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
+	$this->validator->addValidator($legalValuesValidator);
+    }
 }
 
 class X937FieldCashLetterType extends X937FieldPredefined {
@@ -196,14 +234,14 @@ class X937FieldCashLetterType extends X937FieldPredefined {
     }
 
     public static function defineValues() {
-	$X937FieldCashLetterRecordTypeIndicators = array(
+	$definedValues = array(
 	    self::NO_ELECTRONIC_OR_IMAGE_RECORDS                       => 'No electronic check records or image records',
 	    self::ELECTRONIC_RECORDS_NO_IMAGES                         => 'Electronic check records with no images',
 	    self::ELECTRONIC_AND_IMAGE_RECORDS                         => 'Electronic check records and image records',
 	    self::ELECTRONIC_AND_IMAGE_RECORDS_PREVIOUS_CORRESPONDANCE => 'Electronic check records and image records that corespond with previous cash letter',
 	);
 	
-	return $X937FieldCashLetterRecordTypeIndicators;
+	return $definedValues;
     }
 }
 
@@ -291,7 +329,8 @@ class X937FieldDocType extends X937FieldPredefined {
      * This is overridden because the valid values differs depending upon the record type.
      */
     protected function addClassValidators() {
-	$legalValues          = array_keys(self::defineValues());
+	$legalValues = array_keys(self::defineValues());
+	
 	switch ($this->recordType) {
 	    // Check Detail Records can use the default.
 	    case X937FieldRecordType::CASH_LETTER_HEADER:
@@ -299,6 +338,8 @@ class X937FieldDocType extends X937FieldPredefined {
 	    
 	    // Check Detail Records and Return Records do not permit option Z.
 	    case X937FieldRecordType::CHECK_DETAIL:
+		unset($legalValues[self::NOT_SAME_TYPE]);
+		break;
 	    case X937FieldRecordType::RETURN_RECORD:
 		unset($legalValues[self::NOT_SAME_TYPE]);
 		break;
@@ -309,5 +350,48 @@ class X937FieldDocType extends X937FieldPredefined {
 	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
+}
+
+class X937FieldFedWorkType extends X937FieldPredefined {
+    const CITY                      = 1;
+    const CITY_GROUP                = 2;
+    const CITY_FINE_SORT            = 3;
+    const RCPC                      = 4;
+    const RCPC_GROUP                = 5;
+    const RCPC_FINE_SORT            = 6;
+    const HIGH_DOLLAR_GROUP_SORT    = 7;
+    const COUNTRY                   = 8;
+    const COUNTRY_GROUP_SORT        = 9;
+    const COUNTRY_FINE_SORT         = 0;
+    const OTHER_DISTRICT            = 'A';
+    const OTHER_DISTRICT_GROUP_SORT = 'B';
+    const MIXED                     = 'C';
+    const CITY_RCPC_MIXED           = 'D';
+    const PAYOR_GROUP_SORT          = 'E';
     
+    public function __construct() {
+	parent::__construct(13, 'Fed Work Type', X937Field::CONDITIONAL, 77, 1, X937Field::ALPHAMERIC);
+    }
+
+    public static function defineValues() {
+	$definedValues = array(
+	    self::CITY                      => 'City',
+	    self::CITY_GROUP                => 'City Group',
+	    self::CITY_FINE_SORT            => 'City Fine Sort',
+	    self::RCPC                      => 'RCPC',
+	    self::RCPC_GROUP                => 'RCPC Group',
+	    self::RCPC_FINE_SORT            => 'RCPC Fine Sort',
+	    self::HIGH_DOLLAR_GROUP_SORT    => 'High Dollar Group Sort',
+	    self::COUNTRY                   => 'Country',
+	    self::COUNTRY_GROUP_SORT        => 'Country Group Sort',
+	    self::COUNTRY_FINE_SORT         => 'Country Group Sort',
+	    self::OTHER_DISTRICT            => 'Other District',
+	    self::OTHER_DISTRICT_GROUP_SORT => 'Other District Group Sort',
+	    self::MIXED                     => 'Mixed',
+	    self::CITY_RCPC_MIXED           => 'City/RCPC Mixed',
+	    self::PAYOR_GROUP_SORT          => 'Payor Group Sort',
+	);
+	
+	return $definedValues;
+    }
 }
