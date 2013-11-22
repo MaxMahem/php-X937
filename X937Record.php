@@ -10,7 +10,7 @@
 require_once 'X937Field.php';
 require_once 'X937FieldPredefined.php';
 
-class X937Record {
+class X937Record implements IteratorAggregate {
     /**
      * The type of the record. Should be one of the class constants.
      * @var int
@@ -101,6 +101,15 @@ class X937Record {
 	foreach($this->fields as $field) {
 	    $field->parseValue($this->recordASCII);
 	}
+    }
+    
+    /**
+     * Returns an Array Iterator object of the fields (natively a SplFixedArray),
+     * this lets X937Record implement tranversiable.
+     * @return ArrayIterator
+     */
+    public function getIterator() {
+	return new ArrayIterator($this->fields);
     }
 
     /**
@@ -195,17 +204,17 @@ class X937RecordCashLetterHeader  extends X937Record {
 	$this->fields = new SplFixedArray(14);
 	$this->addField(new X937FieldRecordType(X937Record::CASH_LETTER_HEADER));
 	$this->addField(new X937FieldCollectionType());
-	$this->addField(new X937FieldRoutingNumber(3, 'Destination',                  X937Field::MANDATORY,    5));
-	$this->addField(new X937FieldRoutingNumber(4, 'ECE Instituion',               X937Field::MANDATORY,   14));
-	$this->addField(new X937FieldDate(5, 'Cash Letter Business Date',             X937Field::MANDATORY,   23));
-	$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',             X937Field::MANDATORY,   31));
-	$this->addField(new X937FieldTime(7, 'Cash Letter Creation Time',             X937Field::MANDATORY,   39));
+	$this->addField(new X937FieldRoutingNumber(3, 'Destination',            X937Field::MANDATORY,    5));
+	$this->addField(new X937FieldRoutingNumber(4, 'ECE Instituion',         X937Field::MANDATORY,   14));
+	$this->addField(new X937FieldDate(5, 'Cash Letter Business Date',       X937Field::MANDATORY,   23));
+	$this->addField(new X937FieldDate(6, 'Cash Letter Creation Date',       X937Field::MANDATORY,   31));
+	$this->addField(new X937FieldTime(7, 'Cash Letter Creation Time',       X937Field::MANDATORY,   39));
 	$this->addField(new X937FieldCashLetterType());
 	$this->addField(new X937FieldDocType(X937FieldRecordType::CASH_LETTER_HEADER));
-	$this->addField(new X937Field(10, 'Cash Letter ID',                           X937Field::CONDITIONAL, 45,  8, X937Field::ALPHAMERIC));
-	$this->addField(new X937FieldContactName(11, 'Originator Contact Name',       X937Field::CONDITIONAL, 53));
-	$this->addField(new X937FieldPhoneNumber(12, 'Originator Contact',            X937Field::CONDITIONAL, 67));
-	$this->addField(new X937Field(13, 'Fed Work Type',                            X937Field::CONDITIONAL, 77,  1, X937Field::ALPHAMERIC));
+	$this->addField(new X937Field(10, 'Cash Letter ID',                     X937Field::CONDITIONAL, 45,  8, X937Field::ALPHAMERIC));
+	$this->addField(new X937FieldContactName(11, 'Originator Contact Name', X937Field::CONDITIONAL, 53));
+	$this->addField(new X937FieldPhoneNumber(12, 'Originator Contact',      X937Field::CONDITIONAL, 67));
+	$this->addField(new X937Field(13, 'Fed Work Type',                      X937Field::CONDITIONAL, 77,  1, X937Field::ALPHAMERIC));
 	$this->addField(new X937FieldUser(14, 78,  2));
 	$this->addField(new X937FieldReserved(14, 80,  1));
     }
