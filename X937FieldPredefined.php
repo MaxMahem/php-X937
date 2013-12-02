@@ -90,10 +90,10 @@ class X937FieldRecordType extends X937Field {
 }
 
 class X937FieldSpecificationLevel extends X937FieldPredefined {
-    const X9371994 = 01;
-    const X9372001 = 02;
-    const X9372003 = 03;
-    const X9100180 = 20;
+    const X9371994 = '01';
+    const X9372001 = '02';
+    const X9372003 = '03';
+    const X9100180 = '20';
     
     public function __construct() {
 	parent::__construct(2, 'Specification Level', X937Field::MANDATORY, 3, 2, X937Field::NUMERIC);
@@ -349,16 +349,16 @@ class X937FieldDocType extends X937FieldPredefined {
 }
 
 class X937FieldFedWorkType extends X937FieldPredefined {
-    const CITY                      = 1;
-    const CITY_GROUP                = 2;
-    const CITY_FINE_SORT            = 3;
-    const RCPC                      = 4;
-    const RCPC_GROUP                = 5;
-    const RCPC_FINE_SORT            = 6;
-    const HIGH_DOLLAR_GROUP_SORT    = 7;
-    const COUNTRY                   = 8;
-    const COUNTRY_GROUP_SORT        = 9;
-    const COUNTRY_FINE_SORT         = 0;
+    const CITY                      = '1';
+    const CITY_GROUP                = '2';
+    const CITY_FINE_SORT            = '3';
+    const RCPC                      = '4';
+    const RCPC_GROUP                = '5';
+    const RCPC_FINE_SORT            = '6';
+    const HIGH_DOLLAR_GROUP_SORT    = '7';
+    const COUNTRY                   = '8';
+    const COUNTRY_GROUP_SORT        = '9';
+    const COUNTRY_FINE_SORT         = '0';
     const OTHER_DISTRICT            = 'A';
     const OTHER_DISTRICT_GROUP_SORT = 'B';
     const MIXED                     = 'C';
