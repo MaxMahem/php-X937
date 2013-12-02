@@ -8,9 +8,13 @@
 require_once 'X937Record.php';
 
 /**
- * 
+ * Simple X937 Writer class, parses though a record and prints a human readable readout of all records.
  */
 class X937RecordWriter {
+    /**
+     * The X937Record we are writing.
+     * @var X937Record
+     */
     private $X937Record;
     
     public function __construct(X937Record $X937Record) {
