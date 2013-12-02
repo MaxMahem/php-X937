@@ -10,6 +10,19 @@ require_once 'X937FieldPredefined.php';
  * @author astanley
  */
 class X937RecordFactory {
+    
+    public static function handledRecordTypes() {
+	$handledRecordTypes = X937FieldRecordType::defineValues();
+	
+	unset($handledRecordTypes[X937FieldRecordType::CHECK_DETAIL_ADDENDUM_B]);
+	unset($handledRecordTypes[X937FieldRecordType::RETURN_ADDENDUM_D]);
+	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_DETAIL]);
+	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_DATA]);
+	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_ANALYSIS]);
+	
+	return $handledRecordTypes;
+    }
+
     /**
      * Generates an appropriate X937 Record from the raw record data.
      * @param type $recordData raw Record data as from the X937 file, generally EBCDIC format.
@@ -43,8 +56,38 @@ class X937RecordFactory {
 	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_A:
 		return new X937RecordCheckDetailAddendumA($recordType, $recordData);
 		break;
+	    
+	    /**
+	     * @todo implment Check Detail Addendum B - Type 27
+	     */
 
-	    // more to be inserted
+	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_C:
+		return new X937RecordCheckDetailAddendumC($recordType, $recordData);
+		break;
+	    
+	    case X937FieldRecordType::RETURN_RECORD:
+		return new X937RecordReturnRecord($recordType, $recordData);
+		break;
+	    case X937FieldRecordType::RETURN_ADDENDUM_A:
+		return new X937RecordReturnAddendumA($recordType, $recordData);
+		break;
+	    case X937FieldRecordType::RETURN_ADDENDUM_B:
+		return new X937RecordReturnAddendumB($recordType, $recordData);
+		break;
+	    
+	    /**
+	     * @todo implment Return Record Addendum C - Type 34
+	     */
+	    
+	    case X937FieldRecordType::RETURN_ADDENDUM_D:
+		return new X937RecordReturnAddendumD($recordType, $recordData);
+		break;
+	    
+	    /**
+	     * @todo implment Image View Detail - Type 50
+	     * @todo implment Image View Data Record - Type 52
+	     * @todo implment Image View Analysis - Type 54
+	     */
 
 	    case X937FieldRecordType::BUNDLE_CONTROL:
 		return new X937RecordBundleControl($recordType, $recordData);
