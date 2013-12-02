@@ -139,12 +139,20 @@ class X937FieldDate extends X937Field {
     protected function addClassValidators() {
 	$this->validator->addValidator(new ValidatorDate('Ymd'));
     }
+    
+    public static function translate($value) {
+	return 'Date YYYYMMDD';
+    }
 }
 
 class X937FieldTime extends X937Field {
     public function __construct($fieldNumber, $fieldName, $usage, $position) {
 	parent::__construct($fieldNumber, $fieldName, $usage, $position, 4, X937Field::NUMERIC);
-    }	
+    }
+    
+    public static function translate($value) {
+	return 'Time HHMM 24hour Clock';
+    }
 }
 
 class X937FieldInstitutionName extends X937Field {
