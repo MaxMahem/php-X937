@@ -62,7 +62,7 @@ class X937RecordFactory {
 		return new X937RecordFileControl($recordType, $recordData);
 		break;
 	    default:
-		return new X937Record($recordType, $recordData);
+		return new X937RecordGeneric($recordType, $recordData);
 		break;
 	}
     }

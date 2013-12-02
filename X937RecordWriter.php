@@ -18,9 +18,15 @@ class X937RecordWriter {
     }
     
     public function write() {
+	// check for records we current haven't implemented.
+	if ($this->X937Record instanceof X937RecordGeneric) {
+	    return "Record type" . ' ' . $this->X937Record->getRecordType() . ' ' . 'currently unhandled.';
+	}
+	
 	$output = '';
+	
 	foreach ($this->X937Record as $field) {
-	     $output .= $field->getFieldName() . ': ' . $field->getValue() . PHP_EOL;
+   	    $output .= $field->getFieldName() . ': ' . $field->getValue() . PHP_EOL;
 	}
 	
 	return $output;

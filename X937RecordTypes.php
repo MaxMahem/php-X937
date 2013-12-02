@@ -3,6 +3,11 @@
 require_once 'X937Field.php';
 require_once 'X937FieldPredefined.php';
 
+/**
+ * This class is just a stub for record types we haven't implemented yet.
+ */
+class X937RecordGeneric extends X937Record { }
+
 // File Header Record - Type 01
 class X937RecordFileHeader  extends X937Record {
     protected function addFields() {
@@ -27,7 +32,7 @@ class X937RecordFileHeader  extends X937Record {
 // Cash Letter Header Record - Type 10
 class X937RecordCashLetterHeader  extends X937Record {
     protected function addFields() {
-	$this->fields = new SplFixedArray(14);
+	$this->fields = new SplFixedArray(15);
 	$this->addField(new X937FieldRecordType(X937FieldRecordType::CASH_LETTER_HEADER));
 	$this->addField(new X937FieldCollectionType(X937FieldRecordType::CASH_LETTER_HEADER));
 	$this->addField(new X937FieldRoutingNumber(3, 'Destination',            X937Field::MANDATORY,    5));
