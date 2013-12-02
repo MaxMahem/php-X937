@@ -24,7 +24,8 @@ class X937RecordWriter {
     public function write() {
 	// check for records we current haven't implemented.
 	if ($this->X937Record instanceof X937RecordGeneric) {
-	    return "Record type" . ' ' . $this->X937Record->getRecordType() . ' ' . 'currently unhandled.';
+	    $recordType = $this->X937Record->getRecordType();
+	    return "Record type $recordType" . ' ' . X937FieldRecordType::translate($recordType) . ' ' . 'currently unhandled.';
 	}
 	
 	$output = '';

@@ -28,7 +28,7 @@ abstract class X937FieldPredefined extends X937Field {
     }
 }
 
-class X937FieldRecordType extends X937Field {
+class X937FieldRecordType extends X937FieldPredefined {
     const FILE_HEADER             = '01';
     const CASH_LETTER_HEADER      = '10';
     const BUNDLE_HEADER           = '20';
@@ -58,7 +58,7 @@ class X937FieldRecordType extends X937Field {
 	$this->value = $value;
     }
     
-    public function defineValues() {
+    public static function defineValues() {
 	$X937FieldRecordTypes = array(
 	    self::FILE_HEADER             => 'File Header Record',
 	    self::CASH_LETTER_HEADER      => 'Cash Letter Header Record',
