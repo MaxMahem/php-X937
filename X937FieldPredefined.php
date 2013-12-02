@@ -391,3 +391,21 @@ class X937FieldFedWorkType extends X937FieldPredefined {
 	return $definedValues;
     }
 }
+
+class X937FieldVariableSizeIndicator extends X937FieldPredefined {
+    const FIXED    = '0';
+    const VARIABLE = '1';
+    
+    public function __construct() {
+	parent::__construct(2, 'Variable Size Record Indicator', X937Field::MANDATORY, 3, 1, X937Field::NUMERIC);
+    }
+
+    public static function defineValues() {
+	$definedValues = array(
+	    self::FIXED    => 'Fixed Size',
+	    self::VARIABLE => 'Variable Size',
+	);
+	
+	return $definedValues;
+    }
+}

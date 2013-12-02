@@ -52,16 +52,15 @@ class X937Record implements IteratorAggregate {
      * Calls addFields which should be overriden in a subclass to add all the
      * fields to the record. And then calls all those fields parseValue function
      * to parse in the data.
-     * @param type $recordTypeASCII the type of the record, in ASCII. Should be
-     * one of the class constants.
+     * @param type $recordType the type of the record, in ASCII.
      * @param type $recordData the raw data for the record. EBCDIC/Binary/ASCII
      * @throws InvalidArgumentException If given bad input.
      */
-    public function __construct($recordTypeASCII, $recordData) {
+    public function __construct($recordType, $recordData) {
 	// input validation
         if (!is_string($recordData)) { throw new InvalidArgumentException("Bad record: $recordData passed to new X937Record"); }
 
-        $this->recordType = $recordTypeASCII;
+        $this->recordType = $recordType;
 
         // check for the IMAGE_VIEW_DETAIL Record type. This is a TIFF record, and in this case we only want the first 117 bytes of EBCDIC data,
         // the rest is TIFF.

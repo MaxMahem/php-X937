@@ -14,8 +14,6 @@ class X937RecordFactory {
     public static function handledRecordTypes() {
 	$handledRecordTypes = X937FieldRecordType::defineValues();
 	
-	unset($handledRecordTypes[X937FieldRecordType::CHECK_DETAIL_ADDENDUM_B]);
-	unset($handledRecordTypes[X937FieldRecordType::RETURN_ADDENDUM_D]);
 	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_DETAIL]);
 	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_DATA]);
 	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_ANALYSIS]);
@@ -56,15 +54,12 @@ class X937RecordFactory {
 	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_A:
 		return new X937RecordCheckDetailAddendumA($recordType, $recordData);
 		break;
-	    
-	    /**
-	     * @todo implment Check Detail Addendum B - Type 27
-	     */
-
+	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_B:
+		return new X937RecordCheckDetailAddendumB($recordType, $recordData);
+		break;
 	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_C:
 		return new X937RecordCheckDetailAddendumC($recordType, $recordData);
-		break;
-	    
+		break;	    
 	    case X937FieldRecordType::RETURN_RECORD:
 		return new X937RecordReturnRecord($recordType, $recordData);
 		break;
@@ -74,11 +69,9 @@ class X937RecordFactory {
 	    case X937FieldRecordType::RETURN_ADDENDUM_B:
 		return new X937RecordReturnAddendumB($recordType, $recordData);
 		break;
-	    
-	    /**
-	     * @todo implment Return Record Addendum C - Type 34
-	     */
-	    
+	    case X937FieldRecordType::RETURN_ADDENDUM_C:
+		return new X937RecordReturnAddendumC($recordType, $recordData);
+		break;
 	    case X937FieldRecordType::RETURN_ADDENDUM_D:
 		return new X937RecordReturnAddendumD($recordType, $recordData);
 		break;
