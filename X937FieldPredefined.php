@@ -12,17 +12,13 @@ abstract class X937FieldPredefined extends X937Field {
 	$this->validator->addValidator($legalValuesValidator);
     }
     
-    public function translatedValue() {
-	return static::translate($this->value);
-    }
-    
     public static function translate($value) {
 	$legalValues = static::defineValues();
 	
 	if (array_key_exists($value, $legalValues)) {
-	    $translatedValue = $legalValues[$legalValues];
-	    if (gettype($translatedValue) !== 'string') {
-		throw new LogicException('Bad data type in X937Field Value table. All values should be strings.');
+	    $translatedValue = $legalValues[$value];
+	    if (is_string($translatedValue) === FALSE) {
+		throw new LogicException("Bad data type $translatedValue in X937Field Value table. All values should be strings.");
 	    }
 	} else {
 	    $translatedValue = 'Undefined';

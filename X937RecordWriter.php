@@ -26,7 +26,8 @@ class X937RecordWriter {
 	$output = '';
 	
 	foreach ($this->X937Record as $field) {
-   	    $output .= $field->getFieldName() . ': ' . $field->getValue() . PHP_EOL;
+	    $outputArray = array($field->getFieldName() . ':', $field->getValue(), $field->translatedValue());
+   	    $output     .= implode(' ', $outputArray) . PHP_EOL;
 	}
 	
 	return $output;

@@ -108,6 +108,15 @@ class X937Field {
     public function parseValue($recordASCII) {
 	    $this->value = substr($recordASCII, $this->position - 1, $this->size);
     }
+    
+    public static function translate($value) {
+	// stub for later classes.
+	return ' ';
+    }
+    
+    public function translatedValue() {
+	return static::translate($this->value);
+    }
 }
 
 class X937FieldReserved extends X937Field {
