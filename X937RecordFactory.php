@@ -1,6 +1,7 @@
 <?php
 
 require_once 'X937Record.php';
+require_once 'X937RecordTypes.php';
 require_once 'X937FieldPredefined.php';
 
 /**
