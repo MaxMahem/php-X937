@@ -48,6 +48,7 @@ class X937RecordFactory {
 	    case X937FieldRecordType::BUNDLE_HEADER:
 		return new X937RecordBundleHeader($recordType, $recordData);
 		break;
+
 	    case X937FieldRecordType::CHECK_DETAIL:
 		return new X937RecordCheckDetail($recordType, $recordData);
 		break;
@@ -60,6 +61,7 @@ class X937RecordFactory {
 	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_C:
 		return new X937RecordCheckDetailAddendumC($recordType, $recordData);
 		break;	    
+
 	    case X937FieldRecordType::RETURN_RECORD:
 		return new X937RecordReturnRecord($recordType, $recordData);
 		break;
@@ -76,8 +78,11 @@ class X937RecordFactory {
 		return new X937RecordReturnAddendumD($recordType, $recordData);
 		break;
 	    
+	    case X937FieldRecordType::IMAGE_VIEW_DETAIL:
+		return new X937RecordImageViewDetail($recordType, $recordData);
+		break;
+	    
 	    /**
-	     * @todo implment Image View Detail - Type 50
 	     * @todo implment Image View Data Record - Type 52
 	     * @todo implment Image View Analysis - Type 54
 	     */
@@ -91,6 +96,7 @@ class X937RecordFactory {
 	    case X937FieldRecordType::ROUTING_NUMBER_SUMMARY:
 		return new X937RecordRoutingNumberSummary($recordType, $recordData);
 		break;
+
 	    case X937FieldRecordType::CASH_LETTER_CONTROL:
 		return new X937RecordCashLetterControl($recordType, $recordData);
 		break;

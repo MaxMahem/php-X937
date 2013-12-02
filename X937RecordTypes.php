@@ -231,6 +231,30 @@ class X937RecordNonHitTotalsDetail extends X937Record {
     }
 }
 
+// Image View Detail Record - Type 50
+class X937RecordImageViewDetail extends X937Record {
+    protected function addFields() {
+	$this->fields = new SplFixedArray(17);
+	$this->addField(new X937FieldRecordType(X937FieldRecordType::IMAGE_VIEW_DETAIL));
+	$this->addField(new X937Field(2, 'Image Indicator',                             X937Field::MANDATORY,    3, 1, X937Field::NUMERIC));
+	$this->addField(new X937FieldRoutingNumber(3, 'Image Creator',                  X937Field::MANDATORY,    4));
+	$this->addField(new X937FieldDate(4, 'Image Creator Date',                      X937Field::MANDATORY,   13));
+	$this->addField(new X937Field( 5, 'Image View Format Indicator',                X937Field::MANDATORY,   21, 2, X937Field::NUMERICBLANK));
+	$this->addField(new X937Field( 6, 'Image View Compression Algorithm Identifer', X937Field::MANDATORY,   23, 2, X937Field::NUMERICBLANK));
+	$this->addField(new X937Field( 7, 'Image View Data Size',                       X937Field::CONDITIONAL, 25, 7, X937Field::NUMERIC));
+	$this->addField(new X937Field( 8, 'View Side Indicator',                        X937Field::MANDATORY,   32, 1, X937Field::NUMERIC));
+	$this->addField(new X937Field( 9, 'View Descriptor',                            X937Field::MANDATORY,   33, 2, X937Field::NUMERIC));
+	$this->addField(new X937Field(10, 'Digital Signature Indicator',                X937Field::MANDATORY,   35, 1, X937Field::NUMERICBLANK));
+	$this->addField(new X937Field(11, 'Digital Signature Method',                   X937Field::MANDATORY,   36, 2, X937Field::NUMERIC));
+	$this->addField(new X937Field(12, 'Security Key Size',                          X937Field::CONDITIONAL, 38, 5, X937Field::NUMERIC));
+	$this->addField(new X937Field(13, 'Start of Protected Data',                    X937Field::CONDITIONAL, 43, 7, X937Field::NUMERIC));
+	$this->addField(new X937Field(14, 'Length of Protected Data',                   X937Field::CONDITIONAL, 50, 7, X937Field::NUMERIC));
+	$this->addField(new X937Field(15, 'Image Recreate Indicator',                   X937Field::CONDITIONAL, 57, 1, X937Field::NUMERIC));
+	$this->addField(new X937FieldUser(16, 58, 8));
+	$this->addField(new X937FieldReserved(17, 66, 15));
+    }
+}
+
 // Bundle Control Record - Type 70
 class X937RecordBundleControl extends X937Record {
     protected function addFields() {
