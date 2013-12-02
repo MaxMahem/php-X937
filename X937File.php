@@ -1,6 +1,7 @@
 <?php
 
 require_once 'X937Record.php';
+require_once 'X937RecordFactory.php';
 require_once 'X937Field.php';
 
 class X937File implements Countable, Iterator {
@@ -79,7 +80,7 @@ class X937File implements Countable, Iterator {
 	$fileControlRecordData = fread($this->fileHandle, 80);
 	
 	// build our file record from this data.
-	$this->fileControlRecord = $this->newRecord($fileControlRecordData);
+	$this->fileControlRecord = X937RecordFactory::newRecordFromRawData($fileControlRecordData);
 	if ($this->fileControlRecord instanceof X937RecordFileControl) {
 	    $this->fileTotalAmount = $this->fileControlRecord->getFieldByNumber(5)->getValue()/100;
 	    $this->fileItemCount   = $this->fileControlRecord->getFieldByNumber(4)->getValue();
@@ -114,7 +115,7 @@ class X937File implements Countable, Iterator {
 
 	// read the data for our record. Build a record.
 	$recordData = fread($this->fileHandle, $this->curentRecordLength);	
-	$record     = $this->newRecord($recordData);
+	$record     = X937RecordFactory::newRecordFromRawData($recordData);
 	
 	// seek back to the old position
 	fseek($this->fileHandle, -$this->curentRecordLength, SEEK_CUR);

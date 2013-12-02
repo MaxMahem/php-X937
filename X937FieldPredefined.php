@@ -7,8 +7,8 @@ abstract class X937FieldPredefined extends X937Field {
     public abstract static function defineValues();
     
     protected function addClassValidators() {
-	$legalValues          = array_keys(self::defineValues());
-	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
+	$legalValues          = array_keys(static::defineValues());
+	$legalValuesValidator = new ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
     
@@ -100,7 +100,7 @@ class X937FieldSpecificationLevel extends X937FieldPredefined {
     const X9100180 = 20;
     
     public function __construct() {
-	parent::__construct(1, 'Specification Level', X937Field::MANDATORY, 3, 2, X937Field::NUMERIC);
+	parent::__construct(2, 'Specification Level', X937Field::MANDATORY, 3, 2, X937Field::NUMERIC);
     }
     
     public static function defineValues() {

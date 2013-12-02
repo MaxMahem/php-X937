@@ -120,16 +120,16 @@ class X937FieldUser extends X937Field {
     public function __construct($fieldNumber, $position, $size) {
 	parent::__construct($fieldNumber, 'User Field', X937Field::CONDITIONAL, $position, $size, X937Field::ALPHAMERICSPECIAL);
     }
-    
-    protected function addClassValidators() {
-	$this->validator->addValidator(new ValidatorDate('Ymd'));
-    }
 }
 
 class X937FieldDate extends X937Field {
     public function __construct($fieldNumber, $fieldName, $usage, $position) {
 	parent::__construct($fieldNumber, $fieldName, $usage, $position, 8, X937Field::NUMERIC);
-    }	
+    }
+    
+    protected function addClassValidators() {
+	$this->validator->addValidator(new ValidatorDate('Ymd'));
+    }
 }
 
 class X937FieldTime extends X937Field {

@@ -14,7 +14,7 @@ abstract class AbstractValidator implements ValidatorInterface {
     const ERROR = 'ABSTRACT ERROR.';
     
     abstract public function validate($value);
-    public static function getMessages() {
+    public function getMessages() {
 	// a little cleverness here. self::ERROR would always return 'ABSTRACT ERROR'
 	// this classes constant. static::ERROR tatic will return the child classes
 	// overrident constant.
