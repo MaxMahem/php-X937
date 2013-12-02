@@ -122,51 +122,6 @@ class X937File implements Countable, Iterator {
 
 	return $record;
     }
-	
-    private function newRecord($recordData) {
-	// the first two characters should be the record type, in EBCDIC. Cut them and convert them.
-	$recordTypeEBCDIC = substr($recordData, 0, 2);
-	$recordTypeASCII  = iconv('EBCDIC-US', 'ASCII', $recordTypeEBCDIC);
-
-	switch ($recordTypeASCII) {
-	    case X937Record::FILE_HEADER:
-		return new X937RecordFileHeader($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::CASH_LETTER_HEADER:
-		return new X937RecordCashLetterHeader($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::BUNDLE_HEADER:
-		return new X937RecordBundleHeader($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::CHECK_DETAIL:
-		return new X937RecordCheckDetail($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::CHECK_DETAIL_ADDENDUM_A:
-		return new X937RecordCheckDetailAddendumA($recordTypeASCII, $recordData);
-		break;
-
-	    // more to be inserted
-
-	    case X937Record::BUNDLE_CONTROL:
-		return new X937RecordBundleControl($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::BOX_SUMMARY:
-		return new X937RecordBoxSummary($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::ROUTING_NUMBER_SUMMARY:
-		return new X937RecordRoutingNumberSummary($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::CASH_LETTER_CONTROL:
-		return new X937RecordCashLetterControl($recordTypeASCII, $recordData);
-		break;
-	    case X937Record::FILE_CONTROL:
-		return new X937RecordFileControl($recordTypeASCII, $recordData);
-		break;
-	    default:
-		return new X937Record($recordTypeASCII, $recordData);
-		break;
-	}
-    }
 
     /**
      * Implementation for countable. Returns the number of records from the file

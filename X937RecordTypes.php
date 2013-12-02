@@ -42,7 +42,7 @@ class X937RecordCashLetterHeader  extends X937Record {
 	$this->addField(new X937FieldPhoneNumber(12, 'Originator Contact',      X937Field::CONDITIONAL, 67));
 	$this->addField(new X937FieldFedWorkType());
 	$this->addField(new X937FieldUser(14, 78,  2));
-	$this->addField(new X937FieldReserved(14, 80,  1));
+	$this->addField(new X937FieldReserved(15, 80,  1));
     }
 }
 

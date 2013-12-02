@@ -173,7 +173,7 @@ class X937FieldCollectionType extends X937FieldPredefined {
     public function __construct($recordType) {
 	$this->recordType = $recordType;
 	
-	if (($recordType !== X937FieldRecordType::CASH_LETTER_HEADER) OR ($recordType !== X937FieldRecordType::BUNDLE_HEADER)) {
+	if (in_array($recordType, array(X937FieldRecordType::CASH_LETTER_HEADER, X937FieldRecordType::BUNDLE_HEADER)) === FALSE) {
 	    throw new InvalidArgumentException('Bad record type');
 	}
 	
@@ -218,7 +218,7 @@ class X937FieldCollectionType extends X937FieldPredefined {
 	    // we would normaly error check here, but that should be handled in the constructor.
 	}
 	
-	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
 }
@@ -279,7 +279,7 @@ class X937FieldDocType extends X937FieldPredefined {
 	
 	switch ($recordType) {
 	    case X937FieldRecordType::CASH_LETTER_HEADER:
-		$fieldNumber = 8;
+		$fieldNumber = 9;
 		$fieldName   = 'Cash Letter Documentation Type Indicator';
 		$position    = 44;
 		$usage       = X937Field::MANDATORY;
@@ -347,7 +347,7 @@ class X937FieldDocType extends X937FieldPredefined {
 	    // we would normaly error check here, but that should be handled in the constructor.
 	}
 	
-	$legalValuesValidator = new FieldValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
 }

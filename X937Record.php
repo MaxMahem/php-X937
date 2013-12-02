@@ -75,6 +75,14 @@ class X937Record implements IteratorAggregate {
 
 	$this->addFields();
 	
+	// added error check because I seem to be missing some.
+	foreach($this->fields as $field) {
+	    if (($field instanceof X937Field) === FALSE) {
+		print_r($this->fields);
+		throw new LogicException("Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
+	    }
+	}
+	
 	foreach($this->fields as $field) {
 	    $field->parseValue($this->recordASCII);
 	}
@@ -86,7 +94,7 @@ class X937Record implements IteratorAggregate {
      * @return ArrayIterator
      */
     public function getIterator() {
-	return new ArrayIterator($this->fields);
+	return $this->fields;
     }
     
     public function validate() {
