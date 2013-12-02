@@ -82,3 +82,28 @@ class X937RecordReturnAddendumC extends X937RecordVariableLength {
 	}
     }
 }
+
+class X937RecordImageViewData extends X937RecordVariableLength {
+    protected function addFields() {
+	$this->fields = new SplFixedArray(14);
+	$this->addField(new X937FieldRecordType(X937FieldRecordType::IMAGE_VIEW_DATA));
+	$this->addField(new X937FieldRoutingNumber(2, 'ECE Institution',         X937Field::MANDATORY,     3));
+	$this->addField(new X937FieldDate(3, 'Bundle Bsiness Date',              X937Field::MANDATORY,    12));
+	$this->addField(new X937Field(4,  'Cycle Number',                        X937Field::MANDATORY,    20,  2, X937Field::ALPHAMERIC));
+	$this->addField(new X937Field(5,  'ECE Instituion Item Sequence Number', X937Field::MANDATORY,    22, 15, X937Field::NUMERICBLANK));
+	$this->addField(new X937Field(6,  'Security Originator Name',            X937Field::CONDITIONAL,  37, 16, X937Field::ALPHAMERICSPECIAL));
+	$this->addField(new X937Field(7,  'Security Authenticator Name',         X937Field::CONDITIONAL,  53, 16, X937Field::ALPHAMERICSPECIAL));
+	$this->addField(new X937Field(8,  'Security Key Name',                   X937Field::CONDITIONAL,  69, 16, X937Field::ALPHAMERICSPECIAL));
+	$this->addField(new X937Field(9,  'Clipping Origin',                     X937Field::MANDATORY,    85,  1, X937Field::NUMERIC));
+	$this->addField(new X937Field(10, 'Clipping Coordinate H1',              X937Field::CONDITIONAL,  86,  4, X937Field::NUMERIC));
+	$this->addField(new X937Field(11, 'Clipping Coordinate H2',              X937Field::CONDITIONAL,  90,  4, X937Field::NUMERIC));
+	$this->addField(new X937Field(12, 'Clipping Coordinate V1',              X937Field::CONDITIONAL,  94,  4, X937Field::NUMERIC));
+	$this->addField(new X937Field(13, 'Clipping Coordinate V2',              X937Field::CONDITIONAL,  98,  4, X937Field::NUMERIC));
+	$this->addField(new X937Field(14, 'Length of Image Reference Key',       X937Field::MANDATORY,   102,  4, X937Field::NUMERIC));
+	
+
+	/**
+	 * @todo rest of field handling!
+	 */
+    }
+}

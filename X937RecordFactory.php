@@ -2,6 +2,7 @@
 
 require_once 'X937Record.php';
 require_once 'X937RecordTypes.php';
+require_once 'X937RecordVariableLength.php';
 require_once 'X937FieldPredefined.php';
 
 /**
@@ -13,9 +14,7 @@ class X937RecordFactory {
     
     public static function handledRecordTypes() {
 	$handledRecordTypes = X937FieldRecordType::defineValues();
-	
-	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_DETAIL]);
-	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_DATA]);
+
 	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_ANALYSIS]);
 	
 	return $handledRecordTypes;
@@ -81,9 +80,11 @@ class X937RecordFactory {
 	    case X937FieldRecordType::IMAGE_VIEW_DETAIL:
 		return new X937RecordImageViewDetail($recordType, $recordData);
 		break;
+	    case X937FieldRecordType::IMAGE_VIEW_DATA:
+		return new X937RecordImageViewData($recordType, $recordData);
+		break;
 	    
-	    /**
-	     * @todo implment Image View Data Record - Type 52
+	    /*
 	     * @todo implment Image View Analysis - Type 54
 	     */
 
