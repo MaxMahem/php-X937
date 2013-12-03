@@ -21,7 +21,7 @@ class X937RecordCheckDetailAddendumB extends X937RecordVariableLength {
 	$this->addField(new X937FieldVariableSizeIndicator());
 	$this->addField(new X937Field(3, 'Microfilm Archive Sequence Number', X937Field::CONDITIONAL,  4, 15, X937Field::NUMERICBLANK));
 
-	$this->fields[1]->parseValue($this->recordASCII);
+	$this->fields[1]->parseValue($this->recordData);
 	$variableSizeIndicator = $this->fields[1]->getValue();
 
 	switch ($variableSizeIndicator) {
@@ -58,7 +58,7 @@ class X937RecordReturnAddendumC extends X937RecordVariableLength {
 	$this->addField(new X937Field(3, 'Microfilm Archive Sequence Number', X937Field::CONDITIONAL,  4, 15, X937Field::NUMERICBLANK));
 	$this->addField(new X937Field(4, 'Length of Image Archive Sequence',  X937Field::MANDATORY,   19,  4, X937Field::NUMERIC));
 
-	$this->fields[1]->parseValue($this->recordASCII);
+	$this->fields[1]->parseValue($this->recordData);
 	$variableSizeIndicator = $this->fields[1]->getValue();
 	
 	switch ($variableSizeIndicator) {

@@ -34,12 +34,6 @@ class X937Record implements IteratorAggregate {
     protected $recordLength;
 
     /**
-     * The record string in ASCII format.
-     * @var string
-     */
-    protected $recordASCII;
-
-    /**
      * Contains all the field in the record.
      * @var SplFixedArray
      */
@@ -77,10 +71,8 @@ class X937Record implements IteratorAggregate {
         // the rest is TIFF.
         if ($this->recordType == X937FieldRecordType::IMAGE_VIEW_DATA) {
             $this->recordData  = substr($recordData, 0, 117);
-//            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
 	} else {
             $this->recordData  = $recordData;
-//            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', $recordData);
 	}
 
 	$this->addFields($dataType);
@@ -119,7 +111,6 @@ class X937Record implements IteratorAggregate {
      */
     public function getRecordType()  { return $this->recordType; }
     public function getRecordData()  { return $this->recordData; }
-    public function getRecordASCII() { return $this->recordASCII; }
     public function getFields()      { return $this->fields; }
 
     public function getFieldByNumber($fieldNumber) { return $this->fields[$fieldNumber-1]; }
