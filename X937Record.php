@@ -66,14 +66,7 @@ class X937Record implements IteratorAggregate {
 	// elect not to validate $recordData, because we can get all kinds of crap in there.
 
         $this->recordType = $recordType;
-
-        // check for the IMAGE_VIEW_DETAIL Record type. This is a TIFF record, and in this case we only want the first 117 bytes of EBCDIC data,
-        // the rest is TIFF.
-        if ($this->recordType == X937FieldRecordType::IMAGE_VIEW_DATA) {
-            $this->recordData  = substr($recordData, 0, 117);
-	} else {
-            $this->recordData  = $recordData;
-	}
+	$this->recordData = $recordData;
 
 	$this->addFields($dataType);
 	
