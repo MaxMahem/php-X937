@@ -11,6 +11,10 @@ require_once 'X937Field.php';
 require_once 'X937FieldPredefined.php';
 
 class X937Record implements IteratorAggregate {
+    
+    const DATA_ASCII  = 'ASCII';
+    const DATA_EBCDIC = 'EBCDIC-US';
+    
     /**
      * The type of the record. Should be one of the class constants.
      * @var int
@@ -52,13 +56,20 @@ class X937Record implements IteratorAggregate {
      * Calls addFields which should be overriden in a subclass to add all the
      * fields to the record. And then calls all those fields parseValue function
      * to parse in the data.
-     * @param type $recordType the type of the record, in ASCII.
-     * @param type $recordData the raw data for the record. EBCDIC/Binary/ASCII
+     * @param string $recordType the type of the record, in ASCII.
+     * @param string $recordData the raw data for the record. EBCDIC/Binary/ASCII
+     * @param string $dataType   the type of the record data, a X937Record Constat, either DATA_EBCDIC or DATA_ASCII
      * @throws InvalidArgumentException If given bad input.
      */
-    public function __construct($recordType, $recordData) {
+    public function __construct($recordType, $recordData, $dataType = X937Record::DATA_EBCDIC) {
 	// input validation
-        if (!is_string($recordData)) { throw new InvalidArgumentException("Bad record: $recordData passed to new X937Record"); }
+        if (array_key_exists($recordType, X937FieldRecordType::defineValues()) === FALSE) { 
+	    throw new InvalidArgumentException("Bad record: $recordData passed.");
+	}
+	if (in_array($dataType, array(X937Record::DATA_ASCII, X937Record::DATA_EBCDIC)) === FALSE) {
+	    throw new InvalidArgumentException("Bad date type $dataType passed.");
+	}
+	// elect not to validate $recordData, because we can get all kinds of crap in there.
 
         $this->recordType = $recordType;
 
@@ -66,13 +77,13 @@ class X937Record implements IteratorAggregate {
         // the rest is TIFF.
         if ($this->recordType == X937FieldRecordType::IMAGE_VIEW_DATA) {
             $this->recordData  = substr($recordData, 0, 117);
-            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
+//            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', substr($recordData, 0, 117));
 	} else {
             $this->recordData  = $recordData;
-            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', $recordData);
+//            $this->recordASCII = iconv('EBCDIC-US', 'ASCII', $recordData);
 	}
 
-	$this->addFields();
+	$this->addFields($dataType);
 	
 	// added error check because I seem to be missing some.
 	foreach($this->fields as $field) {
@@ -83,7 +94,7 @@ class X937Record implements IteratorAggregate {
 	}
 	
 	foreach($this->fields as $field) {
-	    $field->parseValue($this->recordASCII);
+	    $field->parseValue($this->recordData, X937Record::DATA_EBCDIC);
 	}
     }
     

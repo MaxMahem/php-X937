@@ -105,8 +105,19 @@ class X937Field {
     public function getType()        { return $this->type; }
     public function getValue()       { return $this->value; }
 
-    public function parseValue($recordASCII) {
-	    $this->value = substr($recordASCII, $this->position - 1, $this->size);
+    public function parseValue($recordData, $dataType = X937Record::DATA_EBCDIC) {
+	switch ($dataType) {
+	    case X937Record::DATA_ASCII:
+		$this->value = substr($recordData, $this->position - 1, $this->size);
+		break;
+	    case X937Record::DATA_EBCDIC:
+		$dataRaw     = substr($recordData, $this->position - 1, $this->size);
+		$this->value = iconv(X937Record::DATA_EBCDIC, X937Record::DATA_ASCII, $dataRaw);
+		break;
+	    default:
+		throw new InvalidArgumentException("Bad record type $dataType passed.");
+		break;
+	}
     }
     
     public static function translate($value) {
