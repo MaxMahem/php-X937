@@ -57,8 +57,6 @@ class X937Field {
 	$this->size        = $size;
 	$this->type        = $type;
 	
-	echo "Name: $filedName Position: $position Size: $size" . PHP_EOL;
-	
 	$this->addValidators();
 	$this->addClassValidators();
     }

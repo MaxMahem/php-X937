@@ -141,8 +141,6 @@ class X937RecordImageViewData extends X937RecordVariableLength {
 	$this->fields[17]->parseValue($this->recordData);
 	$imageDataLength = (int) $this->fields[17]->getValue();
 	
-//	echo substr($this->recordData, 0, 117) . PHP_EOL;
-	
 	$this->addField(new X937FieldImageData($this, $imageRefKeyLength + $digitalSignatureLength, $imageDataLength));
     }
 }
