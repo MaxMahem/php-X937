@@ -88,8 +88,23 @@ class X937RecordReturnAddendumC extends X937RecordVariableLength {
 }
 
 class X937RecordImageViewData extends X937RecordVariableLength {
-    private $digitalSignature;
-    private $imageData;
+    /**
+     * The raw record data, preserved so we can have it for binary fields.
+     * @var string
+     */
+    private $recordDataRaw;
+    
+    public function __construct($recordType, $recordDataASCII, $recordDataRaw) {
+	$this->recordDataRaw = $recordDataRaw;
+	
+	parent::__construct($recordType, $recordDataASCII);
+    }
+    
+    /**
+     * Get the raw Record data
+     * @return string Raw (untranslated) Record Data
+     */
+    public function getRawRecordData() { return $this->recordDataRaw; }
     
     protected function addFields() {
 	$this->fields = new SplFixedArray(19);
@@ -113,19 +128,21 @@ class X937RecordImageViewData extends X937RecordVariableLength {
 	$imageRefKeyLength = (int) $this->fields[13]->getValue();
 	
 	$this->addField(new X937FieldVariableLength(15, 'Image Reference Key',   X937Field::CONDITIONAL, 106,  $imageRefKeyLength,     X937Field::ALPHAMERICSPECIAL));
-	$this->addField(new X937Field(16, 'Length of Digital Signature',         X937Field::MANDATORY,   106 + $imageRefKeyLength, 10, X937Field::NUMERICBLANK));
+	$this->addField(new X937Field(16, 'Length of Digital Signature',         X937Field::MANDATORY,   106 + $imageRefKeyLength, 5, X937Field::NUMERICBLANK));
 
 	// get the size of the second variable key, field 16 - Length of Digital Signature
 	$this->fields[15]->parseValue($this->recordData);
 	$digitalSignatureLength = (int) $this->fields[15]->getValue();
 	
-	$this->addField(new X937FieldDigitalSignature($imageRefKeyLength, $digitalSignatureLength));
+	$this->addField(new X937FieldDigitalSignature($this, $imageRefKeyLength, $digitalSignatureLength));
 	$this->addField(new X937Field(18, 'Length of Image Data',                X937Field::MANDATORY,   111 + $imageRefKeyLength + $digitalSignatureLength, 7, X937Field::NUMERICBLANK));
 	
 	// get the size of the third variable key, field 18 - Length of Image Data
 	$this->fields[17]->parseValue($this->recordData);
 	$imageDataLength = (int) $this->fields[17]->getValue();
 	
-	$this->addField(new X937FieldImageData($imageRefKeyLength + $digitalSignatureLength, $imageDataLength));
+//	echo substr($this->recordData, 0, 117) . PHP_EOL;
+	
+	$this->addField(new X937FieldImageData($this, $imageRefKeyLength + $digitalSignatureLength, $imageDataLength));
     }
 }

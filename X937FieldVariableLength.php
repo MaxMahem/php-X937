@@ -13,25 +13,30 @@ class X937FieldVariableLength extends X937Field {
 }
 
 abstract class X937FieldBinary extends X937FieldVariableLength {
-    const BINARY = 'Binary';
+    const TYPE_BINARY = 'Binary';
     
-    public function __construct($fieldNumber, $filedName, $usage, $position, $size) {
-	parent::__construct($fieldNumber, $filedName, $usage, $position, $size, X937Field::BINARY);
+    public function __construct($record, $fieldNumber, $filedName, $usage, $position, $size) {
+	$this->record = $record;
+	
+	parent::__construct($fieldNumber, $filedName, $usage, $position, $size, self::TYPE_BINARY);
     }
     
     public function parseValue() {
-	$this->value = 'Binary Data';
-}
+	$rawRecordData = $this->record->getRawRecordData();
+	
+	parent::parseValue($rawRecordData);
+//	$this->value = 'Binary Data';
+    }
 }
 
 class X937FieldDigitalSignature extends X937FieldBinary {
-    public function __construct($offset, $size) {
-	parent::__construct(17, 'Digital Signature', X937Field::CONDITIONAL, 111 + $offset, $size);
+    public function __construct($record, $offset, $size) {
+	parent::__construct($record, 17, 'Digital Signature', X937Field::CONDITIONAL, 111 + $offset, $size);
     }
 }
 
 class X937FieldImageData extends X937FieldBinary {
-    public function __construct($offset, $size) {
-	parent::__construct(19, 'Image Data', X937Field::MANDATORY, 118 + $offset, $size);
+    public function __construct($record, $offset, $size) {
+	parent::__construct($record, 19, 'Image Data', X937Field::MANDATORY, 118 + $offset, $size);
     }
 }

@@ -11,10 +11,6 @@ require_once 'X937Field.php';
 require_once 'X937FieldPredefined.php';
 
 class X937Record implements IteratorAggregate {
-    
-    const DATA_ASCII  = 'ASCII';
-    const DATA_EBCDIC = 'EBCDIC-US';
-    
     /**
      * The type of the record. Should be one of the class constants.
      * @var int
@@ -52,23 +48,21 @@ class X937Record implements IteratorAggregate {
      * to parse in the data.
      * @param string $recordType the type of the record, in ASCII.
      * @param string $recordData the raw data for the record. EBCDIC/Binary/ASCII
-     * @param string $dataType   the type of the record data, a X937Record Constat, either DATA_EBCDIC or DATA_ASCII
      * @throws InvalidArgumentException If given bad input.
      */
-    public function __construct($recordType, $recordData, $dataType = X937Record::DATA_EBCDIC) {
+    public function __construct($recordType, $recordData) {
 	// input validation
         if (array_key_exists($recordType, X937FieldRecordType::defineValues()) === FALSE) { 
 	    throw new InvalidArgumentException("Bad record: $recordData passed.");
 	}
-	if (in_array($dataType, array(X937Record::DATA_ASCII, X937Record::DATA_EBCDIC)) === FALSE) {
-	    throw new InvalidArgumentException("Bad date type $dataType passed.");
+	if (is_string($recordData) === FALSE) {
+	    throw new InvalidArgumentException("Bad data type $recordData passed.");
 	}
-	// elect not to validate $recordData, because we can get all kinds of crap in there.
 
         $this->recordType = $recordType;
 	$this->recordData = $recordData;
 
-	$this->addFields($dataType);
+	$this->addFields();
 	
 	// added error check because I seem to be missing some.
 	foreach($this->fields as $field) {
@@ -79,7 +73,7 @@ class X937Record implements IteratorAggregate {
 	}
 	
 	foreach($this->fields as $field) {
-	    $field->parseValue($this->recordData, X937Record::DATA_EBCDIC);
+	    $field->parseValue($this->recordData);
 	}
     }
     
@@ -102,9 +96,9 @@ class X937Record implements IteratorAggregate {
      * Get the Record Type, should be one of the class constents.
      * @return int The record type of the record.
      */
-    public function getRecordType()  { return $this->recordType; }
-    public function getRecordData()  { return $this->recordData; }
-    public function getFields()      { return $this->fields; }
+    public function getRecordType() { return $this->recordType; }
+    public function getRecordData() { return $this->recordData; }
+    public function getFields()     { return $this->fields; }
 
     public function getFieldByNumber($fieldNumber) { return $this->fields[$fieldNumber-1]; }
     public function getFieldByName($fieldName)     { return $this->fields[$this->fieldsRef[$fieldName]]; }

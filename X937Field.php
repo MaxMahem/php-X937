@@ -7,6 +7,12 @@ require_once 'Validator.php';
  * @author astanley
  */
 class X937Field {
+    /**
+     * pointer back to the X937Record that contains the field.
+     * @var X937Record
+     */
+    protected $record;
+    
     protected $fieldNumber; // the sequential number of the field in the record
     protected $fieldName;   // the filed name;
     protected $usage;       // usage, Mandatory or Conditional.
@@ -19,7 +25,11 @@ class X937Field {
      * @var Validator
      */
     protected $validator;
-	
+
+    /**
+     * The value of the field, always ASCII data.
+     * @var string 
+     */
     protected $value;	    // the value of the field;
 	
     // Usage Types
@@ -46,6 +56,8 @@ class X937Field {
 	$this->position    = $position;
 	$this->size        = $size;
 	$this->type        = $type;
+	
+	echo "Name: $filedName Position: $position Size: $size" . PHP_EOL;
 	
 	$this->addValidators();
 	$this->addClassValidators();
@@ -105,24 +117,17 @@ class X937Field {
     public function getType()        { return $this->type; }
     public function getValue()       { return $this->value; }
 
-    public function parseValue($recordData, $dataType = X937Record::DATA_EBCDIC) {
-	switch ($dataType) {
-	    case X937Record::DATA_ASCII:
-		$this->value = substr($recordData, $this->position - 1, $this->size);
-		break;
-	    case X937Record::DATA_EBCDIC:
-		$dataRaw     = substr($recordData, $this->position - 1, $this->size);
-		$this->value = iconv(X937Record::DATA_EBCDIC, X937Record::DATA_ASCII, $dataRaw);
-		break;
-	    default:
-		throw new InvalidArgumentException("Bad record type $dataType passed.");
-		break;
+    public function parseValue($recordData) {
+	if (is_string($recordData) === FALSE) {
+	    throw new InvalidArgumentException("Bad recordData passed. String expected.");
 	}
+	
+	$this->value = substr($recordData, $this->position - 1, $this->size);
     }
     
     public static function translate($value) {
 	// stub for later classes.
-	return ' ';
+	return '';
     }
     
     public function translatedValue() {

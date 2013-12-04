@@ -5,6 +5,9 @@ require_once 'X937RecordFactory.php';
 require_once 'X937Field.php';
 
 class X937File implements Countable, Iterator {
+    const DATA_ASCII  = 'ASCII';
+    const DATA_EBCDIC = 'EBCDIC-US';
+    
     /**
      * Our FileHandle.
      * @var resource
@@ -16,6 +19,12 @@ class X937File implements Countable, Iterator {
      * @var SplFileInfo
      */
     private $fileInfo;
+    
+    /**
+     * The type of the data, either self::DATA_ASCII self::DATA_EBCDIC
+     * @var string
+     */
+    private $dataType = self::DATA_ASCII;
     
     /**
      * Current position of the itterator in the file.
@@ -51,7 +60,7 @@ class X937File implements Countable, Iterator {
      * Count of the number of records in the file. Retrieved from File Control Record.
      * @var int
      */
-    private $recordCount; 
+    private $recordCount;
     
     private $fileTotalAmount;
     private $fileItemCount;
@@ -72,6 +81,11 @@ class X937File implements Countable, Iterator {
 		
 	// open our file for reading in binary mode.
 	$this->fileHandle = fopen($filename, 'rb');
+	
+	/**
+	 * @todo add record type check here, DATA_ASCII or DATA_EBCDIC
+	 */
+	$this->dataType = self::DATA_EBCDIC;
 		
 	// seek to 80 characters before the end of file. This SHOULD give us the file control recored.
 	fseek($this->fileHandle, -80, SEEK_END);
@@ -80,7 +94,7 @@ class X937File implements Countable, Iterator {
 	$fileControlRecordData = fread($this->fileHandle, 80);
 	
 	// build our file record from this data.
-	$this->fileControlRecord = X937RecordFactory::newRecordFromRawData($fileControlRecordData);
+	$this->fileControlRecord = X937RecordFactory::newRecordFromRawData($fileControlRecordData, $this->dataType);
 	if ($this->fileControlRecord instanceof X937RecordFileControl) {
 	    $this->fileTotalAmount = $this->fileControlRecord->getFieldByNumber(5)->getValue()/100;
 	    $this->fileItemCount   = $this->fileControlRecord->getFieldByNumber(4)->getValue();
@@ -115,7 +129,7 @@ class X937File implements Countable, Iterator {
 
 	// read the data for our record. Build a record.
 	$recordData = fread($this->fileHandle, $this->curentRecordLength);	
-	$record     = X937RecordFactory::newRecordFromRawData($recordData);
+	$record     = X937RecordFactory::newRecordFromRawData($recordData, $this->dataType);
 	
 	// seek back to the old position
 	fseek($this->fileHandle, -$this->curentRecordLength, SEEK_CUR);
