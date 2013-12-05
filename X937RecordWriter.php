@@ -7,34 +7,87 @@
 
 require_once 'X937Record.php';
 
+interface Writer {
+    public function write();
+}
+
+abstract class X937RecordWriter implements Writer {  
+    /**
+     * The X937Record we are going to write.
+     * @var X937Record
+     */
+    protected $record;
+    
+    /**
+     * The options for printing.
+     * @var array
+     */
+    protected $options;
+
+    public function __construct(X937Record $record, array $options = array()) {
+	$this->record  = $record;
+	$this->options = $options;
+    }
+    
+    public function setOptions(array $options) {
+	$this->options = array_merge($this->options, $options);
+    }
+    
+    public function getOptions() {
+	return $this->options;
+    }
+
+    public abstract function write();
+}
+
 /**
  * Simple X937 Writer class, parses though a record and prints a human readable readout of all records.
  */
-class X937RecordWriter {
-    /**
-     * The X937Record we are writing.
-     * @var X937Record
-     */
-    private $X937Record;
-    
-    public function __construct(X937Record $X937Record) {
-	$this->X937Record = $X937Record;
-    }
+class X937RecordWriterSimple extends X937RecordWriter {
+    const OPTION_VALIDATE  = 'validate';
+    const OPTION_TRANSLATE = 'translate';
     
     public function write() {
+	$recordType = $this->record->getRecordType();
+	
 	// check for records we current haven't implemented.
-	if ($this->X937Record instanceof X937RecordGeneric) {
-	    $recordType = $this->X937Record->getRecordType();
+	if (array_key_exists($recordType, X937RecordFactory::handledRecordTypes()) === FALSE) {
 	    return "Record type $recordType" . ' ' . X937FieldRecordType::translate($recordType) . ' ' . 'currently unhandled.';
 	}
 	
-	$output = '';
+	$fieldsFailedValidation = 0;
+	$outputArray = array();
 	
-	foreach ($this->X937Record as $field) {
-	    $outputArray = array($field->getFieldName() . ':', $field->getValue(), $field->translatedValue());
-   	    $output     .= implode(' ', $outputArray) . PHP_EOL;
+	foreach ($this->record as $field) {
+	    // reset our output array
+	    $fieldOutputArray = array();
+	    
+	    // we build an array of what we want to output.
+	    // These items are mandatory.
+	    $fieldOutputArray[] = $field->getFieldName() . ':';
+	    $fieldOutputArray[] = $field->getValueFormated();
+	    
+	    // these items are conditional
+	    if ($this->options[self::OPTION_TRANSLATE] === TRUE) { $fieldOutputArray[] = $field->translatedValue(); }
+	    if ($this->options[self::OPTION_VALIDATE]  === TRUE) {
+		$validation = $field->validate();
+		$fieldOutputArray[] = ($validation) ? 'Validated' : 'Validation Failed';
+		
+		// if we fail validation, incrament the failed validatoin counter.
+		if ($validation === FALSE) { $fieldsFailedValidation++; } 
+	    }
+
+	    // implode the array to build our string, append it to the output.
+	    $outputArray[] .= implode(' ', $fieldOutputArray);
 	}
 	
-	return $output;
+	// display record summary if we are doing validation.
+	if ($this->options[self::OPTION_VALIDATE]) {
+	    $recordCount = count($this->record);
+	    $recordValidation = ($fieldsFailedValidation === 0) ? 'The Record is Valid' : 'The Record is Invalid';
+	    $outputArray[] .= "$fieldsFailedValidation of $recordCount fields failed validation. $recordValidation";
+	}
+	
+	return implode(PHP_EOL, $outputArray) . PHP_EOL;
     }
 }

@@ -15,6 +15,10 @@ class X937FieldVariableLength extends X937Field {
 abstract class X937FieldBinary extends X937FieldVariableLength {
     const TYPE_BINARY = 'Binary';
     
+    public function getValueFormated() {
+	return 'Binary Data';
+    }
+    
     public function __construct($record, $fieldNumber, $filedName, $usage, $position, $size) {
 	$this->record = $record;
 	
@@ -25,7 +29,6 @@ abstract class X937FieldBinary extends X937FieldVariableLength {
 	$rawRecordData = $this->record->getRawRecordData();
 	
 	parent::parseValue($rawRecordData);
-//	$this->value = 'Binary Data';
     }
 }
 
