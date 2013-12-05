@@ -2,11 +2,13 @@
 
 require_once 'Validator.php';
 /**
- * Description of X937Field
+ * Contains a specific X937Field
+ * 
+ * @todo make this class abstract implement X937FieldGeneric instead.
  *
  * @author astanley
  */
-class X937Field {
+abstract class X937Field {
     /**
      * pointer back to the X937Record that contains the field.
      * @var X937Record
@@ -33,21 +35,21 @@ class X937Field {
     protected $value;	    // the value of the field;
 	
     // Usage Types
-    const MANDATORY   = 'M';
-    const CONDITIONAL = 'C';
+    const USAGE_MANDATORY   = 'M';
+    const USAGE_CONDITIONAL = 'C';
 	
     // field types
-    const ALPHABETIC                  = 'A';
-    const NUMERIC                     = 'N';
-    const BLANK                       = 'B';
-    const SPECIAL                     = 'S';
-    const ALPHAMERIC                  = 'AN';
-    const ALPHAMERICSPECIAL           = 'ANS';
-    const NUMERICBLANK                = 'NB';
-    const NUMERICSPECIAL              = 'NS';
-    const NUMERICBLANKSPECIALMICR     = 'NBSM';
-    const NUMERICBLANKSPECIALMICRONUS = 'NBSMOS';
-    const BINARY                      = 'Binary';
+    const TYPE_ALPHABETIC                  = 'A';
+    const TYPE_NUMERIC                     = 'N';
+    const TYPE_BLANK                       = 'B';
+    const TYPE_SPECIAL                     = 'S';
+    const TYPE_ALPHAMERIC                  = 'AN';
+    const TYPE_ALPHAMERICSPECIAL           = 'ANS';
+    const TYPE_NUMERICBLANK                = 'NB';
+    const TYPE_NUMERICSPECIAL              = 'NS';
+    const TYPE_NUMERICBLANKSPECIALMICR     = 'NBSM';
+    const TYPE_NUMERICBLANKSPECIALMICRONUS = 'NBSMOS';
+    const TYPE_BINARY                      = 'Binary';
 	
     public function __construct($fieldNumber, $filedName, $usage, $position, $size, $type) {
 	$this->fieldNumber = $fieldNumber;
@@ -57,16 +59,19 @@ class X937Field {
 	$this->size        = $size;
 	$this->type        = $type;
 	
-	$this->addValidators();
+	$this->addBaseValidators();
 	$this->addClassValidators();
     }
     
-    protected function addValidators() {
+    /**
+     * adds the base Validators to the field, based on attributes we can pre-determine.
+     */
+    protected function addBaseValidators() {
 	// initialize validator
 	$this->validator = new Validator();
 	
 	// add validator based on usage.
-	if ($this->usage === X937Field::MANDATORY) {
+	if ($this->usage === X937Field::USAGE_MANDATORY) {
 	    $this->validator->addValidator(new ValidatorUsageManditory());
 	}
 	
@@ -75,19 +80,19 @@ class X937Field {
 	
 	// add validator based on type.
 	switch ($this->type) {
-	    case X937Field::ALPHABETIC:
+	    case X937Field::TYPE_ALPHABETIC:
 		$this->validator->addValidator(new ValidatorTypeAlphabetic());
 		break;
-	    case X937Field::NUMERIC:
+	    case X937Field::TYPE_NUMERIC:
 		$this->validator->addValidator(new ValidatorTypeNumeric());
 		break;
-	    case X937Field::BLANK:
+	    case X937Field::TYPE_BLANK:
 		$this->validator->addValidator(new ValidatorTypeBlank());
 		break;
-	    case X937Field::SPECIAL:
+	    case X937Field::TYPE_SPECIAL:
 		// insert validators
 		break;
-	    case X937Field::ALPHAMERIC:
+	    case X937Field::TYPE_ALPHAMERIC:
 		$this->validator->addValidator(new ValidatorTypeAlphameric());
 		break;
 	    /**
@@ -99,6 +104,9 @@ class X937Field {
 	}
     }
     
+    /**
+     * stub for later overloading.
+     */
     protected function addClassValidators() {}
 
     // validate

@@ -34,12 +34,12 @@ abstract class X937FieldBinary extends X937FieldVariableLength {
 
 class X937FieldDigitalSignature extends X937FieldBinary {
     public function __construct($record, $offset, $size) {
-	parent::__construct($record, 17, 'Digital Signature', X937Field::CONDITIONAL, 111 + $offset, $size);
+	parent::__construct($record, 17, 'Digital Signature', X937Field::USAGE_CONDITIONAL, 111 + $offset, $size);
     }
 }
 
 class X937FieldImageData extends X937FieldBinary {
     public function __construct($record, $offset, $size) {
-	parent::__construct($record, 19, 'Image Data', X937Field::MANDATORY, 118 + $offset, $size);
+	parent::__construct($record, 19, 'Image Data', X937Field::USAGE_MANDATORY, 118 + $offset, $size);
     }
 }

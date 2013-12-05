@@ -12,6 +12,7 @@ interface ValidatorInterface {
 
 abstract class AbstractValidator implements ValidatorInterface {
     const ERROR = 'ABSTRACT ERROR.';
+    const TEST  = 'ABSTRACT TEST.';
     
     abstract public function validate($value);
     public function getMessages() {
@@ -61,6 +62,7 @@ class Validator implements ValidatorInterface {
 
 class ValidatorUsageManditory extends AbstractValidator implements ValidatorInterface {
     const ERROR = 'Field is mandatory.';
+    const TEST  = 'Value Must be present';
     
     public function validate($value) {
 	if (is_null($value) === TRUE) {
@@ -73,6 +75,7 @@ class ValidatorUsageManditory extends AbstractValidator implements ValidatorInte
 
 class ValidatorTypeNumeric extends AbstractValidator implements ValidatorInterface {
     const ERROR = 'Field must be numeric';
+    const TEST  = 'Value must be numeric';
     
     public function validate($value) { 
 	return is_numeric($value);
@@ -81,6 +84,7 @@ class ValidatorTypeNumeric extends AbstractValidator implements ValidatorInterfa
 
 class ValidatorTypeAlphabetic extends AbstractValidator implements ValidatorInterface {
     const ERROR = 'Field must be Alphabetic';
+    const TEST  = 'Value must be Alphabetic';
     
     public function validate($value) {
 	return ctype_alpha($value);

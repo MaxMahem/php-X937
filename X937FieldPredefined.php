@@ -53,7 +53,7 @@ class X937FieldRecordType extends X937FieldPredefined {
     const FILE_CONTROL            = '99';
     
     public function __construct($value) {
-	parent::__construct(1, 'Record Type', X937Field::MANDATORY, 1, 2, X937Field::NUMERIC);
+	parent::__construct(1, 'Record Type', X937Field::USAGE_MANDATORY, 1, 2, X937Field::TYPE_NUMERIC);
 	
 	$this->value = $value;
     }
@@ -96,7 +96,7 @@ class X937FieldSpecificationLevel extends X937FieldPredefined {
     const X9100180 = '20';
     
     public function __construct() {
-	parent::__construct(2, 'Specification Level', X937Field::MANDATORY, 3, 2, X937Field::NUMERIC);
+	parent::__construct(2, 'Specification Level', X937Field::USAGE_MANDATORY, 3, 2, X937Field::TYPE_NUMERIC);
     }
     
     public static function defineValues() {
@@ -116,7 +116,7 @@ class X937FieldTestFile extends X937FieldPredefined {
     const TEST_FILE       = 'T';
     
     public function __construct() {
-	parent::__construct(3, 'Test File Indicator', X937Field::MANDATORY, 5, 1, X937Field::ALPHABETIC);
+	parent::__construct(3, 'Test File Indicator', X937Field::USAGE_MANDATORY, 5, 1, X937Field::TYPE_ALPHABETIC);
     }
     
     public static function defineValues() {
@@ -134,7 +134,7 @@ class X937FieldResend extends X937FieldPredefined {
     const ORIGINAL_FILE = 'N';
     
     public function __construct() {
-	parent::__construct(8, 'Resend Indicator', X937Field::MANDATORY, 36, 1, X937Field::ALPHABETIC);
+	parent::__construct(8, 'Resend Indicator', X937Field::USAGE_MANDATORY, 36, 1, X937Field::TYPE_ALPHABETIC);
     }
     
     public static function defineValues() {
@@ -173,7 +173,7 @@ class X937FieldCollectionType extends X937FieldPredefined {
 	    throw new InvalidArgumentException('Bad record type');
 	}
 	
-	parent::__construct(2, 'Collection Type Indicator', X937Field::MANDATORY, 3, 2, X937Field::NUMERIC);
+	parent::__construct(2, 'Collection Type Indicator', X937Field::USAGE_MANDATORY, 3, 2, X937Field::TYPE_NUMERIC);
     }
 
     public static function defineValues() {
@@ -226,7 +226,7 @@ class X937FieldCashLetterType extends X937FieldPredefined {
     const ELECTRONIC_AND_IMAGE_RECORDS_PREVIOUS_CORRESPONDANCE = 'F';
     
     public function __construct() {
-	parent::__construct(8, 'Cash Letter Record Type Indicator', X937Field::MANDATORY, 43, 1, X937Field::ALPHABETIC);
+	parent::__construct(8, 'Cash Letter Record Type Indicator', X937Field::USAGE_MANDATORY, 43, 1, X937Field::TYPE_ALPHABETIC);
     }
 
     public static function defineValues() {
@@ -278,26 +278,26 @@ class X937FieldDocType extends X937FieldPredefined {
 		$fieldNumber = 9;
 		$fieldName   = 'Cash Letter Documentation Type Indicator';
 		$position    = 44;
-		$usage       = X937Field::MANDATORY;
+		$usage       = X937Field::USAGE_MANDATORY;
 		break;
 	    case X937FieldRecordType::CHECK_DETAIL:
 		$fieldNumber = 9;
 		$fieldName   = 'Documentation Type Indicator';
 		$position    = 73;
-		$usage       = X937Field::CONDITIONAL;
+		$usage       = X937Field::USAGE_CONDITIONAL;
 		break;
 	    case X937FieldRecordType::RETURN_RECORD:
 		$fieldNumber = 8;
 		$fieldName   = 'Return Documentation Type Indicator';
 		$position    = 45;
-		$usage       = X937Field::CONDITIONAL;
+		$usage       = X937Field::USAGE_CONDITIONAL;
 		break;
 	    default:
 		throw new InvalidArgumentException('Bad record type.');
 		break;
 	}
 	
-	parent::__construct($fieldNumber, $fieldName, $usage, $position, 1, X937Field::ALPHAMERIC);
+	parent::__construct($fieldNumber, $fieldName, $usage, $position, 1, X937Field::TYPE_ALPHAMERIC);
     }
 
     public static function defineValues() {
@@ -366,7 +366,7 @@ class X937FieldFedWorkType extends X937FieldPredefined {
     const PAYOR_GROUP_SORT          = 'E';
     
     public function __construct() {
-	parent::__construct(13, 'Fed Work Type', X937Field::CONDITIONAL, 77, 1, X937Field::ALPHAMERIC);
+	parent::__construct(13, 'Fed Work Type', X937Field::USAGE_CONDITIONAL, 77, 1, X937Field::TYPE_ALPHAMERIC);
     }
 
     public static function defineValues() {
@@ -397,7 +397,7 @@ class X937FieldVariableSizeIndicator extends X937FieldPredefined {
     const VARIABLE = '1';
     
     public function __construct() {
-	parent::__construct(2, 'Variable Size Record Indicator', X937Field::MANDATORY, 3, 1, X937Field::NUMERIC);
+	parent::__construct(2, 'Variable Size Record Indicator', X937Field::USAGE_MANDATORY, 3, 1, X937Field::TYPE_NUMERIC);
     }
 
     public static function defineValues() {
