@@ -114,7 +114,7 @@ class X937RecordFactory {
 		return new X937RecordReturnAddendumD($recordType, $recordDataASCII);
 		break;
 	    
-	    // image detail records
+	    // image view records
 	    case X937FieldRecordType::IMAGE_VIEW_DETAIL:
 		return new X937RecordImageViewDetail($recordType, $recordDataASCII);
 		break;
@@ -124,10 +124,9 @@ class X937RecordFactory {
 		 */
 		return new X937RecordImageViewData($recordType, $recordDataASCII, $recordData);
 		break;
-	    
-	    /*
-	     * @todo implment Image View Analysis - Type 54
-	     */
+	    case X937FieldRecordType::IMAGE_VIEW_ANALYSIS:
+		return new X937RecordImageViewAnalysis($recordType, $recordDataASCII);
+		break;
 
 	    // control/summary records
 	    case X937FieldRecordType::BUNDLE_CONTROL:
