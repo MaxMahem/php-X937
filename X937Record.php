@@ -11,7 +11,7 @@ require_once 'X937Field.php';
 require_once 'X937FieldTypes.php';
 require_once 'X937FieldPredefined.php';
 
-class X937Record implements IteratorAggregate, Countable {
+abstract class X937Record implements IteratorAggregate, Countable {
     /**
      * The type of the record. Should be one of the class constants.
      * @var int

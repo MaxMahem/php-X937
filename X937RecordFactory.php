@@ -53,8 +53,7 @@ class X937RecordFactory {
      * @param string $recordType the type of the record, in ASCII
      * @param string $recordData the raw record data
      * @param string $dataType the type of the record, X937File const either DATA_EBCDIC or DATA_ASCII
-     * @return \X937RecordFileHeader|\X937RecordCashLetterHeader|\X937RecordBundleHeader|\X937RecordCheckDetail|\X937RecordCheckDetailAddendumA|\X937RecordCheckDetailAddendumB|\X937RecordCheckDetailAddendumC|\X937RecordReturnRecord|\X937RecordReturnAddendumA|\X937RecordReturnAddendumB|\X937RecordReturnAddendumC|\X937RecordReturnAddendumD|\X937RecordImageViewDetail|\X937RecordImageViewData|\X937RecordBundleControl|\X937RecordBoxSummary|\X937RecordRoutingNumberSummary|\X937RecordCashLetterControl|\X937RecordFileControl|\X937RecordGeneric
-     *     an approriate record type
+     * @return X937Record an approriate record type
      * @throws InvalidArgumentException if given bad data
      */
     private static function newRecord($recordType, $recordData, $dataType = X937File::DATA_EBCDIC) {
@@ -63,6 +62,9 @@ class X937RecordFactory {
 	}
 	
 	// convert the record data if necessary.
+	/**
+	 * @todo consider how to handle binary data here? Or push this conversion elseware.
+	 */
 	if ($dataType === X937File::DATA_EBCDIC) {
 	    $recordDataASCII = iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordData);
 	} else {
@@ -70,6 +72,7 @@ class X937RecordFactory {
 	}
 
 	switch ($recordType) {
+	    // header records
 	    case X937FieldRecordType::FILE_HEADER:
 		return new X937RecordFileHeader($recordType, $recordDataASCII);
 		break;
@@ -80,6 +83,7 @@ class X937RecordFactory {
 		return new X937RecordBundleHeader($recordType, $recordDataASCII);
 		break;
 
+	    // check detail records
 	    case X937FieldRecordType::CHECK_DETAIL:
 		return new X937RecordCheckDetail($recordType, $recordDataASCII);
 		break;
@@ -92,7 +96,8 @@ class X937RecordFactory {
 	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_C:
 		return new X937RecordCheckDetailAddendumC($recordType, $recordDataASCII);
 		break;	    
-
+	    
+	    // return detail records
 	    case X937FieldRecordType::RETURN_RECORD:
 		return new X937RecordReturnRecord($recordType, $recordDataASCII);
 		break;
@@ -109,6 +114,7 @@ class X937RecordFactory {
 		return new X937RecordReturnAddendumD($recordType, $recordDataASCII);
 		break;
 	    
+	    // image detail records
 	    case X937FieldRecordType::IMAGE_VIEW_DETAIL:
 		return new X937RecordImageViewDetail($recordType, $recordDataASCII);
 		break;
@@ -123,6 +129,7 @@ class X937RecordFactory {
 	     * @todo implment Image View Analysis - Type 54
 	     */
 
+	    // control/summary records
 	    case X937FieldRecordType::BUNDLE_CONTROL:
 		return new X937RecordBundleControl($recordType, $recordDataASCII);
 		break;
@@ -132,7 +139,6 @@ class X937RecordFactory {
 	    case X937FieldRecordType::ROUTING_NUMBER_SUMMARY:
 		return new X937RecordRoutingNumberSummary($recordType, $recordDataASCII);
 		break;
-
 	    case X937FieldRecordType::CASH_LETTER_CONTROL:
 		return new X937RecordCashLetterControl($recordType, $recordDataASCII);
 		break;
