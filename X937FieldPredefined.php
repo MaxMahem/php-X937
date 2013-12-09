@@ -409,3 +409,54 @@ class X937FieldVariableSizeIndicator extends X937FieldPredefined {
 	return $definedValues;
     }
 }
+
+abstract class X937FieldImageInfo extends X937FieldPredefined {
+    const TEST_NOT_DONE = 0;
+    
+    public function __construct($fieldNumber, $fieldName, $position) {
+	parent::__construct($fieldNumber, $fieldName, X937Field::USAGE_CONDITIONAL, $position, 1);
+    }
+    
+    public static function defineValues() {
+	$definedValues = array(
+	    self::TEST_NOT_DONE         => 'Test Not Done',
+	);
+	
+	return $definedValues;
+    }
+}
+
+class X937FieldImageInfoQuality extends X937FieldImageInfo {
+    const CONDITION_PRESENT     = 1;
+    const CONDITION_NOT_PRESENT = 2;
+    
+    public static function defineValues() {
+	$definedValues = array(
+	    self::TEST_NOT_DONE         => 'Test Not Done',
+	    self::CONDITION_PRESENT     => 'Condition Present',
+	    self::CONDITION_NOT_PRESENT => 'Condition Not Present',
+	);
+	
+	return $definedValues;
+    }
+}
+
+class X937FieldImageInfoUsability extends X937FieldPredefined {
+    const TEST_NOT_DONE  = 0;
+    const UNUSEABLE      = 1;
+    const USABLE         = 2;
+    
+    public static function defineValues() {
+	// cut the usability part of the name out here so we can use it in our
+	// definition below.
+	$imagePartName = preg_replace(' Usability', '', $this->fieldName);
+	
+	$definedValues = array(
+	    self::TEST_NOT_DONE => 'Test Not Done',
+	    self::UNUSEABLE     => "$imagePartName data is unusable and unreadable",
+	    self::USABLE        => "$imagePartName data is usable and readable",
+	);
+	
+	return $definedValues;
+    }
+}

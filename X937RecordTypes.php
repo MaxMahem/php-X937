@@ -262,18 +262,18 @@ class X937RecordImageViewAnalysis extends X937Record {
     protected function addFields() {
 	$this->fields = new SplFixedArray(46);
 	$this->addField(new X937FieldRecordType(X937FieldRecordType::IMAGE_VIEW_ANALYSIS));
-	$this->addField(new X937FieldGeneric( 2, 'Global Image Qualilty',                       X937Field::USAGE_MANDATORY,    3, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric( 3, 'Global Image Usability',                      X937Field::USAGE_MANDATORY,    4, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric( 4, 'Imaging Bank Specific Test',                  X937Field::USAGE_MANDATORY,    5, 1, X937Field::TYPE_NUMERIC));
+	$this->addField(new X937FieldGeneric(2, 'Global Image Qualilty',      X937Field::USAGE_MANDATORY, 3, 1, X937Field::TYPE_NUMERIC));
+	$this->addField(new X937FieldGeneric(3, 'Global Image Usability',     X937Field::USAGE_MANDATORY, 4, 1, X937Field::TYPE_NUMERIC));
+	$this->addField(new X937FieldGeneric(4, 'Imaging Bank Specific Test', X937Field::USAGE_MANDATORY, 5, 1, X937Field::TYPE_NUMERIC));
 
 	// Image Quality Information (Fields 5-24)
-	$this->addField(new X937FieldGeneric( 5, 'Partial Image',                              X937Field::USAGE_CONDITIONAL,   6, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric( 6, 'Excessive Image Skew',                       X937Field::USAGE_CONDITIONAL,   7, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric( 7, 'Piggyback Image',                            X937Field::USAGE_CONDITIONAL,   8, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric( 8, 'Too Light or Too Dark',                      X937Field::USAGE_CONDITIONAL,   9, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric( 9, 'Streaks and/or Bands',                       X937Field::USAGE_CONDITIONAL,  10, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(10, 'Below Minimum Image Size',                   X937Field::USAGE_CONDITIONAL,  11, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(11, 'Exceeds Maximum Image Size',                 X937Field::USAGE_CONDITIONAL,  12, 1, X937Field::TYPE_NUMERIC));
+	$this->addField(new X937FieldImageQualityInfo( 5, 'Partial Image',               6));
+	$this->addField(new X937FieldImageInfoQuality( 6, 'Excessive Image Skew',        7));
+	$this->addField(new X937FieldImageInfoQuality( 7, 'Piggyback Image',             8));
+	$this->addField(new X937FieldImageInfoQuality( 8, 'Too Light or Too Dark',       9));
+	$this->addField(new X937FieldImageInfoQuality( 9, 'Streaks and/or Bands',       10));
+	$this->addField(new X937FieldImageInfoQuality(10, 'Below Minimum Image Size',   11));
+	$this->addField(new X937FieldImageInfoQuality(11, 'Exceeds Maximum Image Size', 12));
 	$this->addField(new X937FieldReserved(12, 13, 1));
 	$this->addField(new X937FieldReserved(13, 14, 1));
 	$this->addField(new X937FieldReserved(14, 15, 1));
@@ -289,19 +289,19 @@ class X937RecordImageViewAnalysis extends X937Record {
 	$this->addField(new X937FieldReserved(24, 25, 1));
 
 	// Image Usability Information (Fields 25-44)
-	$this->addField(new X937FieldGeneric(25, 'Image-Enabled POD',                     X937Field::USAGE_CONDITIONAL, 26, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(26, 'Source Document Bad',                   X937Field::USAGE_CONDITIONAL, 27, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(27, 'Date Usability',                        X937Field::USAGE_CONDITIONAL, 28, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(28, 'Payee Usability',                       X937Field::USAGE_CONDITIONAL, 29, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(29, 'Convenience Amount Usability',          X937Field::USAGE_CONDITIONAL, 30, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(30, 'Legal Amount Usability',                X937Field::USAGE_CONDITIONAL, 31, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(31, 'Signature Usability',                   X937Field::USAGE_CONDITIONAL, 32, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(32, 'Payor Name and Address Usability',      X937Field::USAGE_CONDITIONAL, 33, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(33, 'MICR Line Usability',                   X937Field::USAGE_CONDITIONAL, 34, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(34, 'Memo Line Usability',                   X937Field::USAGE_CONDITIONAL, 35, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(35, 'Payor Bank Name and Address Usability', X937Field::USAGE_CONDITIONAL, 36, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(36, 'Payee Endorsement Usability',           X937Field::USAGE_CONDITIONAL, 37, 1, X937Field::TYPE_NUMERIC));
-	$this->addField(new X937FieldGeneric(37, 'BOFD Endorsement Usability',            X937Field::USAGE_CONDITIONAL, 38, 1, X937Field::TYPE_NUMERIC));
+	$this->addField(new X937FieldGeneric(25, 'Image-Enabled POD',   X937Field::USAGE_CONDITIONAL, 26, 1, X937Field::TYPE_NUMERIC));
+	$this->addField(new X937FieldGeneric(26, 'Source Document Bad', X937Field::USAGE_CONDITIONAL, 27, 1, X937Field::TYPE_NUMERIC));
+	$this->addField(new X937FieldImageInfoUsability(27, 'Date Usability',                        28));
+	$this->addField(new X937FieldImageInfoUsability(28, 'Payee Usability',                       29));
+	$this->addField(new X937FieldImageInfoUsability(29, 'Convenience Amount Usability',          30));
+	$this->addField(new X937FieldImageInfoUsability(30, 'Legal Amount Usability',                31));
+	$this->addField(new X937FieldImageInfoUsability(31, 'Signature Usability',                   32));
+	$this->addField(new X937FieldImageInfoUsability(32, 'Payor Name and Address Usability',      33));
+	$this->addField(new X937FieldImageInfoUsability(33, 'MICR Line Usability',                   34));
+	$this->addField(new X937FieldImageInfoUsability(34, 'Memo Line Usability',                   35));
+	$this->addField(new X937FieldImageInfoUsability(35, 'Payor Bank Name and Address Usability', 36));
+	$this->addField(new X937FieldImageInfoUsability(36, 'Payee Endorsement Usability',           37));
+	$this->addField(new X937FieldImageInfoUsability(37, 'BOFD Endorsement Usability',            38));
 	$this->addField(new X937FieldReserved(38, 39, 1));
 	$this->addField(new X937FieldReserved(39, 40, 1));
 	$this->addField(new X937FieldReserved(40, 41, 1));
