@@ -21,5 +21,6 @@ To Do
 * Increased coverage of fields with predefined values (25% coverage).
 * Cash Letter, Bundle, and Check sub-types (composite of X937File probably)
 * More Iterator options.
+* Indexed File Option.
 * UCD Support
 * X100 Support
