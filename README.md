@@ -1,11 +1,9 @@
 php-X937
 ========
-
 A php based X937 file library.
 
 Features
 --------
-
 * Able to read and parse all record types of the  X937-2003.
   * ASCII and EBCDIC file support.
 * Rudimentary validation of file values according to spec.
