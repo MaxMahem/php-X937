@@ -20,8 +20,8 @@ class X937FieldUser extends X937Field {
 }
 
 class X937FieldDate extends X937Field {
-    public function __construct($fieldNumber, $fieldName, $usage, $position) {
-	parent::__construct($fieldNumber, $fieldName, $usage, $position, 8, X937Field::TYPE_NUMERIC);
+    public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
+	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Date', $usage, $position, 8, X937Field::TYPE_NUMERIC);
     }
     
     public function getValueFormated() {
@@ -37,8 +37,8 @@ class X937FieldDate extends X937Field {
 }
 
 class X937FieldTime extends X937Field {
-    public function __construct($fieldNumber, $fieldName, $usage, $position) {
-	parent::__construct($fieldNumber, $fieldName, $usage, $position, 4, X937Field::TYPE_NUMERIC);
+    public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
+	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Time', $usage, $position, 4, X937Field::TYPE_NUMERIC);
     }
     
     public function getValueFormated() {

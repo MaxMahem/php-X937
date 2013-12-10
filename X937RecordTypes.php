@@ -27,8 +27,8 @@ class X937RecordFileHeader  extends X937Record
 	$fields[3]  = new X937FieldTestFile();
 	$fields[4]  = new X937FieldRoutingNumber(4, 'Immediate Destination',    X937Field::USAGE_MANDATORY,    6);
 	$fields[5]  = new X937FieldRoutingNumber(5, 'Immediate Origin',         X937Field::USAGE_MANDATORY,   15);
-	$fields[6]  = new X937FieldDate(6, 'File Creation Date',                X937Field::USAGE_MANDATORY,   24);
-	$fields[7]  = new X937FieldTime(7, 'File Creation Time',                X937Field::USAGE_MANDATORY,   32);
+	$fields[6]  = new X937FieldDate(6, 'File Creation',                     X937Field::USAGE_MANDATORY,   24);
+	$fields[7]  = new X937FieldTime(7, 'File Creation',                     X937Field::USAGE_MANDATORY,   32);
 	$fields[8]  = new X937FieldResend();
 	$fields[9]  = new X937FieldInstitutionName( 9, 'Immediate Destination', X937Field::USAGE_CONDITIONAL, 37);
 	$fields[10] = new X937FieldInstitutionName(10, 'Immediate Origin',      X937Field::USAGE_CONDITIONAL, 55);
@@ -54,9 +54,9 @@ class X937RecordCashLetterHeader  extends X937Record
 	$fields[2]  = new X937FieldCollectionType(X937FieldRecordType::CASH_LETTER_HEADER);
 	$fields[3]  = new X937FieldRoutingNumber(3, 'Destination',            X937Field::USAGE_MANDATORY,    5);
 	$fields[4]  = new X937FieldRoutingNumber(4, 'ECE Instituion',         X937Field::USAGE_MANDATORY,   14);
-	$fields[5]  = new X937FieldDate(5, 'Cash Letter Business Date',       X937Field::USAGE_MANDATORY,   23);
-	$fields[6]  = new X937FieldDate(6, 'Cash Letter Creation Date',       X937Field::USAGE_MANDATORY,   31);
-	$fields[7]  = new X937FieldTime(7, 'Cash Letter Creation Time',       X937Field::USAGE_MANDATORY,   39);
+	$fields[5]  = new X937FieldDate(5, 'Cash Letter Business',            X937Field::USAGE_MANDATORY,   23);
+	$fields[6]  = new X937FieldDate(6, 'Cash Letter Creation',            X937Field::USAGE_MANDATORY,   31);
+	$fields[7]  = new X937FieldTime(7, 'Cash Letter Creation',            X937Field::USAGE_MANDATORY,   39);
 	$fields[8]  = new X937FieldCashLetterType();
 	$fields[9]  = new X937FieldDocType(X937FieldRecordType::CASH_LETTER_HEADER);
 	$fields[10] = new X937FieldGeneric(10, 'Cash Letter ID',              X937Field::USAGE_CONDITIONAL, 45,  8, X937Field::TYPE_ALPHAMERIC);
@@ -83,8 +83,8 @@ class X937RecordBundleHeader extends X937Record
 	$fields[2]  = new X937FieldCollectionType(X937FieldRecordType::BUNDLE_HEADER);
 	$fields[3]  = new X937FieldRoutingNumber( 3, 'Destination',      X937Field::USAGE_MANDATORY,    5);
 	$fields[4]  = new X937FieldRoutingNumber( 4, 'ECE Institution',  X937Field::USAGE_MANDATORY,   14);
-	$fields[5]  = new X937FieldDate(5, 'Bundle Business Date',       X937Field::USAGE_MANDATORY,   23);
-	$fields[6]  = new X937FieldDate(6, 'Bundle Creation Date',       X937Field::USAGE_MANDATORY,   31);
+	$fields[5]  = new X937FieldDate(5, 'Bundle Business',            X937Field::USAGE_MANDATORY,   23);
+	$fields[6]  = new X937FieldDate(6, 'Bundle Creation',            X937Field::USAGE_MANDATORY,   31);
 	$fields[7]  = new X937FieldGeneric( 7, 'Bundle ID',              X937Field::USAGE_CONDITIONAL, 39, 10, X937Field::TYPE_ALPHAMERIC);
 	$fields[8]  = new X937FieldGeneric( 8, 'Bundle Sequence Number', X937Field::USAGE_CONDITIONAL, 49,  4, X937Field::TYPE_NUMERICBLANK);
 	$fields[9]  = new X937FieldGeneric( 9, 'Cycle Number',           X937Field::USAGE_CONDITIONAL, 53,  2, X937Field::TYPE_ALPHAMERIC);
@@ -136,7 +136,7 @@ class X937RecordCheckDetailAddendumA extends X937Record
 	$fields[1]  = new X937FieldRecordType(X937FieldRecordType::CHECK_DETAIL_ADDENDUM_A);
 	$fields[2]  = new X937FieldGeneric( 2, 'Check Detail Addendum A Record Number', X937Field::USAGE_MANDATORY,    3,  1, X937Field::TYPE_NUMERIC);
 	$fields[3]  = new X937FieldRoutingNumber(3, 'BOFD',                             X937Field::USAGE_CONDITIONAL,  4);
-	$fields[4]  = new X937FieldDate(4, 'BOFD Endorsement Date',                     X937Field::USAGE_MANDATORY, 13);
+	$fields[4]  = new X937FieldDate(4, 'BOFD Endorsement',                          X937Field::USAGE_MANDATORY, 13);
 	$fields[5]  = new X937FieldItemSequenceNumber( 5, 'BOFD',                       X937Field::USAGE_CONDITIONAL, 21);
 	$fields[6]  = new X937FieldDepositAccountNumber(6,                              X937Field::USAGE_CONDITIONAL, 36);
 	$fields[7]  = new X937FieldGeneric( 7, 'BOFD Deposit Branch',                   X937Field::USAGE_CONDITIONAL, 54,  5, X937Field::TYPE_ALPHAMERICSPECIAL);
@@ -165,7 +165,7 @@ class X937RecordCheckDetailAddendumC extends X937Record
 	$fields[1]  = new X937FieldRecordType(X937FieldRecordType::CHECK_DETAIL_ADDENDUM_C);
 	$fields[2]  = new X937FieldGeneric(2, 'Check Detail Addendum C Record Number', X937Field::USAGE_MANDATORY,    3,  2, X937Field::TYPE_NUMERIC);
 	$fields[3]  = new X937FieldRoutingNumber(3, 'Endorsing Bank',                  X937Field::USAGE_CONDITIONAL,  5);
-	$fields[4]  = new X937FieldDate(4, 'Endorsing Bank Endorsement Date',          X937Field::USAGE_CONDITIONAL, 14);
+	$fields[4]  = new X937FieldDate(4, 'Endorsing Bank Endorsement',               X937Field::USAGE_CONDITIONAL, 14);
 	$fields[5]  = new X937FieldItemSequenceNumber(5, 'Endorsing Bank',             X937Field::USAGE_CONDITIONAL, 22);
 	$fields[6]  = new X937FieldGeneric(6, 'Truncation Indicator',                  X937Field::USAGE_CONDITIONAL, 37,  1, X937Field::TYPE_ALPHABETIC);
 	$fields[7]  = new X937FieldGeneric(7, 'Endorsing Bank Conversion Indicator',   X937Field::USAGE_CONDITIONAL, 38,  1, X937Field::TYPE_ALPHAMERIC);
@@ -195,7 +195,7 @@ class X937RecordReturnRecord extends X937Record
 	$fields[6]  = new X937FieldReturnReason(6, X937Field::USAGE_MANDATORY, 42);
 	$fields[7]  = new X937FieldGeneric( 7, 'Return Reason Addendum Count',          X937Field::USAGE_MANDATORY,   43,  2, X937Field::TYPE_NUMERIC);
 	$fields[8]  = new X937FieldDocType(X937FieldRecordType::RETURN_RECORD);
-	$fields[9]  = new X937FieldDate(9, 'Forward Bundle Date',                       X937Field::USAGE_CONDITIONAL, 46);
+	$fields[9]  = new X937FieldDate(9, 'Forward Bundle',                            X937Field::USAGE_CONDITIONAL, 46);
 	$fields[10] = new X937FieldItemSequenceNumber(10, 'ECE Institution',            X937Field::USAGE_CONDITIONAL, 54);
 	$fields[11] = new X937FieldGeneric(11, 'External Processing Code',              X937Field::USAGE_CONDITIONAL, 69,  1, X937Field::TYPE_ALPHAMERICSPECIAL);
 	$fields[12] = new X937FieldGeneric(12, 'Return Notification Indicator',         X937Field::USAGE_CONDITIONAL, 70,  1, X937Field::TYPE_NUMERIC);
@@ -218,7 +218,7 @@ class X937RecordReturnAddendumA extends X937Record
 	$fields[1]  = new X937FieldRecordType(X937FieldRecordType::RETURN_ADDENDUM_A);
 	$fields[2]  = new X937FieldGeneric( 2, 'Return Addendum A Record Number', X937Field::USAGE_MANDATORY,    3,  1, X937Field::TYPE_NUMERIC);
 	$fields[3]  = new X937FieldRoutingNumber(3, 'BOFD',                       X937Field::USAGE_CONDITIONAL,  4);
-	$fields[4]  = new X937FieldDate(4, 'BOFD Endorsement Date',               X937Field::USAGE_CONDITIONAL, 13); // This field has some additional data maybe?
+	$fields[4]  = new X937FieldDate(4, 'BOFD Endorsement',                    X937Field::USAGE_CONDITIONAL, 13); // This field has some additional data maybe?
 	$fields[5]  = new X937FieldItemSequenceNumber(5, 'BOFD',                  X937Field::USAGE_CONDITIONAL, 21);
 	$fields[6]  = new X937FieldDepositAccountNumber(6,                        X937Field::USAGE_CONDITIONAL, 36);
 	$fields[7]  = new X937FieldGeneric( 7, 'BOFD Deposit Branch',             X937Field::USAGE_CONDITIONAL, 54,  5, X937Field::TYPE_ALPHAMERICSPECIAL);
@@ -246,7 +246,7 @@ class X937RecordReturnAddendumB extends X937Record
 	$fields[2] = new X937FieldInstitutionName(2, 'Payor Bank',    X937Field::USAGE_CONDITIONAL,  3);
 	$fields[3] = new X937FieldGeneric(3, 'Auxiliary On-Us',       X937Field::USAGE_CONDITIONAL, 21, 15, X937Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[4] = new X937FieldItemSequenceNumber(4, 'Payor Bank', X937Field::USAGE_CONDITIONAL, 36);
-	$fields[5] = new X937FieldDate(5, 'Payor Bank Business Date', X937Field::USAGE_CONDITIONAL, 51,  8, X937Field::TYPE_NUMERIC);
+	$fields[5] = new X937FieldDate(5, 'Payor Bank Business',      X937Field::USAGE_CONDITIONAL, 51,  8, X937Field::TYPE_NUMERIC);
 	$fields[6] = new X937FieldGeneric(6, 'Payor Account Name',    X937Field::USAGE_CONDITIONAL, 59, 22, X937Field::TYPE_ALPHAMERICSPECIAL);
 	
 	return $fields;
@@ -267,7 +267,7 @@ class X937RecordReturnAddendumD extends X937Record
 	$fields[1]  = new X937FieldRecordType(X937FieldRecordType::RETURN_ADDENDUM_D);
 	$fields[2]  = new X937FieldGeneric(2, 'Return Addendum D Record Number',     X937Field::USAGE_MANDATORY,    3,  2, X937Field::TYPE_NUMERIC);
 	$fields[3]  = new X937FieldRoutingNumber(3, 'Endorsing Bank',                X937Field::USAGE_CONDITIONAL,  5);
-	$fields[4]  = new X937FieldDate(4, 'Endorsing Bank Endorsement Date',        X937Field::USAGE_CONDITIONAL, 14);
+	$fields[4]  = new X937FieldDate(4, 'Endorsing Bank Endorsement',             X937Field::USAGE_CONDITIONAL, 14);
 	$fields[5]  = new X937FieldItemSequenceNumber(5, 'Endorsing Bank',           X937Field::USAGE_CONDITIONAL, 22);
 	$fields[6]  = new X937FieldGeneric(6, 'Truncation Indicator',                X937Field::USAGE_CONDITIONAL, 37,  1, X937Field::TYPE_ALPHABETIC);
 	$fields[7]  = new X937FieldGeneric(7, 'Endorsing Bank Conversion Indicator', X937Field::USAGE_CONDITIONAL, 38,  1, X937Field::TYPE_ALPHAMERIC);
@@ -335,7 +335,7 @@ class X937RecordImageViewDetail extends X937Record
 	$fields[1]  = new X937FieldRecordType(X937FieldRecordType::IMAGE_VIEW_DETAIL);
 	$fields[2]  = new X937FieldGeneric(2, 'Image Indicator',                             X937Field::USAGE_MANDATORY,    3, 1, X937Field::TYPE_NUMERIC);
 	$fields[3]  = new X937FieldRoutingNumber(3, 'Image Creator',                         X937Field::USAGE_MANDATORY,    4);
-	$fields[4]  = new X937FieldDate(4, 'Image Creator Date',                             X937Field::USAGE_MANDATORY,   13);
+	$fields[4]  = new X937FieldDate(4, 'Image Creator',                                  X937Field::USAGE_MANDATORY,   13);
 	$fields[5]  = new X937FieldGeneric( 5, 'Image View Format Indicator',                X937Field::USAGE_MANDATORY,   21, 2, X937Field::TYPE_NUMERICBLANK);
 	$fields[6]  = new X937FieldGeneric( 6, 'Image View Compression Algorithm Identifer', X937Field::USAGE_MANDATORY,   23, 2, X937Field::TYPE_NUMERICBLANK);
 	$fields[7]  = new X937FieldGeneric( 7, 'Image View Data Size',                       X937Field::USAGE_CONDITIONAL, 25, 7, X937Field::TYPE_NUMERIC);
@@ -497,7 +497,7 @@ class X937RecordCashLetterControl extends X937Record
 	$fields[4] = new X937FieldGeneric(4, 'Cash Letter Total Amount',        X937Field::USAGE_MANDATORY,   17, 14, X937Field::TYPE_NUMERIC);
 	$fields[5] = new X937FieldGeneric(5, 'Images Within Cash Letter Count', X937Field::USAGE_CONDITIONAL, 31,  9, X937Field::TYPE_ALPHABETIC);
 	$fields[6] = new X937FieldInstitutionName(6, 'ECE Institution',         X937Field::USAGE_CONDITIONAL, 40);
-	$fields[7] = new X937FieldDate(7, 'Settlement Date',                    X937Field::USAGE_CONDITIONAL, 58);
+	$fields[7] = new X937FieldDate(7, 'Settlement',                         X937Field::USAGE_CONDITIONAL, 58);
 	$fields[8] = new X937FieldReserved(8, 66, 15);
 	
 	return $fields;
