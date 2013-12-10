@@ -97,10 +97,18 @@ class X937FieldDepositAccountNumber extends X937Field {
     }	
 }
 
-class X937FieldItemAmount extends X937Field {
-    public function __construct($fieldNumber, $position) {
-	parent::__construct($fieldNumber, 'Item Amount', X937Field::USAGE_MANDATORY, $position, 10, X937Field::TYPE_NUMERIC);
-    }	
+class X937FieldAmount extends X937Field
+{
+    public function __construct($fieldNumber, $fieldNamePrefix, $position, $size, $usage = X937Field::USAGE_MANDATORY)
+    {
+	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Amount', $usage, $position, $size, X937Field::TYPE_NUMERIC);
+    }
+    
+    public function getValueFormated() {
+	$value = $this->value / 100;
+
+	return '$' . number_format($value, 2);
+    }
 }
 
 class X937FieldItemSequenceNumber extends X937Field {
