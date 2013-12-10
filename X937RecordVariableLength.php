@@ -166,9 +166,9 @@ class X937RecordImageViewData extends X937RecordVariableLength
 	$fields[3]  = new X937FieldDate(3, 'Bundle Bsiness Date',                     X937Field::USAGE_MANDATORY,    12);
 	$fields[4]  = new X937FieldGeneric(4,  'Cycle Number',                        X937Field::USAGE_MANDATORY,    20,  2, X937Field::TYPE_ALPHAMERIC);
 	$fields[5]  = new X937FieldGeneric(5,  'ECE Instituion Item Sequence Number', X937Field::USAGE_MANDATORY,    22, 15, X937Field::TYPE_NUMERICBLANK);
-	$fields[6]  = new X937FieldGeneric(6,  'Security Originator Name',            X937Field::USAGE_CONDITIONAL,  37, 16, X937Field::TYPE_ALPHAMERICSPECIAL);
-	$fields[7]  = new X937FieldGeneric(7,  'Security Authenticator Name',         X937Field::USAGE_CONDITIONAL,  53, 16, X937Field::TYPE_ALPHAMERICSPECIAL);
-	$fields[8]  = new X937FieldGeneric(8,  'Security Key Name',                   X937Field::USAGE_CONDITIONAL,  69, 16, X937Field::TYPE_ALPHAMERICSPECIAL);
+	$fields[6]  = new X937FieldNameSecurity(6, 'Originator',    37);
+	$fields[7]  = new X937FieldNameSecurity(7, 'Authenticator', 53);
+	$fields[8]  = new X937FieldNameSecurity(8, 'Key',           69);
 	$fields[9]  = new X937FieldGeneric(9,  'Clipping Origin',                     X937Field::USAGE_MANDATORY,    85,  1, X937Field::TYPE_NUMERIC);
 	$fields[10] = new X937FieldGeneric(10, 'Clipping Coordinate H1',              X937Field::USAGE_CONDITIONAL,  86,  4, X937Field::TYPE_NUMERIC);
 	$fields[11] = new X937FieldGeneric(11, 'Clipping Coordinate H2',              X937Field::USAGE_CONDITIONAL,  90,  4, X937Field::TYPE_NUMERIC);
@@ -192,9 +192,9 @@ class X937RecordImageViewData extends X937RecordVariableLength
 	$this->addField(new X937FieldDate(3, 'Bundle Bsiness Date',                     X937Field::USAGE_MANDATORY,    12));
 	$this->addField(new X937FieldGeneric(4,  'Cycle Number',                        X937Field::USAGE_MANDATORY,    20,  2, X937Field::TYPE_ALPHAMERIC));
 	$this->addField(new X937FieldGeneric(5,  'ECE Instituion Item Sequence Number', X937Field::USAGE_MANDATORY,    22, 15, X937Field::TYPE_NUMERICBLANK));
-	$this->addField(new X937FieldGeneric(6,  'Security Originator Name',            X937Field::USAGE_CONDITIONAL,  37, 16, X937Field::TYPE_ALPHAMERICSPECIAL));
-	$this->addField(new X937FieldGeneric(7,  'Security Authenticator Name',         X937Field::USAGE_CONDITIONAL,  53, 16, X937Field::TYPE_ALPHAMERICSPECIAL));
-	$this->addField(new X937FieldGeneric(8,  'Security Key Name',                   X937Field::USAGE_CONDITIONAL,  69, 16, X937Field::TYPE_ALPHAMERICSPECIAL));
+	$this->addField(new X937FieldNameSecurity(6, 'Originator',    37));
+	$this->addField(new X937FieldNameSecurity(7, 'Authenticator', 53));
+	$this->addField(new X937FieldNameSecurity(8, 'Key',           69));
 	$this->addField(new X937FieldGeneric(9,  'Clipping Origin',                     X937Field::USAGE_MANDATORY,    85,  1, X937Field::TYPE_NUMERIC));
 	$this->addField(new X937FieldGeneric(10, 'Clipping Coordinate H1',              X937Field::USAGE_CONDITIONAL,  86,  4, X937Field::TYPE_NUMERIC));
 	$this->addField(new X937FieldGeneric(11, 'Clipping Coordinate H2',              X937Field::USAGE_CONDITIONAL,  90,  4, X937Field::TYPE_NUMERIC));

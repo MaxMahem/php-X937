@@ -53,18 +53,6 @@ class X937FieldTime extends X937Field {
     }
 }
 
-class X937FieldInstitutionName extends X937Field {
-    public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
-	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Name', $usage, $position, 18, X937Field::TYPE_ALPHABETIC);
-    }
-}
-
-class X937FieldContactName extends X937Field {
-    public function __construct($fieldNumber, $fieldName, $usage, $position) {
-	parent::__construct($fieldNumber, $fieldName, $usage, $position, 14, X937Field::TYPE_ALPHAMERICSPECIAL);
-    }	
-}
-
 class X937FieldPhoneNumber extends X937Field {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position) {
 	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Phone Number', $usage, $position, 10, X937Field::TYPE_NUMERIC);

@@ -2,6 +2,7 @@
 
 require_once 'X937Field.php';
 require_once 'X937FieldPredefined.php';
+require_once 'X937FieldTypeName.php';
 
 /**
  * This class is just a stub for record types we haven't implemented yet.
@@ -30,8 +31,8 @@ class X937RecordFileHeader  extends X937Record
 	$fields[6]  = new X937FieldDate(6, 'File Creation',                     X937Field::USAGE_MANDATORY,   24);
 	$fields[7]  = new X937FieldTime(7, 'File Creation',                     X937Field::USAGE_MANDATORY,   32);
 	$fields[8]  = new X937FieldResend();
-	$fields[9]  = new X937FieldInstitutionName( 9, 'Immediate Destination', X937Field::USAGE_CONDITIONAL, 37);
-	$fields[10] = new X937FieldInstitutionName(10, 'Immediate Origin',      X937Field::USAGE_CONDITIONAL, 55);
+	$fields[9]  = new X937FieldNameInstitution( 9, 'Immediate Destination', 37);
+	$fields[10] = new X937FieldNameInstitution(10, 'Immediate Origin',      55);
 	$fields[11] = new X937FieldGeneric(11, 'File ID Modifer',               X937Field::USAGE_CONDITIONAL, 73,  1, X937Field::TYPE_ALPHAMERIC);
 	$fields[12] = new X937FieldGeneric(12, 'Country Code',                  X937Field::USAGE_CONDITIONAL, 74,  2, X937Field::TYPE_ALPHABETIC);
 	$fields[13] = new X937FieldUser(13, 76,  4);
@@ -60,7 +61,7 @@ class X937RecordCashLetterHeader  extends X937Record
 	$fields[8]  = new X937FieldCashLetterType();
 	$fields[9]  = new X937FieldDocType(X937FieldRecordType::CASH_LETTER_HEADER);
 	$fields[10] = new X937FieldGeneric(10, 'Cash Letter ID',              X937Field::USAGE_CONDITIONAL, 45,  8, X937Field::TYPE_ALPHAMERIC);
-	$fields[11] = new X937FieldContactName(11, 'Originator Contact Name', X937Field::USAGE_CONDITIONAL, 53);
+	$fields[11] = new X937FieldName(11, 'Originator Contact', 53, 14);
 	$fields[12] = new X937FieldPhoneNumber(12, 'Originator Contact',      X937Field::USAGE_CONDITIONAL, 67);
 	$fields[13] = new X937FieldFedWorkType();
 	$fields[14] = new X937FieldUser(14, 78,  2);
@@ -140,7 +141,7 @@ class X937RecordCheckDetailAddendumA extends X937Record
 	$fields[5]  = new X937FieldItemSequenceNumber( 5, 'BOFD',                       X937Field::USAGE_CONDITIONAL, 21);
 	$fields[6]  = new X937FieldDepositAccountNumber(6,                              X937Field::USAGE_CONDITIONAL, 36);
 	$fields[7]  = new X937FieldGeneric( 7, 'BOFD Deposit Branch',                   X937Field::USAGE_CONDITIONAL, 54,  5, X937Field::TYPE_ALPHAMERICSPECIAL);
-	$fields[8]  = new X937FieldGeneric( 8, 'Payee Name',                            X937Field::USAGE_CONDITIONAL, 59, 15, X937Field::TYPE_ALPHAMERICSPECIAL);
+	$fields[8]  = new X937FieldName(    8, 'Payee', 59, 15);
 	$fields[9]  = new X937FieldGeneric( 9, 'Truncation Indicator',                  X937Field::USAGE_CONDITIONAL, 74,  1, X937Field::TYPE_ALPHAMERIC);
 	$fields[10] = new X937FieldGeneric(10, 'BOFD Conversion Indicator',             X937Field::USAGE_CONDITIONAL, 75,  1, X937Field::TYPE_ALPHAMERIC);
 	$fields[11] = new X937FieldGeneric(11, 'BOFD Correction Indicator',             X937Field::USAGE_CONDITIONAL, 76,  1, X937Field::TYPE_NUMERIC);
@@ -222,7 +223,7 @@ class X937RecordReturnAddendumA extends X937Record
 	$fields[5]  = new X937FieldItemSequenceNumber(5, 'BOFD',                  X937Field::USAGE_CONDITIONAL, 21);
 	$fields[6]  = new X937FieldDepositAccountNumber(6,                        X937Field::USAGE_CONDITIONAL, 36);
 	$fields[7]  = new X937FieldGeneric( 7, 'BOFD Deposit Branch',             X937Field::USAGE_CONDITIONAL, 54,  5, X937Field::TYPE_ALPHAMERICSPECIAL);
-	$fields[8]  = new X937FieldGeneric( 8, 'Payee Name',                      X937Field::USAGE_CONDITIONAL, 59, 15, X937Field::TYPE_ALPHAMERICSPECIAL);
+	$fields[8]  = new X937FieldName(    8, 'Payee', 59, 15);
 	$fields[9]  = new X937FieldGeneric( 9, 'Truncation Indicator',            X937Field::USAGE_CONDITIONAL, 74,  1, X937Field::TYPE_ALPHAMERIC);
 	$fields[10] = new X937FieldGeneric(10, 'BOFD Conversion Indicator',       X937Field::USAGE_CONDITIONAL, 75,  1, X937Field::TYPE_ALPHAMERIC);
 	$fields[11] = new X937FieldGeneric(11, 'BOFD Correction Indicator',       X937Field::USAGE_CONDITIONAL, 76,  1, X937Field::TYPE_NUMERIC);
@@ -243,11 +244,11 @@ class X937RecordReturnAddendumB extends X937Record
 	$fields = array();
 	
 	$fields[1] = new X937FieldRecordType(X937FieldRecordType::RETURN_ADDENDUM_B);
-	$fields[2] = new X937FieldInstitutionName(2, 'Payor Bank',    X937Field::USAGE_CONDITIONAL,  3);
+	$fields[2] = new X937FieldNameInstitution(2, 'Payor Bank', 3);
 	$fields[3] = new X937FieldGeneric(3, 'Auxiliary On-Us',       X937Field::USAGE_CONDITIONAL, 21, 15, X937Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[4] = new X937FieldItemSequenceNumber(4, 'Payor Bank', X937Field::USAGE_CONDITIONAL, 36);
 	$fields[5] = new X937FieldDate(5, 'Payor Bank Business',      X937Field::USAGE_CONDITIONAL, 51,  8, X937Field::TYPE_NUMERIC);
-	$fields[6] = new X937FieldGeneric(6, 'Payor Account Name',    X937Field::USAGE_CONDITIONAL, 59, 22, X937Field::TYPE_ALPHAMERICSPECIAL);
+	$fields[6] = new X937FieldName(6, 'Payor Account', 59, 22);
 	
 	return $fields;
     }
@@ -496,7 +497,7 @@ class X937RecordCashLetterControl extends X937Record
 	$fields[3] = new X937FieldGeneric(3, 'Items Within Cash Letter Count',  X937Field::USAGE_MANDATORY,    9, 16, X937Field::TYPE_NUMERIC);
 	$fields[4] = new X937FieldAmount( 4, 'Cash Letter Total', 17, 14);
 	$fields[5] = new X937FieldGeneric(5, 'Images Within Cash Letter Count', X937Field::USAGE_CONDITIONAL, 31,  9, X937Field::TYPE_ALPHABETIC);
-	$fields[6] = new X937FieldInstitutionName(6, 'ECE Institution',         X937Field::USAGE_CONDITIONAL, 40);
+	$fields[6] = new X937FieldNameInstitution(6, 'ECE', 40);
 	$fields[7] = new X937FieldDate(7, 'Settlement',                         X937Field::USAGE_CONDITIONAL, 58);
 	$fields[8] = new X937FieldReserved(8, 66, 15);
 	
@@ -517,8 +518,8 @@ class X937RecordFileControl extends X937Record
 	$fields[2] = new X937FieldGeneric(2, 'Cash Letter Count',                 X937Field::USAGE_MANDATORY,    3,  6, X937Field::TYPE_NUMERIC);
 	$fields[3] = new X937FieldGeneric(3, 'Total Record Count',                X937Field::USAGE_MANDATORY,    9,  6, X937Field::TYPE_NUMERIC);
 	$fields[4] = new X937FieldGeneric(4, 'Total Item Count',                  X937Field::USAGE_MANDATORY,   17,  8, X937Field::TYPE_NUMERIC);
-	$fields[5] = new X937FieldAmount(5, 'File Total', 25, 16);
-	$fields[6] = new X937FieldContactName(6, 'Immediate Origin Contact Name', X937Field::USAGE_CONDITIONAL, 41);
+	$fields[5] = new X937FieldAmount( 5, 'File Total', 25, 16);
+	$fields[6] = new X937FieldName(   6, 'Immediate Origin Contact', 41, 14);
 	$fields[7] = new X937FieldPhoneNumber(7, 'Immediate Origin Contact',      X937Field::USAGE_CONDITIONAL, 55);
 	$fields[8] = new X937FieldReserved(8, 65, 16);
 	
