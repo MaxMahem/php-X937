@@ -112,8 +112,18 @@ abstract class X937Record implements IteratorAggregate, Countable {
     public function getFieldByNumber($fieldNumber) { return $this->fields[$fieldNumber-1]; }
     public function getFieldByName($fieldName)     { return $this->fields[$this->fieldsRef[$fieldName]]; }
 
-    protected function addFields() { 
-	$this->fields = new SplFixedArray(0);
+    abstract public static function defineFields();
+    
+    protected function addFields()
+    {
+	$fields     = static::defineFields();
+	$fieldCount = count($fields);
+	
+	$this->fields = new SplFixedArray($fieldCount);
+		
+	foreach ($fields as $field) {
+	    $this->addField($field);
+	}
     }
 
     /**
