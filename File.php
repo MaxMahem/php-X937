@@ -3,7 +3,7 @@
 namespace X937;
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Record.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Factory.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'RecordFactory.php';
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'Field.php';
 /**
@@ -87,7 +87,7 @@ class X937File implements \Iterator {
 	$fileControlRecordData = fread($this->fileHandle, 80);
 	
 	// build our file record from this data.
-	$this->fileControlRecord = \X937\Records\Factory::newRecordFromRawData($fileControlRecordData, $this->dataType);
+	$this->fileControlRecord = \X937\Records\RecordFactory::newRecordFromRawData($fileControlRecordData, $this->dataType);
 	if (($this->fileControlRecord instanceof \X937\Records\FileControl) === FALSE) {
 	    throw new \InvalidArgumentException('Bad file given, last record is not a File Control Record.');
 	}
@@ -134,7 +134,7 @@ class X937File implements \Iterator {
 
 	// read the data for our record. Build a record.
 	$recordData = $this->readRecord($recordLength);	
-	$record     = \X937\Records\Factory::newRecordFromRawData($recordData, $this->dataType);
+	$record     = \X937\Records\RecordFactory::newRecordFromRawData($recordData, $this->dataType);
 
 	return $record;
     }
