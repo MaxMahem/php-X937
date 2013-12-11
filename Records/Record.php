@@ -1,18 +1,18 @@
 <?php
-/**
- * X937Records represent a single variable length line of a X937 file.
- *
- * @author Austin Stanley <maxtmahem@gmail.com>
- * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3 (or later)
- * @copyright Copyright (c) 2013, Austin Stanley
- */
 
 namespace X937\Records;
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' . DIRECTORY_SEPARATOR . 'Field.php';
 
-use X937\Fields\RecordType;
+use X937\Fields\Predefined\FieldRecordType;
 
+/**
+ * X937Records represent a single variable length line of a X937 file.
+ *
+ * @author Austin Stanley <maxtmahem@gmail.com>
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
+ * @copyright Copyright (c) 2013, Austin Stanley
+ */
 abstract class Record implements \IteratorAggregate, \Countable {
     /**
      * The type of the record. Should be one of the class constants.
@@ -55,7 +55,7 @@ abstract class Record implements \IteratorAggregate, \Countable {
      */
     public function __construct($recordType, $recordData) {
 	// input validation
-        if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) { 
+        if (array_key_exists($recordType, FieldRecordType::defineValues()) === FALSE) { 
 	    throw new InvalidArgumentException("Bad record: $recordData passed.");
 	}
 	if (is_string($recordData) === FALSE) {

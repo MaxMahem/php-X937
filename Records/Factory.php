@@ -3,7 +3,7 @@
 namespace X937\Records;
 
 use X937\X937File;
-use X937\Fields\RecordType;
+use X937\Fields\Predefined\FieldRecordType;
 
 require_once 'RecordTypes.php';
 require_once 'RecordTypesVariableLength.php';
@@ -20,9 +20,9 @@ class Factory {
      * @return array An array of handled types.
      */
     public static function handledRecordTypes() {
-	$handledRecordTypes = RecordType::defineValues();
+	$handledRecordTypes = FieldRecordType::defineValues();
 
-	unset($handledRecordTypes[RecordType::IMAGE_VIEW_ANALYSIS]);
+	unset($handledRecordTypes[FieldRecordType::IMAGE_VIEW_ANALYSIS]);
 	
 	return $handledRecordTypes;
     }
@@ -60,7 +60,7 @@ class Factory {
      * @throws InvalidArgumentException if given bad data
      */
     private static function newRecord($recordType, $recordData, $dataType = X937File::DATA_EBCDIC) {
-	if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) {
+	if (array_key_exists($recordType, FieldRecordType::defineValues()) === FALSE) {
 	    throw new InvalidArgumentException("Bad record type passed.");
 	}
 	
@@ -76,75 +76,75 @@ class Factory {
 
 	switch ($recordType) {
 	    // header records
-	    case RecordType::FILE_HEADER:
+	    case FieldRecordType::FILE_HEADER:
 		return new FileHeader($recordType, $recordDataASCII);
 		break;
-	    case RecordType::CASH_LETTER_HEADER:
+	    case FieldRecordType::CASH_LETTER_HEADER:
 		return new CashLetterHeader($recordType, $recordDataASCII);
 		break;
-	    case RecordType::BUNDLE_HEADER:
+	    case FieldRecordType::BUNDLE_HEADER:
 		return new BundleHeader($recordType, $recordDataASCII);
 		break;
 
 	    // check detail records
-	    case RecordType::CHECK_DETAIL:
+	    case FieldRecordType::CHECK_DETAIL:
 		return new CheckDetail($recordType, $recordDataASCII);
 		break;
-	    case RecordType::CHECK_DETAIL_ADDENDUM_A:
+	    case FieldRecordType::CHECK_DETAIL_ADDENDUM_A:
 		return new CheckDetailAddendumA($recordType, $recordDataASCII);
 		break;
-	    case RecordType::CHECK_DETAIL_ADDENDUM_B:
+	    case FieldRecordType::CHECK_DETAIL_ADDENDUM_B:
 		return new X937RecordCheckDetailAddendumB($recordType, $recordDataASCII);
 		break;
-	    case RecordType::CHECK_DETAIL_ADDENDUM_C:
+	    case FieldRecordType::CHECK_DETAIL_ADDENDUM_C:
 		return new CheckDetailAddendumC($recordType, $recordDataASCII);
 		break;	    
 	    
 	    // return detail records
-	    case RecordType::RETURN_RECORD:
+	    case FieldRecordType::RETURN_RECORD:
 		return new ReturnRecord($recordType, $recordDataASCII);
 		break;
-	    case RecordType::RETURN_ADDENDUM_A:
+	    case FieldRecordType::RETURN_ADDENDUM_A:
 		return new ReturnAddendumA($recordType, $recordDataASCII);
 		break;
-	    case RecordType::RETURN_ADDENDUM_B:
+	    case FieldRecordType::RETURN_ADDENDUM_B:
 		return new ReturnAddendumB($recordType, $recordDataASCII);
 		break;
-	    case RecordType::RETURN_ADDENDUM_C:
+	    case FieldRecordType::RETURN_ADDENDUM_C:
 		return new X937RecordReturnAddendumC($recordType, $recordDataASCII);
 		break;
-	    case RecordType::RETURN_ADDENDUM_D:
+	    case FieldRecordType::RETURN_ADDENDUM_D:
 		return new ReturnAddendumD($recordType, $recordDataASCII);
 		break;
 	    
 	    // image view records
-	    case RecordType::IMAGE_VIEW_DETAIL:
+	    case FieldRecordType::IMAGE_VIEW_DETAIL:
 		return new ImageViewDetail($recordType, $recordDataASCII);
 		break;
-	    case RecordType::IMAGE_VIEW_DATA:
+	    case FieldRecordType::IMAGE_VIEW_DATA:
 		/**
 		 * @todo special data handling here for the binary data.
 		 */
 		return new X937RecordImageViewData($recordType, $recordDataASCII, $recordData);
 		break;
-	    case RecordType::IMAGE_VIEW_ANALYSIS:
+	    case FieldRecordType::IMAGE_VIEW_ANALYSIS:
 		return new ImageViewAnalysis($recordType, $recordDataASCII);
 		break;
 
 	    // control/summary records
-	    case RecordType::BUNDLE_CONTROL:
+	    case FieldRecordType::BUNDLE_CONTROL:
 		return new BundleControl($recordType, $recordDataASCII);
 		break;
-	    case RecordType::BOX_SUMMARY:
+	    case FieldRecordType::BOX_SUMMARY:
 		return new BoxSummary($recordType, $recordDataASCII);
 		break;
-	    case RecordType::ROUTING_NUMBER_SUMMARY:
+	    case FieldRecordType::ROUTING_NUMBER_SUMMARY:
 		return new RoutingNumberSummary($recordType, $recordDataASCII);
 		break;
-	    case RecordType::CASH_LETTER_CONTROL:
+	    case FieldRecordType::CASH_LETTER_CONTROL:
 		return new CashLetterControl($recordType, $recordDataASCII);
 		break;
-	    case RecordType::FILE_CONTROL:
+	    case FieldRecordType::FILE_CONTROL:
 		return new FileControl($recordType, $recordDataASCII);
 		break;
 	    default:

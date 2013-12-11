@@ -2,7 +2,20 @@
 
 namespace X937\Fields;
 
-require_once 'FieldPredefined.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Predefined' . DIRECTORY_SEPARATOR . 'FieldPredefined.php';
+
+/**
+ * @todo: make autoloader work to remove this stuff.
+ */
+require_once 'FieldAmount.php';
+require_once 'FieldDate.php';
+require_once 'FieldGeneric.php';
+require_once 'FieldPhoneNumber.php';
+require_once 'FieldReserved.php';
+require_once 'FieldRoutingNumber.php';
+require_once 'FieldTime.php';
+require_once 'FieldUser.php';
+
 require_once 'FieldTypeName.php';
 require_once 'FieldTypes.php';
 require_once 'FieldVariableLength.php';
