@@ -41,7 +41,11 @@ class Factory {
 		$recordType = $recordTypeRaw;
 		break;
 	    case X937File::DATA_EBCDIC:
-		$recordType = iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordTypeRaw);
+		/**
+		 * @todo: Better handling here so we don't have to supress errors.
+		 * currently it will warn when hitting some binary data.
+		 */
+		$recordType = @iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordTypeRaw);
 		break;
 	    default:
 		throw new InvalidArgumentException("Bad dataType passed.");
