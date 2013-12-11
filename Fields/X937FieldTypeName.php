@@ -1,24 +1,28 @@
 <?php
 
-abstract class X937FieldName extends X937Field 
+namespace X937\Fields;
+
+abstract class Name extends Field 
 {
-    public function __construct($fieldNumber, $fieldNamePrefix, $position, $size) {
+    public function __construct($fieldNumber, $fieldNamePrefix, $position, $size)
+    {
 	// append 'Name' to the end of the name. Results in: $fieldNamePrefix Name
 	$fieldNamePrefix .= ' ' . 'Name';
-	parent::__construct($fieldNumber, $fieldNamePrefix, X937Field::USAGE_CONDITIONAL, $position, $size, X937Field::TYPE_ALPHAMERICSPECIAL);
+	parent::__construct($fieldNumber, $fieldNamePrefix, Field::USAGE_CONDITIONAL, $position, $size, Field::TYPE_ALPHAMERICSPECIAL);
     }	
 }
 
-class X937FieldNameInstitution extends X937FieldName
+class NameInstitution extends Name
 {
-    public function __construct($fieldNumber, $fieldNamePrefix, $position) {
+    public function __construct($fieldNumber, $fieldNamePrefix, $position)
+    {
 	// append 'Institiuion' to the end of the name. Results in: $fieldNamePrefix Instition Name
 	$fieldNamePrefix .= ' ' . 'Institution';
 	parent::__construct($fieldNumber, $fieldNamePrefix, $position, 18);
     }
 }
 
-class X937FieldNameContact extends X937FieldName
+class NameContact extends Name
 {
     public function __construct($fieldNumber, $fieldNamePrefix, $position)
     {
@@ -28,7 +32,7 @@ class X937FieldNameContact extends X937FieldName
     }
 }
 
-class X937FieldNamePayee extends X937FieldName
+class NamePayee extends Name
 {
     public function __construct()
     {
@@ -36,7 +40,7 @@ class X937FieldNamePayee extends X937FieldName
     }
 }
 
-class X937FieldNameSecurity extends X937FieldName
+class NameSecurity extends Name
 {
     public function __construct($fieldNumber, $fieldNamePrefix, $position) {
 	// prepend 'Security' to the begining of the name.
@@ -45,7 +49,7 @@ class X937FieldNameSecurity extends X937FieldName
     }
 }
 
-class X937FieldNamePayerAccount extends X937FieldName
+class NamePayerAccount extends Name
 {
     public function __construct()
     {	

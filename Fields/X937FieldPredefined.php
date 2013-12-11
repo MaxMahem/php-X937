@@ -1,14 +1,13 @@
 <?php
 
-require_once 'X937Field.php';
-require_once 'Validator.php';
+namespace X937\Fields;
 
-abstract class X937FieldPredefined extends X937Field {
+abstract class X937FieldPredefined extends Field {
     public abstract static function defineValues();
     
     protected function addClassValidators() {
 	$legalValues          = array_keys(static::defineValues());
-	$legalValuesValidator = new ValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new \ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
     
@@ -28,7 +27,8 @@ abstract class X937FieldPredefined extends X937Field {
     }
 }
 
-class X937FieldRecordType extends X937FieldPredefined {
+class RecordType extends X937FieldPredefined
+{
     const FILE_HEADER             = '01';
     const CASH_LETTER_HEADER      = '10';
     const BUNDLE_HEADER           = '20';
@@ -52,13 +52,15 @@ class X937FieldRecordType extends X937FieldPredefined {
     const CASH_LETTER_CONTROL     = '90';
     const FILE_CONTROL            = '99';
     
-    public function __construct($value) {
-	parent::__construct(1, 'Record Type', X937Field::USAGE_MANDATORY, 1, 2, X937Field::TYPE_NUMERIC);
+    public function __construct($value)
+    {
+	parent::__construct(1, 'Record Type', Field::USAGE_MANDATORY, 1, 2, Field::TYPE_NUMERIC);
 	
 	$this->value = $value;
     }
     
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$X937FieldRecordTypes = array(
 	    self::FILE_HEADER             => 'File Header Record',
 	    self::CASH_LETTER_HEADER      => 'Cash Letter Header Record',
@@ -89,17 +91,20 @@ class X937FieldRecordType extends X937FieldPredefined {
 
 }
 
-class X937FieldSpecificationLevel extends X937FieldPredefined {
+class SpecificationLevel extends X937FieldPredefined
+{
     const X9371994 = '01';
     const X9372001 = '02';
     const X9372003 = '03';
     const X9100180 = '20';
     
-    public function __construct() {
-	parent::__construct(2, 'Specification Level', X937Field::USAGE_MANDATORY, 3, 2, X937Field::TYPE_NUMERIC);
+    public function __construct()
+    {
+	parent::__construct(2, 'Specification Level', Field::USAGE_MANDATORY, 3, 2, Field::TYPE_NUMERIC);
     }
     
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$X937FieldSpecificationLevels = array(
 	    self::X9371994 => 'X9.37-1994',
 	    self::X9372001 => 'X9.37-2001',
@@ -111,15 +116,18 @@ class X937FieldSpecificationLevel extends X937FieldPredefined {
     }
 }
 
-class X937FieldTestFile extends X937FieldPredefined {
+class TestFile extends X937FieldPredefined
+{
     const PRODUCTION_FILE = 'P';
     const TEST_FILE       = 'T';
     
-    public function __construct() {
-	parent::__construct(3, 'Test File Indicator', X937Field::USAGE_MANDATORY, 5, 1, X937Field::TYPE_ALPHABETIC);
+    public function __construct()
+    {
+	parent::__construct(3, 'Test File Indicator', Field::USAGE_MANDATORY, 5, 1, Field::TYPE_ALPHABETIC);
     }
     
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$X937FieldTestFileIndicators = array(
 	    self::PRODUCTION_FILE => 'Production File',
 	    self::TEST_FILE       => 'Test File',
@@ -129,25 +137,29 @@ class X937FieldTestFile extends X937FieldPredefined {
     }
 }
 
-class X937FieldResend extends X937FieldPredefined {
+class Resend extends X937FieldPredefined
+{
     const RESEND_FILE   = 'Y';
     const ORIGINAL_FILE = 'N';
     
-    public function __construct() {
-	parent::__construct(8, 'Resend Indicator', X937Field::USAGE_MANDATORY, 36, 1, X937Field::TYPE_ALPHABETIC);
+    public function __construct()
+    {
+	parent::__construct(8, 'Resend Indicator', Field::USAGE_MANDATORY, 36, 1, Field::TYPE_ALPHABETIC);
     }
     
-    public static function defineValues() {
-	$X937FieldResendIndicators = array(
+    public static function defineValues()
+    {
+	$definedValues = array(
 	    self::RESEND_FILE   => 'Production File',
 	    self::ORIGINAL_FILE => 'Test File',
 	);
 	
-	return $X937FieldResendIndicators;
+	return $definedValues;
     }
 }
 
-class X937FieldCollectionType extends X937FieldPredefined {
+class CollectionType extends X937FieldPredefined
+{
     const PRELIMINARY_FORWARD_INFORMATION         = 00;
     const FORWARD_PRESENTMENT                     = 01;
     const FORWARD_PRESENTMENT_SAME_DAY_SETTLEMENT = 02;
@@ -166,18 +178,20 @@ class X937FieldCollectionType extends X937FieldPredefined {
      */
     private $recordType;
     
-    public function __construct($recordType) {
+    public function __construct($recordType)
+    {
 	$this->recordType = $recordType;
 	
-	if (in_array($recordType, array(X937FieldRecordType::CASH_LETTER_HEADER, X937FieldRecordType::BUNDLE_HEADER)) === FALSE) {
+	if (in_array($recordType, array(RecordType::CASH_LETTER_HEADER, RecordType::BUNDLE_HEADER)) === FALSE) {
 	    throw new InvalidArgumentException('Bad record type');
 	}
 	
-	parent::__construct(2, 'Collection Type Indicator', X937Field::USAGE_MANDATORY, 3, 2, X937Field::TYPE_NUMERIC);
+	parent::__construct(2, 'Collection Type Indicator', Field::USAGE_MANDATORY, 3, 2, Field::TYPE_NUMERIC);
     }
 
-    public static function defineValues() {
-	$X937FieldCollectionTypeIndicators = array(
+    public static function defineValues()
+    {
+	$definedValues = array(
 	    self::PRELIMINARY_FORWARD_INFORMATION         => 'Preliminary Forward Information',
 	    self::FORWARD_PRESENTMENT                     => 'Forward Presentment',
 	    self::FORWARD_PRESENTMENT_SAME_DAY_SETTLEMENT => 'Forward Presentment - Same-Day Settlement',
@@ -190,22 +204,23 @@ class X937FieldCollectionType extends X937FieldPredefined {
 	    self::BUNDLES_NOT_SAME                        => 'Bundles not the same collection type',
 	);
 	
-	return $X937FieldCollectionTypeIndicators;
+	return $definedValues;
     }
     
     /**
      * This is overridden because the valid values differs depending upon the record type.
      */
-    protected function addClassValidators() {
+    protected function addClassValidators()
+    {
 	$legalValues = array_keys(self::defineValues());
 	
 	switch ($this->recordType) {
 	    // Check Letter Header can use the default.
-	    case X937FieldRecordType::CASH_LETTER_HEADER:
+	    case RecordType::CASH_LETTER_HEADER:
 		break;
 	    
 	    // Bundle Header Records do not permit option 10, 20, and 99.
-	    case X937FieldRecordType::BUNDLE_HEADER:
+	    case RecordType::BUNDLE_HEADER:
 		unset($legalValues[self::ACCOUNT_TOTALS]);
 		unset($legalValues[self::NO_DETAIL]);
 		unset($legalValues[self::BUNDLES_NOT_SAME]);
@@ -214,22 +229,25 @@ class X937FieldCollectionType extends X937FieldPredefined {
 	    // we would normaly error check here, but that should be handled in the constructor.
 	}
 	
-	$legalValuesValidator = new ValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new \ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
 }
 
-class X937FieldCashLetterType extends X937FieldPredefined {
+class CashLetterType extends X937FieldPredefined
+{
     const NO_ELECTRONIC_OR_IMAGE_RECORDS                       = 'N';
     const ELECTRONIC_RECORDS_NO_IMAGES                         = 'E';
     const ELECTRONIC_AND_IMAGE_RECORDS                         = 'I';
     const ELECTRONIC_AND_IMAGE_RECORDS_PREVIOUS_CORRESPONDANCE = 'F';
     
-    public function __construct() {
-	parent::__construct(8, 'Cash Letter Record Type Indicator', X937Field::USAGE_MANDATORY, 43, 1, X937Field::TYPE_ALPHABETIC);
+    public function __construct()
+    {
+	parent::__construct(8, 'Cash Letter Record Type Indicator', Field::USAGE_MANDATORY, 43, 1, Field::TYPE_ALPHABETIC);
     }
 
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$definedValues = array(
 	    self::NO_ELECTRONIC_OR_IMAGE_RECORDS                       => 'No electronic check records or image records',
 	    self::ELECTRONIC_RECORDS_NO_IMAGES                         => 'Electronic check records with no images',
@@ -241,7 +259,8 @@ class X937FieldCashLetterType extends X937FieldPredefined {
     }
 }
 
-class X937FieldDocType extends X937FieldPredefined {
+class DocType extends X937FieldPredefined
+{
     const NO_IMAGE_PAPER_SEPERATE                        = 'A';
     const NO_IMAGE_PAPER_SEPERATE_IMAGE_ON_REQUEST       = 'B';
     const IMAGE_SEPERATE_NO_PAPER                        = 'C';
@@ -270,37 +289,39 @@ class X937FieldDocType extends X937FieldPredefined {
      * X937Field::CHECK_DETAIL, or X937Field::RETURN_RECORD
      * @throws InvalidArgumentException if Given a bad record type
      */
-    public function __construct($recordType) {
+    public function __construct($recordType)
+    {
 	$this->recordType = $recordType;
 	
 	switch ($recordType) {
-	    case X937FieldRecordType::CASH_LETTER_HEADER:
+	    case RecordType::CASH_LETTER_HEADER:
 		$fieldNumber = 9;
 		$fieldName   = 'Cash Letter Documentation Type Indicator';
 		$position    = 44;
-		$usage       = X937Field::USAGE_MANDATORY;
+		$usage       = Field::USAGE_MANDATORY;
 		break;
-	    case X937FieldRecordType::CHECK_DETAIL:
+	    case RecordType::CHECK_DETAIL:
 		$fieldNumber = 9;
 		$fieldName   = 'Documentation Type Indicator';
 		$position    = 73;
-		$usage       = X937Field::USAGE_CONDITIONAL;
+		$usage       = Field::USAGE_CONDITIONAL;
 		break;
-	    case X937FieldRecordType::RETURN_RECORD:
+	    case RecordType::RETURN_RECORD:
 		$fieldNumber = 8;
 		$fieldName   = 'Return Documentation Type Indicator';
 		$position    = 45;
-		$usage       = X937Field::USAGE_CONDITIONAL;
+		$usage       = Field::USAGE_CONDITIONAL;
 		break;
 	    default:
 		throw new InvalidArgumentException('Bad record type.');
 		break;
 	}
 	
-	parent::__construct($fieldNumber, $fieldName, $usage, $position, 1, X937Field::TYPE_ALPHAMERIC);
+	parent::__construct($fieldNumber, $fieldName, $usage, $position, 1, Field::TYPE_ALPHAMERIC);
     }
 
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$legalValues = array(
 	    self::NO_IMAGE_PAPER_SEPERATE                        => 'No image provided, paper provided separately',
 	    self::NO_IMAGE_PAPER_SEPERATE_IMAGE_ON_REQUEST       => 'No image provided, paper provided separetly, image upon request',
@@ -324,31 +345,33 @@ class X937FieldDocType extends X937FieldPredefined {
     /**
      * This is overridden because the valid values differs depending upon the record type.
      */
-    protected function addClassValidators() {
+    protected function addClassValidators()
+    {
 	$legalValues = array_keys(self::defineValues());
 	
 	switch ($this->recordType) {
 	    // Check Detail Records can use the default.
-	    case X937FieldRecordType::CASH_LETTER_HEADER:
+	    case RecordType::CASH_LETTER_HEADER:
 		break;
 	    
 	    // Check Detail Records and Return Records do not permit option Z.
-	    case X937FieldRecordType::CHECK_DETAIL:
+	    case RecordType::CHECK_DETAIL:
 		unset($legalValues[self::NOT_SAME_TYPE]);
 		break;
-	    case X937FieldRecordType::RETURN_RECORD:
+	    case RecordType::RETURN_RECORD:
 		unset($legalValues[self::NOT_SAME_TYPE]);
 		break;
 		
 	    // we would normaly error check here, but that should be handled in the constructor.
 	}
 	
-	$legalValuesValidator = new ValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new \ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
 }
 
-class X937FieldFedWorkType extends X937FieldPredefined {
+class FedWorkType extends X937FieldPredefined
+{
     const CITY                      = '1';
     const CITY_GROUP                = '2';
     const CITY_FINE_SORT            = '3';
@@ -365,11 +388,13 @@ class X937FieldFedWorkType extends X937FieldPredefined {
     const CITY_RCPC_MIXED           = 'D';
     const PAYOR_GROUP_SORT          = 'E';
     
-    public function __construct() {
-	parent::__construct(13, 'Fed Work Type', X937Field::USAGE_CONDITIONAL, 77, 1, X937Field::TYPE_ALPHAMERIC);
+    public function __construct()
+    {
+	parent::__construct(13, 'Fed Work Type', Field::USAGE_CONDITIONAL, 77, 1, Field::TYPE_ALPHAMERIC);
     }
 
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$definedValues = array(
 	    self::CITY                      => 'City',
 	    self::CITY_GROUP                => 'City Group',
@@ -392,15 +417,18 @@ class X937FieldFedWorkType extends X937FieldPredefined {
     }
 }
 
-class X937FieldVariableSizeIndicator extends X937FieldPredefined {
+class VariableSizeIndicator extends X937FieldPredefined
+{
     const FIXED    = '0';
     const VARIABLE = '1';
     
-    public function __construct() {
-	parent::__construct(2, 'Variable Size Record Indicator', X937Field::USAGE_MANDATORY, 3, 1, X937Field::TYPE_NUMERIC);
+    public function __construct()
+    {
+	parent::__construct(2, 'Variable Size Record Indicator', Field::USAGE_MANDATORY, 3, 1, Field::TYPE_NUMERIC);
     }
 
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$definedValues = array(
 	    self::FIXED    => 'Fixed Size',
 	    self::VARIABLE => 'Variable Size',
@@ -410,14 +438,17 @@ class X937FieldVariableSizeIndicator extends X937FieldPredefined {
     }
 }
 
-abstract class X937FieldImageInfo extends X937FieldPredefined {
+abstract class ImageInfo extends X937FieldPredefined
+{
     const TEST_NOT_DONE = 0;
     
-    public function __construct($fieldNumber, $fieldName, $position) {
-	parent::__construct($fieldNumber, $fieldName, X937Field::USAGE_CONDITIONAL, $position, 1);
+    public function __construct($fieldNumber, $fieldName, $position)
+    {
+	parent::__construct($fieldNumber, $fieldName, Field::USAGE_CONDITIONAL, $position, 1);
     }
     
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$definedValues = array(
 	    self::TEST_NOT_DONE         => 'Test Not Done',
 	);
@@ -426,11 +457,13 @@ abstract class X937FieldImageInfo extends X937FieldPredefined {
     }
 }
 
-class X937FieldImageInfoQuality extends X937FieldImageInfo {
+class ImageInfoQuality extends ImageInfo
+{
     const CONDITION_PRESENT     = 1;
     const CONDITION_NOT_PRESENT = 2;
     
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	$definedValues = array(
 	    self::TEST_NOT_DONE         => 'Test Not Done',
 	    self::CONDITION_PRESENT     => 'Condition Present',
@@ -441,12 +474,13 @@ class X937FieldImageInfoQuality extends X937FieldImageInfo {
     }
 }
 
-class X937FieldImageInfoUsability extends X937FieldPredefined {
-    const TEST_NOT_DONE  = 0;
+class ImageInfoUsability extends ImageInfo
+{
     const UNUSEABLE      = 1;
     const USABLE         = 2;
     
-    public static function defineValues() {
+    public static function defineValues()
+    {
 	// cut the usability part of the name out here so we can use it in our
 	// definition below.
 	$imagePartName = preg_replace(' Usability', '', $this->fieldName);

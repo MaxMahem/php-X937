@@ -5,13 +5,18 @@
  * @author astanley
  */
 
-require_once 'X937Record.php';
+namespace X937\Writer;
+
+use X937\Records as Records;
+use X937\Fields  as Fields;
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'X937Record.php';
 
 interface Writer {
     public function write();
 }
 
-abstract class X937RecordWriter implements Writer {  
+abstract class RecordWriter implements Writer {  
     /**
      * The X937Record we are going to write.
      * @var X937Record
@@ -24,7 +29,7 @@ abstract class X937RecordWriter implements Writer {
      */
     protected $options;
 
-    public function __construct(X937Record $record, array $options = array()) {
+    public function __construct(Records\Record $record, array $options = array()) {
 	$this->record  = $record;
 	$this->options = $options;
     }
@@ -43,7 +48,7 @@ abstract class X937RecordWriter implements Writer {
 /**
  * Simple X937 Writer class, parses though a record and prints a human readable readout of all records.
  */
-class X937RecordWriterSimple extends X937RecordWriter {
+class RecordWriterSimple extends RecordWriter {
     const OPTION_VALIDATE  = 'validate';
     const OPTION_TRANSLATE = 'translate';
     
@@ -51,8 +56,8 @@ class X937RecordWriterSimple extends X937RecordWriter {
 	$recordType = $this->record->getRecordType();
 	
 	// check for records we current haven't implemented.
-	if (array_key_exists($recordType, X937RecordFactory::handledRecordTypes()) === FALSE) {
-	    return "Record type $recordType" . ' ' . X937FieldRecordType::translate($recordType) . ' ' . 'currently unhandled.';
+	if (array_key_exists($recordType, Records\Factory::handledRecordTypes()) === FALSE) {
+	    return "Record type $recordType" . ' ' . Fields\RecordType::translate($recordType) . ' ' . 'currently unhandled.';
 	}
 	
 	$fieldsFailedValidation = 0;

@@ -1,14 +1,20 @@
 <?php
 
-require_once 'Validator.php';
+namespace X937\Fields;
+
+require_once 'X937FieldPredefined.php';
+require_once 'X937FieldTypeName.php';
+require_once 'X937FieldTypes.php';
+require_once 'X937FieldVariableLength.php';
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Validator.php';
+
 /**
  * Contains a specific X937Field
- * 
- * @todo make this class abstract implement X937FieldGeneric instead.
  *
  * @author astanley
  */
-abstract class X937Field {
+abstract class Field {
     /**
      * pointer back to the X937Record that contains the field.
      * @var X937Record
@@ -68,32 +74,32 @@ abstract class X937Field {
      */
     protected function addBaseValidators() {
 	// initialize validator
-	$this->validator = new Validator();
+	$this->validator = new \Validator();
 	
 	// add validator based on usage.
-	if ($this->usage === X937Field::USAGE_MANDATORY) {
-	    $this->validator->addValidator(new ValidatorUsageManditory());
+	if ($this->usage === Field::USAGE_MANDATORY) {
+	    $this->validator->addValidator(new \ValidatorUsageManditory());
 	}
 	
 	// add validator based on size.
-	$this->validator->addValidator(new ValidatorSize($this->size));
+	$this->validator->addValidator(new \ValidatorSize($this->size));
 	
 	// add validator based on type.
 	switch ($this->type) {
-	    case X937Field::TYPE_ALPHABETIC:
-		$this->validator->addValidator(new ValidatorTypeAlphabetic());
+	    case Field::TYPE_ALPHABETIC:
+		$this->validator->addValidator(new \ValidatorTypeAlphabetic());
 		break;
-	    case X937Field::TYPE_NUMERIC:
-		$this->validator->addValidator(new ValidatorTypeNumeric());
+	    case Field::TYPE_NUMERIC:
+		$this->validator->addValidator(new \ValidatorTypeNumeric());
 		break;
-	    case X937Field::TYPE_BLANK:
-		$this->validator->addValidator(new ValidatorTypeBlank());
+	    case Field::TYPE_BLANK:
+		$this->validator->addValidator(new \ValidatorTypeBlank());
 		break;
-	    case X937Field::TYPE_SPECIAL:
+	    case Field::TYPE_SPECIAL:
 		// insert validators
 		break;
-	    case X937Field::TYPE_ALPHAMERIC:
-		$this->validator->addValidator(new ValidatorTypeAlphameric());
+	    case Field::TYPE_ALPHAMERIC:
+		$this->validator->addValidator(new \ValidatorTypeAlphameric());
 		break;
 	    /**
 	     * @todo add rest of validators.

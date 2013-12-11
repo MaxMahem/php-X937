@@ -7,11 +7,13 @@
  * @copyright Copyright (c) 2013, Austin Stanley
  */
 
-require_once 'X937Field.php';
-require_once 'X937FieldTypes.php';
-require_once 'X937FieldPredefined.php';
+namespace X937\Records;
 
-abstract class X937Record implements IteratorAggregate, Countable {
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' . DIRECTORY_SEPARATOR . 'X937Field.php';
+
+use X937\Fields\RecordType;
+
+abstract class Record implements \IteratorAggregate, \Countable {
     /**
      * The type of the record. Should be one of the class constants.
      * @var int
@@ -53,7 +55,7 @@ abstract class X937Record implements IteratorAggregate, Countable {
      */
     public function __construct($recordType, $recordData) {
 	// input validation
-        if (array_key_exists($recordType, X937FieldRecordType::defineValues()) === FALSE) { 
+        if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) { 
 	    throw new InvalidArgumentException("Bad record: $recordData passed.");
 	}
 	if (is_string($recordData) === FALSE) {
@@ -67,8 +69,7 @@ abstract class X937Record implements IteratorAggregate, Countable {
 	
 	// added error check because I seem to be missing some.
 	foreach($this->fields as $field) {
-	    if (($field instanceof X937Field) === FALSE) {
-		print_r($this->fields);
+	    if (($field instanceof \X937\Fields\Field) === FALSE) {
 		throw new LogicException("Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
 	    }
 	}
@@ -119,7 +120,7 @@ abstract class X937Record implements IteratorAggregate, Countable {
 	$fields     = static::defineFields();
 	$fieldCount = count($fields);
 	
-	$this->fields = new SplFixedArray($fieldCount);
+	$this->fields = new \SplFixedArray($fieldCount);
 		
 	foreach ($fields as $field) {
 	    $this->addField($field);
@@ -130,7 +131,7 @@ abstract class X937Record implements IteratorAggregate, Countable {
      * Adds a X937Field (or one of it's subclasses) to the Record.
      * @param X937Field $field
      */
-    protected function addField(X937Field $field) {
+    protected function addField(\X937\Fields\Field $field) {
         $this->fields[$field->getFieldNumber()-1]  = $field;
 	
 	// update fieldRef with pointer to correct position.

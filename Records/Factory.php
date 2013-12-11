@@ -1,25 +1,29 @@
 <?php
 
+namespace X937\Records;
+
+use X937\X937File;
+use X937\Fields\RecordType;
+
 require_once 'X937Record.php';
 require_once 'X937RecordTypes.php';
 require_once 'X937RecordVariableLength.php';
-require_once 'X937FieldPredefined.php';
 
 /**
  * A factor class to generate new X937Records from different sorts of input.
  *
  * @author astanley
  */
-class X937RecordFactory {
+class Factory {
     
     /**
      * Returns an array of currently handled record types.
      * @return array An array of handled types.
      */
     public static function handledRecordTypes() {
-	$handledRecordTypes = X937FieldRecordType::defineValues();
+	$handledRecordTypes = RecordType::defineValues();
 
-	unset($handledRecordTypes[X937FieldRecordType::IMAGE_VIEW_ANALYSIS]);
+	unset($handledRecordTypes[RecordType::IMAGE_VIEW_ANALYSIS]);
 	
 	return $handledRecordTypes;
     }
@@ -28,7 +32,7 @@ class X937RecordFactory {
      * Generates an appropriate X937 Record from the raw record data.
      * @param string $recordData raw Record data as from the X937 file, generally EBCDIC format.
      * @param string $dataType   the type of the data a X937File const, either DATA_EBCDIC or DATA_ASCII
-     * @return X937Record returns an X937Record of the appropriate type.
+     * @return Record returns an X937Record of the appropriate type.
      */
     public static function newRecordFromRawData($recordData, $dataType) {
 	$recordTypeRaw = substr($recordData, 0, 2);
@@ -53,11 +57,11 @@ class X937RecordFactory {
      * @param string $recordType the type of the record, in ASCII
      * @param string $recordData the raw record data
      * @param string $dataType the type of the record, X937File const either DATA_EBCDIC or DATA_ASCII
-     * @return X937Record an approriate record type
+     * @return Record an approriate record type
      * @throws InvalidArgumentException if given bad data
      */
     private static function newRecord($recordType, $recordData, $dataType = X937File::DATA_EBCDIC) {
-	if (array_key_exists($recordType, X937FieldRecordType::defineValues()) === FALSE) {
+	if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) {
 	    throw new InvalidArgumentException("Bad record type passed.");
 	}
 	
@@ -73,79 +77,79 @@ class X937RecordFactory {
 
 	switch ($recordType) {
 	    // header records
-	    case X937FieldRecordType::FILE_HEADER:
-		return new X937RecordFileHeader($recordType, $recordDataASCII);
+	    case RecordType::FILE_HEADER:
+		return new FileHeader($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::CASH_LETTER_HEADER:
-		return new X937RecordCashLetterHeader($recordType, $recordDataASCII);
+	    case RecordType::CASH_LETTER_HEADER:
+		return new CashLetterHeader($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::BUNDLE_HEADER:
-		return new X937RecordBundleHeader($recordType, $recordDataASCII);
+	    case RecordType::BUNDLE_HEADER:
+		return new BundleHeader($recordType, $recordDataASCII);
 		break;
 
 	    // check detail records
-	    case X937FieldRecordType::CHECK_DETAIL:
-		return new X937RecordCheckDetail($recordType, $recordDataASCII);
+	    case RecordType::CHECK_DETAIL:
+		return new CheckDetail($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_A:
-		return new X937RecordCheckDetailAddendumA($recordType, $recordDataASCII);
+	    case RecordType::CHECK_DETAIL_ADDENDUM_A:
+		return new CheckDetailAddendumA($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_B:
+	    case RecordType::CHECK_DETAIL_ADDENDUM_B:
 		return new X937RecordCheckDetailAddendumB($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::CHECK_DETAIL_ADDENDUM_C:
-		return new X937RecordCheckDetailAddendumC($recordType, $recordDataASCII);
+	    case RecordType::CHECK_DETAIL_ADDENDUM_C:
+		return new CheckDetailAddendumC($recordType, $recordDataASCII);
 		break;	    
 	    
 	    // return detail records
-	    case X937FieldRecordType::RETURN_RECORD:
-		return new X937RecordReturnRecord($recordType, $recordDataASCII);
+	    case RecordType::RETURN_RECORD:
+		return new ReturnRecord($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::RETURN_ADDENDUM_A:
-		return new X937RecordReturnAddendumA($recordType, $recordDataASCII);
+	    case RecordType::RETURN_ADDENDUM_A:
+		return new ReturnAddendumA($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::RETURN_ADDENDUM_B:
-		return new X937RecordReturnAddendumB($recordType, $recordDataASCII);
+	    case RecordType::RETURN_ADDENDUM_B:
+		return new ReturnAddendumB($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::RETURN_ADDENDUM_C:
+	    case RecordType::RETURN_ADDENDUM_C:
 		return new X937RecordReturnAddendumC($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::RETURN_ADDENDUM_D:
-		return new X937RecordReturnAddendumD($recordType, $recordDataASCII);
+	    case RecordType::RETURN_ADDENDUM_D:
+		return new ReturnAddendumD($recordType, $recordDataASCII);
 		break;
 	    
 	    // image view records
-	    case X937FieldRecordType::IMAGE_VIEW_DETAIL:
-		return new X937RecordImageViewDetail($recordType, $recordDataASCII);
+	    case RecordType::IMAGE_VIEW_DETAIL:
+		return new ImageViewDetail($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::IMAGE_VIEW_DATA:
+	    case RecordType::IMAGE_VIEW_DATA:
 		/**
 		 * @todo special data handling here for the binary data.
 		 */
 		return new X937RecordImageViewData($recordType, $recordDataASCII, $recordData);
 		break;
-	    case X937FieldRecordType::IMAGE_VIEW_ANALYSIS:
-		return new X937RecordImageViewAnalysis($recordType, $recordDataASCII);
+	    case RecordType::IMAGE_VIEW_ANALYSIS:
+		return new ImageViewAnalysis($recordType, $recordDataASCII);
 		break;
 
 	    // control/summary records
-	    case X937FieldRecordType::BUNDLE_CONTROL:
-		return new X937RecordBundleControl($recordType, $recordDataASCII);
+	    case RecordType::BUNDLE_CONTROL:
+		return new BundleControl($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::BOX_SUMMARY:
-		return new X937RecordBoxSummary($recordType, $recordDataASCII);
+	    case RecordType::BOX_SUMMARY:
+		return new BoxSummary($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::ROUTING_NUMBER_SUMMARY:
-		return new X937RecordRoutingNumberSummary($recordType, $recordDataASCII);
+	    case RecordType::ROUTING_NUMBER_SUMMARY:
+		return new RoutingNumberSummary($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::CASH_LETTER_CONTROL:
-		return new X937RecordCashLetterControl($recordType, $recordDataASCII);
+	    case RecordType::CASH_LETTER_CONTROL:
+		return new CashLetterControl($recordType, $recordDataASCII);
 		break;
-	    case X937FieldRecordType::FILE_CONTROL:
-		return new X937RecordFileControl($recordType, $recordDataASCII);
+	    case RecordType::FILE_CONTROL:
+		return new FileControl($recordType, $recordDataASCII);
 		break;
 	    default:
-		return new X937RecordGeneric($recordType, $recordDataASCII);
+		return new Generic($recordType, $recordDataASCII);
 		break;
 	}
     }

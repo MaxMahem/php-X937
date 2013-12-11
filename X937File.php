@@ -1,14 +1,17 @@
 <?php
 
-require_once 'X937Record.php';
-require_once 'X937RecordFactory.php';
-require_once 'X937Field.php';
+namespace X937;
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'X937Record.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Factory.php';
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'X937Field.php';
 /**
  * An X937File
  * 
  * @todo Test ASCII file codepaths. Currently untested as have no example work.
  */
-class X937File implements Iterator {
+class X937File implements \Iterator {
     const DATA_ASCII  = 'ASCII';
     const DATA_EBCDIC = 'EBCDIC-US';
     
@@ -62,7 +65,7 @@ class X937File implements Iterator {
 	}
 		
 	// so we have a file, get info on it.
-	$this->fileInfo = new SplFileInfo($filename);
+	$this->fileInfo = new \SplFileInfo($filename);
 	
 	// open our file for reading in binary mode.
 	$this->fileHandle = fopen($filename, 'rb');
@@ -73,8 +76,8 @@ class X937File implements Iterator {
 	// pull the first record, this should always be the file header record.
 	$this->fileHeaderRecord = $this->current();
 	
-	if (($this->fileHeaderRecord instanceof X937RecordFileHeader) === FALSE) {
-	    throw new InvalidArgumentException('Bad file given, first record is not a File Header Record.');
+	if (($this->fileHeaderRecord instanceof \X937\Records\FileHeader) === FALSE) {
+	    throw new \InvalidArgumentException('Bad file given, first record is not a File Header Record.');
 	}
 
 	// seek to 80 bytes from the EOF. This should be the File Control Record
@@ -84,9 +87,9 @@ class X937File implements Iterator {
 	$fileControlRecordData = fread($this->fileHandle, 80);
 	
 	// build our file record from this data.
-	$this->fileControlRecord = X937RecordFactory::newRecordFromRawData($fileControlRecordData, $this->dataType);
-	if (($this->fileControlRecord instanceof X937RecordFileControl) === FALSE) {
-	    throw new InvalidArgumentException('Bad file given, last record is not a File Control Record.');
+	$this->fileControlRecord = \X937\Records\Factory::newRecordFromRawData($fileControlRecordData, $this->dataType);
+	if (($this->fileControlRecord instanceof \X937\Records\FileControl) === FALSE) {
+	    throw new \InvalidArgumentException('Bad file given, last record is not a File Control Record.');
 	}
 	
 	// rewind to the beginning so users can start itteration.
@@ -131,7 +134,7 @@ class X937File implements Iterator {
 
 	// read the data for our record. Build a record.
 	$recordData = $this->readRecord($recordLength);	
-	$record     = X937RecordFactory::newRecordFromRawData($recordData, $this->dataType);
+	$record     = \X937\Records\Factory::newRecordFromRawData($recordData, $this->dataType);
 
 	return $record;
     }
