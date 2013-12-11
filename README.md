@@ -9,6 +9,8 @@ Features
 * Rudimentary validation of file values according to spec.
 * Translation of some Predefined Field values (~50% coverage).
 * Object Oriented, Iterator based Access.
+* Sample Human readable writer.
+* Sample ASCII writer.
 
 To Do
 -----
