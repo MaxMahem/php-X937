@@ -11,8 +11,8 @@ namespace X937\Fields\Predefined;
  */
 class FieldVariableSize extends FieldPredefined
 {
-    const FIXED    = '0';
-    const VARIABLE = '1';
+    const VALUE_FIXED    = '0';
+    const VALUE_VARIABLE = '1';
     
     public function __construct()
     {
@@ -22,8 +22,8 @@ class FieldVariableSize extends FieldPredefined
     public static function defineValues()
     {
 	$definedValues = array(
-	    self::FIXED    => 'Fixed Size',
-	    self::VARIABLE => 'Variable Size',
+	    self::VALUE_FIXED    => 'Fixed Size',
+	    self::VALUE_VARIABLE => 'Variable Size',
 	);
 	
 	return $definedValues;

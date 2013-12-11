@@ -106,9 +106,8 @@ abstract class Record implements \IteratorAggregate, \Countable {
      * Get the Record Type, should be one of the class constents.
      * @return int The record type of the record.
      */
-    public function getRecordType() { return $this->recordType; }
-    public function getRecordData() { return $this->recordData; }
-    public function getFields()     { return $this->fields; }
+    public function getType() { return $this->recordType; }
+    public function getData() { return $this->recordData; }
 
     public function getFieldByNumber($fieldNumber) { return $this->fields[$fieldNumber-1]; }
     public function getFieldByName($fieldName)     { return $this->fields[$this->fieldsRef[$fieldName]]; }

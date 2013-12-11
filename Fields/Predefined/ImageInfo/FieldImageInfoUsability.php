@@ -14,6 +14,11 @@ class FieldImageInfoUsability extends FieldImageInfo
     const UNUSEABLE      = 1;
     const USABLE         = 2;
     
+    public function __construct($fieldNumber, $fieldNamePrefix, $position) {
+	$fieldName = $fieldNamePrefix . ' ' . 'Usability';
+	parent::__construct($fieldNumber, $fieldName, $position);
+    }
+    
     public static function defineValues()
     {
 	// cut the usability part of the name out here so we can use it in our

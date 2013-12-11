@@ -11,13 +11,13 @@ Features
 * Object Oriented, Iterator based Access.
 * Sample Human readable writer.
 * Sample ASCII writer.
+* Sample Image writer.
 
 To Do
 -----
 * File Writing Support
   * Ability to Generate Dummy Records
-* Ability to Extract Image Files
-  * Ability to perform automated IQA on these files.
+* Perform automated IQA on image files.
 * Increased coverage of fields with predefined values (~50% coverage, 114/272).
 * Cash Letter, Bundle, and Check sub-types (composite of X937File probably)
 * More Iterator options.

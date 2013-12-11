@@ -17,15 +17,6 @@ abstract class FieldImageInfo extends \X937\Fields\Predefined\FieldPredefined
     {
 	parent::__construct($fieldNumber, $fieldName, self::USAGE_CONDITIONAL, $position, 1);
     }
-    
-    public static function defineValues()
-    {
-	$definedValues = array(
-	    self::TEST_NOT_DONE         => 'Test Not Done',
-	);
-	
-	return $definedValues;
-    }
 }
 
 require_once 'FieldImageInfoQuality.php';
