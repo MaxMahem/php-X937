@@ -11,25 +11,18 @@ use X937\Records as Records;
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Record.php';
 
-interface Writer {
-    public function write();
+interface WriterInterface {
+    public function write(Records\Record $record);
 }
 
-abstract class RecordWriter implements Writer {  
+abstract class Writer implements WriterInterface {     
     /**
-     * The X937Record we are going to write.
-     * @var X937Record
-     */
-    protected $record;
-    
-    /**
-     * The options for printing.
+     * Options array
      * @var array
      */
     protected $options;
 
-    public function __construct(Records\Record $record, array $options = array()) {
-	$this->record  = $record;
+    public function __construct(array $options = array()) {
 	$this->options = $options;
     }
     
@@ -41,5 +34,5 @@ abstract class RecordWriter implements Writer {
 	return $this->options;
     }
 
-    public abstract function write();
+    public abstract function write(Records\Record $record);
 }
