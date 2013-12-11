@@ -17,6 +17,7 @@ To Do
 -----
 * File Writing Support
   * Ability to Generate Dummy Records
+  * Ability to merge files
 * Perform automated IQA on image files.
 * Increased coverage of fields with predefined values (~50% coverage, 114/272).
 * Cash Letter, Bundle, and Check sub-types (composite of X937File probably)
