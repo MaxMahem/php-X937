@@ -340,8 +340,8 @@ class ImageViewDetail extends Record
 	$fields[2]  = new Fields\FieldGeneric(2, 'Image Indicator',                             Field::USAGE_MANDATORY,    3, 1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Image Creator',                         Field::USAGE_MANDATORY,    4);
 	$fields[4]  = new Fields\FieldDate(4, 'Image Creator',                                  Field::USAGE_MANDATORY,   13);
-	$fields[5]  = new Fields\FieldGeneric( 5, 'Image View Format Indicator',                Field::USAGE_MANDATORY,   21, 2, Field::TYPE_NUMERICBLANK);
-	$fields[6]  = new Fields\FieldGeneric( 6, 'Image View Compression Algorithm Identifer', Field::USAGE_MANDATORY,   23, 2, Field::TYPE_NUMERICBLANK);
+	$fields[5]  = new Fields\Predefined\ImageView\FieldImageViewFormat();
+	$fields[6]  = new Fields\Predefined\ImageView\FieldImageViewCompression();
 	$fields[7]  = new Fields\FieldGeneric( 7, 'Image View Data Size',                       Field::USAGE_CONDITIONAL, 25, 7, Field::TYPE_NUMERIC);
 	$fields[8]  = new Fields\FieldGeneric( 8, 'View Side Indicator',                        Field::USAGE_MANDATORY,   32, 1, Field::TYPE_NUMERIC);
 	$fields[9]  = new Fields\FieldGeneric( 9, 'View Descriptor',                            Field::USAGE_MANDATORY,   33, 2, Field::TYPE_NUMERIC);

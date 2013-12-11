@@ -2,6 +2,9 @@
 
 namespace X937\Writer;
 
+use X937\Records as Records;
+use X937\Fields  as Fields;
+
 require_once 'RecordWriter.php';
 
 /**

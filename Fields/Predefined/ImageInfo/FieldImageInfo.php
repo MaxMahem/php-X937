@@ -2,8 +2,6 @@
 
 namespace X937\Fields\Predefined\ImageInfo;
 
-use X937\Fields\Predefined\FieldPredefined;
-
 /**
  * Abstract base clase for Image Info fields. They share some const's in common.
  *
@@ -11,7 +9,7 @@ use X937\Fields\Predefined\FieldPredefined;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-abstract class FieldImageInfo extends FieldPredefined
+abstract class FieldImageInfo extends \X937\Fields\Predefined\FieldPredefined
 {
     const TEST_NOT_DONE = 0;
     

@@ -14,7 +14,7 @@ $options = array(
 
 foreach($file as $record) {
     $recordWriter = new X937\Writer\RecordWriterASCII($record);
-//    $recordWriter = new X937\Writer\RecordWriterHumanReadable($record, $options);
+    $recordWriter = new X937\Writer\RecordWriterHuman($record, $options);
     echo $recordWriter->write() . PHP_EOL;
     $count++;
     if ($count > 100) { break; }

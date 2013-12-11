@@ -29,11 +29,8 @@ class RecordWriterASCII extends RecordWriter {
 	$output = '';
 	
 	foreach ($this->record as $field) {
-	    if ($field->getType() !== Field::TYPE_BINARY) {
-		$output .= $field->getValue();
-	    } else {
-		$output .= '';
-	    }
+	    // ignore binary data.
+	    $output .= ($field->getType() === Field::TYPE_BINARY) ? '' : $field->getValue();
 	}
 	
 	return $output;
