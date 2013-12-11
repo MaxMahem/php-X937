@@ -2,10 +2,10 @@
 
 namespace X937;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'X937Record.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Record.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Factory.php';
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'X937Field.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'Field.php';
 /**
  * An X937File
  * 

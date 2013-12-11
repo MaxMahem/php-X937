@@ -10,7 +10,7 @@ namespace X937\Writer;
 use X937\Records as Records;
 use X937\Fields  as Fields;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'X937Record.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Record.php';
 
 interface Writer {
     public function write();

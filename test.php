@@ -1,7 +1,7 @@
 <?php
 
-require_once 'X937File.php';
-require_once 'X937RecordWriter.php';
+require_once 'File.php';
+require_once 'RecordWriter.php';
 
 $file = new X937\X937File("test.X937");
 

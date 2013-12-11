@@ -9,7 +9,7 @@
 
 namespace X937\Records;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' . DIRECTORY_SEPARATOR . 'X937Field.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' . DIRECTORY_SEPARATOR . 'Field.php';
 
 use X937\Fields\RecordType;
 

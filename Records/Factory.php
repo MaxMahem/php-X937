@@ -5,9 +5,8 @@ namespace X937\Records;
 use X937\X937File;
 use X937\Fields\RecordType;
 
-require_once 'X937Record.php';
-require_once 'X937RecordTypes.php';
-require_once 'X937RecordVariableLength.php';
+require_once 'RecordTypes.php';
+require_once 'RecordTypesVariableLength.php';
 
 /**
  * A factor class to generate new X937Records from different sorts of input.

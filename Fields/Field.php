@@ -2,10 +2,10 @@
 
 namespace X937\Fields;
 
-require_once 'X937FieldPredefined.php';
-require_once 'X937FieldTypeName.php';
-require_once 'X937FieldTypes.php';
-require_once 'X937FieldVariableLength.php';
+require_once 'FieldPredefined.php';
+require_once 'FieldTypeName.php';
+require_once 'FieldTypes.php';
+require_once 'FieldVariableLength.php';
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Validator.php';
 
