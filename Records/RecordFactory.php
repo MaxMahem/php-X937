@@ -126,7 +126,7 @@ class RecordFactory {
 		/**
 		 * @todo special data handling here for the binary data.
 		 */
-		return new X937RecordImageViewData($recordType, $recordDataASCII, $recordData);
+		return new RecordImageViewData($recordType, $recordDataASCII, $recordData);
 		break;
 	    case FieldRecordType::IMAGE_VIEW_ANALYSIS:
 		return new ImageViewAnalysis($recordType, $recordDataASCII);

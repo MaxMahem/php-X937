@@ -138,7 +138,7 @@ class X937RecordReturnAddendumC extends X937RecordVariableLength
     }
 }
 
-class X937RecordImageViewData extends X937RecordVariableLength
+class RecordImageViewData extends X937RecordVariableLength
 {
     /**
      * The raw record data, preserved so we can have it for binary fields.

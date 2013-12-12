@@ -74,7 +74,7 @@ class WriterImage extends Writer implements WriterInterface
 	}
     }
     
-    private function writeImage(\X937\Records\X937RecordImageViewData $record)
+    private function writeImage(\X937\Records\RecordImageViewData $record)
     {
 	$filename  = trim($record->getFieldByNumber(5)->getValue()); // base
 	$filename .= '-' . $this->viewSide;                          // side
