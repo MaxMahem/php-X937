@@ -4,6 +4,7 @@ require_once 'File.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Writer' .  DIRECTORY_SEPARATOR . 'WriterHuman.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Writer' .  DIRECTORY_SEPARATOR . 'WriterASCII.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Writer' .  DIRECTORY_SEPARATOR . 'WriterImage.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Writer' .  DIRECTORY_SEPARATOR . 'WriterXML.php';
 
 $file = new X937\X937File("test.X937");
 
@@ -16,6 +17,7 @@ $options = array(
 $imageWriter = New X937\Writer\WriterImage($file, 'images');
 $humanWriter = New X937\Writer\WriterHuman($options);
 $asciiWriter = New X937\Writer\WriterASCII();
+$xmlWriter   = New X937\Writer\WriterXML('test.xml');
 
 $fileASCII = fopen('test.txt', 'w');
 
@@ -27,7 +29,10 @@ foreach($file as $record) {
     fwrite($fileASCII, $asciiWriter->write($record) . PHP_EOL);
     
     // write Images.
-    $imageWriter->write($record);
+    // $imageWriter->write($record);
+    
+    // write XML
+    $xmlWriter->write($record);
     
 //    if ($count > 100) { break; }
 }

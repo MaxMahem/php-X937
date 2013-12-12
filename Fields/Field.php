@@ -134,8 +134,8 @@ abstract class Field {
     }
 
     // getters
-    public function getFieldName()   { return $this->fieldName; }
-    public function getFieldNumber() { return $this->fieldNumber; }
+    public function getName()   { return $this->fieldName; }
+    public function getNumber() { return $this->fieldNumber; }
     public function getUsage()       { return $this->usage; }
     public function getPosition()    { return $this->position; }
     public function getSize()        { return $this->size; }

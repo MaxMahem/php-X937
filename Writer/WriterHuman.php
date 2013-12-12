@@ -37,7 +37,7 @@ class WriterHuman extends Writer implements WriterInterface
 	    
 	    // we build an array of what we want to output.
 	    // These items are mandatory.
-	    $fieldOutputArray[] = $field->getFieldName() . ':';
+	    $fieldOutputArray[] = $field->getName() . ':';
 	    $fieldOutputArray[] = $field->getValueFormated();
 	    
 	    // these items are conditional

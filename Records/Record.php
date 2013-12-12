@@ -131,9 +131,9 @@ abstract class Record implements \IteratorAggregate, \Countable {
      * @param X937Field $field
      */
     protected function addField(\X937\Fields\Field $field) {
-        $this->fields[$field->getFieldNumber()-1]  = $field;
+        $this->fields[$field->getNumber()-1]  = $field;
 	
 	// update fieldRef with pointer to correct position.
-	$this->fieldsRef[$field->getFieldName()-1] = $field->getFieldNumber();
+	$this->fieldsRef[$field->getName()-1] = $field->getNumber();
     }
 }
