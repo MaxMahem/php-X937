@@ -246,7 +246,6 @@ class X937File implements \Iterator {
 	
 	// rewind to the start of the file.
 	rewind($this->fileHandle);
-
 	
 	return $dataType;
     }

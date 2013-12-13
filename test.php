@@ -23,7 +23,7 @@ $fileASCII = fopen('test.txt', 'w');
 
 foreach($file as $record) {
     // write human readable.
-    echo $humanWriter->write($record) . PHP_EOL;
+    // echo $humanWriter->write($record) . PHP_EOL;
     
     // write ASCII.
     fwrite($fileASCII, $asciiWriter->write($record) . PHP_EOL);

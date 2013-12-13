@@ -12,6 +12,7 @@ Features
 * Sample Human readable writer.
 * Sample ASCII writer.
 * Sample Image writer.
+* Sample XML writer
 
 To Do
 -----

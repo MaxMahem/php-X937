@@ -21,9 +21,11 @@ require_once 'Writer.php';
  */
 class WriterXML extends Writer implements WriterInterface
 {
+    // control elements
     const CONTROL_ELEMENT_FILE        = 'File';
     const CONTROL_ELEMENT_CASH_LETTER = 'Cash_Letter';
     const CONTROL_ELEMENT_BUNDLE      = 'Bundle';
+    const CONTROL_ELEMENT_ITEM        = 'Item';
     /**
      * XMLWriter object for writing XML!
      * @var XMLWriter
@@ -41,6 +43,12 @@ class WriterXML extends Writer implements WriterInterface
      * @var array
      */
     private $openElements = array();
+    
+    /**
+     * Do we currently have a check element open.
+     * @var boolean
+     */
+    private $checkElementOpen = FALSE;
     
     /**
      * Create a new XML writer. Initialises a XML file.
@@ -91,36 +99,36 @@ class WriterXML extends Writer implements WriterInterface
 		$this->writeElement($record);
 		break;
 	    
-	    /**
-	     * @todo Special handling for checks.
-	     */
+	    // Item records. There should only be one item detail record per 
+	    // item group. Each new record marks the start of a new group.
+	    case FieldRecordType::CHECK_DETAIL:
+		$this->openElement(self::CONTROL_ELEMENT_ITEM);
+		$this->writeElement($record);
+		break;
+	    case FieldRecordType::RETURN_RECORD:
+		$this->openElement(self::CONTROL_ELEMENT_ITEM);
+		$this->writeElement($record);
 	    
 	    // Control record. Write the record element first and then close the
 	    // control element.
 	    case FieldRecordType::BUNDLE_CONTROL:
+		$this->closeItemElement();
 		$this->writeElement($record);
 		$this->closeElement(self::CONTROL_ELEMENT_BUNDLE);
 		break;
 	    case FieldRecordType::CASH_LETTER_CONTROL:
+		$this->closeItemElement();
 		$this->writeElement($record);
 		$this->closeElement(self::CONTROL_ELEMENT_CASH_LETTER);
 		break;
 	    case FieldRecordType::FILE_CONTROL:
+		$this->closeItemElement();
 		$this->writeElement($record);
 		$this->closeElement(self::CONTROL_ELEMENT_FILE);
 		break;
 	    default:
 		$this->writeElement($record);
 	}
-	
-	$output = '';
-	
-	foreach ($record as $field) {
-	    // ignore binary data.
-	    $output .= ($field->getType() === Field::TYPE_BINARY) ? '' : $field->getValue();
-	}
-	
-	return $output;
     }
     
     private function writeElement(Records\Record $record)
@@ -161,15 +169,36 @@ class WriterXML extends Writer implements WriterInterface
     
     private function openElement($element)
     {
+	// check to see if the current open element is a check, if it is, close it.
+	$this->closeItemElement();
+	
 	// push our element onto the end of our stack.
 	array_push($this->openElements, $element);
 	
 	// open our element
 	$this->XML->startElement($element);
     }
+    /**
+     * Item records have no closing records so closing them is tricky. Call
+     * this function before any potentially non check record is open or closed.
+     */
+    private function closeItemElement() {
+	$openElement = array_pop($this->openElements);
+	
+	if ($openElement === self::CONTROL_ELEMENT_ITEM) {
+	    // end our check element
+	    $this->XML->endElement();
+	} else {
+	    // wasn't a check, push our elements back on the array.
+	    array_push($this->openElements, $openElement);
+	}
+    }
     
     private function closeElement($element)
     {
+	// check to see if we need to close a check element first.
+	$this->closeItemElement();
+
 	// pop our element of of the end of our stack.
 	$elementFromStack = array_pop($this->openElements);
 	
