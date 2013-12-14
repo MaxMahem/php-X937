@@ -54,8 +54,9 @@ class BinaryData extends \X937\Fields\VariableLength\VariableLength
     }
     
     public function getValueRaw() {
-	// strelen should work here even though this data is binary.
-	$size = strlen($this->getValue());
-	return X937\Fields\SizeBytes::formatBinary($size) . ' ' . 'Binary Data';
+	// strelen should work here even though this data is binary. We actually
+	// the value in 8 bit byets.
+	$size = strlen($this->value);
+	return \X937\Fields\SizeBytes::formatBytes($size) . ' ' . 'Binary Data';
     }
 }
