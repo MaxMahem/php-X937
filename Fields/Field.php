@@ -87,9 +87,29 @@ abstract class Field {
      */
     protected $value;	    // the value of the field;
 	
-    public function __construct($fieldNumber, $filedName, $usage, $position, $size, $type) {
+    public function __construct($fieldNumber, $fieldName, $usage, $position, $size, $type) {
+	// validate inputs:
+	if (is_int($fieldNumber) === false) {
+	    throw new \InvalidArgumentException('Fieldnumber must be an integer.');
+	}
+	if (is_string($fieldName) === false) {
+	    throw new \InvalidArgumentException('Field Name must be a string.');
+	}
+	if (($usage !== self::USAGE_CONDITIONAL) && ($usage !== self::USAGE_MANDATORY)) {
+	    throw new \InvalidArgumentException('Usage must be a usage constant');
+	}
+	if (is_int($position) === false) {
+	    throw new \InvalidArgumentException('Position must be an integer');
+	}
+	if (is_int($size) === false) {
+	    throw new \InvalidArgumentException('Size must be an integer');
+	}
+	if (array_key_exists($type, self::defineTypes()) === false) {
+	    throw new \InvalidArgumentException('Type must be a type constant');
+	}
+	
 	$this->fieldNumber = $fieldNumber;
-	$this->fieldName   = $filedName;
+	$this->fieldName   = $fieldName;
 	$this->usage       = $usage;
 	$this->position    = $position;
 	$this->size        = $size;
@@ -99,6 +119,23 @@ abstract class Field {
 	$this->addClassValidators();
     }
     
+    public static function defineTypes() {
+	$legalTypes = array(
+	    self::TYPE_ALPHABETIC                  => 'Alphabetic characters (A-Z, a-z) and space.',
+	    self::TYPE_NUMERIC                     => 'Numeric characters (0-9)',
+	    self::TYPE_BLANK                       => 'Blank character, space (ASCII 0x20, EBCDIC 0x40)',
+	    self::TYPE_SPECIAL                     => 'Any printable character (ASCII > 0x1F, EBCIDC > 0x3F',
+	    self::TYPE_ALPHAMERIC                  => 'Any Alphabetic or Numeric character',
+	    self::TYPE_ALPHAMERICSPECIAL           => 'Any Alphabetic, Numeric, or Special character.',
+	    self::TYPE_NUMERICBLANK                => 'Any Numeric or Blank character',
+	    self::TYPE_NUMERICSPECIAL              => 'Any Numeric of Special character',
+	    self::TYPE_NUMERICBLANKSPECIALMICR     => 'Any Numeric Character, Dash (-), or Asterisk (*)',
+	    self::TYPE_NUMERICBLANKSPECIALMICRONUS => 'Any Numeric Character, Dash (-), Asterisk (*), or Forward Slash (/)',
+	    self::TYPE_BINARY                      => 'Binary Data',
+	);
+	
+	return $legalTypes;
+    }
     /**
      * adds the base Validators to the field, based on attributes we can pre-determine.
      */

@@ -115,7 +115,7 @@ class CheckDetailAddendumA extends Record
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'BOFD',                             Field::USAGE_CONDITIONAL,  4);
 	$fields[4]  = new Fields\FieldDate(4, 'BOFD Endorsement',                          Field::USAGE_MANDATORY, 13);
 	$fields[5]  = new Fields\ItemSequenceNumber( 5, 'BOFD',                       Field::USAGE_CONDITIONAL, 21);
-	$fields[6]  = new Fields\DepositAccountNumber(6,                              Field::USAGE_CONDITIONAL, 36);
+	$fields[6]  = new Fields\DepositAccountNumber(6, 36);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'BOFD Deposit Branch',                   Field::USAGE_CONDITIONAL, 54,  5, Field::TYPE_ALPHAMERICSPECIAL);
 	$fields[8]  = new Fields\NamePayee();
 	$fields[9]  = new Fields\FieldGeneric( 9, 'Truncation Indicator',                  Field::USAGE_CONDITIONAL, 74,  1, Field::TYPE_ALPHAMERIC);
@@ -197,7 +197,7 @@ class ReturnAddendumA extends Record
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'BOFD',                       Field::USAGE_CONDITIONAL,  4);
 	$fields[4]  = new Fields\FieldDate(4, 'BOFD Endorsement',                    Field::USAGE_CONDITIONAL, 13); // This field has some additional data maybe?
 	$fields[5]  = new Fields\ItemSequenceNumber(5, 'BOFD',                  Field::USAGE_CONDITIONAL, 21);
-	$fields[6]  = new Fields\DepositAccountNumber(6,                        Field::USAGE_CONDITIONAL, 36);
+	$fields[6]  = new Fields\DepositAccountNumber(6, 36);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'BOFD Deposit Branch',             Field::USAGE_CONDITIONAL, 54,  5, Field::TYPE_ALPHAMERICSPECIAL);
 	$fields[8]  = new Fields\NamePayee();
 	$fields[9]  = new Fields\FieldGeneric( 9, 'Truncation Indicator',            Field::USAGE_CONDITIONAL, 74,  1, Field::TYPE_ALPHAMERIC);

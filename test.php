@@ -18,20 +18,20 @@ $fileHuman = New \SplFileObject('human.txt', 'w');
 $fileXML   = New \XMLWriter();
 $fileXML->openURI('xml.xml');
 
-$imageWriter = New X937\Writer\Image(X937\Writer\Image::FORMAT_FILE, 'image');
+$imageWriter       = New X937\Writer\Image(X937\Writer\Image::FORMAT_FILE, 'image');
 $imageWriterBase64 = New X937\Writer\Image(X937\Writer\Image::FORMAT_BASE64);
-$humanWriter = New X937\Writer\Human($fileHuman, $options);
-$flatWriter  = New X937\Writer\Flat($fileASCII);
-$xmlWriter   = New X937\Writer\XML($fileXML, array(), $imageWriter);
+$humanWriter       = New X937\Writer\Human($fileHuman, $options);
+$flatWriter        = New X937\Writer\Flat($fileASCII);
+$xmlWriter         = New X937\Writer\XML($fileXML, array(), $imageWriter);
 
 $timeStart = microtime(true);
 
 foreach($file as $record) {
     // write human readable.
-    $humanWriter->write($record);
+    $humanWriter->write($record, array(), $imageWriter);
     
     // write ASCII.
-    $flatWriter->write($record);
+    $flatWriter->write($record, array(), $imageWriterBase64);
     
     // write Images.
 //    $imageWriter->write($record);
