@@ -10,7 +10,7 @@ namespace X937\Fields;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class FieldAmount extends Field
+class Amount extends Field
 {
     public function __construct($fieldNumber, $fieldNamePrefix, $position, $size, $usage = Field::USAGE_MANDATORY)
     {
@@ -27,5 +27,9 @@ class FieldAmount extends Field
 	$value = $this->value / 100;
 
 	return '$' . number_format($value, 2);
+    }
+    
+    public function getValueSignifigant() {
+	return ltrim($this->value, '0 ');
     }
 }

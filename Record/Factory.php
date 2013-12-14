@@ -1,28 +1,35 @@
 <?php
 
-namespace X937\Records;
+namespace X937\Record;
 
 use X937\X937File;
-use X937\Fields\Predefined\FieldRecordType;
+use X937\Fields\Predefined\RecordType;
 
 require_once 'RecordTypes.php';
-require_once 'RecordTypesVariableLength.php';
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'VariableLength.php';
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'CheckDetailAddendumB.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'ImageViewData.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'ReturnAddendumC.php';
+
+require_once 'CashLetterHeader.php';
 
 /**
- * A factor class to generate new X937Records from different sorts of input.
+ * A factor class to generate new X937Record from different sorts of input.
  *
  * @author astanley
  */
-class RecordFactory {
+class Factory {
     
     /**
      * Returns an array of currently handled record types.
      * @return array An array of handled types.
      */
     public static function handledRecordTypes() {
-	$handledRecordTypes = FieldRecordType::defineValues();
+	$handledRecordTypes = RecordType::defineValues();
 
-	unset($handledRecordTypes[FieldRecordType::IMAGE_VIEW_ANALYSIS]);
+	unset($handledRecordTypes[RecordType::VALUE_IMAGE_VIEW_ANALYSIS]);
 	
 	return $handledRecordTypes;
     }
@@ -60,7 +67,7 @@ class RecordFactory {
      * @throws InvalidArgumentException if given bad data
      */
     private static function newRecord($recordType, $recordData, $dataType = X937File::DATA_EBCDIC) {
-	if (array_key_exists($recordType, FieldRecordType::defineValues()) === FALSE) {
+	if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) {
 	    throw new InvalidArgumentException("Bad record type passed.");
 	}
 	
@@ -76,76 +83,76 @@ class RecordFactory {
 	}
 
 	switch ($recordType) {
-	    // header records
-	    case FieldRecordType::FILE_HEADER:
+	    // header Record
+	    case RecordType::VALUE_FILE_HEADER:
 		return new FileHeader($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::CASH_LETTER_HEADER:
+	    case RecordType::VALUE_CASH_LETTER_HEADER:
 		return new CashLetterHeader($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::BUNDLE_HEADER:
+	    case RecordType::VALUE_BUNDLE_HEADER:
 		return new BundleHeader($recordType, $recordDataASCII);
 		break;
 
-	    // check detail records
-	    case FieldRecordType::CHECK_DETAIL:
+	    // check detail Record
+	    case RecordType::VALUE_CHECK_DETAIL:
 		return new CheckDetail($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::CHECK_DETAIL_ADDENDUM_A:
+	    case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_A:
 		return new CheckDetailAddendumA($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::CHECK_DETAIL_ADDENDUM_B:
-		return new X937RecordCheckDetailAddendumB($recordType, $recordDataASCII);
+	    case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_B:
+		return new VariableLength\CheckDetailAddendumB($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::CHECK_DETAIL_ADDENDUM_C:
+	    case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_C:
 		return new CheckDetailAddendumC($recordType, $recordDataASCII);
 		break;	    
 	    
-	    // return detail records
-	    case FieldRecordType::RETURN_RECORD:
+	    // return detail Record
+	    case RecordType::VALUE_RETURN_RECORD:
 		return new ReturnRecord($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::RETURN_ADDENDUM_A:
+	    case RecordType::VALUE_RETURN_ADDENDUM_A:
 		return new ReturnAddendumA($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::RETURN_ADDENDUM_B:
+	    case RecordType::VALUE_RETURN_ADDENDUM_B:
 		return new ReturnAddendumB($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::RETURN_ADDENDUM_C:
-		return new X937RecordReturnAddendumC($recordType, $recordDataASCII);
+	    case RecordType::VALUE_RETURN_ADDENDUM_C:
+		return new VariableLength\ReturnAddendumC($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::RETURN_ADDENDUM_D:
+	    case RecordType::VALUE_RETURN_ADDENDUM_D:
 		return new ReturnAddendumD($recordType, $recordDataASCII);
 		break;
 	    
-	    // image view records
-	    case FieldRecordType::IMAGE_VIEW_DETAIL:
+	    // image view Record
+	    case RecordType::VALUE_IMAGE_VIEW_DETAIL:
 		return new ImageViewDetail($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::IMAGE_VIEW_DATA:
+	    case RecordType::VALUE_IMAGE_VIEW_DATA:
 		/**
 		 * @todo special data handling here for the binary data.
 		 */
-		return new RecordImageViewData($recordType, $recordDataASCII, $recordData);
+		return new VariableLength\ImageViewData($recordType, $recordDataASCII, $recordData);
 		break;
-	    case FieldRecordType::IMAGE_VIEW_ANALYSIS:
+	    case RecordType::VALUE_IMAGE_VIEW_ANALYSIS:
 		return new ImageViewAnalysis($recordType, $recordDataASCII);
 		break;
 
-	    // control/summary records
-	    case FieldRecordType::BUNDLE_CONTROL:
+	    // control/summary Record
+	    case RecordType::VALUE_BUNDLE_CONTROL:
 		return new BundleControl($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::BOX_SUMMARY:
+	    case RecordType::VALUE_BOX_SUMMARY:
 		return new BoxSummary($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::ROUTING_NUMBER_SUMMARY:
+	    case RecordType::VALUE_ROUTING_NUMBER_SUMMARY:
 		return new RoutingNumberSummary($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::CASH_LETTER_CONTROL:
+	    case RecordType::VALUE_CASH_LETTER_CONTROL:
 		return new CashLetterControl($recordType, $recordDataASCII);
 		break;
-	    case FieldRecordType::FILE_CONTROL:
+	    case RecordType::VALUE_FILE_CONTROL:
 		return new FileControl($recordType, $recordDataASCII);
 		break;
 	    default:

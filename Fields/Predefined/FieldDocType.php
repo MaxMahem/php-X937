@@ -45,19 +45,19 @@ class FieldDocType extends FieldPredefined
 	$this->recordType = $recordType;
 	
 	switch ($recordType) {
-	    case FieldRecordType::CASH_LETTER_HEADER:
+	    case RecordType::VALUE_CASH_LETTER_HEADER:
 		$fieldNumber = 9;
 		$fieldName   = 'Cash Letter Documentation Type Indicator';
 		$position    = 44;
 		$usage       = self::USAGE_MANDATORY;
 		break;
-	    case FieldRecordType::CHECK_DETAIL:
+	    case RecordType::VALUE_CHECK_DETAIL:
 		$fieldNumber = 9;
 		$fieldName   = 'Documentation Type Indicator';
 		$position    = 73;
 		$usage       = self::USAGE_CONDITIONAL;
 		break;
-	    case FieldRecordType::RETURN_RECORD:
+	    case RecordType::VALUE_RETURN_RECORD:
 		$fieldNumber = 8;
 		$fieldName   = 'Return Documentation Type Indicator';
 		$position    = 45;
@@ -101,15 +101,15 @@ class FieldDocType extends FieldPredefined
 	$legalValues = array_keys(self::defineValues());
 	
 	switch ($this->recordType) {
-	    // Check Detail Records can use the default.
-	    case FieldRecordType::CASH_LETTER_HEADER:
+	    // Check Detail Record can use the default.
+	    case RecordType::VALUE_CASH_LETTER_HEADER:
 		break;
 	    
-	    // Check Detail Records and Return Records do not permit option Z.
-	    case FieldRecordType::CHECK_DETAIL:
+	    // Check Detail Record and Return Record do not permit option Z.
+	    case RecordType::VALUE_CHECK_DETAIL:
 		unset($legalValues[self::NOT_SAME_TYPE]);
 		break;
-	    case FieldRecordType::RETURN_RECORD:
+	    case RecordType::VALUE_RETURN_RECORD:
 		unset($legalValues[self::NOT_SAME_TYPE]);
 		break;
 		

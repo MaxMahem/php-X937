@@ -33,7 +33,7 @@ class FieldCollectionType extends FieldPredefined
     {
 	$this->recordType = $recordType;
 	
-	if (in_array($recordType, array(FieldRecordType::CASH_LETTER_HEADER, FieldRecordType::BUNDLE_HEADER)) === FALSE) {
+	if (in_array($recordType, array(RecordType::VALUE_CASH_LETTER_HEADER, RecordType::VALUE_BUNDLE_HEADER)) === FALSE) {
 	    throw new InvalidArgumentException('Bad record type');
 	}
 	
@@ -67,11 +67,11 @@ class FieldCollectionType extends FieldPredefined
 	
 	switch ($this->recordType) {
 	    // Check Letter Header can use the default.
-	    case FieldRecordType::CASH_LETTER_HEADER:
+	    case RecordType::VALUE_CASH_LETTER_HEADER:
 		break;
 	    
-	    // Bundle Header Records do not permit option 10, 20, and 99.
-	    case FieldRecordType::BUNDLE_HEADER:
+	    // Bundle Header Record do not permit option 10, 20, and 99.
+	    case RecordType::VALUE_BUNDLE_HEADER:
 		unset($legalValues[self::ACCOUNT_TOTALS]);
 		unset($legalValues[self::NO_DETAIL]);
 		unset($legalValues[self::BUNDLES_NOT_SAME]);

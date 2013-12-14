@@ -11,10 +11,10 @@ namespace X937\Fields\Predefined;
  */
 class FieldCashLetterType extends FieldPredefined
 {
-    const NO_ELECTRONIC_OR_IMAGE_RECORDS                       = 'N';
-    const ELECTRONIC_RECORDS_NO_IMAGES                         = 'E';
-    const ELECTRONIC_AND_IMAGE_RECORDS                         = 'I';
-    const ELECTRONIC_AND_IMAGE_RECORDS_PREVIOUS_CORRESPONDANCE = 'F';
+    const NO_ELECTRONIC_OR_IMAGE_Record                       = 'N';
+    const ELECTRONIC_Record_NO_IMAGES                         = 'E';
+    const ELECTRONIC_AND_IMAGE_Record                         = 'I';
+    const ELECTRONIC_AND_IMAGE_Record_PREVIOUS_CORRESPONDANCE = 'F';
     
     public function __construct()
     {
@@ -24,10 +24,10 @@ class FieldCashLetterType extends FieldPredefined
     public static function defineValues()
     {
 	$definedValues = array(
-	    self::NO_ELECTRONIC_OR_IMAGE_RECORDS                       => 'No electronic check records or image records',
-	    self::ELECTRONIC_RECORDS_NO_IMAGES                         => 'Electronic check records with no images',
-	    self::ELECTRONIC_AND_IMAGE_RECORDS                         => 'Electronic check records and image records',
-	    self::ELECTRONIC_AND_IMAGE_RECORDS_PREVIOUS_CORRESPONDANCE => 'Electronic check records and image records that corespond with previous cash letter',
+	    self::NO_ELECTRONIC_OR_IMAGE_Record                       => 'No electronic check Record or image Record',
+	    self::ELECTRONIC_Record_NO_IMAGES                         => 'Electronic check Record with no images',
+	    self::ELECTRONIC_AND_IMAGE_Record                         => 'Electronic check Record and image Record',
+	    self::ELECTRONIC_AND_IMAGE_Record_PREVIOUS_CORRESPONDANCE => 'Electronic check Record and image Record that corespond with previous cash letter',
 	);
 	
 	return $definedValues;

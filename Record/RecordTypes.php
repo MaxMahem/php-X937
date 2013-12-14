@@ -1,10 +1,10 @@
 <?php
 
-namespace X937\Records;
+namespace X937\Record;
 
 use X937\Fields as Fields;
 
-use X937\Fields\Predefined\FieldRecordType;
+use X937\Fields\Predefined\RecordType;
 use X937\Fields\Field;
 
 /**
@@ -26,7 +26,7 @@ class FileHeader extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::FILE_HEADER);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_FILE_HEADER);
 	$fields[2]  = new Fields\Predefined\FieldSpecificationLevel();
 	$fields[3]  = new Fields\Predefined\FieldTestFile();
 	$fields[4]  = new Fields\FieldRoutingNumber(4, 'Immediate Destination',    Field::USAGE_MANDATORY,    6);
@@ -45,34 +45,7 @@ class FileHeader extends Record
     }
 }
 
-/**
- *  Cash Letter Header Record - Type 10
- */
-class CashLetterHeader  extends Record 
-{
-    public static function defineFields()
-    {
-	$fields = array();
-	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::CASH_LETTER_HEADER);
-	$fields[2]  = new Fields\Predefined\FieldCollectionType(FieldRecordType::CASH_LETTER_HEADER);
-	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Destination',       Field::USAGE_MANDATORY,    5);
-	$fields[4]  = new Fields\FieldRoutingNumber(4, 'ECE Institution',    Field::USAGE_MANDATORY,   14);
-	$fields[5]  = new Fields\FieldDate(5, 'Cash Letter Business',       Field::USAGE_MANDATORY,   23);
-	$fields[6]  = new Fields\FieldDate(6, 'Cash Letter Creation',       Field::USAGE_MANDATORY,   31);
-	$fields[7]  = new Fields\FieldTime(7, 'Cash Letter Creation',       Field::USAGE_MANDATORY,   39);
-	$fields[8]  = new Fields\Predefined\FieldCashLetterType();
-	$fields[9]  = new Fields\Predefined\FieldDocType(FieldRecordType::CASH_LETTER_HEADER);
-	$fields[10] = new Fields\FieldGeneric(10, 'Cash Letter ID',         Field::USAGE_CONDITIONAL, 45,  8, Field::TYPE_ALPHAMERIC);
-	$fields[11] = new Fields\NameContact(11, 'Originator', 53, 14);
-	$fields[12] = new Fields\FieldPhoneNumber(12, 'Originator Contact', Field::USAGE_CONDITIONAL, 67);
-	$fields[13] = new Fields\Predefined\FieldFedWorkType();
-	$fields[14] = new Fields\FieldUser(14, 78,  2);
-	$fields[15] = new Fields\FieldReserved(15, 80,  1);
-	
-	return $fields;
-    }
-}
+
 
 /**
  * Bundle Header Record - Type 20
@@ -83,8 +56,8 @@ class BundleHeader extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::BUNDLE_HEADER);
-	$fields[2]  = new Fields\Predefined\FieldCollectionType(FieldRecordType::BUNDLE_HEADER);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_BUNDLE_HEADER);
+	$fields[2]  = new Fields\Predefined\FieldCollectionType(RecordType::VALUE_BUNDLE_HEADER);
 	$fields[3]  = new Fields\FieldRoutingNumber( 3, 'Destination',      Field::USAGE_MANDATORY,    5);
 	$fields[4]  = new Fields\FieldRoutingNumber( 4, 'ECE Institution',  Field::USAGE_MANDATORY,   14);
 	$fields[5]  = new Fields\FieldDate(5, 'Bundle Business',            Field::USAGE_MANDATORY,   23);
@@ -108,15 +81,15 @@ class CheckDetail extends Record {
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::CHECK_DETAIL);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_CHECK_DETAIL);
 	$fields[2]  = new Fields\FieldGeneric( 2, 'Auxiliary On-Us',                       Field::USAGE_CONDITIONAL,  3, 15, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldGeneric( 3, 'External Processing Code',              Field::USAGE_CONDITIONAL, 18,  1, Field::TYPE_ALPHAMERICSPECIAL);
 	$fields[4]  = new Fields\FieldGeneric( 4, 'Payor Bank Routing Number',             Field::USAGE_MANDATORY,   19,  8, Field::TYPE_NUMERIC);
 	$fields[5]  = new Fields\FieldGeneric( 5, 'Payor Bank Routing Number Check Digit', Field::USAGE_CONDITIONAL, 27,  1, Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[6]  = new Fields\FieldGeneric( 6, 'On-Us',                                 Field::USAGE_MANDATORY,   28, 20, Field::TYPE_NUMERICBLANKSPECIALMICRONUS);
-	$fields[7]  = new Fields\FieldAmount(  7, 'Item', 10, 48);
+	$fields[7]  = new Fields\Amount(  7, 'Item', 10, 48);
 	$fields[8]  = new Fields\ItemSequenceNumber(8, 'ECE Institution',             Field::USAGE_MANDATORY, 58);
-	$fields[9]  = new Fields\Predefined\FieldDocType(FieldRecordType::CHECK_DETAIL);
+	$fields[9]  = new Fields\Predefined\FieldDocType(RecordType::VALUE_CHECK_DETAIL);
 	$fields[10] = new Fields\FieldGeneric(10, 'Return Acceptance Indicator',           Field::USAGE_CONDITIONAL, 74,  1, Field::TYPE_ALPHAMERIC);
 	$fields[11] = new Fields\FieldGeneric(11, 'MICR Valid Indicator',                  Field::USAGE_CONDITIONAL, 75,  1, Field::TYPE_NUMERIC);
 	$fields[12] = new Fields\FieldGeneric(12, 'BOFD Indicator',                        Field::USAGE_MANDATORY,   76,  1, Field::TYPE_ALPHABETIC);
@@ -137,7 +110,7 @@ class CheckDetailAddendumA extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::CHECK_DETAIL_ADDENDUM_A);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_CHECK_DETAIL_ADDENDUM_A);
 	$fields[2]  = new Fields\FieldGeneric( 2, 'Check Detail Addendum A Record Number', Field::USAGE_MANDATORY,    3,  1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'BOFD',                             Field::USAGE_CONDITIONAL,  4);
 	$fields[4]  = new Fields\FieldDate(4, 'BOFD Endorsement',                          Field::USAGE_MANDATORY, 13);
@@ -166,7 +139,7 @@ class CheckDetailAddendumC extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::CHECK_DETAIL_ADDENDUM_C);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_CHECK_DETAIL_ADDENDUM_C);
 	$fields[2]  = new Fields\FieldGeneric(2, 'Check Detail Addendum C Record Number', Field::USAGE_MANDATORY,    3,  2, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Endorsing Bank',                  Field::USAGE_CONDITIONAL,  5);
 	$fields[4]  = new Fields\FieldDate(4, 'Endorsing Bank Endorsement',               Field::USAGE_CONDITIONAL, 14);
@@ -191,14 +164,14 @@ class ReturnRecord extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::RETURN_RECORD);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_RETURN_RECORD);
 	$fields[2]  = new Fields\FieldGeneric( 2, 'Payor Bank Routing Number',             Field::USAGE_MANDATORY,    3,  8, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldGeneric( 3, 'Payor Bank Routing Number Check Digit', Field::USAGE_CONDITIONAL, 11,  1, Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[4]  = new Fields\FieldGeneric( 4, 'On-Us Return Record',                   Field::USAGE_CONDITIONAL, 12, 20, Field::TYPE_NUMERICBLANKSPECIALMICRONUS);
 	$fields[5]  = new Fields\Item(    5, 'Item',                                  Field::USAGE_MANDATORY,   32, 10);
 	$fields[6]  = new Fields\Predefined\FieldReturnReason(6, Field::USAGE_MANDATORY, 42);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'Return Reason Addendum Count',          Field::USAGE_MANDATORY,   43,  2, Field::TYPE_NUMERIC);
-	$fields[8]  = new Fields\Predefined\FieldDocType(FieldRecordType::RETURN_RECORD);
+	$fields[8]  = new Fields\Predefined\FieldDocType(RecordType::VALUE_RETURN_RECORD);
 	$fields[9]  = new Fields\FieldDate(9, 'Forward Bundle',                            Field::USAGE_CONDITIONAL, 46);
 	$fields[10] = new Fields\ItemSequenceNumber(10, 'ECE Institution',            Field::USAGE_CONDITIONAL, 54);
 	$fields[11] = new Fields\FieldGeneric(11, 'External Processing Code',              Field::USAGE_CONDITIONAL, 69,  1, Field::TYPE_ALPHAMERICSPECIAL);
@@ -219,7 +192,7 @@ class ReturnAddendumA extends Record
     {
 	$fields = array();
 
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::RETURN_ADDENDUM_A);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_RETURN_ADDENDUM_A);
 	$fields[2]  = new Fields\FieldGeneric( 2, 'Return Addendum A Record Number', Field::USAGE_MANDATORY,    3,  1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'BOFD',                       Field::USAGE_CONDITIONAL,  4);
 	$fields[4]  = new Fields\FieldDate(4, 'BOFD Endorsement',                    Field::USAGE_CONDITIONAL, 13); // This field has some additional data maybe?
@@ -246,7 +219,7 @@ class ReturnAddendumB extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::RETURN_ADDENDUM_B);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_RETURN_ADDENDUM_B);
 	$fields[2] = new Fields\NameInstitution(2, 'Payor Bank', 3);
 	$fields[3] = new Fields\FieldGeneric(3, 'Auxiliary On-Us',       Field::USAGE_CONDITIONAL, 21, 15, Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[4] = new Fields\ItemSequenceNumber(4, 'Payor Bank', Field::USAGE_CONDITIONAL, 36);
@@ -268,7 +241,7 @@ class ReturnAddendumD extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::RETURN_ADDENDUM_D);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_RETURN_ADDENDUM_D);
 	$fields[2]  = new Fields\FieldGeneric(2, 'Return Addendum D Record Number',     Field::USAGE_MANDATORY,    3,  2, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Endorsing Bank',                Field::USAGE_CONDITIONAL,  5);
 	$fields[4]  = new Fields\FieldDate(4, 'Endorsing Bank Endorsement',             Field::USAGE_CONDITIONAL, 14);
@@ -293,12 +266,12 @@ class AccountTotalsDetail extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::ACCOUNT_TOTALS_DETAIL);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_ACCOUNT_TOTALS_DETAIL);
 	$fields[2] = new Fields\FieldRoutingNumber(2, 'Destination',                   Field::USAGE_MANDATORY,  5);
 	$fields[3] = new Fields\FieldGeneric(3, 'Key Account / Low Account in Range',  Field::USAGE_MANDATORY, 12, 18, Field::TYPE_NUMERIC);
 	$fields[4] = new Fields\FieldGeneric(4, 'Key Account / High Account in Range', Field::USAGE_MANDATORY, 30, 18, Field::TYPE_NUMERIC);
 	$fields[5] = new Fields\FieldGeneric(5, 'Total Item Count',                    Field::USAGE_MANDATORY, 48, 12, Field::TYPE_NUMERIC);
-	$fields[6] = new Fields\FieldAmount( 6, 'Total Item', 60, 14);
+	$fields[6] = new Fields\Amount( 6, 'Total Item', 60, 14);
 	$fields[7] = new Fields\FieldUser(7, 74, 4);
 	$fields[8] = new Fields\FieldReserved(8, 78, 3);
 	
@@ -315,11 +288,11 @@ class NonHitTotalsDetail extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::NON_HIT_TOTALS_DETAIL);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_NON_HIT_TOTALS_DETAIL);
 	$fields[2] = new Fields\FieldRoutingNumber(2, 'Destination', Field::USAGE_MANDATORY,  5);
 	$fields[3] = new Fields\FieldGeneric(3, 'Non-Hit Indicator', Field::USAGE_MANDATORY, 12, 01, Field::TYPE_ALPHAMERIC);
 	$fields[4] = new Fields\FieldGeneric(4, 'Total Item Count',  Field::USAGE_MANDATORY, 13, 12, Field::TYPE_NUMERIC);
-	$fields[5] = new Fields\FieldAmount( 5, 'Total Item', 25, 14);
+	$fields[5] = new Fields\Amount( 5, 'Total Item', 25, 14);
 	$fields[6] = new Fields\FieldUser(6, 39, 12);
 	$fields[7] = new Fields\FieldReserved(7, 51, 30);
 	
@@ -336,20 +309,20 @@ class ImageViewDetail extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::IMAGE_VIEW_DETAIL);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_IMAGE_VIEW_DETAIL);
 	$fields[2]  = new Fields\FieldGeneric(2, 'Image Indicator',              Field::USAGE_MANDATORY,    3, 1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Image Creator',          Field::USAGE_MANDATORY,    4);
 	$fields[4]  = new Fields\FieldDate(4, 'Image Creator',                   Field::USAGE_MANDATORY,   13);
 	$fields[5]  = new Fields\Predefined\ImageView\FieldImageViewFormat();
 	$fields[6]  = new Fields\Predefined\ImageView\FieldImageViewCompression();
-	$fields[7]  = new Fields\FieldGeneric( 7, 'Image View Data Size',        Field::USAGE_CONDITIONAL, 25, 7, Field::TYPE_NUMERIC);
+	$fields[7]  = new Fields\SizeBytes( 7, 'Image View Data Size',           Field::USAGE_CONDITIONAL, 25, 7);
 	$fields[8]  = new Fields\Predefined\FieldViewSide();
 	$fields[9]  = new Fields\FieldGeneric( 9, 'View Descriptor',             Field::USAGE_MANDATORY,   33, 2, Field::TYPE_NUMERIC);
 	$fields[10] = new Fields\FieldGeneric(10, 'Digital Signature Indicator', Field::USAGE_MANDATORY,   35, 1, Field::TYPE_NUMERICBLANK);
 	$fields[11] = new Fields\FieldGeneric(11, 'Digital Signature Method',    Field::USAGE_MANDATORY,   36, 2, Field::TYPE_NUMERIC);
-	$fields[12] = new Fields\FieldGeneric(12, 'Security Key Size',           Field::USAGE_CONDITIONAL, 38, 5, Field::TYPE_NUMERIC);
+	$fields[12] = new Fields\FieldGeneric(12, 'Security Key Size',           Field::USAGE_MANDATORY,   38, 5, Field::TYPE_NUMERIC);
 	$fields[13] = new Fields\FieldGeneric(13, 'Start of Protected Data',     Field::USAGE_CONDITIONAL, 43, 7, Field::TYPE_NUMERIC);
-	$fields[14] = new Fields\FieldGeneric(14, 'Length of Protected Data',    Field::USAGE_CONDITIONAL, 50, 7, Field::TYPE_NUMERIC);
+	$fields[14] = new Fields\SizeBytes(14, 'Length of Protected Data',       Field::USAGE_CONDITIONAL, 50, 7);
 	$fields[15] = new Fields\FieldGeneric(15, 'Image Recreate Indicator',    Field::USAGE_CONDITIONAL, 57, 1, Field::TYPE_NUMERIC);
 	$fields[16] = new Fields\FieldUser(16, 58, 8);
 	$fields[17] = new Fields\FieldReserved(17, 66, 15);
@@ -367,7 +340,7 @@ class ImageViewAnalysis extends Record
     {
 	$fields = array();
 	
-	$fields[1]  = new Fields\Predefined\FieldRecordType(FieldRecordType::IMAGE_VIEW_ANALYSIS);
+	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_IMAGE_VIEW_ANALYSIS);
 	$fields[2]  = new Fields\FieldGeneric(2, 'Global Image Qualilty',      Field::USAGE_MANDATORY, 3, 1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldGeneric(3, 'Global Image Usability',     Field::USAGE_MANDATORY, 4, 1, Field::TYPE_NUMERIC);
 	$fields[4]  = new Fields\FieldGeneric(4, 'Imaging Bank Specific Test', Field::USAGE_MANDATORY, 5, 1, Field::TYPE_NUMERIC);
@@ -433,10 +406,10 @@ class BundleControl extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::BUNDLE_CONTROL);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_BUNDLE_CONTROL);
 	$fields[2] = new Fields\FieldGeneric(2, 'Items Within Bundle Count',  Field::USAGE_MANDATORY,    3,  4, Field::TYPE_NUMERIC);
-	$fields[3] = new Fields\FieldAmount( 3, 'Bundle Total',      7, 12);
-	$fields[4] = new Fields\FieldAmount( 4, 'MICR Valid Total', 19, 12,   Field::USAGE_CONDITIONAL);
+	$fields[3] = new Fields\Amount( 3, 'Bundle Total',      7, 12);
+	$fields[4] = new Fields\Amount( 4, 'MICR Valid Total', 19, 12,   Field::USAGE_CONDITIONAL);
 	$fields[5] = new Fields\FieldGeneric(5, 'Images within Bundle Count', Field::USAGE_CONDITIONAL, 31,  5, Field::TYPE_NUMERIC);
 	$fields[6] = new Fields\FieldUser(6, 36, 20);
 	$fields[7] = new Fields\FieldReserved(7, 56, 25);
@@ -454,12 +427,12 @@ class BoxSummary extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::BOX_SUMMARY);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_BOX_SUMMARY);
 	$fields[2] = new Fields\FieldRoutingNumber(2, 'Destination',   Field::USAGE_MANDATORY, 03);
 	$fields[3] = new Fields\FieldGeneric(3, 'Box Sequence Number', Field::USAGE_MANDATORY, 12,  3, Field::TYPE_NUMERIC);
 	$fields[4] = new Fields\FieldGeneric(4, 'Box Bundle Count',    Field::USAGE_MANDATORY, 15,  4, Field::TYPE_NUMERIC);
 	$fields[5] = new Fields\FieldGeneric(5, 'Box Number ID',       Field::USAGE_MANDATORY, 19,  8, Field::TYPE_NUMERIC);
-	$fields[6] = new Fields\FieldAmount( 6, 'Box Total', 27, 14);
+	$fields[6] = new Fields\Amount( 6, 'Box Total', 27, 14);
 	$fields[7] = new Fields\FieldReserved(7, 41, 40);
 	
 	return $fields;
@@ -475,9 +448,9 @@ class RoutingNumberSummary extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::ROUTING_NUMBER_SUMMARY);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_ROUTING_NUMBER_SUMMARY);
 	$fields[2] = new Fields\FieldRoutingNumber(2, 'Within Cash Letter',    Field::USAGE_MANDATORY,  3);
-	$fields[3] = new Fields\FieldAmount( 3, 'Routing Number Total', 12, 14);
+	$fields[3] = new Fields\Amount( 3, 'Routing Number Total', 12, 14);
 	$fields[4] = new Fields\FieldGeneric(4, 'Routing Number Item Count',   Field::USAGE_MANDATORY, 26,  6, Field::TYPE_NUMERIC);
 	$fields[5] = new Fields\FieldUser(5, 32, 24);
 	$fields[6] = new Fields\FieldReserved(6, 56, 25);
@@ -495,10 +468,10 @@ class CashLetterControl extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::CASH_LETTER_CONTROL);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_CASH_LETTER_CONTROL);
 	$fields[2] = new Fields\FieldGeneric(2, 'Bundle Count',                    Field::USAGE_MANDATORY,    3,  6, Field::TYPE_NUMERIC);
 	$fields[3] = new Fields\FieldGeneric(3, 'Items Within Cash Letter Count',  Field::USAGE_MANDATORY,    9, 16, Field::TYPE_NUMERIC);
-	$fields[4] = new Fields\FieldAmount( 4, 'Cash Letter Total', 17, 14);
+	$fields[4] = new Fields\Amount( 4, 'Cash Letter Total', 17, 14);
 	$fields[5] = new Fields\FieldGeneric(5, 'Images Within Cash Letter Count', Field::USAGE_CONDITIONAL, 31,  9, Field::TYPE_ALPHABETIC);
 	$fields[6] = new Fields\NameInstitution(6, 'ECE', 40);
 	$fields[7] = new Fields\FieldDate(7, 'Settlement',                         Field::USAGE_CONDITIONAL, 58);
@@ -517,11 +490,11 @@ class FileControl extends Record
     {
 	$fields = array();
 	
-	$fields[1] = new Fields\Predefined\FieldRecordType(FieldRecordType::FILE_CONTROL);
+	$fields[1] = new Fields\Predefined\RecordType(RecordType::VALUE_FILE_CONTROL);
 	$fields[2] = new Fields\FieldGeneric(2, 'Cash Letter Count',                 Field::USAGE_MANDATORY,    3,  6, Field::TYPE_NUMERIC);
 	$fields[3] = new Fields\FieldGeneric(3, 'Total Record Count',                Field::USAGE_MANDATORY,    9,  6, Field::TYPE_NUMERIC);
 	$fields[4] = new Fields\FieldGeneric(4, 'Total Item Count',                  Field::USAGE_MANDATORY,   17,  8, Field::TYPE_NUMERIC);
-	$fields[5] = new Fields\FieldAmount( 5, 'File Total', 25, 16);
+	$fields[5] = new Fields\Amount( 5, 'File Total', 25, 16);
 	$fields[6] = new Fields\NameContact(6, 'Immediate Origin', 41, 14);
 	$fields[7] = new Fields\FieldPhoneNumber(7, 'Immediate Origin Contact',      Field::USAGE_CONDITIONAL, 55);
 	$fields[8] = new Fields\FieldReserved(8, 65, 16);

@@ -44,7 +44,7 @@ require_once 'FieldCashLetterType.php';
 require_once 'FieldCollectionType.php';
 require_once 'FieldDocType.php';
 require_once 'FieldFedWorkType.php';
-require_once 'FieldRecordType.php';
+require_once 'RecordType.php';
 require_once 'FieldResend.php';
 require_once 'FieldReturnReason.php';
 require_once 'FieldSpecificationLevel.php';

@@ -2,8 +2,8 @@
 
 namespace X937;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Record.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'RecordFactory.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Record.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Factory.php';
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'Field.php';
 /**
@@ -53,7 +53,7 @@ class X937File implements \Iterator {
      * Creates a new X937File. It is immediatly validated for dataType (EBCDIC
      * vs ASCII) and for presence of the File Header Record at the start of the
      * file and File Control Record at the end of the file. Throws exception if
-     * these two mandatory records are not present.
+     * these two mandatory Record are not present.
      * @param string $filename the path to the X937File
      * @throws InvalidArgumentException
      */
@@ -76,7 +76,7 @@ class X937File implements \Iterator {
 	// pull the first record, this should always be the file header record.
 	$this->fileHeaderRecord = $this->current();
 	
-	if (($this->fileHeaderRecord instanceof \X937\Records\FileHeader) === FALSE) {
+	if (($this->fileHeaderRecord instanceof \X937\Record\FileHeader) === FALSE) {
 	    throw new \InvalidArgumentException('Bad file given, first record is not a File Header Record.');
 	}
 
@@ -87,8 +87,8 @@ class X937File implements \Iterator {
 	$fileControlRecordData = fread($this->fileHandle, 80);
 	
 	// build our file record from this data.
-	$this->fileControlRecord = \X937\Records\RecordFactory::newRecordFromRawData($fileControlRecordData, $this->dataType);
-	if (($this->fileControlRecord instanceof \X937\Records\FileControl) === FALSE) {
+	$this->fileControlRecord = \X937\Record\Factory::newRecordFromRawData($fileControlRecordData, $this->dataType);
+	if (($this->fileControlRecord instanceof \X937\Record\FileControl) === FALSE) {
 	    throw new \InvalidArgumentException('Bad file given, last record is not a File Control Record.');
 	}
 	
@@ -134,7 +134,7 @@ class X937File implements \Iterator {
 
 	// read the data for our record. Build a record.
 	$recordData = $this->readRecord($recordLength);	
-	$record     = \X937\Records\RecordFactory::newRecordFromRawData($recordData, $this->dataType);
+	$record     = \X937\Record\Factory::newRecordFromRawData($recordData, $this->dataType);
 
 	return $record;
     }

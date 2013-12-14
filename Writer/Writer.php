@@ -7,22 +7,52 @@
 
 namespace X937\Writer;
 
-use X937\Records as Records;
+use X937\Record as Record;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Records' . DIRECTORY_SEPARATOR . 'Record.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Record.php';
 
 interface WriterInterface {
-    public function write(Records\Record $record);
+    public function write(Record\Record $record);
 }
 
-abstract class Writer implements WriterInterface {     
+abstract class Writer implements WriterInterface {
+    const OPTION_PATH   = 'path';
+    const OPTION_FORMAT = 'format';
+
     /**
      * Options array
      * @var array
      */
     protected $options;
+    
+    /**
+     * Our resource for writing.
+     * @var resource
+     */
+    protected $resource;
 
-    public function __construct(array $options = array()) {
+
+    /**
+     * Our writer for writing images.
+     * @var \X937\Writer\Image
+     */
+    protected $imageWriter;
+
+    public function __construct(
+	    $resource,
+	    array $options                  = array(),
+	    \X937\Writer\Image $imageWriter = NULL
+	    )
+    {
+	$this->resource = $resource;
+	
+	// get our $imageWriter if necessary.
+	if ($imageWriter === NULL) {
+	    $imageWriter = new \X937\Writer\Image(\X937\Writer\Image::FORMAT_STUB);
+	}
+	$this->imageWriter = $imageWriter;
+	
+	// set the options.
 	$this->options = $options;
     }
     
@@ -34,5 +64,5 @@ abstract class Writer implements WriterInterface {
 	return $this->options;
     }
 
-    public abstract function write(Records\Record $record);
+    public abstract function write(Record\Record $record);
 }

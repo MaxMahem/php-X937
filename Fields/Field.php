@@ -2,12 +2,21 @@
 
 namespace X937\Fields;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Predefined' . DIRECTORY_SEPARATOR . 'FieldPredefined.php';
-
 /**
  * @todo: make autoloader work to remove this stuff.
  */
-require_once 'FieldAmount.php';
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Predefined' .     DIRECTORY_SEPARATOR . 'FieldPredefined.php';
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'VariableLength.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'ImageKey.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'BinaryData.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'DigitalSignature.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'ImageData.php';
+
+require_once 'Amount.php';
+require_once 'SizeBytes.php';
+
 require_once 'FieldDate.php';
 require_once 'FieldGeneric.php';
 require_once 'FieldPhoneNumber.php';
@@ -18,7 +27,6 @@ require_once 'FieldUser.php';
 
 require_once 'FieldTypeName.php';
 require_once 'FieldTypes.php';
-require_once 'FieldVariableLength.php';
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Validator.php';
 
@@ -28,6 +36,32 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATO
  * @author astanley
  */
 abstract class Field {
+    // Usage Types
+    const USAGE_CONDITIONAL = 'C';
+    const USAGE_MANDATORY   = 'M';
+	
+    // field types
+    const TYPE_ALPHABETIC                  = 'A';
+    const TYPE_NUMERIC                     = 'N';
+    const TYPE_BLANK                       = 'B';
+    const TYPE_SPECIAL                     = 'S';
+    const TYPE_ALPHAMERIC                  = 'AN';
+    const TYPE_ALPHAMERICSPECIAL           = 'ANS';
+    const TYPE_NUMERICBLANK                = 'NB';
+    const TYPE_NUMERICSPECIAL              = 'NS';
+    const TYPE_NUMERICBLANKSPECIALMICR     = 'NBSM';
+    const TYPE_NUMERICBLANKSPECIALMICRONUS = 'NBSMOS';
+    const TYPE_BINARY                      = 'Binary';
+    
+    // value formats
+    const FORMAT_RAW         = 'r';
+    const FORMAT_SIGNIFIGANT = 's';
+    const FORMAT_HUMAN       = 'h';
+    
+    // length & position magic numbers
+    const LENGTH_VARIABLE   = -1;
+    const POSITION_VARIABLE = -1;
+    
     /**
      * pointer back to the X937Record that contains the field.
      * @var X937Record
@@ -52,23 +86,6 @@ abstract class Field {
      * @var string 
      */
     protected $value;	    // the value of the field;
-	
-    // Usage Types
-    const USAGE_MANDATORY   = 'M';
-    const USAGE_CONDITIONAL = 'C';
-	
-    // field types
-    const TYPE_ALPHABETIC                  = 'A';
-    const TYPE_NUMERIC                     = 'N';
-    const TYPE_BLANK                       = 'B';
-    const TYPE_SPECIAL                     = 'S';
-    const TYPE_ALPHAMERIC                  = 'AN';
-    const TYPE_ALPHAMERICSPECIAL           = 'ANS';
-    const TYPE_NUMERICBLANK                = 'NB';
-    const TYPE_NUMERICSPECIAL              = 'NS';
-    const TYPE_NUMERICBLANKSPECIALMICR     = 'NBSM';
-    const TYPE_NUMERICBLANKSPECIALMICRONUS = 'NBSMOS';
-    const TYPE_BINARY                      = 'Binary';
 	
     public function __construct($fieldNumber, $filedName, $usage, $position, $size, $type) {
 	$this->fieldNumber = $fieldNumber;
@@ -143,10 +160,24 @@ abstract class Field {
     
     /**
      * Return the value.
+     * @param string $format Format to return the value.
      * @return string
      */
-    public function getValue() {
-        return $this->value;
+    public function getValue($format = self::FORMAT_RAW) {
+        switch ($format) {
+	    case self::FORMAT_HUMAN:
+		return $this->getValueFormated();
+	    case self::FORMAT_SIGNIFIGANT:
+		return $this->getValueSignifigant();
+	    case self::FORMAT_RAW:
+		return $this->getValueRaw();
+	    default:
+		/**
+		 * We should never get here but if we do, emit raw value and return.
+		 * @todo emit warning.
+		 */
+		return $this->value;
+	}
     }
     
     /**
@@ -154,7 +185,30 @@ abstract class Field {
      * @return string
      */
     public function getValueFormated() {
-	return trim($this->value);
+	if ($this->type === self::TYPE_BINARY) {
+	    return 'Binary Data';
+	} else {
+	    return trim($this->value);
+	}
+    }
+    
+    /**
+     * Return the signifigant parts of the value, but in raw. Generally leading
+     * 0's are not signifigant and are stripped.
+     * @return string
+     */
+    public function getValueSignifigant() {
+	$value = $this->getValueFormated();
+	return ltrim($value, '0');
+    }
+    
+    /**
+     * Returns the raw value. Function exists so it can be overloaded for binary
+     * data.
+     * @return string
+     */
+    public function getValueRaw() {
+	return $this->value;
     }
 
     public function parseValue($recordData) {
