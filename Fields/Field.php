@@ -56,7 +56,7 @@ abstract class Field {
     // value formats
     const FORMAT_RAW         = 'r';
     const FORMAT_SIGNIFIGANT = 's';
-    const FORMAT_HUMAN       = 'h';
+    const FORMAT_FORMATED       = 'h';
     
     // length & position magic numbers
     const LENGTH_VARIABLE   = -1;
@@ -202,7 +202,7 @@ abstract class Field {
      */
     public function getValue($format = self::FORMAT_RAW) {
         switch ($format) {
-	    case self::FORMAT_HUMAN:
+	    case self::FORMAT_FORMATED:
 		return $this->getValueFormated();
 	    case self::FORMAT_SIGNIFIGANT:
 		return $this->getValueSignifigant();
