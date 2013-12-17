@@ -19,12 +19,6 @@ class Human extends Writer implements WriterInterface
 {
     const OPTION_TRANSLATE = 'translate';
     
-    public function __construct($resource, array $options = array(), Image $imageWriter = NULL) {
-	$translate = (isset($options[self::OPTION_TRANSLATE])) ? $options[self::OPTION_TRANSLATE] : false;
-	
-	parent::__construct($resource, $options, $imageWriter);
-    }
-    
     public function write(Record\Record $record) {
 	$recordType = $record->getType();
 	

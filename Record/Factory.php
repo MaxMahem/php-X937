@@ -14,6 +14,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECT
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'ReturnAddendumC.php';
 
 require_once 'CashLetterHeader.php';
+require_once 'ImageViewDetail.php';
 
 /**
  * A factor class to generate new X937Record from different sorts of input.
@@ -40,7 +41,7 @@ class Factory {
      * @param string $dataType   the type of the data a X937File const, either DATA_EBCDIC or DATA_ASCII
      * @return Record returns an X937Record of the appropriate type.
      */
-    public static function newRecordFromRawData($recordData, $dataType) {
+    public static function GenerateFromRawData($recordData, $dataType) {
 	$recordTypeRaw = substr($recordData, 0, 2);
 	
 	switch ($dataType) {

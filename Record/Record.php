@@ -149,7 +149,7 @@ abstract class Record implements \IteratorAggregate, \Countable {
      * Get the raw Record data
      * @return string Raw (untranslated) Record Data
      */
-    public function geDataRaw()
+    public function getDataRaw()
     {
 	return $this->recordDataRaw;
     }

@@ -9,7 +9,7 @@ namespace X937\Fields\Predefined\ImageView;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class FieldImageViewCompression extends FieldImageView
+class Compression extends ImageView
 {
     // no agreement required
     const VALUE_GROUP_4       = '0';

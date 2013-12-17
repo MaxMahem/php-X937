@@ -38,22 +38,11 @@ abstract class Writer implements WriterInterface {
      */
     protected $imageWriter;
 
-    public function __construct(
-	    $resource,
-	    array $options                  = array(),
-	    \X937\Writer\Image $imageWriter = NULL
-	    )
-    {
-	$this->resource = $resource;
-	
-	// get our $imageWriter if necessary.
-	if ($imageWriter === NULL) {
-	    $imageWriter = new \X937\Writer\Image(\X937\Writer\Image::FORMAT_STUB);
-	}
+    public function __construct(\SplFileObject $resource, \X937\Writer\Image $imageWriter, $options = array())
+    {	
+	$this->resource    = $resource;
 	$this->imageWriter = $imageWriter;
-	
-	// set the options.
-	$this->options = $options;
+	$this->options     = $options;
     }
     
     public function setOptions(array $options) {
@@ -65,4 +54,13 @@ abstract class Writer implements WriterInterface {
     }
 
     public abstract function write(Record\Record $record);
+    
+    /**
+     * The intent here is to handle the writing of 
+     * @param \X937\Record\Record $record The record we are writing.
+     */
+    protected function writeImage(Record\Record $record) {
+	// should we type check this?
+	return $this->imageWriter->write($record);
+    }
 }

@@ -9,7 +9,7 @@ namespace X937\Fields\Predefined\ImageView;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class FieldImageViewFormat extends FieldImageView
+class Format extends ImageView
 {
     // no agreement required
     const VALUE_TIFF_6     = '00';

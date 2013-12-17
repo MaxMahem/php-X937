@@ -50,7 +50,7 @@ require_once 'FieldReturnReason.php';
 require_once 'FieldSpecificationLevel.php';
 require_once 'FieldTestFile.php';
 require_once 'FieldVariableSize.php';
-require_once 'FieldViewSide.php';
+require_once 'ViewSide.php';
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageInfo' . DIRECTORY_SEPARATOR . 'FieldImageInfo.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageView' . DIRECTORY_SEPARATOR . 'FieldImageView.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageView' . DIRECTORY_SEPARATOR . 'ImageView.php';

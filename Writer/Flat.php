@@ -20,15 +20,6 @@ require_once 'Writer.php';
 class Flat extends Writer implements WriterInterface
 {
     const FORMAT_ASCII_US = 'ASCII-US';
-    
-    public function __construct(
-	    \SplFileObject $resource,
-	    array $options                  = array(),
-	    \X937\Writer\Image $imageWriter = NULL
-	    )
-    {	
-	parent::__construct($resource, $options, $imageWriter);
-    }
 
     public function write(Record\Record $record) {
 	$recordType = $record->getType();
@@ -40,14 +31,15 @@ class Flat extends Writer implements WriterInterface
 	
 	$output = '';
 	
-	/**
-	 * @todo image handling!
-	 */
 	// pass our data to the imageWriter.
-	// $imageData = $this->imageWriter->write($record);
+	$imageData = $this->imageWriter->write($record);
 	
 	foreach ($record as $field) {
-	    $output .= ($field->getType() === Field::TYPE_BINARY) ? '' : $field->getValue();
+	    if ($field->getType() === Field::TYPE_BINARY) {
+		$output .= $imageData;
+	    } else {
+		$output .= $field->getValue();
+	    }
 	}
 	
 	$output .= PHP_EOL;

@@ -87,7 +87,7 @@ class X937File implements \Iterator {
 	$fileControlRecordData = fread($this->fileHandle, 80);
 	
 	// build our file record from this data.
-	$this->fileControlRecord = \X937\Record\Factory::newRecordFromRawData($fileControlRecordData, $this->dataType);
+	$this->fileControlRecord = \X937\Record\Factory::GenerateFromRawData($fileControlRecordData, $this->dataType);
 	if (($this->fileControlRecord instanceof \X937\Record\FileControl) === FALSE) {
 	    throw new \InvalidArgumentException('Bad file given, last record is not a File Control Record.');
 	}
@@ -134,7 +134,7 @@ class X937File implements \Iterator {
 
 	// read the data for our record. Build a record.
 	$recordData = $this->readRecord($recordLength);	
-	$record     = \X937\Record\Factory::newRecordFromRawData($recordData, $this->dataType);
+	$record     = \X937\Record\Factory::GenerateFromRawData($recordData, $this->dataType);
 
 	return $record;
     }

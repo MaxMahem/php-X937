@@ -9,7 +9,7 @@ namespace X937\Fields\Predefined\ImageView;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-abstract class FieldImageView extends \X937\Fields\Predefined\FieldPredefined
+abstract class ImageView extends \X937\Fields\Predefined\FieldPredefined
 {
     public function __construct($fieldNumber, $fieldNameSufix, $position, $size) {
 	$fieldName = 'Image View' . ' ' . $fieldNameSufix;
@@ -36,5 +36,5 @@ abstract class FieldImageView extends \X937\Fields\Predefined\FieldPredefined
     }
 }
 
-require_once 'FieldImageViewCompression.php';
-require_once 'FieldImageViewFormat.php';
+require_once 'Compression.php';
+require_once 'Format.php';

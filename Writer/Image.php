@@ -30,45 +30,45 @@ class Image extends Writer implements WriterInterface
     private $imageExtension = 'tif';
     
     /**
-     *
+     * The current side of our image.
      * @var string
      */
-    private $viewSide = Fields\Predefined\FieldViewSide::VALUE_FRONT;
+    private $viewSide = Fields\Predefined\ViewSide::VALUE_FRONT;
     
     /**
-     * Create a WriterImage, for writing check images to disk.
+     * Create a Image, for writing check images to disk.
      * @param string $optionFormat the format to write our image file in.
      * @param string $path Path to folder to write the image files in if
      * it does not exist, it is created.
      */
-    public function __construct($format = self::FORMAT_BASE64, $path = '.')
+    public function __construct($format = self::FORMAT_BASE64, $path = null)
     {
+	if (array_key_exists($format, self::defineFormats()) === false) {
+	    throw new \InvalidArgumentException('Format is not a defined type.');
+	}
+	
 	if ($format === self::FORMAT_FILE) {
 	    if (is_writable($path) === FALSE) {
 		$result = mkdir($path, 0777, true);
 		if ($result === FALSE) {
-		    throw new \InvalidArgumentException("Error writing to $path");
+		    throw new \InvalidArgumentException('Error writing to path.');
 		}
 	    }
 	}
 	
-	$options = array(
+	$this->options = array(
 	    self::OPTION_FORMAT => $format,
 	    self::OPTION_PATH   => $path
 	);
-	
-	// generate a dummy resource for the parent.
-	$dummyResource = fopen('php://output', 'wb');
-	
-	parent::__construct($dummyResource, $options, $this);
     }
     
     public function write(\X937\Record\Record $record)
     {
+	// we only handle these two record types.
 	switch ($record->getType()) {
 	    case Fields\Predefined\RecordType::VALUE_IMAGE_VIEW_DETAIL:
-		$this->imageExtension = $record->getFieldByNumber(5)->getExtension();
-		$this->viewSide       = $record->getFieldByNumber(8)->getValue();
+		$this->imageExtension = $record->getFieldByName('Image View Format Indicator')->getExtension();
+		$this->viewSide       = $record->getFieldByName('View Side Indicator')->getValue();
 
 		/**
 		 * @todo: validation checks here.
@@ -81,17 +81,18 @@ class Image extends Writer implements WriterInterface
 	}
     }
     
-    private function writeImage($record)
+    protected function writeImage($record)
     {
 	$imageDataField = $record->getFieldByName('Image Data');
-	// var_dump($imageDataField);
 	
-	switch ($this->options['format']) {
+	switch ($this->options[self::OPTION_FORMAT]) {
 	    case self::FORMAT_NONE:
 		return '';
 	    
 	    case self::FORMAT_STUB:
-		return $imageDataField->getValue(Fields\Field::FORMAT_RAW);
+		$value = $imageDataField->getValue(Fields\Field::FORMAT_RAW);
+		echo $value;
+		return $value;
 	    
 	    case self::FORMAT_BASE64:
 		return $imageDataField->getValue(BinaryData::FORMAT_BASE64);
@@ -124,5 +125,18 @@ class Image extends Writer implements WriterInterface
 	fclose($file);
 	
 	return $filename;
+    }
+    
+    public static function defineFormats()
+    {
+	$legalFormats = array(
+	    self::FORMAT_BASE64 => 'Base 64 Encoded',
+	    self::FORMAT_BINARY => 'Binary Data',
+	    self::FORMAT_FILE   => 'Write to seperate file',
+	    self::FORMAT_NONE   => 'Ignore Image Data',
+	    self::FORMAT_STUB   => 'Return Image Stub',
+	);
+	
+	return $legalFormats;
     }
 }
