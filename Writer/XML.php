@@ -10,7 +10,6 @@ use X937\Record as Record;
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Record.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'Field.php';
 
-require_once 'Writer.php';
 /**
  * Outputs record data as an XML file.
  * Binary data is discarded.
@@ -19,7 +18,7 @@ require_once 'Writer.php';
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class XML extends Writer implements WriterInterface
+class XML extends AbstractWriter
 {
     // control elements
     const CONTROL_ELEMENT_FILE        = 'File';
@@ -62,7 +61,7 @@ class XML extends Writer implements WriterInterface
 	$this->resource->endDocument();
     }
     
-    public function write(Record\Record $record)
+    public function writeRecord(Record\Record $record)
     {
 	$recordType = $record->getType();
 	

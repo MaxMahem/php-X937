@@ -14,7 +14,7 @@ use X937\Record as Record;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Image extends Writer implements WriterInterface
+class Image extends AbstractWriter implements WriterInterface
 {
     // the format we are going to write out in.
     const FORMAT_FILE   = 'file';
@@ -62,7 +62,7 @@ class Image extends Writer implements WriterInterface
 	);
     }
     
-    public function write(\X937\Record\Record $record)
+    public function writeRecord(\X937\Record\Record $record)
     {
 	// we only handle these two record types.
 	switch ($record->getType()) {
@@ -76,12 +76,12 @@ class Image extends Writer implements WriterInterface
 		
 		break;
 	    case Fields\Predefined\RecordType::VALUE_IMAGE_VIEW_DATA:
-		return $this->writeImage($record);
+		return $this->writeBinaryField($record);
 		break;
 	}
     }
     
-    protected function writeImage($record)
+    protected function writeBinaryField($record)
     {
 	$imageDataField = $record->getFieldByName('Image Data');
 	

@@ -7,12 +7,16 @@ $file = new X937\X937File("test.X937");
 
 $count = 0;
 
-$writerFlat = \X937\Writer\Factory::Generate(\X937\Writer\Factory::TYPE_FLAT, 'ascii.txt', \X937\Writer\Image::FORMAT_BASE64);
+$fileFormat  = \X937\Writer\Factory::FORMAT_FILE_FLAT;
+$filename    = 'ascii.txt';
+$imageFormat = \X937\Writer\Factory::FORMAT_BINARY_NONE;
+
+$writerFlat = \X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
 
 $timeStart = microtime(true);
 
 foreach($file as $record) {
-    $writerFlat->write($record);
+    $writerFlat->writeRecord($record);
     
     if ($count > 10) { break; }
 }

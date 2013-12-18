@@ -54,9 +54,9 @@ abstract class Field {
     const TYPE_BINARY                      = 'Binary';
     
     // value formats
-    const FORMAT_RAW         = 'r';
-    const FORMAT_SIGNIFIGANT = 's';
-    const FORMAT_FORMATED       = 'h';
+    const FORMAT_RAW         = 'raw';
+    const FORMAT_SIGNIFIGANT = 'signifigant';
+    const FORMAT_FORMATED    = 'formated';
     
     // length & position magic numbers
     const LENGTH_VARIABLE   = -1;

@@ -5,8 +5,6 @@ namespace X937\Writer;
 use X937\Record as Record;
 use X937\Fields  as Fields;
 
-require_once 'Writer.php';
-
 /**
  * Simple X937 Writer class, parses though a record and prints a human readable
  * readout of all Record.
@@ -15,11 +13,11 @@ require_once 'Writer.php';
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Human extends Writer implements WriterInterface
+class Human extends AbstractWriter implements WriterInterface
 {
     const OPTION_TRANSLATE = 'translate';
     
-    public function write(Record\Record $record) {
+    public function writeRecord(Record\Record $record) {
 	$recordType = $record->getType();
 	
 	// check for Record we current haven't implemented.
