@@ -51,11 +51,13 @@ abstract class AbstractWriter implements WriterInterface {
 	$this->options           = $options;
     }
     
-    public function setOptions(array $options) {
+    public function setOptions(array $options)
+    {
 	$this->options = array_merge($this->options, $options);
     }
     
-    public function getOptions() {
+    public function getOptions()
+    {
 	return $this->options;
     }
 
@@ -68,7 +70,7 @@ abstract class AbstractWriter implements WriterInterface {
     public function writeAll(\X937\X937File $file)
     {	
 	foreach ($file as $record) {
-	    $this->write($record);
+	    $this->writeRecord($record);
 	}
     }
 

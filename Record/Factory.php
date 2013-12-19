@@ -23,16 +23,62 @@ require_once 'ImageViewDetail.php';
  */
 class Factory {
     
+    // record types
+    const RECORD_TYPE_FILE_HEADER             = '01';
+    const RECORD_TYPE_CASH_LETTER_HEADER      = '10';
+    const RECORD_TYPE_BUNDLE_HEADER           = '20';
+    const RECORD_TYPE_CHECK_DETAIL            = '25';
+    const RECORD_TYPE_CHECK_DETAIL_ADDENDUM_A = '26';
+    const RECORD_TYPE_CHECK_DETAIL_ADDENDUM_B = '27';
+    const RECORD_TYPE_CHECK_DETAIL_ADDENDUM_C = '28';
+    const RECORD_TYPE_RETURN_RECORD           = '31';
+    const RECORD_TYPE_RETURN_ADDENDUM_A       = '32';
+    const RECORD_TYPE_RETURN_ADDENDUM_B       = '33';
+    const RECORD_TYPE_RETURN_ADDENDUM_C       = '34';
+    const RECORD_TYPE_RETURN_ADDENDUM_D       = '35';
+    const RECORD_TYPE_ACCOUNT_TOTALS_DETAIL   = '40';
+    const RECORD_TYPE_NON_HIT_TOTALS_DETAIL   = '41';
+    const RECORD_TYPE_IMAGE_VIEW_DETAIL       = '50';
+    const RECORD_TYPE_IMAGE_VIEW_DATA         = '52';
+    const RECORD_TYPE_IMAGE_VIEW_ANALYSIS     = '54';
+    const RECORD_TYPE_BUNDLE_CONTROL          = '70';
+    const RECORD_TYPE_BOX_SUMMARY             = '75';
+    const RECORD_TYPE_ROUTING_NUMBER_SUMMARY  = '85';
+    const RECORD_TYPE_CASH_LETTER_CONTROL     = '90';
+    const RECORD_TYPE_FILE_CONTROL            = '99';
+    
     /**
-     * Returns an array of currently handled record types.
-     * @return array An array of handled types.
+     * 
+     * @return array List of defined Record Types.
      */
-    public static function handledRecordTypes() {
-	$handledRecordTypes = RecordType::defineValues();
-
-	unset($handledRecordTypes[RecordType::VALUE_IMAGE_VIEW_ANALYSIS]);
+    public static function defineRecordTypes()
+    {
+	$definedValues = array(
+	    self::RECORD_TYPE_FILE_HEADER             => 'File Header Record',
+	    self::RECORD_TYPE_CASH_LETTER_HEADER      => 'Cash Letter Header Record',
+	    self::RECORD_TYPE_BUNDLE_HEADER           => 'Bundle Header Record',
+	    self::RECORD_TYPE_CHECK_DETAIL            => 'Check Detail Record',
+            self::RECORD_TYPE_CHECK_DETAIL_ADDENDUM_A => 'Check Detail Addendum A Record',
+	    self::RECORD_TYPE_CHECK_DETAIL_ADDENDUM_B => 'Check Detail Addendum B Record',
+	    self::RECORD_TYPE_CHECK_DETAIL_ADDENDUM_C => 'Check Detail Addendum C Record',
+	    self::RECORD_TYPE_RETURN_RECORD           => 'Return Record',
+	    self::RECORD_TYPE_RETURN_ADDENDUM_A       => 'Retrun Addendum A Record',
+	    self::RECORD_TYPE_RETURN_ADDENDUM_B       => 'Return Addendum B Record',
+	    self::RECORD_TYPE_RETURN_ADDENDUM_C       => 'Return Addendum C Record',
+	    self::RECORD_TYPE_RETURN_ADDENDUM_D       => 'Return Addendum D Record',
+	    self::RECORD_TYPE_ACCOUNT_TOTALS_DETAIL   => 'Account Totals Detail Record',
+	    self::RECORD_TYPE_NON_HIT_TOTALS_DETAIL   => 'Non-Hit Total Detail Record',
+	    self::RECORD_TYPE_IMAGE_VIEW_DETAIL       => 'Image View Detail Record',
+	    self::RECORD_TYPE_IMAGE_VIEW_DATA         => 'Image View Data Record',
+	    self::RECORD_TYPE_IMAGE_VIEW_ANALYSIS     => 'Image View Analysis',
+	    self::RECORD_TYPE_BUNDLE_CONTROL          => 'Bundle Control Record',
+	    self::RECORD_TYPE_BOX_SUMMARY             => 'Box Summary Record',
+	    self::RECORD_TYPE_ROUTING_NUMBER_SUMMARY  => 'Routing Number Summary Record',
+	    self::RECORD_TYPE_CASH_LETTER_CONTROL     => 'Cash Letter Control Record',
+	    self::RECORD_TYPE_FILE_CONTROL            => 'File Control Record',
+	);
 	
-	return $handledRecordTypes;
+	return $definedValues;
     }
 
     /**
@@ -68,7 +114,7 @@ class Factory {
      * @throws InvalidArgumentException if given bad data
      */
     private static function newRecord($recordType, $recordData, $dataType = X937File::DATA_EBCDIC) {
-	if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) {
+	if (array_key_exists($recordType, self::defineRecordTypes()) === FALSE) {
 	    throw new InvalidArgumentException("Bad record type passed.");
 	}
 	
