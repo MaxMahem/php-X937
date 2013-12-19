@@ -51,14 +51,18 @@ abstract class AbstractWriter implements WriterInterface {
 	$this->options           = $options;
     }
     
-    public function setOptions(array $options)
-    {
-	$this->options = array_merge($this->options, $options);
-    }
-    
     public function getOptions()
     {
 	return $this->options;
+    }
+    
+    /**
+     * Define universal options. None currently.
+     * @return array
+     */
+    public function defineOptions()
+    {
+	return array();
     }
 
     abstract public function writeRecord(Record\Record $record);
@@ -87,5 +91,18 @@ abstract class AbstractWriter implements WriterInterface {
 	} else {
 	    return $this->fieldWriter->writeField($field);
 	}
+    }
+    
+    /**
+     * Set an option.
+     * @param type $optionKey the option to set
+     * @param type $value the option value
+     */
+    protected function setOption($optionKey, $value)
+    {
+	if (array_key_exists($optionKey, static::defineOptions()) === false) {
+	    trigger_error('Set undefined option', E_USER_WARNING);
+	}
+	$this->options[$optionKey] = $value;
     }
 }

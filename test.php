@@ -7,11 +7,14 @@ $file = new X937\X937File("test.X937");
 
 $count = 0;
 
-$fileFormat  = \X937\Writer\Factory::FORMAT_FILE_FLAT;
-$filename    = 'ascii.txt';
+$fileFormat  = \X937\Writer\Factory::FORMAT_FILE_HUMAN;
+$filename    = 'human.txt';
 $imageFormat = \X937\Writer\Factory::FORMAT_BINARY_NONE;
 
 $writerFlat = \X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
+
+$writerFlat->setOptionOmitBlanks(true);
+$writerFlat->setOptionTranslate(true);
 
 $timeStart = microtime(true);
 

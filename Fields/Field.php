@@ -209,39 +209,40 @@ abstract class Field {
 	    case self::FORMAT_RAW:
 		return $this->getValueRaw();
 	    default:
-		/**
-		 * We should never get here but if we do, emit raw value and return.
-		 * @todo emit warning.
-		 */
+		trigger_error('Invalid format type passed', E_USER_ERROR);
 		return $this->value;
 	}
     }
     
     /**
-     * Return the value, formated nicely.
+     * Return the value, formated nicely. Also implies Signifigant. Binary data
+     * is stubbed.
      * @return string
      */
     public function getValueFormated() {
 	if ($this->type === self::TYPE_BINARY) {
 	    return 'Binary Data';
-	} else {
-	    return trim($this->value);
 	}
+	
+	return $this->getValueSignifigant();
     }
     
     /**
      * Return the signifigant parts of the value, but in raw. Generally leading
-     * 0's are not signifigant and are stripped.
+     * 0's are not signifigant and are stripped. Binary data is stubbed.
      * @return string
      */
     public function getValueSignifigant() {
-	$value = $this->getValueFormated();
+	if ($this->type === self::TYPE_BINARY) {
+	    return 'Binary Data';
+	}
+	
+	$value = trim($this->value);
 	return ltrim($value, '0');
     }
     
     /**
-     * Returns the raw value. Function exists so it can be overloaded for binary
-     * data.
+     * Returns the raw value.
      * @return string
      */
     public function getValueRaw() {

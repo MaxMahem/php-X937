@@ -37,6 +37,9 @@ class Factory {
     const FORMAT_BINARY_BASE64 = 'Base64';
     const FORMAT_BINARY_NONE   = 'None';
     
+    const FORMAT_ENCODE_UTF8   = 'UTF-8';
+    const FORMAT_ENCODE_ASCII  = 'ASCII';
+    
     public static function defineFileFormats()
     {
 	$legalTypes = array(
@@ -115,6 +118,8 @@ class Factory {
 	switch ($fileFormat) {
 	    case self::FORMAT_FILE_FLAT:
 		return new Flat($fileObject, $fieldWriter, $binaryWriter);
+	    case self::FORMAT_FILE_HUMAN:
+		return new Human($fileObject, $fieldWriter, $binaryWriter);
 	}
     }
     //put your code here

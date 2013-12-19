@@ -18,9 +18,6 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATO
  */
 class Flat extends AbstractWriter
 {
-    const FORMAT_ASCII_US = 'ASCII-US';
-    const FORMAT_UTF_8    = 'UTF-8';
-
     public function writeRecord(Record\Record $record) {	
 	$output = '';
 	
