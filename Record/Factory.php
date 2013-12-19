@@ -203,6 +203,8 @@ class Factory {
 		return new FileControl($recordType, $recordDataASCII);
 		break;
 	    default:
+		// emmit notice, we shouldn't get any of these.
+		trigger_error('Invalid record passed, data is unhandled.');
 		return new Generic($recordType, $recordDataASCII);
 		break;
 	}
