@@ -21,7 +21,7 @@ class ImageViewDetail extends Record
 	$fields[1]  = new Fields\Predefined\RecordType(Fields\Predefined\RecordType::VALUE_IMAGE_VIEW_DETAIL);
 	$fields[2]  = new Fields\FieldGeneric(2, 'Image Indicator',              Field::USAGE_MANDATORY,    3, 1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Image Creator',          Field::USAGE_MANDATORY,    4);
-	$fields[4]  = new Fields\FieldDate(4, 'Image Creator',                   Field::USAGE_MANDATORY,   13);
+	$fields[4]  = new Fields\DateTime\Date(4, 'Image Creator',         Field::USAGE_MANDATORY,   13);
 	$fields[5]  = new Fields\Predefined\ImageView\Format();
 	$fields[6]  = new Fields\Predefined\ImageView\Compression();
 	$fields[7]  = new Fields\SizeBytes( 7, 'Image View Data Size',           Field::USAGE_CONDITIONAL, 25, 7);

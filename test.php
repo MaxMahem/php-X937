@@ -9,12 +9,11 @@ $count = 0;
 
 $fileFormat  = \X937\Writer\Factory::FORMAT_FILE_HUMAN;
 $filename    = 'human.txt';
-$imageFormat = \X937\Writer\Factory::FORMAT_BINARY_NONE;
+$imageFormat = \X937\Writer\Factory::FORMAT_BINARY_STUB;
 
 $writerFlat = \X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
 
 $writerFlat->setOptionOmitBlanks(true);
-$writerFlat->setOptionTranslate(true);
 
 $timeStart = microtime(true);
 

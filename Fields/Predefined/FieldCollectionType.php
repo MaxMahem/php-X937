@@ -11,16 +11,16 @@ namespace X937\Fields\Predefined;
  */
 class FieldCollectionType extends FieldPredefined
 {
-    const PRELIMINARY_FORWARD_INFORMATION         = 00;
-    const FORWARD_PRESENTMENT                     = 01;
-    const FORWARD_PRESENTMENT_SAME_DAY_SETTLEMENT = 02;
-    const RETURN_CHECKS                           = 03;
-    const RETURN_NOTIFICATION                     = 04;
-    const PRELIMINARY_RETURN_NOTIFICATION         = 05;
-    const FINAL_RETURN_NOTIFICATION               = 06;
-    const ACCOUNT_TOTALS                          = 10;
-    const NO_DETAIL                               = 20;
-    const BUNDLES_NOT_SAME                        = 99;
+    const PRELIMINARY_FORWARD_INFORMATION         = '00';
+    const FORWARD_PRESENTMENT                     = '01';
+    const FORWARD_PRESENTMENT_SAME_DAY_SETTLEMENT = '02';
+    const RETURN_CHECKS                           = '03';
+    const RETURN_NOTIFICATION                     = '04';
+    const PRELIMINARY_RETURN_NOTIFICATION         = '05';
+    const FINAL_RETURN_NOTIFICATION               = '06';
+    const ACCOUNT_TOTALS                          = '10';
+    const NO_DETAIL                               = '20';
+    const BUNDLES_NOT_SAME                        = '99';
     
     /**
      * The record type of this field, one of X937Field::CASH_LETTER_HEADER, or

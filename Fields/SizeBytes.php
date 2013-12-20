@@ -16,16 +16,11 @@ class SizeBytes extends Field
 	parent::__construct($fieldNumber, $fieldName, $usage, $position, $size, self::TYPE_NUMERIC);
     }
     
-    public function getValueFormated()
-    {
-	return self::formatBytes($this->value);
-    }
-    
     public function getValueSignifigant() {
 	return ltrim($this->value, '0 ');
     }
     
-    public static function formatBytes($bytes) {
+    public static function formatBytes($bytes, $signifigantDigits = 2) {
 	if ((is_numeric($bytes) === false) || ($bytes < 0)) {
 	    trigger_error('Non-numeric or negative byte count given to format.');
 	    return trim($bytes);
@@ -51,6 +46,15 @@ class SizeBytes extends Field
 	$unit = $units[$powMin];
 	
 
-        return round($convertedBytes, 2) . $unit;
+        return round($convertedBytes, $signifigantDigits) . $unit;
+    }
+    
+    /**
+     * Return the value formated.
+     * @param type $string
+     * @return string
+     */
+    protected static function formatValue($value) {
+	return self::formatBytes($value);
     }
 }

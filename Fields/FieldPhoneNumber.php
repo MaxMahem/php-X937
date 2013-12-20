@@ -20,9 +20,8 @@ class FieldPhoneNumber extends Field
      * Returns the phone number formated ###-###-####
      * @return string
      */
-    public function getValueFormated()
+    protected static function formatValue($value)
     {
-	$value = $this->value;
 	return substr($value, 0, 3) . '-' . substr($value, 3, 3) . '-' . substr($value, 6, 4);
     }
 }

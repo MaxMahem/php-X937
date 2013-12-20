@@ -23,9 +23,9 @@ class CashLetterHeader extends Record
 	$fields[2]  = new Fields\Predefined\FieldCollectionType(FieldRecordType::VALUE_CASH_LETTER_HEADER);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Destination',       Field::USAGE_MANDATORY,    5);
 	$fields[4]  = new Fields\FieldRoutingNumber(4, 'ECE Institution',   Field::USAGE_MANDATORY,   14);
-	$fields[5]  = new Fields\FieldDate(5, 'Cash Letter Business',       Field::USAGE_MANDATORY,   23);
-	$fields[6]  = new Fields\FieldDate(6, 'Cash Letter Creation',       Field::USAGE_MANDATORY,   31);
-	$fields[7]  = new Fields\FieldTime(7, 'Cash Letter Creation',       Field::USAGE_MANDATORY,   39);
+	$fields[5]  = new Fields\DateTime\Date(5, 'Cash Letter Business',   Field::USAGE_MANDATORY,   23);
+	$fields[6]  = new Fields\DateTime\Date(6, 'Cash Letter Creation',   Field::USAGE_MANDATORY,   31);
+	$fields[7]  = new Fields\DateTime\Time(7, 'Cash Letter Creation',   Field::USAGE_MANDATORY,   39);
 	$fields[8]  = new Fields\Predefined\FieldCashLetterType();
 	$fields[9]  = new Fields\Predefined\FieldDocType(FieldRecordType::VALUE_CASH_LETTER_HEADER);
 	$fields[10] = new Fields\FieldGeneric(10, 'Cash Letter ID',         Field::USAGE_CONDITIONAL, 45,  8, Field::TYPE_ALPHAMERIC);

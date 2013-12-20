@@ -2,6 +2,8 @@
 
 namespace X937\Writer;
 
+use X937\Writer\Field as FieldWriter;
+
 require_once 'WriterInterface.php';
 require_once 'AbstractWriter.php';
 
@@ -36,6 +38,7 @@ class Factory {
     
     const FORMAT_BINARY_BASE64 = 'Base64';
     const FORMAT_BINARY_NONE   = 'None';
+    const FORMAT_BINARY_STUB   = 'Stub';
     
     const FORMAT_ENCODE_UTF8   = 'UTF-8';
     const FORMAT_ENCODE_ASCII  = 'ASCII';
@@ -55,7 +58,8 @@ class Factory {
     {
 	$legalTypes = array(
 	    self::FORMAT_BINARY_BASE64 => 'Base64 encoded data',
-	    self::FORMAT_BINARY_NONE   => 'Omit binary data'
+	    self::FORMAT_BINARY_NONE   => 'Omit binary data',
+	    self::FORMAT_BINARY_STUB   => 'Stub of Binary data',
 	);
 	return $legalTypes;
     }
@@ -76,24 +80,26 @@ class Factory {
 	
 	// build our binary handler.
 	switch ($binaryFormat) {
-	    case self::FORMAT_BINARY_BASE64;
-		$binaryWriter = new \X937\Writer\Field\Binary\Base64();
+	    case self::FORMAT_BINARY_BASE64:
+		$binaryWriter = new FieldWriter\Binary\Base64();
 		break;
 	    case self::FORMAT_BINARY_NONE:
-		$binaryWriter = new \X937\Writer\Field\None();
+		$binaryWriter = new FieldWriter\None();
 		break;
+	    case self::FORMAT_BINARY_STUB:
+		$binaryWriter = new FieldWriter\Formated();
 	}
 	
 	// build our normal field handler.
 	switch ($fileFormat) {
 	    case self::FORMAT_FILE_FLAT:
-		$fieldWriter = new \X937\Writer\Field\Raw();
+		$fieldWriter = new FieldWriter\Raw();
 		break;
 	    case self::FORMAT_FILE_HUMAN:
-		$fieldWriter = new \X937\Writer\Field\Formated();
+		$fieldWriter = new FieldWriter\Formated();
 		break;
 	    case self::FORMAT_FILE_XML:
-		$fieldWriter = new \X937\Writer\Field\Signifigant();
+		$fieldWriter = new FieldWriter\Signifigant();
 		break;
 	}
 	

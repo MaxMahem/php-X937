@@ -16,22 +16,16 @@ use X937\Fields  as Fields;
 class Human extends AbstractWriter
 {
     // type specific options.
-    const OPTION_TRANSLATE   = 'Translate';
     const OPTION_OMIT_BLANKS = 'Omit';
     
     public function defineOptions() {
 	$parentOptions = parent::defineOptions();
 	
 	$legalOptions = array(
-	    self::OPTION_TRANSLATE   => 'Translate the value: true/false',
 	    self::OPTION_OMIT_BLANKS => 'Omit Blank Values: true/false',
 	);
 	
 	return array_merge($parentOptions, $legalOptions);
-    }
-    
-    public function setOptionTranslate($value) {
-	$this->setOption(self::OPTION_TRANSLATE, (bool) $value);
     }
     
     public function setOptionOmitBlanks($value)
@@ -48,12 +42,8 @@ class Human extends AbstractWriter
 	    // reset our field output array
 	    $fieldOutputArray = array();
 	    
-	    $fieldOutputArray['name']  = $field->getName() . ':';
-	    $fieldOutputArray['value'] = $this->writeField($field);
-	    
-	    if ($this->options[self::OPTION_TRANSLATE] === true) {
-		$fieldOutputArray['translation'] = $field->translatedValue();
-	    }
+	    $fieldOutputArray['name']        = $field->getName() . ':';
+	    $fieldOutputArray['value']       = $this->writeField($field);
 
 	    // adding to the output array is optional, we dont' want to do it
 	    // for blank fields if the OMIT_BLANKS option is set.
@@ -69,7 +59,7 @@ class Human extends AbstractWriter
 	    }
 	}
 	
-	$output = implode(PHP_EOL, $outputArray) . PHP_EOL;
+	$output = implode(PHP_EOL, $outputArray) . PHP_EOL . PHP_EOL;
 	$this->resource->fwrite($output);
     }
 }

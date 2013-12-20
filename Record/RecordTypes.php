@@ -31,8 +31,8 @@ class FileHeader extends Record
 	$fields[3]  = new Fields\Predefined\FieldTestFile();
 	$fields[4]  = new Fields\FieldRoutingNumber(4, 'Immediate Destination',    Field::USAGE_MANDATORY,    6);
 	$fields[5]  = new Fields\FieldRoutingNumber(5, 'Immediate Origin',         Field::USAGE_MANDATORY,   15);
-	$fields[6]  = new Fields\FieldDate(6, 'File Creation',                     Field::USAGE_MANDATORY,   24);
-	$fields[7]  = new Fields\FieldTime(7, 'File Creation',                     Field::USAGE_MANDATORY,   32);
+	$fields[6]  = new Fields\DateTime\Date(6, 'File Creation',                     Field::USAGE_MANDATORY,   24);
+	$fields[7]  = new Fields\DateTime\Time(7, 'File Creation',                     Field::USAGE_MANDATORY,   32);
 	$fields[8]  = new Fields\Predefined\FieldResend();
 	$fields[9]  = new Fields\NameInstitution( 9, 'Immediate Destination', 37);
 	$fields[10] = new Fields\NameInstitution(10, 'Immediate Origin',      55);
@@ -60,8 +60,8 @@ class BundleHeader extends Record
 	$fields[2]  = new Fields\Predefined\FieldCollectionType(RecordType::VALUE_BUNDLE_HEADER);
 	$fields[3]  = new Fields\FieldRoutingNumber( 3, 'Destination',      Field::USAGE_MANDATORY,    5);
 	$fields[4]  = new Fields\FieldRoutingNumber( 4, 'ECE Institution',  Field::USAGE_MANDATORY,   14);
-	$fields[5]  = new Fields\FieldDate(5, 'Bundle Business',            Field::USAGE_MANDATORY,   23);
-	$fields[6]  = new Fields\FieldDate(6, 'Bundle Creation',            Field::USAGE_MANDATORY,   31);
+	$fields[5]  = new Fields\DateTime\Date(5, 'Bundle Business',            Field::USAGE_MANDATORY,   23);
+	$fields[6]  = new Fields\DateTime\Date(6, 'Bundle Creation',            Field::USAGE_MANDATORY,   31);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'Bundle ID',              Field::USAGE_CONDITIONAL, 39, 10, Field::TYPE_ALPHAMERIC);
 	$fields[8]  = new Fields\FieldGeneric( 8, 'Bundle Sequence Number', Field::USAGE_CONDITIONAL, 49,  4, Field::TYPE_NUMERICBLANK);
 	$fields[9]  = new Fields\FieldGeneric( 9, 'Cycle Number',           Field::USAGE_CONDITIONAL, 53,  2, Field::TYPE_ALPHAMERIC);
@@ -113,7 +113,7 @@ class CheckDetailAddendumA extends Record
 	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_CHECK_DETAIL_ADDENDUM_A);
 	$fields[2]  = new Fields\FieldGeneric( 2, 'Check Detail Addendum A Record Number', Field::USAGE_MANDATORY,    3,  1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'BOFD',                             Field::USAGE_CONDITIONAL,  4);
-	$fields[4]  = new Fields\FieldDate(4, 'BOFD Endorsement',                          Field::USAGE_MANDATORY, 13);
+	$fields[4]  = new Fields\DateTime\Date(4, 'BOFD Endorsement',                          Field::USAGE_MANDATORY, 13);
 	$fields[5]  = new Fields\ItemSequenceNumber( 5, 'BOFD',                       Field::USAGE_CONDITIONAL, 21);
 	$fields[6]  = new Fields\DepositAccountNumber(6, 36);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'BOFD Deposit Branch',                   Field::USAGE_CONDITIONAL, 54,  5, Field::TYPE_ALPHAMERICSPECIAL);
@@ -142,7 +142,7 @@ class CheckDetailAddendumC extends Record
 	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_CHECK_DETAIL_ADDENDUM_C);
 	$fields[2]  = new Fields\FieldGeneric(2, 'Check Detail Addendum C Record Number', Field::USAGE_MANDATORY,    3,  2, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Endorsing Bank',                  Field::USAGE_CONDITIONAL,  5);
-	$fields[4]  = new Fields\FieldDate(4, 'Endorsing Bank Endorsement',               Field::USAGE_CONDITIONAL, 14);
+	$fields[4]  = new Fields\DateTime\Date(4, 'Endorsing Bank Endorsement',               Field::USAGE_CONDITIONAL, 14);
 	$fields[5]  = new Fields\ItemSequenceNumber(5, 'Endorsing Bank',             Field::USAGE_CONDITIONAL, 22);
 	$fields[6]  = new Fields\FieldGeneric(6, 'Truncation Indicator',                  Field::USAGE_CONDITIONAL, 37,  1, Field::TYPE_ALPHABETIC);
 	$fields[7]  = new Fields\FieldGeneric(7, 'Endorsing Bank Conversion Indicator',   Field::USAGE_CONDITIONAL, 38,  1, Field::TYPE_ALPHAMERIC);
@@ -172,7 +172,7 @@ class ReturnRecord extends Record
 	$fields[6]  = new Fields\Predefined\FieldReturnReason(6, Field::USAGE_MANDATORY, 42);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'Return Reason Addendum Count',          Field::USAGE_MANDATORY,   43,  2, Field::TYPE_NUMERIC);
 	$fields[8]  = new Fields\Predefined\FieldDocType(RecordType::VALUE_RETURN_RECORD);
-	$fields[9]  = new Fields\FieldDate(9, 'Forward Bundle',                            Field::USAGE_CONDITIONAL, 46);
+	$fields[9]  = new Fields\DateTime\Date(9, 'Forward Bundle',                            Field::USAGE_CONDITIONAL, 46);
 	$fields[10] = new Fields\ItemSequenceNumber(10, 'ECE Institution',            Field::USAGE_CONDITIONAL, 54);
 	$fields[11] = new Fields\FieldGeneric(11, 'External Processing Code',              Field::USAGE_CONDITIONAL, 69,  1, Field::TYPE_ALPHAMERICSPECIAL);
 	$fields[12] = new Fields\FieldGeneric(12, 'Return Notification Indicator',         Field::USAGE_CONDITIONAL, 70,  1, Field::TYPE_NUMERIC);
@@ -195,7 +195,7 @@ class ReturnAddendumA extends Record
 	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_RETURN_ADDENDUM_A);
 	$fields[2]  = new Fields\FieldGeneric( 2, 'Return Addendum A Record Number', Field::USAGE_MANDATORY,    3,  1, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'BOFD',                       Field::USAGE_CONDITIONAL,  4);
-	$fields[4]  = new Fields\FieldDate(4, 'BOFD Endorsement',                    Field::USAGE_CONDITIONAL, 13); // This field has some additional data maybe?
+	$fields[4]  = new Fields\DateTime\Date(4, 'BOFD Endorsement',                    Field::USAGE_CONDITIONAL, 13); // This field has some additional data maybe?
 	$fields[5]  = new Fields\ItemSequenceNumber(5, 'BOFD',                  Field::USAGE_CONDITIONAL, 21);
 	$fields[6]  = new Fields\DepositAccountNumber(6, 36);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'BOFD Deposit Branch',             Field::USAGE_CONDITIONAL, 54,  5, Field::TYPE_ALPHAMERICSPECIAL);
@@ -223,7 +223,7 @@ class ReturnAddendumB extends Record
 	$fields[2] = new Fields\NameInstitution(2, 'Payor Bank', 3);
 	$fields[3] = new Fields\FieldGeneric(3, 'Auxiliary On-Us',       Field::USAGE_CONDITIONAL, 21, 15, Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[4] = new Fields\ItemSequenceNumber(4, 'Payor Bank', Field::USAGE_CONDITIONAL, 36);
-	$fields[5] = new Fields\FieldDate(5, 'Payor Bank Business',      Field::USAGE_CONDITIONAL, 51,  8, Field::TYPE_NUMERIC);
+	$fields[5] = new Fields\DateTime\Date(5, 'Payor Bank Business',      Field::USAGE_CONDITIONAL, 51,  8, Field::TYPE_NUMERIC);
 	$fields[6] = new Fields\NamePayorAccount();
 	
 	return $fields;
@@ -244,7 +244,7 @@ class ReturnAddendumD extends Record
 	$fields[1]  = new Fields\Predefined\RecordType(RecordType::VALUE_RETURN_ADDENDUM_D);
 	$fields[2]  = new Fields\FieldGeneric(2, 'Return Addendum D Record Number',     Field::USAGE_MANDATORY,    3,  2, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldRoutingNumber(3, 'Endorsing Bank',                Field::USAGE_CONDITIONAL,  5);
-	$fields[4]  = new Fields\FieldDate(4, 'Endorsing Bank Endorsement',             Field::USAGE_CONDITIONAL, 14);
+	$fields[4]  = new Fields\DateTime\Date(4, 'Endorsing Bank Endorsement',             Field::USAGE_CONDITIONAL, 14);
 	$fields[5]  = new Fields\ItemSequenceNumber(5, 'Endorsing Bank',           Field::USAGE_CONDITIONAL, 22);
 	$fields[6]  = new Fields\FieldGeneric(6, 'Truncation Indicator',                Field::USAGE_CONDITIONAL, 37,  1, Field::TYPE_ALPHABETIC);
 	$fields[7]  = new Fields\FieldGeneric(7, 'Endorsing Bank Conversion Indicator', Field::USAGE_CONDITIONAL, 38,  1, Field::TYPE_ALPHAMERIC);
@@ -443,7 +443,7 @@ class CashLetterControl extends Record
 	$fields[4] = new Fields\Amount( 4, 'Cash Letter Total', 17, 14);
 	$fields[5] = new Fields\FieldGeneric(5, 'Images Within Cash Letter Count', Field::USAGE_CONDITIONAL, 31,  9, Field::TYPE_ALPHABETIC);
 	$fields[6] = new Fields\NameInstitution(6, 'ECE', 40);
-	$fields[7] = new Fields\FieldDate(7, 'Settlement',                         Field::USAGE_CONDITIONAL, 58);
+	$fields[7] = new Fields\DateTime\Date(7, 'Settlement',                         Field::USAGE_CONDITIONAL, 58);
 	$fields[8] = new Fields\FieldReserved(8, 66, 15);
 	
 	return $fields;

@@ -38,6 +38,15 @@ abstract class FieldPredefined extends Field
 	
 	return $translatedValue;
     }
+    
+    /**
+     * Returns a value plus it's translation if we know it.
+     * @param string $value
+     * @return string Formated value + translation.
+     */
+    protected static function formatValue($value) {
+	return $value . ' ' . static::translate($value);
+    }
 }
 
 require_once 'FieldCashLetterType.php';

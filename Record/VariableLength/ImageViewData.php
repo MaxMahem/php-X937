@@ -30,7 +30,7 @@ class ImageViewData extends VariableLength
 	
 	$fields[1]  = new Fields\Predefined\RecordType(Fields\Predefined\RecordType::VALUE_IMAGE_VIEW_DATA);
 	$fields[2]  = new Fields\FieldRoutingNumber(2, 'ECE Institution',                Field::USAGE_MANDATORY,     3);
-	$fields[3]  = new Fields\FieldDate(3, 'Bundle Bsiness Date',                     Field::USAGE_MANDATORY,    12);
+	$fields[3]  = new Fields\DateTime\Date(3, 'Bundle Business Date',                Field::USAGE_MANDATORY,    12);
 	$fields[4]  = new Fields\FieldGeneric(4,  'Cycle Number',                        Field::USAGE_MANDATORY,    20,  2, Field::TYPE_ALPHAMERIC);
 	$fields[5]  = new Fields\FieldGeneric(5,  'ECE Instituion Item Sequence Number', Field::USAGE_MANDATORY,    22, 15, Field::TYPE_NUMERICBLANK);
 	$fields[6]  = new Fields\NameSecurity(6, 'Originator',    37);
@@ -56,7 +56,7 @@ class ImageViewData extends VariableLength
 	$this->fields = new \SplFixedArray(19);
 	$this->addField(new Fields\Predefined\RecordType(Fields\Predefined\RecordType::VALUE_IMAGE_VIEW_DATA));
 	$this->addField(new Fields\FieldRoutingNumber(2, 'ECE Institution',                Field::USAGE_MANDATORY,     3));
-	$this->addField(new Fields\FieldDate(3, 'Bundle Bsiness Date',                     Field::USAGE_MANDATORY,    12));
+	$this->addField(new Fields\DateTime\Date(3, 'Bundle Business Date',                Field::USAGE_MANDATORY,    12));
 	$this->addField(new Fields\FieldGeneric(4,  'Cycle Number',                        Field::USAGE_MANDATORY,    20,  2, Field::TYPE_ALPHAMERIC));
 	$this->addField(new Fields\FieldGeneric(5,  'ECE Instituion Item Sequence Number', Field::USAGE_MANDATORY,    22, 15, Field::TYPE_NUMERICBLANK));
 	$this->addField(new Fields\NameSecurity(6, 'Originator',    37));

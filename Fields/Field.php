@@ -14,15 +14,17 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECT
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'DigitalSignature.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'ImageData.php';
 
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DateTime.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DateTime' . DIRECTORY_SEPARATOR . 'Date.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DateTime' . DIRECTORY_SEPARATOR . 'Time.php';
+
 require_once 'Amount.php';
 require_once 'SizeBytes.php';
 
-require_once 'FieldDate.php';
 require_once 'FieldGeneric.php';
 require_once 'FieldPhoneNumber.php';
 require_once 'FieldReserved.php';
 require_once 'FieldRoutingNumber.php';
-require_once 'FieldTime.php';
 require_once 'FieldUser.php';
 
 require_once 'FieldTypeName.php';
@@ -215,8 +217,8 @@ abstract class Field {
     }
     
     /**
-     * Return the value, formated nicely. Also implies Signifigant. Binary data
-     * is stubbed.
+     * Return the value, after calling the classes formating function. Nothing
+     * if blank.
      * @return string
      */
     public function getValueFormated() {
@@ -224,7 +226,15 @@ abstract class Field {
 	    return 'Binary Data';
 	}
 	
-	return $this->getValueSignifigant();
+	$value = $this->getValueSignifigant();
+	
+	// if value is blank we don't want to return that an not call the other
+	// format functions.
+	if ($value === '') {
+	    return '';
+	}
+	
+	return static::formatValue($value);
     }
     
     /**
@@ -257,12 +267,13 @@ abstract class Field {
 	$this->value = substr($recordData, $this->position - 1, $this->size);
     }
     
-    public static function translate($value) {
-	// stub for later classes.
-	return '';
-    }
-    
-    public function translatedValue() {
-	return static::translate($this->value);
+    /**
+     * Returns the value formated. By default just a trim, but classes override.
+     * @param string $value
+     * @return string
+     */
+    protected static function formatValue($value)
+    {
+	return trim($value);
     }
 }

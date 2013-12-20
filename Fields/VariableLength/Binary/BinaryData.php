@@ -53,10 +53,20 @@ class BinaryData extends \X937\Fields\VariableLength\VariableLength
 	return base64_encode($this->value);
     }
     
-    public function getValueRaw() {
+    /**
+     * Returns the number of bytes in the field. If 0 bytes, returns blank.
+     * @return string
+     */
+    public function getValueFormated() {
 	// strelen should work here even though this data is binary. We actually
 	// the value in 8 bit byets.
 	$size = strlen($this->value);
+	
+	// if size is 0, return nothing. This should always be the case for 0
+	// length fields, which is possible for variable length fields.
+	if ($size === 0) {
+	    return '';
+	}
 	return \X937\Fields\SizeBytes::formatBytes($size) . ' ' . 'Binary Data';
     }
 }

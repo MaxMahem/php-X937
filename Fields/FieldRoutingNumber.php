@@ -15,22 +15,22 @@ class FieldRoutingNumber extends Field
     {
 	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Routing Number', $usage, $position, 9, Field::TYPE_NUMERIC);
     }
+
+    protected function addClassValidators()
+    {
+	$this->validator->addValidator(new \ValidatorRoutingNumber());
+    }
     
     /**
      * Returns a routing number formated ####-#### without the check digit.
      * @return string
      */
-    public function getValueFormated()
+    protected static function formatValue($value)
     {
-	$value = substr($this->value, 0, 8);
+	$shortenedValue = substr($value, 0, 8);
 	
 	// insert - in the middle of the number
-	$value = substr_replace($value, '-', 5, 0);
-	return ;
-    }
-
-    protected function addClassValidators()
-    {
-	$this->validator->addValidator(new \ValidatorRoutingNumber());
+	$replacedValue = substr_replace($shortenedValue, '-', 4, 0);
+	return $replacedValue;
     }
 }
