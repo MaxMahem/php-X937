@@ -47,6 +47,14 @@ abstract class FieldPredefined extends Field
     protected static function formatValue($value) {
 	return $value . ' ' . static::translate($value);
     }
+    
+    /**
+     * Get the signifigant value. This includes preceding 0's for this type.
+     * @return string
+     */
+    public function getValueSignifigant() {
+	return $this->value;
+    }
 }
 
 require_once 'FieldCashLetterType.php';

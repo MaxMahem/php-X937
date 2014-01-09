@@ -12,9 +12,9 @@ namespace X937\Fields\Predefined\ImageView;
 class Compression extends ImageView
 {
     // no agreement required
-    const VALUE_GROUP_4       = '0';
-    const VALUE_JPEG_BASELINE = '1';
-    const VALUE_ABIC          = '2';
+    const VALUE_GROUP_4       = '00';
+    const VALUE_JPEG_BASELINE = '01';
+    const VALUE_ABIC          = '02';
     
     // agreement required
     const VALUE_PNG           = '21';

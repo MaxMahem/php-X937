@@ -49,7 +49,7 @@ class NameSecurity extends Name
     }
 }
 
-class NamePayerAccount extends Name
+class NamePayorAccount extends Name
 {
     public function __construct()
     {	

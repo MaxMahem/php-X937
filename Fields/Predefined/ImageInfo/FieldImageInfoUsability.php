@@ -20,15 +20,11 @@ class FieldImageInfoUsability extends FieldImageInfo
     }
     
     public static function defineValues()
-    {
-	// cut the usability part of the name out here so we can use it in our
-	// definition below.
-	$imagePartName = preg_replace(' Usability', '', $this->fieldName);
-	
+    {	
 	$definedValues = array(
 	    self::TEST_NOT_DONE => 'Test Not Done',
-	    self::UNUSEABLE     => "$imagePartName data is unusable and unreadable",
-	    self::USABLE        => "$imagePartName data is usable and readable",
+	    self::UNUSEABLE     => "Data is unusable and unreadable",
+	    self::USABLE        => "Data is usable and readable",
 	);
 	
 	return $definedValues;
