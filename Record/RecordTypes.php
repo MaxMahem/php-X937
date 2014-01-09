@@ -87,7 +87,7 @@ class CheckDetail extends Record {
 	$fields[4]  = new Fields\FieldGeneric( 4, 'Payor Bank Routing Number',             Field::USAGE_MANDATORY,   19,  8, Field::TYPE_NUMERIC);
 	$fields[5]  = new Fields\FieldGeneric( 5, 'Payor Bank Routing Number Check Digit', Field::USAGE_CONDITIONAL, 27,  1, Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[6]  = new Fields\FieldGeneric( 6, 'On-Us',                                 Field::USAGE_MANDATORY,   28, 20, Field::TYPE_NUMERICBLANKSPECIALMICRONUS);
-	$fields[7]  = new Fields\Amount(  7, 'Item', 10, 48);
+	$fields[7]  = new Fields\Amount(7, 'Item', 10, 48);
 	$fields[8]  = new Fields\ItemSequenceNumber(8, 'ECE Institution',             Field::USAGE_MANDATORY, 58);
 	$fields[9]  = new Fields\Predefined\FieldDocType(RecordType::VALUE_CHECK_DETAIL);
 	$fields[10] = new Fields\FieldGeneric(10, 'Return Acceptance Indicator',           Field::USAGE_CONDITIONAL, 74,  1, Field::TYPE_ALPHAMERIC);
@@ -168,7 +168,7 @@ class ReturnRecord extends Record
 	$fields[2]  = new Fields\FieldGeneric( 2, 'Payor Bank Routing Number',             Field::USAGE_MANDATORY,    3,  8, Field::TYPE_NUMERIC);
 	$fields[3]  = new Fields\FieldGeneric( 3, 'Payor Bank Routing Number Check Digit', Field::USAGE_CONDITIONAL, 11,  1, Field::TYPE_NUMERICBLANKSPECIALMICR);
 	$fields[4]  = new Fields\FieldGeneric( 4, 'On-Us Return Record',                   Field::USAGE_CONDITIONAL, 12, 20, Field::TYPE_NUMERICBLANKSPECIALMICRONUS);
-	$fields[5]  = new Fields\Item(    5, 'Item',                                  Field::USAGE_MANDATORY,   32, 10);
+	$fields[5]  = new Fields\Amount(5, 'Item', 32, 10);
 	$fields[6]  = new Fields\Predefined\FieldReturnReason(6, Field::USAGE_MANDATORY, 42);
 	$fields[7]  = new Fields\FieldGeneric( 7, 'Return Reason Addendum Count',          Field::USAGE_MANDATORY,   43,  2, Field::TYPE_NUMERIC);
 	$fields[8]  = new Fields\Predefined\FieldDocType(RecordType::VALUE_RETURN_RECORD);
