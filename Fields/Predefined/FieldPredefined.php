@@ -26,11 +26,11 @@ abstract class FieldPredefined extends Field
     public static function translate($value)
     {
 	$legalValues = static::defineValues();
-	
-	if (array_key_exists($value, $legalValues)) {
-	    $translatedValue = $legalValues[$value];
+        	
+	if (array_key_exists((string)$value, $legalValues)) {
+	    $translatedValue = $legalValues[(string)$value];
 	    if (is_string($translatedValue) === FALSE) {
-		throw new LogicException("Bad data type $translatedValue in X937Field Value table. All values should be strings.");
+		throw new \LogicException("Bad data type $translatedValue in X937Field Value table. All values should be strings.");
 	    }
 	} else {
 	    $translatedValue = 'Undefined';

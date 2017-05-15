@@ -95,14 +95,139 @@ class Factory {
 		$recordType = $recordTypeRaw;
 		break;
 	    case X937File::DATA_EBCDIC:
-		$recordType = iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordTypeRaw);
+                if (PHP_OS == 'Linux') {
+                    $recordType = iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordTypeRaw);
+                } else {
+                    $recordType = self::e2aConverter($recordTypeRaw);
+                }
+//              $recordType = mb_convert_encoding($recordTypeRaw, 'ASCII', 'EBCDIC');
+//              $recordType = recode_string('EBCDIC..ASCII', $recordTypeRaw);
 		break;
 	    default:
-		throw new InvalidArgumentException("Bad dataType passed.");
-		break;
+		throw new \InvalidArgumentException("Bad dataType passed: $dataType");
 	}
-    
+            
 	return self::newRecord($recordType, $recordData, $dataType);
+    }
+    
+    /**
+     * Converts the dreaded EBCDIC to ASCII
+     * @param string $eBinaryString raw EBCDIC hex string, in the format \xF0\xF1...
+     * @return string Decoded ASCII data
+     */
+     public static function e2aConverter($eBinaryString ) {
+        $e2aTable = [];
+        $e2aTable['40'] = ' ';
+        $e2aTable['4A'] = "¢";
+        $e2aTable['4B'] = ".";
+        $e2aTable['4C'] = "<";
+        $e2aTable['4D'] = "(";
+        $e2aTable['4E'] = "+";
+        $e2aTable['4F'] = "|";
+        $e2aTable['5A'] = "!";
+        $e2aTable['5B'] = "$";
+        $e2aTable['5C'] = "*";
+        $e2aTable['5D'] = ")";
+        $e2aTable['5E'] = ";";
+        $e2aTable['5F'] = "¬";
+        $e2aTable['60'] = "-";
+        $e2aTable['61'] = "/";
+        $e2aTable['6A'] = "¦";
+        $e2aTable['6B'] = ",";
+        $e2aTable['6C'] = "%";
+        $e2aTable['6D'] = "_";
+        $e2aTable['6E'] = ">";
+        $e2aTable['6F'] = "?";
+        $e2aTable['79'] = "`";
+        $e2aTable['7A'] = ":";
+        $e2aTable['7B'] = "#";
+        $e2aTable['7C'] = "@";
+        $e2aTable['7D'] = "'";
+        $e2aTable['7E'] = "=";
+        $e2aTable['7F'] = '"';
+        $e2aTable['81'] = "a";
+        $e2aTable['82'] = "b";
+        $e2aTable['83'] = "c";
+        $e2aTable['84'] = "d";
+        $e2aTable['85'] = "e";
+        $e2aTable['86'] = "f";
+        $e2aTable['87'] = "g";
+        $e2aTable['88'] = "h";
+        $e2aTable['89'] = "i";
+        $e2aTable['91'] = "j";
+        $e2aTable['92'] = "k";
+        $e2aTable['93'] = "l";
+        $e2aTable['94'] = "m";
+        $e2aTable['95'] = "n";
+        $e2aTable['96'] = "o";
+        $e2aTable['97'] = "p";
+        $e2aTable['98'] = "q";
+        $e2aTable['99'] = "r";
+        $e2aTable['A1'] = "~";
+        $e2aTable['A2'] = "s";
+        $e2aTable['A3'] = "t";
+        $e2aTable['A4'] = "u";
+        $e2aTable['A5'] = "v";
+        $e2aTable['A6'] = "w";
+        $e2aTable['A7'] = "x";
+        $e2aTable['A8'] = "y";
+        $e2aTable['A9'] = "z";
+        $e2aTable['C0'] = "{";
+        $e2aTable['C1'] = "A";
+        $e2aTable['C2'] = "B";
+        $e2aTable['C3'] = "C";
+        $e2aTable['C4'] = "D";
+        $e2aTable['C5'] = "E";
+        $e2aTable['C6'] = "F";
+        $e2aTable['C7'] = "G";
+        $e2aTable['C8'] = "H";
+        $e2aTable['C9'] = "I";
+        $e2aTable['D0'] = "}";
+        $e2aTable['D1'] = "J";
+        $e2aTable['D2'] = "K";
+        $e2aTable['D3'] = "L";
+        $e2aTable['D4'] = "M";
+        $e2aTable['D5'] = "N";
+        $e2aTable['D6'] = "O";
+        $e2aTable['D7'] = "P";
+        $e2aTable['D8'] = "Q";
+        $e2aTable['D9'] = "R";
+        $e2aTable['E0'] = '\\';
+        $e2aTable['E2'] = "S";
+        $e2aTable['E3'] = "T";
+        $e2aTable['E4'] = "U";
+        $e2aTable['E5'] = "V";
+        $e2aTable['E6'] = "W";
+        $e2aTable['E7'] = "X";
+        $e2aTable['E8'] = "Y";
+        $e2aTable['E9'] = "Z";
+        $e2aTable['F0'] = "0";
+        $e2aTable['F1'] = "1";
+        $e2aTable['F2'] = "2";
+        $e2aTable['F3'] = "3";
+        $e2aTable['F4'] = "4";
+        $e2aTable['F5'] = "5";
+        $e2aTable['F6'] = "6";
+        $e2aTable['F7'] = "7";
+        $e2aTable['F8'] = "8";
+        $e2aTable['F9'] = "9";
+        $e2aTable['FF'] = "E0";
+
+        // loop until there is no more conversion.
+        $asciiOut = "";    
+        while(strlen($eBinaryString)>=1)
+        {
+            $thisEbcdic = strtoupper(bin2hex(substr($eBinaryString, 0, 1)));
+            if (array_key_exists($thisEbcdic, $e2aTable)) {
+                $asciiOut = $asciiOut . $e2aTable[$thisEbcdic];
+            } else {
+                $asciiOut .= ' ';
+            }
+            $eBinaryString = substr($eBinaryString, 1);
+
+        }    
+
+        return $asciiOut;
     }
 
     /**
@@ -115,7 +240,7 @@ class Factory {
      */
     private static function newRecord($recordType, $recordData, $dataType = X937File::DATA_EBCDIC) {
 	if (array_key_exists($recordType, self::defineRecordTypes()) === FALSE) {
-	    throw new InvalidArgumentException("Bad record type passed.");
+	    throw new \InvalidArgumentException("Bad record type passed.");
 	}
 	
 	// convert the record data if necessary.
@@ -124,89 +249,72 @@ class Factory {
 	 * Currently it will warn on binary data, which we suppress.
 	 */
 	if ($dataType === X937File::DATA_EBCDIC) {
-	    $recordDataASCII = @iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordData);
+            if (PHP_OS == 'Linux') { 
+                $recordDataASCII = @iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordData);
+            } else {
+                $recordDataASCII = self::e2aConverter($recordData);
+            }
 	} else {
 	    $recordDataASCII = $recordData;
 	}
-
+        
 	switch ($recordType) {
 	    // header Record
 	    case RecordType::VALUE_FILE_HEADER:
-		return new FileHeader($recordType, $recordDataASCII);
-		break;
+		return new FileHeader($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_CASH_LETTER_HEADER:
-		return new CashLetterHeader($recordType, $recordDataASCII);
-		break;
+		return new CashLetterHeader($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_BUNDLE_HEADER:
-		return new BundleHeader($recordType, $recordDataASCII);
-		break;
+		return new BundleHeader($recordType, $recordDataASCII, $recordData);
 
 	    // check detail Record
 	    case RecordType::VALUE_CHECK_DETAIL:
-		return new CheckDetail($recordType, $recordDataASCII);
-		break;
+		return new CheckDetail($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_A:
-		return new CheckDetailAddendumA($recordType, $recordDataASCII);
-		break;
+		return new CheckDetailAddendumA($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_B:
-		return new VariableLength\CheckDetailAddendumB($recordType, $recordDataASCII);
-		break;
+		return new VariableLength\CheckDetailAddendumB($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_C:
-		return new CheckDetailAddendumC($recordType, $recordDataASCII);
-		break;	    
+		return new CheckDetailAddendumC($recordType, $recordDataASCII, $recordData);    
 	    
 	    // return detail Record
 	    case RecordType::VALUE_RETURN_RECORD:
-		return new ReturnRecord($recordType, $recordDataASCII);
-		break;
+		return new ReturnRecord($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_RETURN_ADDENDUM_A:
-		return new ReturnAddendumA($recordType, $recordDataASCII);
-		break;
+		return new ReturnAddendumA($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_RETURN_ADDENDUM_B:
-		return new ReturnAddendumB($recordType, $recordDataASCII);
-		break;
+		return new ReturnAddendumB($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_RETURN_ADDENDUM_C:
-		return new VariableLength\ReturnAddendumC($recordType, $recordDataASCII);
-		break;
+		return new VariableLength\ReturnAddendumC($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_RETURN_ADDENDUM_D:
-		return new ReturnAddendumD($recordType, $recordDataASCII);
-		break;
+		return new ReturnAddendumD($recordType, $recordDataASCII, $recordData);
 	    
 	    // image view Record
 	    case RecordType::VALUE_IMAGE_VIEW_DETAIL:
-		return new ImageViewDetail($recordType, $recordDataASCII);
-		break;
+		return new ImageViewDetail($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_IMAGE_VIEW_DATA:
 		/**
 		 * @todo special data handling here for the binary data.
 		 */
 		return new VariableLength\ImageViewData($recordType, $recordDataASCII, $recordData);
-		break;
 	    case RecordType::VALUE_IMAGE_VIEW_ANALYSIS:
-		return new ImageViewAnalysis($recordType, $recordDataASCII);
-		break;
+		return new ImageViewAnalysis($recordType, $recordDataASCII, $recordData);
 
 	    // control/summary Record
 	    case RecordType::VALUE_BUNDLE_CONTROL:
-		return new BundleControl($recordType, $recordDataASCII);
-		break;
+		return new BundleControl($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_BOX_SUMMARY:
-		return new BoxSummary($recordType, $recordDataASCII);
-		break;
+		return new BoxSummary($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_ROUTING_NUMBER_SUMMARY:
-		return new RoutingNumberSummary($recordType, $recordDataASCII);
-		break;
+		return new RoutingNumberSummary($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_CASH_LETTER_CONTROL:
-		return new CashLetterControl($recordType, $recordDataASCII);
-		break;
+		return new CashLetterControl($recordType, $recordDataASCII, $recordData);
 	    case RecordType::VALUE_FILE_CONTROL:
-		return new FileControl($recordType, $recordDataASCII);
-		break;
+		return new FileControl($recordType, $recordDataASCII, $recordData);
 	    default:
 		// emmit notice, we shouldn't get any of these.
 		trigger_error('Invalid record passed, data is unhandled.');
-		return new Generic($recordType, $recordDataASCII);
-		break;
+		return new Generic($recordType, $recordDataASCII, $recordData);
 	}
     }
 }

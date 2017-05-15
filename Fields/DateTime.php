@@ -81,6 +81,10 @@ abstract class DateTime extends Field {
     protected static function formatValue($value)
     {
 	$dateTime = \DateTime::createFromFormat(static::X937_DATETIME_FORMAT, $value);
+        
+        if ($dateTime == FALSE) {
+            throw new \InvalidArgumentException("Unable to format date: $value");
+        }
 	
 	return $dateTime->format(static::OUTPUT_DATETIME_FORMAT);
     }

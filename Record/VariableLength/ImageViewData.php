@@ -13,14 +13,7 @@ use X937\Fields\Field;
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
 class ImageViewData extends VariableLength
-{   
-    public function __construct($recordType, $recordDataASCII, $recordDataRaw)
-    {
-	$this->recordDataRaw = $recordDataRaw;
-	
-	parent::__construct($recordType, $recordDataASCII);
-    }
-    
+{       
     /**
      * Note that this record has variable length and so these field definition may not be accurate.
      * @return array() array of X937Fields

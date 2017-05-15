@@ -261,7 +261,7 @@ abstract class Field {
 
     public function parseValue($recordData) {
 	if (is_string($recordData) === FALSE) {
-	    throw new InvalidArgumentException("Bad recordData passed. String expected.");
+	    throw new \InvalidArgumentException("Bad recordData passed. String expected.");
 	}
 	
 	$this->value = substr($recordData, $this->position - 1, $this->size);

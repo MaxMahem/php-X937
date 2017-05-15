@@ -22,8 +22,8 @@ class SizeBytes extends Field
     
     public static function formatBytes($bytes, $signifigantDigits = 2) {
 	if ((is_numeric($bytes) === false) || ($bytes < 0)) {
-	    trigger_error('Non-numeric or negative byte count given to format.');
-	    return trim($bytes);
+            throw new \InvalidArgumentException("Non-numeric or negative byte count given to formatByte. $bytes");
+//	    return trim($bytes);
 	}
 	
 	// handle 0 byte case.
@@ -45,7 +45,6 @@ class SizeBytes extends Field
 	// get our unit
 	$unit = $units[$powMin];
 	
-
         return round($convertedBytes, $signifigantDigits) . $unit;
     }
     

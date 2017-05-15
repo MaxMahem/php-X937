@@ -43,7 +43,12 @@ class Human extends AbstractWriter
 	    $fieldOutputArray = array();
 	    
 	    $fieldOutputArray['name']        = $field->getName() . ':';
-	    $fieldOutputArray['value']       = $this->writeField($field);
+            try {
+                $fieldOutputArray['value']       = $this->writeField($field);
+            } catch (\Exception $e) {
+                echo "Error: Record Type#" . $record->getType() . " Field: " . $field->getName()
+                        . ' ' . $e->getMessage() . PHP_EOL;
+            }
 
 	    // adding to the output array is optional, we dont' want to do it
 	    // for blank fields if the OMIT_BLANKS option is set.

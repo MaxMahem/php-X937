@@ -117,7 +117,7 @@ class ValidatorSize implements ValidatorInterface {
     
     public function __construct($fieldLength) {
 	if (!is_integer($fieldLength)) {
-	    throw new InvalidArgumentException("Invalid argument passed to new FieldValidatorSize: $fieldLength. Integer expected");
+	    throw new \InvalidArgumentException("Invalid argument passed to new FieldValidatorSize: $fieldLength. Integer expected");
 	}
 	
 	$this->fieldLength = $fieldLength;

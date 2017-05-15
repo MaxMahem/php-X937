@@ -61,7 +61,7 @@ class X937File implements \Iterator {
 	// input validation		
 	// check for existance of our file
 	if (!file_exists($filename)) {
-	    throw new InvalidArgumentException("X937File created with file that does not exist, filename: $filename");
+	    throw new \InvalidArgumentException("X937File created with file that does not exist, filename: $filename");
 	}
 		
 	// so we have a file, get info on it.
@@ -116,8 +116,8 @@ class X937File implements \Iterator {
     
     /**
      * Returns the current key for our record, which is the location of the 
-     * beging of the record in the file, in bytes, with the data length record
-     * field. I.E. 4 bytes before the actuall data's position.
+     * beginning of the record in the file, in bytes, with the data length record
+     * field. I.E. 4 bytes before the actual data's position.
      * @return int Key for the record, it's position in the file (in bytes)
      */
     public function key() {
@@ -131,11 +131,13 @@ class X937File implements \Iterator {
     public function current() {
 	// get the current record length.
 	$recordLength = $this->readRecordLength();
-
+        
+        $GLOBALS['length'] = $recordLength;
+        
 	// read the data for our record. Build a record.
 	$recordData = $this->readRecord($recordLength);	
 	$record     = \X937\Record\Factory::GenerateFromRawData($recordData, $this->dataType);
-
+        
 	return $record;
     }
     
@@ -184,7 +186,7 @@ class X937File implements \Iterator {
 	// unpack our data into an int, unpack should return an with a single
 	// value i.e. array '['int']=>RECORDLENGTH so array shift will get us
 	// the raw value.
-	$curentRecordLength = array_shift(unpack("Nint", $recordLengthData));
+	$curentRecordLength = array_shift(unpack('N', $recordLengthData));
 	
 	// return the cursor to it's previous position.
 	fseek($this->fileHandle, -4, SEEK_CUR);

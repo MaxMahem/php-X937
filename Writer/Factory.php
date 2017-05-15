@@ -22,6 +22,7 @@ require_once 'Flat.php';
 require_once 'Human.php';
 require_once 'Image.php';
 require_once 'XML.php';
+require_once 'X937Writer.php';
 
 /**
  * A Factor for building writers.
@@ -35,10 +36,12 @@ class Factory {
     const FORMAT_FILE_FLAT  = 'Flat';
     const FORMAT_FILE_HUMAN = 'Human';
     const FORMAT_FILE_XML   = 'XML';
+    const FORMAT_FILE_X937  = 'X937';
     
     const FORMAT_BINARY_BASE64 = 'Base64';
     const FORMAT_BINARY_NONE   = 'None';
     const FORMAT_BINARY_STUB   = 'Stub';
+    const FORMAT_BINARY_BINARY = 'Binary';
     
     const FORMAT_ENCODE_UTF8   = 'UTF-8';
     const FORMAT_ENCODE_ASCII  = 'ASCII';
@@ -49,6 +52,7 @@ class Factory {
 	    self::FORMAT_FILE_FLAT  => 'Flat File',
 	    self::FORMAT_FILE_HUMAN => 'Human Readable File',
 	    self::FORMAT_FILE_XML   => 'XML File',
+            self::FORMAT_FILE_X937  => 'X937 Format File',
 	);
 	
 	return $legalTypes;
@@ -60,6 +64,7 @@ class Factory {
 	    self::FORMAT_BINARY_BASE64 => 'Base64 encoded data',
 	    self::FORMAT_BINARY_NONE   => 'Omit binary data',
 	    self::FORMAT_BINARY_STUB   => 'Stub of Binary data',
+            self::FORMAT_BINARY_BINARY => 'Raw Binary Data',
 	);
 	return $legalTypes;
     }
@@ -88,6 +93,12 @@ class Factory {
 		break;
 	    case self::FORMAT_BINARY_STUB:
 		$binaryWriter = new FieldWriter\Formated();
+                break;
+            case self::FORMAT_BINARY_RAW:
+                $binaryWriter = new FieldWriter\Binary\Binary();
+                break;
+            default:
+                $binaryWriter = new FieldWriter\Binary\Binary();
 	}
 	
 	// build our normal field handler.
@@ -101,12 +112,15 @@ class Factory {
 	    case self::FORMAT_FILE_XML:
 		$fieldWriter = new FieldWriter\Signifigant();
 		break;
+            default:
+                $fieldWriter = new FieldWriter\Raw();
 	}
 	
 	// build our file object for the writer.
 	switch ($fileFormat) {
 	    case self::FORMAT_FILE_FLAT:
 	    case self::FORMAT_FILE_HUMAN:
+            case self::FORMAT_FILE_X937:
 		// delebirate fall through.
 		// SplObject will throw it's own exception if it can't write.
 		$fileObject = new \SplFileObject($filename, 'wb');
@@ -126,6 +140,10 @@ class Factory {
 		return new Flat($fileObject, $fieldWriter, $binaryWriter);
 	    case self::FORMAT_FILE_HUMAN:
 		return new Human($fileObject, $fieldWriter, $binaryWriter);
+            case self::FORMAT_FILE_XML:
+                throw new Exception('Not Implemented yet, sorry!');
+            case self::FORMAT_FILE_X937:
+                return new X937Writer($fileObject, $fieldWriter, $binaryWriter);
 	}
     }
     //put your code here
