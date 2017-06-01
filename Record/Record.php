@@ -274,9 +274,7 @@ abstract class Record implements \IteratorAggregate, \Countable {
 	
 	// added error check because I seem to be missing some.
 	foreach($this->fields as $field) {
-	    if (($field instanceof Field) === FALSE) {
-		throw new \LogicException("Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
-	    }
+	    assert(($field instanceof Field), "Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
 	}
 	
 	foreach($this->fields as $field) {

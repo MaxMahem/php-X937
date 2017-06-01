@@ -28,9 +28,6 @@ abstract class FieldPredefined extends Field
         	
 	if (array_key_exists((string)$value, $legalValues)) {
 	    $translatedValue = $legalValues[(string)$value];
-	    if (is_string($translatedValue) === FALSE) {
-		throw new \LogicException("Bad data type $translatedValue in X937Field Value table. All values should be strings.");
-	    }
 	} else {
 	    $translatedValue = 'Undefined';
 	}

@@ -72,9 +72,6 @@ class Format extends ImageView
 	
 	if (array_key_exists($value, $legalValues)) {
 	    $translatedValue = $legalValues[$value];
-	    if (is_string($translatedValue) === FALSE) {
-		throw new LogicException("Bad data type $translatedValue in X937Field Value table. All values should be strings.");
-	    }
 	} else {
 	    $translatedValue = 'Undefined';
 	}
