@@ -1,8 +1,7 @@
-<?php
-
-namespace X937\Fields\Predefined;
+<?php namespace X937\Fields\Predefined;
 
 use X937\Fields\Field;
+use X937\Validator;
 
 /**
  * FieldsPredefined is an abstract base class which defines methods for other
@@ -19,7 +18,7 @@ abstract class FieldPredefined extends Field
     protected function addClassValidators()
     {
 	$legalValues          = array_keys(static::defineValues());
-	$legalValuesValidator = new \ValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new Validator\ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
     
@@ -56,18 +55,3 @@ abstract class FieldPredefined extends Field
 	return $this->value;
     }
 }
-
-require_once 'FieldCashLetterType.php';
-require_once 'FieldCollectionType.php';
-require_once 'FieldDocType.php';
-require_once 'FieldFedWorkType.php';
-require_once 'RecordType.php';
-require_once 'FieldResend.php';
-require_once 'FieldReturnReason.php';
-require_once 'FieldSpecificationLevel.php';
-require_once 'FieldTestFile.php';
-require_once 'FieldVariableSize.php';
-require_once 'ViewSide.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageInfo' . DIRECTORY_SEPARATOR . 'FieldImageInfo.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageView' . DIRECTORY_SEPARATOR . 'ImageView.php';

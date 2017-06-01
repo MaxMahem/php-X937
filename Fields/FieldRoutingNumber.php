@@ -1,6 +1,4 @@
-<?php
-
-namespace X937\Fields;
+<?php namespace X937\Fields;
 
 /**
  * Field containing a routing number. 9 digits, including a check digit.
@@ -18,7 +16,7 @@ class FieldRoutingNumber extends Field
 
     protected function addClassValidators()
     {
-	$this->validator->addValidator(new \ValidatorRoutingNumber());
+	$this->validator->addValidator(new \X937\Validator\ValidatorRoutingNumber());
     }
     
     /**

@@ -1,6 +1,4 @@
-<?php
-
-namespace X937\Fields;
+<?php namespace X937\Fields;
 
 /**
  * A field containing a monitary value. No decimal places, divide by 100 to get

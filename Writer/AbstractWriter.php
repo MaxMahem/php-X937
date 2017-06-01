@@ -10,8 +10,6 @@ namespace X937\Writer;
 use X937\Record as Record;
 use X937\Fields as Fields;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Record.php';
-
 abstract class AbstractWriter implements WriterInterface {
     /**
      * Options array

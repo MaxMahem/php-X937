@@ -1,14 +1,4 @@
-<?php
-
-namespace X937\Writer;
-
-use X937\Fields\Field;
-use X937\Fields\Predefined\RecordType;
-
-use X937\Record as Record;
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Record.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'Field.php';
+<?php namespace X937\Writer;
 
 /**
  * Outputs record data as an XML file.
@@ -151,7 +141,7 @@ class XML extends AbstractWriter
 	    if($field->getName() === 'Image Data') {
 		$this->imageWriter->write($record);
 	    } else {
-		$value = $field->getValue(\X937\Fields\Field::FORMAT_SIGNIFIGANT);
+		$value = $field->getValue(X937\Fields\Field::FORMAT_SIGNIFIGANT);
 	    }
 	    
 	    /**

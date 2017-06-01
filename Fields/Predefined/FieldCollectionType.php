@@ -1,6 +1,4 @@
-<?php
-
-namespace X937\Fields\Predefined;
+<?php namespace X937\Fields\Predefined;
 
 /**
  * Field indicating collection type. Valid values very on record type.
@@ -34,7 +32,7 @@ class FieldCollectionType extends FieldPredefined
 	$this->recordType = $recordType;
 	
 	if (in_array($recordType, array(RecordType::VALUE_CASH_LETTER_HEADER, RecordType::VALUE_BUNDLE_HEADER)) === FALSE) {
-	    throw new InvalidArgumentException('Bad record type');
+	    throw new \InvalidArgumentException('Bad record type');
 	}
 	
 	parent::__construct(2, 'Collection Type Indicator', self::USAGE_MANDATORY, 3, 2, self::TYPE_NUMERIC);
@@ -80,7 +78,7 @@ class FieldCollectionType extends FieldPredefined
 	    // we would normaly error check here, but that should be handled in the constructor.
 	}
 	
-	$legalValuesValidator = new \ValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new \X937\Validator\ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
 }

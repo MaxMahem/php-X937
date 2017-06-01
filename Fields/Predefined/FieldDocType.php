@@ -1,6 +1,4 @@
-<?php
-
-namespace X937\Fields\Predefined;
+<?php namespace X937\Fields\Predefined;
 
 /**
  * Field indicating the work type. Allowed values vary based on the where the
@@ -64,7 +62,7 @@ class FieldDocType extends FieldPredefined
 		$usage       = self::USAGE_CONDITIONAL;
 		break;
 	    default:
-		throw new InvalidArgumentException('Bad record type.');
+		throw new \InvalidArgumentException('Bad record type.');
 		break;
 	}
 	
@@ -116,7 +114,7 @@ class FieldDocType extends FieldPredefined
 	    // we would normaly error check here, but that should be handled in the constructor.
 	}
 	
-	$legalValuesValidator = new \ValidatorValueEnumerated($legalValues);
+	$legalValuesValidator = new \X937\Validator\ValidatorValueEnumerated($legalValues);
 	$this->validator->addValidator($legalValuesValidator);
     }
 }

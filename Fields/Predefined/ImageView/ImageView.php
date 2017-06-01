@@ -35,6 +35,3 @@ abstract class ImageView extends \X937\Fields\Predefined\FieldPredefined
 	}
     }
 }
-
-require_once 'Compression.php';
-require_once 'Format.php';

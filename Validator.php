@@ -1,4 +1,4 @@
-<?php
+<?php namespace X937\Validator;
 
 /**
  * Description of Validator

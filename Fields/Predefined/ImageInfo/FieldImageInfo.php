@@ -18,6 +18,3 @@ abstract class FieldImageInfo extends \X937\Fields\Predefined\FieldPredefined
 	parent::__construct($fieldNumber, $fieldName, self::USAGE_CONDITIONAL, $position, 1, self::TYPE_NUMERIC);
     }
 }
-
-require_once 'FieldImageInfoQuality.php';
-require_once 'FieldImageInfoUsability.php';

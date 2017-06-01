@@ -1,11 +1,5 @@
-<?php
+<?php namespace X937;
 
-namespace X937;
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Record.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Factory.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'Field.php';
 /**
  * An X937File
  * 
@@ -57,7 +51,7 @@ class X937File implements \Iterator {
      * @param string $filename the path to the X937File
      * @throws InvalidArgumentException
      */
-    public function __construct($filename) {
+    public function __construct(string $filename) {
 	// input validation		
 	// check for existance of our file
 	if (!file_exists($filename)) {
@@ -120,7 +114,7 @@ class X937File implements \Iterator {
      * field. I.E. 4 bytes before the actual data's position.
      * @return int Key for the record, it's position in the file (in bytes)
      */
-    public function key() {
+    public function key(): int {
 	return ftell($this->fileHandle);
     }
     
@@ -131,8 +125,6 @@ class X937File implements \Iterator {
     public function current() {
 	// get the current record length.
 	$recordLength = $this->readRecordLength();
-        
-        $GLOBALS['length'] = $recordLength;
         
 	// read the data for our record. Build a record.
 	$recordData = $this->readRecord($recordLength);	
@@ -156,7 +148,7 @@ class X937File implements \Iterator {
      * Returns true if we are at the end of our record set, false otherwise.
      * @return bool True if end of record set. False if not.
      */
-    public function valid() {
+    public function valid(): bool {
 	// if we are at the last record our file handle should point to the eof.
 	// feof will return true in this case, we wan't the opposite.
 	$currentPosition = ftell($this->fileHandle);
@@ -179,14 +171,15 @@ class X937File implements \Iterator {
      * The file cursor is returned to its original position.
      * @return int Length of the record (in bytes)
      */
-    private function readRecordLength() {
+    private function readRecordLength(): int {
 	// pull 4 bytes, this should contain our record length.
 	$recordLengthData = fread($this->fileHandle, 4);
 	
 	// unpack our data into an int, unpack should return an with a single
 	// value i.e. array '['int']=>RECORDLENGTH so array shift will get us
 	// the raw value.
-	$curentRecordLength = array_shift(unpack('N', $recordLengthData));
+        $unpackedData = unpack('N', $recordLengthData);
+	$curentRecordLength = array_shift($unpackedData);
 	
 	// return the cursor to it's previous position.
 	fseek($this->fileHandle, -4, SEEK_CUR);
@@ -200,7 +193,7 @@ class X937File implements \Iterator {
      * @param int $recordLength
      * @return string the raw record data.
      */
-    private function readRecord($recordLength) {
+    private function readRecord(int $recordLength): string {
 	// seek forward 4 bytes, our cursor should always be at the beginning of
 	// a record, so we need to advance 4 bytes (past the record length part)
 	// to get to our data.
@@ -225,7 +218,7 @@ class X937File implements \Iterator {
      * @return string the file data type.
      * @throws InvalidArgumentException
      */
-    private function readFileDataType() {
+    private function readFileDataType(): string {
 	// seek to the right location. 4 bytes from the start of the file.
 	fseek($this->fileHandle, 4, SEEK_SET);
 	
@@ -242,8 +235,7 @@ class X937File implements \Iterator {
 		$dataType = self::DATA_ASCII;
 		break;
 	    default:
-		throw new InvalidArgumentException('Unable to parse file, bad data given.');
-		break;
+		throw new \InvalidArgumentException('Unable to parse file, bad data given.');
 	}
 	
 	// rewind to the start of the file.

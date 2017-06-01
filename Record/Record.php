@@ -2,8 +2,6 @@
 
 namespace X937\Record;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' . DIRECTORY_SEPARATOR . 'Field.php';
-
 use X937\Fields\Predefined\RecordType;
 use X937\Fields\Field;
 
@@ -277,7 +275,7 @@ abstract class Record implements \IteratorAggregate, \Countable {
 	// added error check because I seem to be missing some.
 	foreach($this->fields as $field) {
 	    if (($field instanceof Field) === FALSE) {
-		throw new LogicException("Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
+		throw new \LogicException("Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
 	    }
 	}
 	

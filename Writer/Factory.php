@@ -4,26 +4,6 @@ namespace X937\Writer;
 
 use X937\Writer\Field as FieldWriter;
 
-require_once 'WriterInterface.php';
-require_once 'AbstractWriter.php';
-
-require_once 'FieldInterface.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Field' .  DIRECTORY_SEPARATOR . 'BinaryAbstract.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Field' .  DIRECTORY_SEPARATOR . 'Formated.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Field' .  DIRECTORY_SEPARATOR . 'None.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Field' .  DIRECTORY_SEPARATOR . 'Raw.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Field' .  DIRECTORY_SEPARATOR . 'Signifigant.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Field' .  DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'Base64.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Field' .  DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'Binary.php';
-
-require_once 'Flat.php';
-require_once 'Human.php';
-require_once 'Image.php';
-require_once 'XML.php';
-require_once 'X937Writer.php';
-
 /**
  * A Factor for building writers.
  *

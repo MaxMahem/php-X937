@@ -5,17 +5,6 @@ namespace X937\Record;
 use X937\X937File;
 use X937\Fields\Predefined\RecordType;
 
-require_once 'RecordTypes.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'VariableLength.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'CheckDetailAddendumB.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'ImageViewData.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'ReturnAddendumC.php';
-
-require_once 'CashLetterHeader.php';
-require_once 'ImageViewDetail.php';
-
 /**
  * A factor class to generate new X937Record from different sorts of input.
  *

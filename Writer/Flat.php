@@ -2,11 +2,7 @@
 
 namespace X937\Writer;
 
-use X937\Fields\Field;
 use X937\Record as Record;
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Record' . DIRECTORY_SEPARATOR . 'Record.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fields' .  DIRECTORY_SEPARATOR . 'Field.php';
 
 /**
  * Outputs record data in ASCII, with system line-endings at end of record.

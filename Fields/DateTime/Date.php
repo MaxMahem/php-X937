@@ -1,6 +1,4 @@
-<?php
-
-namespace X937\Fields\DateTime;
+<?php namespace X937\Fields\DateTime;
 
 /**
  * Field containing a date, YYYYMMDD format.
@@ -19,6 +17,6 @@ class Date extends \X937\Fields\DateTime
     
     protected function addClassValidators()
     {
-	$this->validator->addValidator(new \ValidatorDate(self::X937_DATETIME_FORMAT));
+	$this->validator->addValidator(new \X937\Validator\ValidatorDate(self::X937_DATETIME_FORMAT));
     }
 }

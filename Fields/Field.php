@@ -1,36 +1,6 @@
-<?php
+<?php namespace X937\Fields;
 
-namespace X937\Fields;
-
-/**
- * @todo: make autoloader work to remove this stuff.
- */
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Predefined' .     DIRECTORY_SEPARATOR . 'FieldPredefined.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'VariableLength.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'ImageKey.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'BinaryData.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'DigitalSignature.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'VariableLength' . DIRECTORY_SEPARATOR . 'Binary' . DIRECTORY_SEPARATOR . 'ImageData.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DateTime.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DateTime' . DIRECTORY_SEPARATOR . 'Date.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DateTime' . DIRECTORY_SEPARATOR . 'Time.php';
-
-require_once 'Amount.php';
-require_once 'SizeBytes.php';
-
-require_once 'FieldGeneric.php';
-require_once 'FieldPhoneNumber.php';
-require_once 'FieldReserved.php';
-require_once 'FieldRoutingNumber.php';
-require_once 'FieldUser.php';
-
-require_once 'FieldTypeName.php';
-require_once 'FieldTypes.php';
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Validator.php';
+use X937\Validator as Validator;
 
 /**
  * Contains a specific X937Field
@@ -143,32 +113,32 @@ abstract class Field {
      */
     protected function addBaseValidators() {
 	// initialize validator
-	$this->validator = new \Validator();
+	$this->validator = new Validator\Validator();
 	
 	// add validator based on usage.
 	if ($this->usage === Field::USAGE_MANDATORY) {
-	    $this->validator->addValidator(new \ValidatorUsageManditory());
+	    $this->validator->addValidator(new Validator\ValidatorUsageManditory());
 	}
 	
 	// add validator based on size.
-	$this->validator->addValidator(new \ValidatorSize($this->size));
+	$this->validator->addValidator(new Validator\ValidatorSize($this->size));
 	
 	// add validator based on type.
 	switch ($this->type) {
 	    case Field::TYPE_ALPHABETIC:
-		$this->validator->addValidator(new \ValidatorTypeAlphabetic());
+		$this->validator->addValidator(new Validator\ValidatorTypeAlphabetic());
 		break;
 	    case Field::TYPE_NUMERIC:
-		$this->validator->addValidator(new \ValidatorTypeNumeric());
+		$this->validator->addValidator(new Validator\ValidatorTypeNumeric());
 		break;
 	    case Field::TYPE_BLANK:
-		$this->validator->addValidator(new \ValidatorTypeBlank());
+		$this->validator->addValidator(new Validator\ValidatorTypeBlank());
 		break;
 	    case Field::TYPE_SPECIAL:
 		// insert validators
 		break;
 	    case Field::TYPE_ALPHAMERIC:
-		$this->validator->addValidator(new \ValidatorTypeAlphameric());
+		$this->validator->addValidator(new Validator\ValidatorTypeAlphameric());
 		break;
 	    /**
 	     * @todo add rest of validators.
