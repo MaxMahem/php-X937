@@ -2,9 +2,10 @@
 
 /**
  * Field containing a date, YYYYMMDD format.
+ * 
  * @author Austin Stanley <maxtmahem@gmail.com>
- * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  */
 class Date extends \X937\Fields\DateTime
 {
@@ -17,6 +18,6 @@ class Date extends \X937\Fields\DateTime
     
     protected function addClassValidators()
     {
-	$this->validator->addValidator(new \X937\Validator\ValidatorDate(self::X937_DATETIME_FORMAT));
+    $this->validator->addValidator(new \X937\Validator\ValidatorDate(self::X937_DATETIME_FORMAT));
     }
 }

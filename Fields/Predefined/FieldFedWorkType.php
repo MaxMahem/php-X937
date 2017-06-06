@@ -29,29 +29,29 @@ class FieldFedWorkType extends FieldPredefined
     
     public function __construct()
     {
-	parent::__construct(13, 'Fed Work Type', self::USAGE_CONDITIONAL, 77, 1, self::TYPE_ALPHAMERIC);
+    parent::__construct(13, 'Fed Work Type', self::USAGE_CONDITIONAL, 77, 1, self::TYPE_ALPHAMERIC);
     }
 
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::CITY                      => 'City',
-	    self::CITY_GROUP                => 'City Group',
-	    self::CITY_FINE_SORT            => 'City Fine Sort',
-	    self::RCPC                      => 'RCPC',
-	    self::RCPC_GROUP                => 'RCPC Group',
-	    self::RCPC_FINE_SORT            => 'RCPC Fine Sort',
-	    self::HIGH_DOLLAR_GROUP_SORT    => 'High Dollar Group Sort',
-	    self::COUNTRY                   => 'Country',
-	    self::COUNTRY_GROUP_SORT        => 'Country Group Sort',
-	    self::COUNTRY_FINE_SORT         => 'Country Group Sort',
-	    self::OTHER_DISTRICT            => 'Other District',
-	    self::OTHER_DISTRICT_GROUP_SORT => 'Other District Group Sort',
-	    self::MIXED                     => 'Mixed',
-	    self::CITY_RCPC_MIXED           => 'City/RCPC Mixed',
-	    self::PAYOR_GROUP_SORT          => 'Payor Group Sort',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::CITY                      => 'City',
+        self::CITY_GROUP                => 'City Group',
+        self::CITY_FINE_SORT            => 'City Fine Sort',
+        self::RCPC                      => 'RCPC',
+        self::RCPC_GROUP                => 'RCPC Group',
+        self::RCPC_FINE_SORT            => 'RCPC Fine Sort',
+        self::HIGH_DOLLAR_GROUP_SORT    => 'High Dollar Group Sort',
+        self::COUNTRY                   => 'Country',
+        self::COUNTRY_GROUP_SORT        => 'Country Group Sort',
+        self::COUNTRY_FINE_SORT         => 'Country Group Sort',
+        self::OTHER_DISTRICT            => 'Other District',
+        self::OTHER_DISTRICT_GROUP_SORT => 'Other District Group Sort',
+        self::MIXED                     => 'Mixed',
+        self::CITY_RCPC_MIXED           => 'City/RCPC Mixed',
+        self::PAYOR_GROUP_SORT          => 'Payor Group Sort',
+    );
+    
+    return $definedValues;
     }
 }

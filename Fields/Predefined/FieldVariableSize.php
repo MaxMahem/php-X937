@@ -16,16 +16,16 @@ class FieldVariableSize extends FieldPredefined
     
     public function __construct()
     {
-	parent::__construct(2, 'Variable Size Record Indicator', self::USAGE_MANDATORY, 3, 1, self::TYPE_NUMERIC);
+    parent::__construct(2, 'Variable Size Record Indicator', self::USAGE_MANDATORY, 3, 1, self::TYPE_NUMERIC);
     }
 
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::VALUE_FIXED    => 'Fixed Size',
-	    self::VALUE_VARIABLE => 'Variable Size',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::VALUE_FIXED    => 'Fixed Size',
+        self::VALUE_VARIABLE => 'Variable Size',
+    );
+    
+    return $definedValues;
     }
 }

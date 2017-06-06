@@ -17,22 +17,22 @@ abstract class FieldPredefined extends Field
     
     protected function addClassValidators()
     {
-	$legalValues          = array_keys(static::defineValues());
-	$legalValuesValidator = new Validator\ValidatorValueEnumerated($legalValues);
-	$this->validator->addValidator($legalValuesValidator);
+    $legalValues          = array_keys(static::defineValues());
+    $legalValuesValidator = new Validator\ValidatorValueEnumerated($legalValues);
+    $this->validator->addValidator($legalValuesValidator);
     }
     
     public static function translate($value)
     {
-	$legalValues = static::defineValues();
-        	
-	if (array_key_exists((string)$value, $legalValues)) {
-	    $translatedValue = $legalValues[(string)$value];
-	} else {
-	    $translatedValue = 'Undefined';
-	}
-	
-	return $translatedValue;
+    $legalValues = static::defineValues();
+            
+    if (array_key_exists((string)$value, $legalValues)) {
+        $translatedValue = $legalValues[(string)$value];
+    } else {
+        $translatedValue = 'Undefined';
+    }
+    
+    return $translatedValue;
     }
     
     /**
@@ -41,7 +41,7 @@ abstract class FieldPredefined extends Field
      * @return string Formated value + translation.
      */
     protected static function formatValue($value) {
-	return $value . ' ' . static::translate($value);
+    return $value . ' ' . static::translate($value);
     }
     
     /**
@@ -49,6 +49,6 @@ abstract class FieldPredefined extends Field
      * @return string
      */
     public function getValueSignifigant() {
-	return $this->value;
+    return $this->value;
     }
 }

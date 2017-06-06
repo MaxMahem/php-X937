@@ -18,6 +18,6 @@ class Raw implements \X937\Writer\FieldInterface {
      */
     public function writeField(\X937\Fields\Field $field)
     {
-	return $field->getValue(\X937\Fields\Field::FORMAT_RAW);
+    return $field->getValue(\X937\Fields\Field::FORMAT_RAW);
     }
 }

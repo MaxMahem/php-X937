@@ -17,6 +17,6 @@ class Binary extends \X937\Writer\Field\BinaryAbstract {
      * @return string The binary data encoded in Binary
      */
     public function writeBinary(\X937\Fields\VariableLength\Binary\BinaryData $field) {
-	return $field->getValue(\X937\Fields\VariableLength\Binary\BinaryData::FORMAT_BINARY);
+    return $field->getValue(\X937\Fields\VariableLength\Binary\BinaryData::FORMAT_BINARY);
     }
 }

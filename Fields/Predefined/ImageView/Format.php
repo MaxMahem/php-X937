@@ -24,23 +24,23 @@ class Format extends ImageView
     
     public function __construct()
     {
-	parent::__construct(5, 'Format Indicator', 21, 2);
+    parent::__construct(5, 'Format Indicator', 21, 2);
     }
 
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::VALUE_TIFF_6     => 'TIFF 6',
-	    self::VALUE_IOCA_FS_11 => 'IOCA FS 11',
+    $definedValues = array(
+        self::VALUE_TIFF_6     => 'TIFF 6',
+        self::VALUE_IOCA_FS_11 => 'IOCA FS 11',
     
-	    self::VALUE_PNG        => 'PNG (Portable Network Graphics), Agreement Required.',
-	    self::VALUE_JFIF       => 'JFIF (JPEG File Interchange Format), Agreement Required.',
-	    self::VALUE_SPIFF      => 'SPIFF (Still Picture Interchange File Format), Agreement Required.',
-	    self::VALUE_JBIG       => 'JBIG data stream, Agreement Required.',
-	    self::VALUE_JPEG_2000  => 'JPEG 2000, Agreement Required.',
-	);
-	
-	return $definedValues;
+        self::VALUE_PNG        => 'PNG (Portable Network Graphics), Agreement Required.',
+        self::VALUE_JFIF       => 'JFIF (JPEG File Interchange Format), Agreement Required.',
+        self::VALUE_SPIFF      => 'SPIFF (Still Picture Interchange File Format), Agreement Required.',
+        self::VALUE_JBIG       => 'JBIG data stream, Agreement Required.',
+        self::VALUE_JPEG_2000  => 'JPEG 2000, Agreement Required.',
+    );
+    
+    return $definedValues;
     }
     
     /**
@@ -49,37 +49,37 @@ class Format extends ImageView
      */
     public static function defineExtension()
     {
-	$definedValues = array(
-	    self::VALUE_TIFF_6     => 'TIF',
-	    self::VALUE_IOCA_FS_11 => 'ICA',
-	    self::VALUE_PNG        => 'PNG',
-	    self::VALUE_JFIF       => 'JPG',
-	    self::VALUE_SPIFF      => 'SPF',
-	    self::VALUE_JBIG       => 'JBG',
-	    self::VALUE_JPEG_2000  => 'JP2',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::VALUE_TIFF_6     => 'TIF',
+        self::VALUE_IOCA_FS_11 => 'ICA',
+        self::VALUE_PNG        => 'PNG',
+        self::VALUE_JFIF       => 'JPG',
+        self::VALUE_SPIFF      => 'SPF',
+        self::VALUE_JBIG       => 'JBG',
+        self::VALUE_JPEG_2000  => 'JP2',
+    );
+    
+    return $definedValues;
     }
 
     public static function translate($value) {
-	return self::reservedTranslation($value, 2, 19, 25);
+    return self::reservedTranslation($value, 2, 19, 25);
     }
     
     public static function translateExtensions($value)
     {
-	$legalValues = self::defineExtension();
-	
-	if (array_key_exists($value, $legalValues)) {
-	    $translatedValue = $legalValues[$value];
-	} else {
-	    $translatedValue = 'Undefined';
-	}
-	
-	return $translatedValue;
+    $legalValues = self::defineExtension();
+    
+    if (array_key_exists($value, $legalValues)) {
+        $translatedValue = $legalValues[$value];
+    } else {
+        $translatedValue = 'Undefined';
+    }
+    
+    return $translatedValue;
     }
     
     public function getExtension() {
-	return self::translateExtensions($this->value);
+    return self::translateExtensions($this->value);
     }
 }

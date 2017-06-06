@@ -37,37 +37,37 @@ class FieldReturnReason extends FieldPredefined
     
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::VALUE_NSF                  => 'NSF - Not Sufficent Funds',
-	    self::VALUE_UCF                  => 'UCF - Uncollected Funds Hold',
-	    self::VALUE_STOPPAY              => 'Stop Payment',
-	    self::VALUE_CLOSED_ACCOUNT       => 'Closed Account',
-	    self::VALUE_UTLA                 => 'UTLA - Unable to Locate Account',
-	    self::VALUE_FROZEN               => 'Frozen/Blocked Account',
-	    self::VALUE_STALE_DATE           => 'Stale Dated',
-	    self::VALUE_POST_DATE            => 'Post Dated',
-	    self::VALUE_ENDORSEMENT_MISS     => 'Endorsement Missing',
-	    self::VALUE_ENDORSEMENT_IRREG    => 'Endorsement Irregular',
-	    self::VALUE_SIGNATURE_MISS       => 'Signature Missing',
-	    self::VALUE_SIGNATURE_IRREG      => 'Signature Irregular',
-	    self::VALUE_NON_CASH             => 'Non-Cash Item (Non-Negotiable)',
-	    self::VALUE_ALTERED_FICTIOUS     => 'Altered/Fictious Item',
-	    self::VALUE_UNABLE_TO_PROCESS    => 'Unable to Process (Mutilated Item)',
-	    self::VALUE_EXCEEDS_LIMIT        => 'Item Exceeds Dollar Limit',
-	    self::VALUE_NOT_AUTHORIZED       => 'Not Authorized',
-	    self::VALUE_ACCOUNT_SOLD         => 'Branch/Account Sold (Wrong Bank)',
-	    self::VALUE_REFER_TO_MAKER       => 'Refer to Maker',
-	    self::VALUE_STOPPAY_SUSPECT      => 'Stop Payment Suspect',
-	    self::VALUE_UNUSABLE_IMAGE       => 'Unusable Image',
-	    self::VALUE_IMAGE_FAIL_SECURITY  => 'Image Fails Security Check',
-	    self::VALUE_AMOUNT_INDETERMINATE => 'Cannot Determine Amount',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::VALUE_NSF                  => 'NSF - Not Sufficent Funds',
+        self::VALUE_UCF                  => 'UCF - Uncollected Funds Hold',
+        self::VALUE_STOPPAY              => 'Stop Payment',
+        self::VALUE_CLOSED_ACCOUNT       => 'Closed Account',
+        self::VALUE_UTLA                 => 'UTLA - Unable to Locate Account',
+        self::VALUE_FROZEN               => 'Frozen/Blocked Account',
+        self::VALUE_STALE_DATE           => 'Stale Dated',
+        self::VALUE_POST_DATE            => 'Post Dated',
+        self::VALUE_ENDORSEMENT_MISS     => 'Endorsement Missing',
+        self::VALUE_ENDORSEMENT_IRREG    => 'Endorsement Irregular',
+        self::VALUE_SIGNATURE_MISS       => 'Signature Missing',
+        self::VALUE_SIGNATURE_IRREG      => 'Signature Irregular',
+        self::VALUE_NON_CASH             => 'Non-Cash Item (Non-Negotiable)',
+        self::VALUE_ALTERED_FICTIOUS     => 'Altered/Fictious Item',
+        self::VALUE_UNABLE_TO_PROCESS    => 'Unable to Process (Mutilated Item)',
+        self::VALUE_EXCEEDS_LIMIT        => 'Item Exceeds Dollar Limit',
+        self::VALUE_NOT_AUTHORIZED       => 'Not Authorized',
+        self::VALUE_ACCOUNT_SOLD         => 'Branch/Account Sold (Wrong Bank)',
+        self::VALUE_REFER_TO_MAKER       => 'Refer to Maker',
+        self::VALUE_STOPPAY_SUSPECT      => 'Stop Payment Suspect',
+        self::VALUE_UNUSABLE_IMAGE       => 'Unusable Image',
+        self::VALUE_IMAGE_FAIL_SECURITY  => 'Image Fails Security Check',
+        self::VALUE_AMOUNT_INDETERMINATE => 'Cannot Determine Amount',
+    );
+    
+    return $definedValues;
     }
     
     public function __construct($fieldNumber, $usage, $position)
     {
-	parent::__construct($fieldNumber, 'Return Reason', $usage, $position, 1, self::TYPE_ALPHAMERIC);
+    parent::__construct($fieldNumber, 'Return Reason', $usage, $position, 1, self::TYPE_ALPHAMERIC);
     }
 }

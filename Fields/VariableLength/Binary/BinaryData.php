@@ -24,8 +24,8 @@ class BinaryData extends \X937\Fields\VariableLength\VariableLength
      * @param int $size
      */
     public function __construct($fieldNumber, $filedName, $usage, $position, $size)
-    {	
-	parent::__construct($fieldNumber, $filedName, $usage, $position, $size, self::TYPE_BINARY);
+    {    
+    parent::__construct($fieldNumber, $filedName, $usage, $position, $size, self::TYPE_BINARY);
     }
     
     /**
@@ -35,22 +35,22 @@ class BinaryData extends \X937\Fields\VariableLength\VariableLength
      */
     public function getValue($format = self::FORMAT_RAW)
     {
-	switch($format) {
-	    case self::FORMAT_BINARY:
-		return $this->getValueBinary();
-	    case self::FORMAT_BASE64:
-		return $this->getValueBase64();
-	    default:
-		return parent::getValue($format);
-	}
+    switch($format) {
+        case self::FORMAT_BINARY:
+        return $this->getValueBinary();
+        case self::FORMAT_BASE64:
+        return $this->getValueBase64();
+        default:
+        return parent::getValue($format);
+    }
     }
     
     public function getValueBinary() {
-	return $this->value;
+    return $this->value;
     }
     
     public function getValueBase64() {
-	return base64_encode($this->value);
+    return base64_encode($this->value);
     }
     
     /**
@@ -58,15 +58,15 @@ class BinaryData extends \X937\Fields\VariableLength\VariableLength
      * @return string
      */
     public function getValueFormated() {
-	// strelen should work here even though this data is binary. We actually
-	// the value in 8 bit byets.
-	$size = strlen($this->value);
-	
-	// if size is 0, return nothing. This should always be the case for 0
-	// length fields, which is possible for variable length fields.
-	if ($size === 0) {
-	    return '';
-	}
-	return \X937\Fields\SizeBytes::formatBytes($size) . ' ' . 'Binary Data';
+    // strelen should work here even though this data is binary. We actually
+    // the value in 8 bit byets.
+    $size = strlen($this->value);
+    
+    // if size is 0, return nothing. This should always be the case for 0
+    // length fields, which is possible for variable length fields.
+    if ($size === 0) {
+        return '';
+    }
+    return \X937\Fields\SizeBytes::formatBytes($size) . ' ' . 'Binary Data';
     }
 }

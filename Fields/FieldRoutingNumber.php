@@ -11,12 +11,12 @@ class FieldRoutingNumber extends Field
 {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position)
     {
-	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Routing Number', $usage, $position, 9, Field::TYPE_NUMERIC);
+    parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Routing Number', $usage, $position, 9, Field::TYPE_NUMERIC);
     }
 
     protected function addClassValidators()
     {
-	$this->validator->addValidator(new \X937\Validator\ValidatorRoutingNumber());
+    $this->validator->addValidator(new \X937\Validator\ValidatorRoutingNumber());
     }
     
     /**
@@ -25,10 +25,10 @@ class FieldRoutingNumber extends Field
      */
     protected static function formatValue($value)
     {
-	$shortenedValue = substr($value, 0, 8);
-	
-	// insert - in the middle of the number
-	$replacedValue = substr_replace($shortenedValue, '-', 4, 0);
-	return $replacedValue;
+    $shortenedValue = substr($value, 0, 8);
+    
+    // insert - in the middle of the number
+    $replacedValue = substr_replace($shortenedValue, '-', 4, 0);
+    return $replacedValue;
     }
 }

@@ -12,6 +12,6 @@ namespace X937\Fields\VariableLength;
 class ImageKey extends VariableLength
 {
     public function __construct($fieldNumber, $filedName, $position, $size) {
-	parent::__construct($fieldNumber, $filedName, self::USAGE_CONDITIONAL, $position, $size, self::TYPE_ALPHAMERICSPECIAL);
+    parent::__construct($fieldNumber, $filedName, self::USAGE_CONDITIONAL, $position, $size, self::TYPE_ALPHAMERICSPECIAL);
     }
 }

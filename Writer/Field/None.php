@@ -18,6 +18,6 @@ class None implements \X937\Writer\FieldInterface {
      */
     public function writeField(\X937\Fields\Field $field)
     {
-	// do nothing!
+    // do nothing!
     }
 }

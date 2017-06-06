@@ -16,16 +16,16 @@ class ViewSide extends FieldPredefined
         
     public function __construct()
     {
-	parent::__construct(8, 'View Side Indicator', self::USAGE_MANDATORY, 32, 1, self::TYPE_NUMERIC);
+    parent::__construct(8, 'View Side Indicator', self::USAGE_MANDATORY, 32, 1, self::TYPE_NUMERIC);
     }
 
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::VALUE_FRONT => 'Front Image View',
-	    self::VALUE_REAR  => 'Rear Image View',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::VALUE_FRONT => 'Front Image View',
+        self::VALUE_REAR  => 'Rear Image View',
+    );
+    
+    return $definedValues;
     }
 }

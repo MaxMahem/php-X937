@@ -16,16 +16,16 @@ class FieldResend extends FieldPredefined
     
     public function __construct()
     {
-	parent::__construct(8, 'Resend Indicator', self::USAGE_MANDATORY, 36, 1, self::TYPE_ALPHABETIC);
+    parent::__construct(8, 'Resend Indicator', self::USAGE_MANDATORY, 36, 1, self::TYPE_ALPHABETIC);
     }
     
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::VALUE_RESEND_FILE   => 'Resend File',
-	    self::VALUE_ORIGINAL_FILE => 'Original File',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::VALUE_RESEND_FILE   => 'Resend File',
+        self::VALUE_ORIGINAL_FILE => 'Original File',
+    );
+    
+    return $definedValues;
     }
 }

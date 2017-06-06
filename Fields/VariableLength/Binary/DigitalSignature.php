@@ -13,6 +13,6 @@ class DigitalSignature extends BinaryData
 {
     public function __construct($offset, $size)
     {
-	parent::__construct(17, 'Digital Signature', self::USAGE_CONDITIONAL, 111 + $offset, $size);
+    parent::__construct(17, 'Digital Signature', self::USAGE_CONDITIONAL, 111 + $offset, $size);
     }
 }

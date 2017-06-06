@@ -13,6 +13,6 @@ class FieldUser extends Field
 {
     public function __construct($fieldNumber, $position, $size)
     {
-	parent::__construct($fieldNumber, 'User Field', Field::USAGE_CONDITIONAL, $position, $size, Field::TYPE_ALPHAMERICSPECIAL);
+    parent::__construct($fieldNumber, 'User Field', Field::USAGE_CONDITIONAL, $position, $size, Field::TYPE_ALPHAMERICSPECIAL);
     }
 }

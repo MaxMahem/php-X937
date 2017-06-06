@@ -23,25 +23,25 @@ class Compression extends ImageView
     
     public function __construct()
     {
-	parent::__construct(6, 'Compression Algorithm Indicator', 23, 2);
+    parent::__construct(6, 'Compression Algorithm Indicator', 23, 2);
     }
 
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::VALUE_GROUP_4       => 'Group 4 Facsimile Compression',
-	    self::VALUE_JPEG_BASELINE => 'JPEG Baseline',
-	    self::VALUE_ABIC          => 'ABIC',
+    $definedValues = array(
+        self::VALUE_GROUP_4       => 'Group 4 Facsimile Compression',
+        self::VALUE_JPEG_BASELINE => 'JPEG Baseline',
+        self::VALUE_ABIC          => 'ABIC',
     
-	    self::VALUE_PNG           => 'PNG (Portable Network Graphics), Agreement Required.',
-	    self::VALUE_JBIG          => 'JBIG, Agreement Required.',
-	    self::VALUE_JPEG_2000     => 'JPEG 2000, Agreement Required.',
-	);
-	
-	return $definedValues;
+        self::VALUE_PNG           => 'PNG (Portable Network Graphics), Agreement Required.',
+        self::VALUE_JBIG          => 'JBIG, Agreement Required.',
+        self::VALUE_JPEG_2000     => 'JPEG 2000, Agreement Required.',
+    );
+    
+    return $definedValues;
     }
     
     public static function translate($value) {
-	return self::reservedTranslation($value, 3, 20, 24);
+    return self::reservedTranslation($value, 3, 20, 24);
     }
 }

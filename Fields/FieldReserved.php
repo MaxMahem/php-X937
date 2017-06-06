@@ -13,6 +13,6 @@ class FieldReserved extends Field
 {
     public function __construct($fieldNumber, $position, $size)
     {
-	parent::__construct($fieldNumber, 'Reserved', Field::USAGE_MANDATORY, $position, $size, Field::TYPE_BLANK);
+    parent::__construct($fieldNumber, 'Reserved', Field::USAGE_MANDATORY, $position, $size, Field::TYPE_BLANK);
     }
 }

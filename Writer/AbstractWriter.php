@@ -38,20 +38,20 @@ abstract class AbstractWriter implements WriterInterface {
     protected $binaryFormat;
 
     public function __construct(
-	    \SplFileObject $resource,
-	    FieldInterface $fieldWriter,
-	    FieldInterface $binaryWriter,
-	    $options = array()
-    ) {	
-	$this->resource          = $resource;
-	$this->fieldWriter       = $fieldWriter;
-	$this->binaryFieldWriter = $binaryWriter;
-	$this->options           = $options;
+        \SplFileObject $resource,
+        FieldInterface $fieldWriter,
+        FieldInterface $binaryWriter,
+        $options = array()
+    ) {    
+    $this->resource          = $resource;
+    $this->fieldWriter       = $fieldWriter;
+    $this->binaryFieldWriter = $binaryWriter;
+    $this->options           = $options;
     }
     
     public function getOptions()
     {
-	return $this->options;
+    return $this->options;
     }
     
     /**
@@ -60,7 +60,7 @@ abstract class AbstractWriter implements WriterInterface {
      */
     public function defineOptions()
     {
-	return array();
+    return array();
     }
 
     abstract public function writeRecord(Record\Record $record);
@@ -70,10 +70,10 @@ abstract class AbstractWriter implements WriterInterface {
      * @param \X937\X937File $file
      */
     public function writeAll(\X937\X937File $file)
-    {	
-	foreach ($file as $record) {
-	    $this->writeRecord($record);
-	}
+    {    
+    foreach ($file as $record) {
+        $this->writeRecord($record);
+    }
     }
 
     /**
@@ -84,11 +84,11 @@ abstract class AbstractWriter implements WriterInterface {
      */
     protected function writeField(Fields\Field $field)
     {
-	if ($field->getType() === Fields\Field::TYPE_BINARY) {
-	    return $this->binaryFieldWriter->writeField($field);
-	} else {
-	    return $this->fieldWriter->writeField($field);
-	}
+    if ($field->getType() === Fields\Field::TYPE_BINARY) {
+        return $this->binaryFieldWriter->writeField($field);
+    } else {
+        return $this->fieldWriter->writeField($field);
+    }
     }
     
     /**
@@ -98,9 +98,9 @@ abstract class AbstractWriter implements WriterInterface {
      */
     protected function setOption($optionKey, $value)
     {
-	if (array_key_exists($optionKey, static::defineOptions()) === false) {
-	    trigger_error('Set undefined option', E_USER_WARNING);
-	}
-	$this->options[$optionKey] = $value;
+    if (array_key_exists($optionKey, static::defineOptions()) === false) {
+        trigger_error('Set undefined option', E_USER_WARNING);
+    }
+    $this->options[$optionKey] = $value;
     }
 }

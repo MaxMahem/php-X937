@@ -13,6 +13,6 @@ class ImageData extends BinaryData
 {
     public function __construct($offset, $size)
     {
-	parent::__construct(19, 'Image Data', self::USAGE_MANDATORY, 118 + $offset, $size);
+    parent::__construct(19, 'Image Data', self::USAGE_MANDATORY, 118 + $offset, $size);
     }
 }

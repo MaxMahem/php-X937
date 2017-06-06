@@ -16,12 +16,12 @@ class FieldImageInfoQuality extends FieldImageInfo
     
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::TEST_NOT_DONE         => 'Test Not Done',
-	    self::CONDITION_PRESENT     => 'Condition Present',
-	    self::CONDITION_NOT_PRESENT => 'Condition Not Present',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::TEST_NOT_DONE         => 'Test Not Done',
+        self::CONDITION_PRESENT     => 'Condition Present',
+        self::CONDITION_NOT_PRESENT => 'Condition Not Present',
+    );
+    
+    return $definedValues;
     }
 }

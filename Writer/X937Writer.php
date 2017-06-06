@@ -1,7 +1,5 @@
 <?php namespace X937\Writer;
 
-use X937\Record;
-
 /**
  * Outputs record data in ASCII, with system line-endings at end of record.
  * Binary data is discarded.
@@ -12,15 +10,15 @@ use X937\Record;
  */
 class X937Writer extends AbstractWriter
 {
-    public function writeRecord(Record\Record $record) {	
-	$output = '';
+    public function writeRecord(\X937\Record\Record $record) {    
+    $output = '';
         
         $recordLengthData = pack('N', $record->getLength());
         
         $output .= $recordLengthData;
         
         $output .= $record->getDataRaw();
-	
-	$this->resource->fwrite($output);
+    
+    $this->resource->fwrite($output);
     }
 }

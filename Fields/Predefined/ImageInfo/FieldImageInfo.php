@@ -15,6 +15,6 @@ abstract class FieldImageInfo extends \X937\Fields\Predefined\FieldPredefined
     
     public function __construct($fieldNumber, $fieldName, $position)
     {
-	parent::__construct($fieldNumber, $fieldName, self::USAGE_CONDITIONAL, $position, 1, self::TYPE_NUMERIC);
+    parent::__construct($fieldNumber, $fieldName, self::USAGE_CONDITIONAL, $position, 1, self::TYPE_NUMERIC);
     }
 }

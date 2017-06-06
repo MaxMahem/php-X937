@@ -13,7 +13,7 @@ class FieldPhoneNumber extends Field
 {
     public function __construct($fieldNumber, $fieldNamePrefix, $usage, $position)
     {
-	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Phone Number', $usage, $position, 10, Field::TYPE_NUMERIC);
+    parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Phone Number', $usage, $position, 10, Field::TYPE_NUMERIC);
     }
     
     /**
@@ -22,6 +22,6 @@ class FieldPhoneNumber extends Field
      */
     protected static function formatValue($value)
     {
-	return substr($value, 0, 3) . '-' . substr($value, 3, 3) . '-' . substr($value, 6, 4);
+    return substr($value, 0, 3) . '-' . substr($value, 3, 3) . '-' . substr($value, 6, 4);
     }
 }

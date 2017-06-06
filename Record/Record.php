@@ -257,33 +257,33 @@ abstract class Record implements \IteratorAggregate, \Countable {
      * @throws InvalidArgumentException If given bad input.
      */
     public function __construct($recordType, $recordData, $recordDataRaw) {
-	// input validation
+    // input validation
         if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) { 
-	    throw new \InvalidArgumentException("Bad record: $recordData passed.");
-	}
-	if (is_string($recordData) === FALSE) {
-	    throw new \InvalidArgumentException("Bad data type " . \gettype($recordData) . " passed.");
-	}
+        throw new \InvalidArgumentException("Bad record: $recordData passed.");
+    }
+    if (is_string($recordData) === FALSE) {
+        throw new \InvalidArgumentException("Bad data type " . \gettype($recordData) . " passed.");
+    }
         
         $this->recordType    = $recordType;
-	$this->recordData    = $recordData;
+    $this->recordData    = $recordData;
         $this->recordDataRaw = $recordDataRaw;
         $this->recordLength  = strlen($recordDataRaw);
 
-	$this->addFields();
-	
-	// added error check because I seem to be missing some.
-	foreach($this->fields as $field) {
-	    assert(($field instanceof Field), "Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
-	}
-	
-	foreach($this->fields as $field) {
-	    if ($field->getType() === Field::TYPE_BINARY) {
-		$field->parseValue($this->recordDataRaw);
-	    } else {
-		$field->parseValue($this->recordData);
-	    }
-	}
+    $this->addFields();
+    
+    // added error check because I seem to be missing some.
+    foreach($this->fields as $field) {
+        assert(($field instanceof Field), "Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
+    }
+    
+    foreach($this->fields as $field) {
+        if ($field->getType() === Field::TYPE_BINARY) {
+        $field->parseValue($this->recordDataRaw);
+        } else {
+        $field->parseValue($this->recordData);
+        }
+    }
     }
     
     /**
@@ -300,9 +300,9 @@ abstract class Record implements \IteratorAggregate, \Countable {
     public function count() { return count($this->fields); }
     
     public function validate() {
-	foreach ($this->fields as $field) {
-	    echo $field->validate();
-	}
+    foreach ($this->fields as $field) {
+        echo $field->validate();
+    }
     }
 
     /**
@@ -344,8 +344,8 @@ abstract class Record implements \IteratorAggregate, \Countable {
      */
     public function getFieldByName($fieldName) 
     {
-	$fieldNumber = $this->fieldsRef[$fieldName];
-	return $this->fields[$fieldNumber];
+    $fieldNumber = $this->fieldsRef[$fieldName];
+    return $this->fields[$fieldNumber];
     }
     
     public function setData($data, $dataType = self::DATA_ASCII) {
@@ -357,14 +357,14 @@ abstract class Record implements \IteratorAggregate, \Countable {
     
     protected function addFields()
     {
-	$fields     = static::defineFields();
-	$fieldCount = count($fields);
-	
-	$this->fields = new \SplFixedArray($fieldCount);
-		
-	foreach ($fields as $field) {
-	    $this->addField($field);
-	}
+    $fields     = static::defineFields();
+    $fieldCount = count($fields);
+    
+    $this->fields = new \SplFixedArray($fieldCount);
+        
+    foreach ($fields as $field) {
+        $this->addField($field);
+    }
     }
 
     /**
@@ -372,15 +372,15 @@ abstract class Record implements \IteratorAggregate, \Countable {
      * @param X937Field $field
      */
     protected function addField(\X937\Fields\Field $field) {
-	// since field numbers are 1 indexed and the array 0 indexed, we need to
-	// subtract one to correlate.
-	$fieldNumber = $field->getNumber() - 1;
-	
-	// assign our field to the array.
+    // since field numbers are 1 indexed and the array 0 indexed, we need to
+    // subtract one to correlate.
+    $fieldNumber = $field->getNumber() - 1;
+    
+    // assign our field to the array.
         $this->fields[$fieldNumber] = $field;
-	
-	// update fieldRef with a key to correct position.
-	$this->fieldsRef[$field->getName()] = $fieldNumber;
+    
+    // update fieldRef with a key to correct position.
+    $this->fieldsRef[$field->getName()] = $fieldNumber;
     }
     
     /**

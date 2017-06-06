@@ -12,8 +12,8 @@ namespace X937\Fields\Predefined\ImageView;
 abstract class ImageView extends \X937\Fields\Predefined\FieldPredefined
 {
     public function __construct($fieldNumber, $fieldNameSufix, $position, $size) {
-	$fieldName = 'Image View' . ' ' . $fieldNameSufix;
-	parent::__construct($fieldNumber, $fieldName, self::USAGE_MANDATORY, $position, 2, self::TYPE_NUMERIC);
+    $fieldName = 'Image View' . ' ' . $fieldNameSufix;
+    parent::__construct($fieldNumber, $fieldName, self::USAGE_MANDATORY, $position, 2, self::TYPE_NUMERIC);
     }
     
     /**
@@ -26,12 +26,12 @@ abstract class ImageView extends \X937\Fields\Predefined\FieldPredefined
      */
     protected static function reservedTranslation($value, $startNoAgreement, $endNoAgreement, $startAgreement)
     {
-	if       (($value >= $startNoAgreement)  && ($value <= $endNoAgreement)) {
-	    return 'Reserved (Agreement is not required)';
-	} elseif (($value >= $startAgreement)    && ($value <= 99)) {
-	    return 'Reserved';
-	} else {
-	    return parent::translate($value);
-	}
+    if       (($value >= $startNoAgreement)  && ($value <= $endNoAgreement)) {
+        return 'Reserved (Agreement is not required)';
+    } elseif (($value >= $startAgreement)    && ($value <= 99)) {
+        return 'Reserved';
+    } else {
+        return parent::translate($value);
+    }
     }
 }

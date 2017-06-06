@@ -16,16 +16,16 @@ class FieldTestFile extends FieldPredefined
     
     public function __construct()
     {
-	parent::__construct(3, 'Test File Indicator', self::USAGE_MANDATORY, 5, 1, self::TYPE_ALPHABETIC);
+    parent::__construct(3, 'Test File Indicator', self::USAGE_MANDATORY, 5, 1, self::TYPE_ALPHABETIC);
     }
     
     public static function defineValues()
     {
-	$X937FieldTestFileIndicators = array(
-	    self::PRODUCTION_FILE => 'Production File',
-	    self::TEST_FILE       => 'Test File',
-	);
-	
-	return $X937FieldTestFileIndicators;
+    $X937FieldTestFileIndicators = array(
+        self::PRODUCTION_FILE => 'Production File',
+        self::TEST_FILE       => 'Test File',
+    );
+    
+    return $X937FieldTestFileIndicators;
     }
 }

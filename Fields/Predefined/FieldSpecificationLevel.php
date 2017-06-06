@@ -18,18 +18,18 @@ class FieldSpecificationLevel extends FieldPredefined
     
     public function __construct()
     {
-	parent::__construct(2, 'Specification Level', self::USAGE_MANDATORY, 3, 2, self::TYPE_NUMERIC);
+    parent::__construct(2, 'Specification Level', self::USAGE_MANDATORY, 3, 2, self::TYPE_NUMERIC);
     }
     
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::X9371994 => 'X9.37-1994',
-	    self::X9372001 => 'X9.37-2001',
-	    self::X9372003 => 'X9.37-2003',
-	    self::X9100180 => 'X9.100-180',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::X9371994 => 'X9.37-1994',
+        self::X9372001 => 'X9.37-2001',
+        self::X9372003 => 'X9.37-2003',
+        self::X9100180 => 'X9.100-180',
+    );
+    
+    return $definedValues;
     }
 }

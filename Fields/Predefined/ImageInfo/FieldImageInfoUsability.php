@@ -15,18 +15,18 @@ class FieldImageInfoUsability extends FieldImageInfo
     const USABLE         = 2;
     
     public function __construct($fieldNumber, $fieldNamePrefix, $position) {
-	$fieldName = $fieldNamePrefix . ' ' . 'Usability';
-	parent::__construct($fieldNumber, $fieldName, $position);
+    $fieldName = $fieldNamePrefix . ' ' . 'Usability';
+    parent::__construct($fieldNumber, $fieldName, $position);
     }
     
     public static function defineValues()
-    {	
-	$definedValues = array(
-	    self::TEST_NOT_DONE => 'Test Not Done',
-	    self::UNUSEABLE     => "Data is unusable and unreadable",
-	    self::USABLE        => "Data is usable and readable",
-	);
-	
-	return $definedValues;
+    {    
+    $definedValues = array(
+        self::TEST_NOT_DONE => 'Test Not Done',
+        self::UNUSEABLE     => "Data is unusable and unreadable",
+        self::USABLE        => "Data is usable and readable",
+    );
+    
+    return $definedValues;
     }
 }

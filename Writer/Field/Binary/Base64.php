@@ -17,6 +17,6 @@ class Base64 extends \X937\Writer\Field\BinaryAbstract {
      * @return string The binary data encoded Base64
      */
     public function writeBinary(\X937\Fields\VariableLength\Binary\BinaryData $field) {
-	return $field->getValue(\X937\Fields\VariableLength\Binary\BinaryData::FORMAT_BASE64);
+    return $field->getValue(\X937\Fields\VariableLength\Binary\BinaryData::FORMAT_BASE64);
     }
 }

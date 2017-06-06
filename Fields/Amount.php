@@ -12,7 +12,7 @@ class Amount extends Field
 {
     public function __construct($fieldNumber, $fieldNamePrefix, $position, $size, $usage = Field::USAGE_MANDATORY)
     {
-	parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Amount', $usage, $position, $size, Field::TYPE_NUMERIC);
+    parent::__construct($fieldNumber, $fieldNamePrefix . ' ' . 'Amount', $usage, $position, $size, Field::TYPE_NUMERIC);
     }
     
     /**
@@ -22,12 +22,12 @@ class Amount extends Field
      */
     public function getValueFormated()
     {
-	$value = $this->value / 100;
+    $value = $this->value / 100;
 
-	return '$' . number_format($value, 2);
+    return '$' . number_format($value, 2);
     }
     
     public function getValueSignifigant() {
-	return ltrim($this->value, '0 ');
+    return ltrim($this->value, '0 ');
     }
 }

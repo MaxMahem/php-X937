@@ -29,31 +29,31 @@ class FieldCollectionType extends FieldPredefined
     
     public function __construct($recordType)
     {
-	$this->recordType = $recordType;
-	
-	if (in_array($recordType, array(RecordType::VALUE_CASH_LETTER_HEADER, RecordType::VALUE_BUNDLE_HEADER)) === FALSE) {
-	    throw new \InvalidArgumentException('Bad record type');
-	}
-	
-	parent::__construct(2, 'Collection Type Indicator', self::USAGE_MANDATORY, 3, 2, self::TYPE_NUMERIC);
+    $this->recordType = $recordType;
+    
+    if (in_array($recordType, array(RecordType::VALUE_CASH_LETTER_HEADER, RecordType::VALUE_BUNDLE_HEADER)) === FALSE) {
+        throw new \InvalidArgumentException('Bad record type');
+    }
+    
+    parent::__construct(2, 'Collection Type Indicator', self::USAGE_MANDATORY, 3, 2, self::TYPE_NUMERIC);
     }
 
     public static function defineValues()
     {
-	$definedValues = array(
-	    self::PRELIMINARY_FORWARD_INFORMATION         => 'Preliminary Forward Information',
-	    self::FORWARD_PRESENTMENT                     => 'Forward Presentment',
-	    self::FORWARD_PRESENTMENT_SAME_DAY_SETTLEMENT => 'Forward Presentment - Same-Day Settlement',
-	    self::RETURN_CHECKS                           => 'Return',
-	    self::RETURN_NOTIFICATION                     => 'Return Notification',
-	    self::PRELIMINARY_RETURN_NOTIFICATION         => 'Preliminary Return Notification',
-	    self::FINAL_RETURN_NOTIFICATION               => 'Final Return Notification',
-	    self::ACCOUNT_TOTALS                          => 'Account Totals',
-	    self::NO_DETAIL                               => 'No Detail',
-	    self::BUNDLES_NOT_SAME                        => 'Bundles not the same collection type',
-	);
-	
-	return $definedValues;
+    $definedValues = array(
+        self::PRELIMINARY_FORWARD_INFORMATION         => 'Preliminary Forward Information',
+        self::FORWARD_PRESENTMENT                     => 'Forward Presentment',
+        self::FORWARD_PRESENTMENT_SAME_DAY_SETTLEMENT => 'Forward Presentment - Same-Day Settlement',
+        self::RETURN_CHECKS                           => 'Return',
+        self::RETURN_NOTIFICATION                     => 'Return Notification',
+        self::PRELIMINARY_RETURN_NOTIFICATION         => 'Preliminary Return Notification',
+        self::FINAL_RETURN_NOTIFICATION               => 'Final Return Notification',
+        self::ACCOUNT_TOTALS                          => 'Account Totals',
+        self::NO_DETAIL                               => 'No Detail',
+        self::BUNDLES_NOT_SAME                        => 'Bundles not the same collection type',
+    );
+    
+    return $definedValues;
     }
     
     /**
@@ -61,24 +61,24 @@ class FieldCollectionType extends FieldPredefined
      */
     protected function addClassValidators()
     {
-	$legalValues = array_keys(self::defineValues());
-	
-	switch ($this->recordType) {
-	    // Check Letter Header can use the default.
-	    case RecordType::VALUE_CASH_LETTER_HEADER:
-		break;
-	    
-	    // Bundle Header Record do not permit option 10, 20, and 99.
-	    case RecordType::VALUE_BUNDLE_HEADER:
-		unset($legalValues[self::ACCOUNT_TOTALS]);
-		unset($legalValues[self::NO_DETAIL]);
-		unset($legalValues[self::BUNDLES_NOT_SAME]);
-		break;
-		
-	    // we would normaly error check here, but that should be handled in the constructor.
-	}
-	
-	$legalValuesValidator = new \X937\Validator\ValidatorValueEnumerated($legalValues);
-	$this->validator->addValidator($legalValuesValidator);
+    $legalValues = array_keys(self::defineValues());
+    
+    switch ($this->recordType) {
+        // Check Letter Header can use the default.
+        case RecordType::VALUE_CASH_LETTER_HEADER:
+        break;
+        
+        // Bundle Header Record do not permit option 10, 20, and 99.
+        case RecordType::VALUE_BUNDLE_HEADER:
+        unset($legalValues[self::ACCOUNT_TOTALS]);
+        unset($legalValues[self::NO_DETAIL]);
+        unset($legalValues[self::BUNDLES_NOT_SAME]);
+        break;
+        
+        // we would normaly error check here, but that should be handled in the constructor.
+    }
+    
+    $legalValuesValidator = new \X937\Validator\ValidatorValueEnumerated($legalValues);
+    $this->validator->addValidator($legalValuesValidator);
     }
 }

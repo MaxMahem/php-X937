@@ -19,7 +19,7 @@ abstract class BinaryAbstract implements \X937\Writer\FieldInterface {
      */
     public function writeField(Fields\Field $field)
     {
-	return $this->writeBinary($field);
+    return $this->writeBinary($field);
     }
     
     abstract public function writeBinary(Fields\VariableLength\Binary\BinaryData $field);

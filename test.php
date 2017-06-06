@@ -3,9 +3,6 @@ $timeStart = microtime(true);
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-// require_once 'File.php';
-// require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Writer' .  DIRECTORY_SEPARATOR . 'Factory.php';
-
 $file = new X937\X937File('C:\PHP-Projects\x937\test4.X937');
 
 $fileFormat  = X937\Writer\Factory::FORMAT_FILE_HUMAN;
