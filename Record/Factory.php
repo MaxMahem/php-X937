@@ -62,6 +62,171 @@ class Factory
         self::RECORD_TYPE_CASH_LETTER_CONTROL     => 'Cash Letter Control Record',
         self::RECORD_TYPE_FILE_CONTROL            => 'File Control Record',
     ];
+    
+    // record properties
+    const RECORD_PROPERTIES = [
+        'name', 'type', 'usage', 'validation', 'length',
+    ];
+    
+    // field properties
+    const FIELD_PROPERTIES = [
+        'name', 'type', 'usage', 'validation', 'length', 'position'
+    ];
+    
+    /**
+     * Contains a template of reference record structures, parsed from the
+     * specification file. Used to create record objects.
+     * @todo consider using an array of template objects for this instead?
+     * 
+     * @var array
+     */
+    protected $recordsTemplateArray;
+    
+    /**
+     * Parses a Dictonary dom element into an array of key-value pairs. Plus
+     * one special element that defines if the dictonary is comprehensive or not
+     * 
+     * @param \DOMElement $dictonaryDOM the Dictonary to be parsed
+     * @return array an array of key value pairs for the dictonary.
+     */
+    protected static function parseDictonary(\DOMElement $dictonaryDOM): array {  
+        $dictonaryArray['comprehensive'] = $dictonaryDOM->getAttribute('comprehensive');
+
+        $valuesDOM = $dictonaryDOM->getElementsByTagName('value');
+        foreach ($valuesDOM as $valueDOM) {
+            $key = $valueDOM->getAttribute('key');
+            $dictonaryArray[$key] = $valueDOM->nodeValue;
+        }
+
+        return $dictonaryArray;
+    }
+    
+    /**
+     * Parses a given element for elements contained in the property list array.
+     * Returns these items as key-value pairs in an array 
+     * 
+     * @param \DOMElement $elementDOM the Dom element to be parsed
+     * @param array $properties a key-value list of array elements.
+     * @return array
+     */
+    protected static function parseProperties(\DOMElement $elementDOM, array $properties): array {
+        foreach ($properties as $property) {
+            $propertyArray[$property] = $elementDOM->getElementsByTagName($property)->item(0)->nodeValue;
+        }
+        
+        return $propertyArray;    
+    }
+
+    public function __construct(string $specXMLFile) {
+        // guard input
+        $specDOM = new \DOMDocument();
+        if (!$specDOM->load($specXMLFile)) {
+            throw new \InvalidArgumentException("Loading of XML file $specXMLFile failed.");
+        }        
+        if (!$specDOM->schemaValidate(__DIR__ . DIRECTORY_SEPARATOR . 'X937Specification.xsd')) {
+            throw new \InvalidArgumentException("$specXMLFile failed schema validation.");
+        }
+        
+        // parse any global dictonaries, at least one is mandatory.
+        $dictonariesDOM = $specDOM->getElementsByTagName('dictonaries')->item(0)->getElementsByTagName('dictonary');
+        foreach ($dictonariesDOM as $dictonaryDOM) {
+            $id = $dictonaryDOM->getAttribute('id');
+            $globalDictonaries[$id] = self::parseDictonary($dictonaryDOM);
+        }
+        
+        // parse each record
+        $recordsDOM = $specDOM->getElementsByTagName('record');
+        foreach ($recordsDOM as $recordDOM) {            
+            // parse the root level record properties
+            $recordArray = self::parseProperties($recordDOM, self::RECORD_PROPERTIES);
+            
+            // parse the field properties
+            $fieldsArray = array();
+            $fieldsDOM = $recordDOM->getElementsByTagName('fields')->item(0)->getElementsByTagName('field');
+            $recordArray['fieldCount'] = $recordDOM->getElementsByTagName('fields')->item(0)->getAttribute('count');
+            foreach ($fieldsDOM as $fieldDOM) {
+                $fieldArray = self::parseProperties($fieldDOM, self::FIELD_PROPERTIES);
+                
+                // parse the dictonary values
+                $dictonaryArray = array();
+                $dictonaryDOM = $fieldDOM->getElementsByTagName('dictonary')->item(0);
+                
+                // if a field does not have a dictonary (allowed), then the above will return null, so we catch that case.
+                if ($dictonaryDOM !== NULL) {
+                    // some dictonaries mearly point back to the global dictonaries, so handle that.
+                    $dictonaryRef = $dictonaryDOM->getAttribute('ref');
+                    if (array_key_exists($dictonaryRef, $globalDictonaries)) {
+                        $dictonaryArray = $globalDictonaries[$dictonaryRef];
+                    } else {
+                       $dictonaryArray = self::parseDictonary($dictonaryDOM);
+                    }
+                    
+                    $fieldArray['dictonary'] = $dictonaryArray;
+                }
+                
+                $fieldId = $fieldDOM->getAttribute('id');
+                $fieldsArray[$fieldId] = $fieldArray;
+            }
+            
+            $recordArray['fields'] = $fieldsArray;
+            
+            $recordType = $recordArray['type'];
+            $this->recordsTemplateArray[$recordType] = $recordArray;
+        }
+        
+        $this->validateRecordTemplate();
+    }
+    
+    /**
+     * Performs internal sanity checking on the internally generated RecordTempalte
+     * to see if it violates constraints of field count, length, and overlap.
+     * 
+     * @return bool always returns True, because it will throw an exception otherwise.
+     * @throws \InvalidArgumentException If the recordTemplate doesn't validate.
+     */
+    protected function validateRecordTemplate(): bool {        
+        // validate each record
+        foreach ($this->recordsTemplateArray as $recordArray) {
+            $recordType = $recordArray['type'];
+            
+            // validate each field
+            $start = $idStart = 1;
+            foreach ($recordArray['fields'] as $fieldId => $fieldArray) {
+                $position = $fieldArray['position'];
+                $length   = $fieldArray['length'];
+                
+                // if our start doesn't equals our calculated start, then we have a gap.
+                if ($position != $start) {
+                    throw new \InvalidArgumentException("Gap in record type $recordType at position $position expected position $start");
+                }
+                
+                // validate that our fieldId's are in sequence.
+                if ($idStart != $fieldId) {
+                    throw new \InvalidArgumentException("Field Id $fieldId out of sequence. Expceted $idStart");
+                }
+                
+                // calculate where the range should end. The end becomes the new start.
+                $end = $position + $length - 1;
+                $start = $end + 1;
+                $idEnd = $idStart;
+                $idStart++;
+            }
+            
+            // validate record length and count
+            $recordLength = $recordArray['length'];
+            $recordCount  = $recordArray['fieldCount'];
+            
+            if ($recordLength != $end) {
+                throw new \InvalidArgumentException("Record type $recordType's length of $recordLength does not match calculated length of $end");
+            }
+            if ($recordCount != $idEnd) {
+                throw new \InvalidArgumentException("Record type $recordType's field count of $recordCount does not match calculated count of $idEnd");
+            }
+        }
+        
+        //if we get here, everything is great.
+        return true;
+    }
 
     /**
      * Generates an appropriate X937 Record from the raw record data.
@@ -77,18 +242,18 @@ class Factory
             case X937File::DATA_ASCII:
                 $recordType = $recordTypeRaw;
                 break;
-        case X937File::DATA_EBCDIC:
+            case X937File::DATA_EBCDIC:
                 if (PHP_OS == 'Linux') {
                     $recordType = iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordTypeRaw);
                 } else {
                     $recordType = self::e2aConverter($recordTypeRaw);
                 }
-        break;
+                break;
         default:
-        throw new \InvalidArgumentException("Bad dataType passed: $dataType");
+            throw new \InvalidArgumentException("Bad dataType passed: $dataType");
     }
             
-    return self::newRecord($recordType, $recordData, $dataType);
+        return self::newRecord($recordType, $recordData, $dataType);
     }
     
     /**
@@ -230,11 +395,11 @@ class Factory
      * Currently it will warn on binary data, which we suppress.
      */
     if ($dataType === X937File::DATA_EBCDIC) {
-            if (PHP_OS == 'Linux') { 
-                $recordDataASCII = @iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordData);
-            } else {
-                $recordDataASCII = self::e2aConverter($recordData);
-            }
+        if (PHP_OS == 'Linux') { 
+            $recordDataASCII = @iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordData);
+        } else {
+            $recordDataASCII = self::e2aConverter($recordData);
+        }
     } else {
         $recordDataASCII = $recordData;
     }
@@ -277,9 +442,9 @@ class Factory
         /**
          * @todo special data handling here for the binary data.
          */
-        return new VariableLength\ImageViewData($recordType, $recordDataASCII, $recordData);
-            case RecordType::VALUE_IMAGE_VIEW_ANALYSIS:
-        return new ImageViewAnalysis($recordType, $recordDataASCII, $recordData);
+            return new VariableLength\ImageViewData($recordType, $recordDataASCII, $recordData);
+        case RecordType::VALUE_IMAGE_VIEW_ANALYSIS:
+            return new ImageViewAnalysis($recordType, $recordDataASCII, $recordData);
 
         // control/summary Record
         case RecordType::VALUE_BUNDLE_CONTROL:
@@ -296,6 +461,6 @@ class Factory
            // emmit notice, we shouldn't get any of these.
             trigger_error('Invalid record passed, data is unhandled.');
             return new Generic($recordType, $recordDataASCII, $recordData);
-    }
+        }
     }
 }

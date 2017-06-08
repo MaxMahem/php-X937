@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:noNamespaceSchemaLocation='X937Specification.xsd'>
+    
+    <dictonaries>
+        <dictonary comprehensive="true" id="recordType">
+            <value key="01">File Header Record</value>
+            <value key="10">Cash Letter Header Record</value>
+        </dictonary>
+    </dictonaries>
+    
+    <record type="01">File Header Record
+        <name>File Header Record</name>
+        <type>01</type>
+        <usage>Mandatory</usage>
+        <validation>Required</validation>
+        <length>80</length>
+        <fields count="14">
+            <field id="1">Record Type
+                <name>Record Type</name>
+                <usage>Mandatory</usage>
+                <type>Numeric</type>
+                <dictonary comprehensive="true" ref="recordType" />
+                <validation>Required</validation>
+                <position>1</position>
+                <length>2</length>
+            </field>
+            <field id="2">Standard Level
+                <name>Standard Level</name>
+                <usage>Mandatory</usage>
+                <type>Numeric</type>
+                <dictonary comprehensive="true">
+                    <value key="03">X9.100-197</value>
+                </dictonary>
+                <validation>Required</validation>
+                <position>3</position>
+                <length>2</length>
+            </field>
+            <field id="3">Test File Indicator
+                <name>Test File Indicator</name>
+                <usage>Mandatory</usage>
+                <type>Alphameric</type>
+                <dictonary comprehensive="false"></dictonary>
+                <validation>Required</validation>
+                <position>5</position>
+                <length>1</length>
+            </field>
+            <field id="4">Immediate Destination Routing Number
+                <name>Immediate Destination Routing Number</name>
+                <usage>Mandatory</usage>
+                <type>Routing Number</type>
+                <validation>Required</validation>
+                <position>6</position>
+                <length>9</length>
+            </field>
+            <field id="5">Immediate Origin Routing Number
+                <name>Immediate Origin Routing Number</name>
+                <usage>Mandatory</usage>
+                <type>Routing Number</type>
+                <validation>Required</validation>
+                <position>15</position>
+                <length>9</length>
+            </field>
+            <field id="6">File Creation Date
+                <name>File Creation Date</name>
+                <usage>Mandatory</usage>
+                <type>Date</type>
+                <validation>Required</validation>
+                <position>24</position>
+                <length>8</length>
+            </field>
+            <field id="7">File Creation Time
+                <name>File Creation Time</name>
+                <usage>Mandatory</usage>
+                <type>Date</type>
+                <validation>Required</validation>
+                <position>32</position>
+                <length>4</length>
+            </field>
+            <field id="8">Resend Indicator
+                <name>Resend Indicator</name>
+                <usage>Mandatory</usage>
+                <type>Alphameric</type>
+                <dictonary comprehensive="true">
+                    <value key="N">Original File</value>
+                </dictonary>
+                <validation>Required</validation>
+                <position>36</position>
+                <length>1</length>
+            </field>
+            <field id="9">Immediate Destination Name
+                <name>Immediate Destination Name</name>
+                <usage>Conditional</usage>
+                <type>Alphanumeric Space</type>
+                <validation>Required if Present</validation>
+                <position>37</position>
+                <length>18</length>
+            </field>
+            <field id="10">Immediate Origin Name
+                <name>Immediate Origin Name</name>
+                <usage>Conditional</usage>
+                <type>Alphanumeric Space</type>
+                <validation>Required if Present</validation>
+                <position>55</position>
+                <length>18</length>
+            </field>
+            <field id="11">File ID Modifier
+                <name>File ID Modifier</name>
+                <usage>Conditional</usage>
+                <type>Alphanumeric Upper Only</type>
+                <validation>Required</validation>
+                <position>73</position>
+                <length>1</length>
+            </field>
+            <field id="12">Country Code
+                <name>Country Code</name>
+                <usage>Conditional</usage>
+                <type>Alphameric</type>
+                <validation>None</validation>
+                <position>74</position>
+                <length>2</length>
+            </field>
+            <field id="13">User Field
+                <name>User Field</name>
+                <usage>Optional</usage>
+                <type>Alphanumeric Special</type>
+                <validation>None</validation>
+                <position>76</position>
+                <length>4</length>
+            </field>
+            <field id="14">Companion Document Version Indicator
+                <name>Companion Document Version Indicator</name>
+                <usage>Optional</usage>
+                <type>Alphanumeric</type>
+                <dictonary comprehensive="true">
+                    <value key="1">UCD X9.100-187</value>
+                </dictonary>
+                <validation>Required if Present</validation>
+                <position>80</position>
+                <length>1</length>
+            </field>
+        </fields>
+    </record>
+    
+    <record type="10">Cash Letter Header Record
+        <name>Cash Letter Header Record</name>
+        <type>10</type>
+        <usage>Mandatory</usage>
+        <validation>Required</validation>
+        <length>80</length>
+        <fields count="16">
+            <field id="1">
+                <name>Record Type</name>
+                <usage>Mandatory</usage>
+                <position>1</position>
+                <length>2</length>
+                <type>Numeric</type>
+                <dictonary comprehensive="true" ref="recordType" />
+                <validation>Required</validation>
+            </field>
+            <field id="2">
+                <name>Collection Type Indicator</name>
+                <usage>Mandatory</usage>
+                <position>3</position>
+                <length>2</length>
+                <type>Numeric</type>
+                <dictonary comprehensive="false">
+                    <value key='01'>Forward Presentment</value>
+                    <value key='03'>Returns</value>
+                </dictonary>
+                <validation>Required</validation>
+            </field>
+            <field id="3">
+                <name>Destination Routing Number</name>
+                <usage>Mandatory</usage>
+                <position>5</position>
+                <length>9</length>
+                <type>Routing Number</type>
+                <validation>Required</validation>
+            </field>
+            <field id="4">
+                <name>ECE Institution Routing Number</name>
+                <usage>Mandatory</usage>
+                <position>14</position>
+                <length>9</length>
+                <type>Routing Number</type>
+                <validation>Required</validation>
+            </field>
+            <field id="5">
+                <name>Cash Letter Buisness Date</name>
+                <usage>Mandatory</usage>
+                <position>23</position>
+                <length>8</length>
+                <type>Date</type>
+                <validation>Required</validation>
+            </field>
+            <field id="6">
+                <name>Cash Letter Creation Date</name>
+                <usage>Mandatory</usage>
+                <position>31</position>
+                <length>8</length>
+                <type>Date</type>
+                <validation>Required</validation>
+            </field>
+            <field id="7">
+                <name>Cash Letter Creation Time</name>
+                <usage>Mandatory</usage>
+                <position>39</position>
+                <length>4</length>
+                <type>Time</type>
+                <validation>Required</validation>
+            </field>
+            <field id="8">
+                <name>Cash Letter Record Type Indicator</name>
+                <usage>Mandatory</usage>
+                <position>43</position>
+                <length>1</length>
+                <type>Alphameric</type>
+                <dictonary comprehensive="false"></dictonary>
+                <validation>Required</validation>
+            </field>
+            <field id="8">
+                <name>Cash Letter Record Type Indicator</name>
+                <usage>Mandatory</usage>
+                <position>43</position>
+                <length>1</length>
+                <type>Alphameric</type>
+                <dictonary comprehensive="false"></dictonary>
+                <validation>Required</validation>
+            </field>
+            <field id="9">
+                <name>Cash Letter Documentation Type Indicator</name>
+                <usage>Mandatory</usage>
+                <position>44</position>
+                <length>1</length>
+                <type>Alphanumeric</type>
+                <dictonary comprehensive="false">
+                    <value key="C"></value>
+                </dictonary>
+                <validation>Required</validation>
+            </field>
+            <field id="10">
+                <name>Cash Letter ID</name>
+                <usage>Mandatory</usage>
+                <position>45</position>
+                <length>8</length>
+                <type>Alphanumeric</type>
+                <validation>Required</validation>
+            </field>
+            <field id="11">
+                <name>Originator Contact Name</name>
+                <usage>Optional</usage>
+                <position>53</position>
+                <length>14</length>
+                <type>Alphanumeric Special</type>
+                <validation>None</validation>
+            </field>
+            <field id="12">
+                <name>Originator Contact Phone</name>
+                <usage>Optional</usage>
+                <position>67</position>
+                <length>10</length>
+                <type>Numeric</type>
+                <validation>None</validation>
+            </field>
+            <field id="13">
+                <name>Fed Work Type</name>
+                <usage>Optional</usage>
+                <position>77</position>
+                <length>1</length>
+                <type>Alphameric</type>
+                <validation>None</validation>
+            </field>
+            <field id="14">
+                <name>Returns Indicator</name>
+                <usage>Mandatory</usage>
+                <position>78</position>
+                <length>1</length>
+                <type>Alphameric</type>
+                <dictonary comprehensive="false"></dictonary>
+                <validation>Required</validation>
+            </field>
+            <field id="15">
+                <name>User Field</name>
+                <usage>Optional</usage>
+                <position>79</position>
+                <length>1</length>
+                <type>Alphanumeric Special</type>
+                <validation>None</validation>
+            </field>
+            <field id="16">
+                <name>Reserved</name>
+                <usage>Forbidden</usage>
+                <position>80</position>
+                <length>1</length>
+                <type>Blank</type>
+                <validation>None</validation>
+            </field>
+        </fields>
+    </record>
+
+</records>

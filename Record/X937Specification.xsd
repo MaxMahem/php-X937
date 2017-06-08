@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+<xs:simpleType name="name">
+    <xs:restriction base="xs:string">
+        <xs:pattern value="[a-zA-Z ]+" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="recordType">
+    <xs:restriction base="xs:int">
+        <xs:pattern value="[0-9][0-9]" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="usage">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="Mandatory" />
+        <xs:enumeration value="Conditional" />
+        <xs:enumeration value="Optional" />
+        <xs:enumeration value="Forbidden" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="validation">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="Required" />
+        <xs:enumeration value="Required if Present" />
+        <xs:enumeration value="None" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="dictonary">
+    <xs:sequence>
+        <xs:element name="value" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="key" type="xs:string" />
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+    <xs:attribute name="comprehensive" type="xs:boolean" use="required" />
+    <xs:attribute name="ref"           type="xs:IDREF"   use="optional" />
+    <xs:attribute name="id"            type="xs:ID"      use="optional" />
+</xs:complexType>
+    
+<xs:element name="records">
+    <xs:complexType><xs:sequence>
+       
+    <xs:element name="dictonaries">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="dictonary" type="dictonary" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="record" maxOccurs="unbounded"><xs:complexType mixed="true">
+        <xs:sequence>
+            <xs:element name="name" type="name"/>
+            <xs:element name="type" type="recordType" />
+            <xs:element name="usage" type="usage" />
+            <xs:element name="validation" type="validation" />
+            <xs:element name="length">
+                <xs:simpleType>
+                    <xs:union>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="Variable" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:int" />
+                        </xs:simpleType>
+                    </xs:union>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="fields"><xs:complexType>
+                <xs:sequence>
+                    <xs:element name="field" maxOccurs="unbounded"><xs:complexType mixed="true">
+                        <xs:all minOccurs="1">
+                            <xs:element name="name"  type="name" />
+                            <xs:element name="usage" type="usage" />
+                            <xs:element name="type">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Alphameric" />
+                                        <xs:enumeration value="Numeric" />
+                                        <xs:enumeration value="Alphanumeric" />
+                                        <xs:enumeration value="Alphanumeric Special" />
+                                        <xs:enumeration value="Alphanumeric Upper Only" />
+                                        <xs:enumeration value="Alphanumeric Space" />
+                                        <xs:enumeration value="Blank" />
+                                        <xs:enumeration value="Date" />
+                                        <xs:enumeration value="Time" />
+                                        <xs:enumeration value="Routing Number" />
+                                        <xs:enumeration value="Phone Number" />
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="dictonary" type="dictonary" minOccurs="0" />
+                            <xs:element name="validation" type="validation" />
+                            <xs:element name="position" type="xs:int" />
+                            <xs:element name="length"   type="xs:int" />
+                        </xs:all>
+                        <xs:attribute name="id" type="xs:int" use="required" />
+                    </xs:complexType></xs:element>
+                </xs:sequence>
+                <xs:attribute name="count" use="required" type="xs:integer" />
+            </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="type" type="recordType" use="required" />
+    </xs:complexType></xs:element>
+    
+    </xs:sequence></xs:complexType>
+    
+    <xs:unique name="uniqueRecords">
+        <xs:selector xpath="record" />
+        <xs:field xpath="@type" />
+    </xs:unique>
+</xs:element>
+</xs:schema>

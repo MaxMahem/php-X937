@@ -248,7 +248,7 @@ abstract class Record implements \IteratorAggregate, \Countable {
 
     /**
      * Creates a X937Record. Basic input validation, currently ignores TIFF data.
-     * Calls addFields which should be overriden in a subclass to add all the
+     * Calls addFields which should be overiden in a subclass to add all the
      * fields to the record. And then calls all those fields parseValue function
      * to parse in the data.
      * @param string $recordType the type of the record, in ASCII.
@@ -256,34 +256,31 @@ abstract class Record implements \IteratorAggregate, \Countable {
      * @param string $recordDataRaw the raw (untranslated) data for the record.
      * @throws InvalidArgumentException If given bad input.
      */
-    public function __construct($recordType, $recordData, $recordDataRaw) {
-    // input validation
+    public function __construct($recordType, string $recordData, $recordDataRaw) {
+        // input validation
         if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) { 
-        throw new \InvalidArgumentException("Bad record: $recordData passed.");
-    }
-    if (is_string($recordData) === FALSE) {
-        throw new \InvalidArgumentException("Bad data type " . \gettype($recordData) . " passed.");
-    }
+            throw new \InvalidArgumentException("Bad record: $recordData passed.");
+        }
         
         $this->recordType    = $recordType;
-    $this->recordData    = $recordData;
+        $this->recordData    = $recordData;
         $this->recordDataRaw = $recordDataRaw;
         $this->recordLength  = strlen($recordDataRaw);
 
-    $this->addFields();
+        $this->addFields();
     
-    // added error check because I seem to be missing some.
-    foreach($this->fields as $field) {
-        assert(($field instanceof Field), "Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
-    }
-    
-    foreach($this->fields as $field) {
-        if ($field->getType() === Field::TYPE_BINARY) {
-        $field->parseValue($this->recordDataRaw);
-        } else {
-        $field->parseValue($this->recordData);
+        // added error check because I seem to be missing some.
+        foreach($this->fields as $field) {
+            assert(($field instanceof Field), "Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
         }
-    }
+    
+        foreach($this->fields as $field) {
+            if ($field->getType() === Field::TYPE_BINARY) {
+                $field->parseValue($this->recordDataRaw);
+            } else {
+                $field->parseValue($this->recordData);
+            }
+        }
     }
     
     /**
