@@ -61,22 +61,10 @@ abstract class Field
      */
     protected $value;        // the value of the field;
     
-    public function __construct($fieldNumber, $fieldName, $usage, $position, $size, $type) {
+    public function __construct(int $fieldNumber, string $fieldName, $usage, int $position, int $size, $type) {
         // validate inputs:
-        if (is_int($fieldNumber) === false) {
-            throw new \InvalidArgumentException('Fieldnumber must be an integer.');
-        }
-        if (is_string($fieldName) === false) {
-            throw new \InvalidArgumentException('Field Name must be a string.');
-        }
         if (($usage !== self::USAGE_CONDITIONAL) && ($usage !== self::USAGE_MANDATORY)) {
             throw new \InvalidArgumentException('Usage must be a usage constant');
-        }
-        if (is_int($position) === false) {
-            throw new \InvalidArgumentException('Position must be an integer');
-        }
-        if (is_int($size) === false) {
-            throw new \InvalidArgumentException('Size must be an integer');
         }
         if (array_key_exists($type, self::defineTypes()) === false) {
             throw new \InvalidArgumentException('Type must be a type constant');
