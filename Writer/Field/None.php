@@ -16,7 +16,7 @@ class None implements \X937\Writer\FieldInterface {
      * @param \X937\Fields\Field $field the field to write.
      * @return void
      */
-    public function writeField(\X937\Fields\Field $field)
+    public function writeField(\X937\Fields\Field2 $field)
     {
     // do nothing!
     }

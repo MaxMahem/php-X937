@@ -4,6 +4,7 @@ namespace X937\Record;
 
 use X937\X937File;
 use X937\Fields\Predefined\RecordType;
+use X937\Fields\Field2;
 
 /**
  * A factor class to generate new X937Record from different sorts of input.
@@ -63,16 +64,6 @@ class Factory
         self::RECORD_TYPE_FILE_CONTROL            => 'File Control Record',
     ];
     
-    // record properties
-    const RECORD_PROPERTIES = [
-        'name', 'type', 'usage', 'validation', 'length',
-    ];
-    
-    // field properties
-    const FIELD_PROPERTIES = [
-        'name', 'type', 'usage', 'validation', 'length', 'position'
-    ];
-    
     /**
      * Contains a template of reference record structures, parsed from the
      * specification file. Used to create record objects.
@@ -82,6 +73,8 @@ class Factory
      */
     protected $recordsTemplateArray;
     
+    protected $globalPredefines;
+    
     /**
      * Parses a Dictonary dom element into an array of key-value pairs. Plus
      * one special element that defines if the dictonary is comprehensive or not
@@ -89,7 +82,7 @@ class Factory
      * @param \DOMElement $dictonaryDOM the Dictonary to be parsed
      * @return array an array of key value pairs for the dictonary.
      */
-    protected static function parseDictonary(\DOMElement $dictonaryDOM): array {  
+    protected function parseDictonary(\DOMElement $dictonaryDOM): array {  
         $dictonaryArray['comprehensive'] = $dictonaryDOM->getAttribute('comprehensive');
 
         $valuesDOM = $dictonaryDOM->getElementsByTagName('value');
@@ -109,12 +102,59 @@ class Factory
      * @param array $properties a key-value list of array elements.
      * @return array
      */
-    protected static function parseProperties(\DOMElement $elementDOM, array $properties): array {
+    protected function parseProperties(\DOMElement $elementDOM, array $properties): array {
         foreach ($properties as $property) {
-            $propertyArray[$property] = $elementDOM->getElementsByTagName($property)->item(0)->nodeValue;
+            $propertyDOM = $elementDOM->getElementsByTagName($property)->item(0);
+            
+            if ($propertyDOM !== NULL) {
+                $propertyArray[$property] = $propertyDOM->nodeValue;
+            } else {
+                continue;
+            }
+        }
+        
+        // variableLength can be in the form, ###+X+Y, and if so we need
+        // to get the static part of the length, which must be index 0.
+        if (isset($propertyArray[Field2::PROP_VARIABLELENGTH])) {
+            $lengthArray = explode('+', $propertyArray[Field2::PROP_VARIABLELENGTH]);
+            if (is_numeric($lengthArray[0])) {
+                $propertyArray[Field2::PROP_LENGTH] = $lengthArray[0];
+            } else {
+                $propertyArray[Field2::PROP_LENGTH] = 0;
+            }
+        }
+        
+        // variablePosition must be in the form, ###+X+Y, and if so we need
+        // to get the static part of the length, which must be index 0.
+        if (isset($propertyArray[Field2::PROP_VARIABLEPOSITION])) {
+            $positionArray = explode('+', $propertyArray[Field2::PROP_VARIABLEPOSITION]);
+            $propertyArray[Field2::PROP_POSITION] = $positionArray[0];
         }
         
         return $propertyArray;    
+    }
+    
+    protected function parseField(\DOMElement $fieldDOM): array {
+        $fieldArray = self::parseProperties($fieldDOM, \X937\Fields\Field2::LEAF_PROPERTIES);
+                
+        // parse the dictonary values
+        $dictonaryArray = array();
+        $dictonaryDOM   = $fieldDOM->getElementsByTagName(Field2::PROP_DICTONARY)->item(0);
+
+        // if a field does not have a dictonary (allowed), then the above will return null, so we catch that case.
+        if ($dictonaryDOM !== NULL) {
+            // some dictonaries mearly point back to the global dictonaries, so handle that.
+            $dictonaryRef = $dictonaryDOM->getAttribute('ref');
+            if (array_key_exists($dictonaryRef, $this->globalPredefines)) {
+                $dictonaryArray = $this->globalPredefines[$dictonaryRef];
+            } else {
+                $dictonaryArray = self::parseDictonary($dictonaryDOM);
+            }
+
+            $fieldArray[Field2::PROP_DICTONARY] = $dictonaryArray;
+        }
+
+        return $fieldArray;        
     }
 
     public function __construct(string $specXMLFile) {
@@ -127,55 +167,61 @@ class Factory
             throw new \InvalidArgumentException("$specXMLFile failed schema validation.");
         }
         
-        // parse any global dictonaries, at least one is mandatory.
-        $dictonariesDOM = $specDOM->getElementsByTagName('dictonaries')->item(0)->getElementsByTagName('dictonary');
-        foreach ($dictonariesDOM as $dictonaryDOM) {
+        // create our XPath
+        $specXPath = new \DOMXPath($specDOM);
+        
+        // parse global dictonaries, at least one is mandatory.
+        $dictonaryDOMList = $specXPath->query('/records/dictonaries/dictonary');
+        foreach ($dictonaryDOMList as $dictonaryDOM) {
             $id = $dictonaryDOM->getAttribute('id');
-            $globalDictonaries[$id] = self::parseDictonary($dictonaryDOM);
+            $this->globalPredefines[$id] = self::parseDictonary($dictonaryDOM);
+        }
+        
+        // parse global pre-defined fields, at least one is mandatory
+        $fieldsDOMList = $specXPath->query('/records/predefines/field');
+        foreach ($fieldsDOMList as $predefinedFieldDOM) {
+            $id = $predefinedFieldDOM->getAttribute('id');
+            $this->globalPredefines[$id] = $this->parseField($predefinedFieldDOM);
         }
         
         // parse each record
-        $recordsDOM = $specDOM->getElementsByTagName('record');
-        foreach ($recordsDOM as $recordDOM) {            
+        $recordDOMList = $specXPath->query('/records/record|forbidden');
+        foreach ($recordDOMList as $recordDOM) {
             // parse the root level record properties
-            $recordArray = self::parseProperties($recordDOM, self::RECORD_PROPERTIES);
+            $recordArray = self::parseProperties($recordDOM, Record2::LEAF_PROPERTIES);
             
             // parse the field properties
             $fieldsArray = array();
-            $fieldsDOM = $recordDOM->getElementsByTagName('fields')->item(0)->getElementsByTagName('field');
-            $recordArray['fieldCount'] = $recordDOM->getElementsByTagName('fields')->item(0)->getAttribute('count');
+            $fieldsDOM  = $specXPath->query('./fields/field|./fields/predefined', $recordDOM);           
             foreach ($fieldsDOM as $fieldDOM) {
-                $fieldArray = self::parseProperties($fieldDOM, self::FIELD_PROPERTIES);
-                
-                // parse the dictonary values
-                $dictonaryArray = array();
-                $dictonaryDOM = $fieldDOM->getElementsByTagName('dictonary')->item(0);
-                
-                // if a field does not have a dictonary (allowed), then the above will return null, so we catch that case.
-                if ($dictonaryDOM !== NULL) {
-                    // some dictonaries mearly point back to the global dictonaries, so handle that.
-                    $dictonaryRef = $dictonaryDOM->getAttribute('ref');
-                    if (array_key_exists($dictonaryRef, $globalDictonaries)) {
-                        $dictonaryArray = $globalDictonaries[$dictonaryRef];
-                    } else {
-                       $dictonaryArray = self::parseDictonary($dictonaryDOM);
-                    }
-                    
-                    $fieldArray['dictonary'] = $dictonaryArray;
+                $fieldOrder = $fieldDOM->getAttribute('order');
+                switch ($fieldDOM->tagName) {
+                    case 'field':
+                        $fieldsArray[$fieldOrder] = $this->parseField($fieldDOM);
+                        break;
+                    case 'predefined':
+                        $globalFieldId = $fieldDOM->getAttribute('ref');
+                        $fieldsArray[$fieldOrder] = $this->globalPredefines[$globalFieldId];
+                        break;
                 }
-                
-                $fieldId = $fieldDOM->getAttribute('id');
-                $fieldsArray[$fieldId] = $fieldArray;
             }
             
-            $recordArray['fields'] = $fieldsArray;
+            // forbidden records lack field data, so we handle that.
+            switch ($recordDOM->tagName) {
+                case 'forbidden':
+                    // do nothing
+                    break;
+                case 'record':
+                    $recordArray['fields']     = $fieldsArray;
+                    Record2::validateTemplate($recordArray);
+                    break;
+            }
             
             $recordType = $recordArray['type'];
             $this->recordsTemplateArray[$recordType] = $recordArray;
         }
-        
-        $this->validateRecordTemplate();
     }
+    
     
     /**
      * Performs internal sanity checking on the internally generated RecordTempalte
@@ -184,50 +230,79 @@ class Factory
      * @return bool always returns True, because it will throw an exception otherwise.
      * @throws \InvalidArgumentException If the recordTemplate doesn't validate.
      */
-    protected function validateRecordTemplate(): bool {        
-        // validate each record
-        foreach ($this->recordsTemplateArray as $recordArray) {
-            $recordType = $recordArray['type'];
-            
-            // validate each field
-            $start = $idStart = 1;
-            foreach ($recordArray['fields'] as $fieldId => $fieldArray) {
-                $position = $fieldArray['position'];
-                $length   = $fieldArray['length'];
-                
-                // if our start doesn't equals our calculated start, then we have a gap.
-                if ($position != $start) {
-                    throw new \InvalidArgumentException("Gap in record type $recordType at position $position expected position $start");
-                }
-                
-                // validate that our fieldId's are in sequence.
-                if ($idStart != $fieldId) {
-                    throw new \InvalidArgumentException("Field Id $fieldId out of sequence. Expceted $idStart");
-                }
-                
-                // calculate where the range should end. The end becomes the new start.
-                $end = $position + $length - 1;
-                $start = $end + 1;
-                $idEnd = $idStart;
-                $idStart++;
+    protected function validateRecordTemplate(array $recordArray): bool {
+        $recordType = $recordArray[Record2::PROP_TYPE];
+
+        // validate each field
+        $currentPos = $idStart = 1;
+        foreach ($recordArray['fields'] as $fieldOrder => $fieldArray) {            
+            $position = $fieldArray[Field2::PROP_POSITION];
+            $length   = $fieldArray[Field2::PROP_LENGTH];
+
+            // if the record start position doesn't equals our calculated currentPos, then we have a gap.
+            if ($position != $currentPos) {
+                throw new \InvalidArgumentException("Gap in record type $recordType at field $fieldOrder position $position expected position $currentPos");
             }
-            
-            // validate record length and count
-            $recordLength = $recordArray['length'];
-            $recordCount  = $recordArray['fieldCount'];
-            
-            if ($recordLength != $end) {
-                throw new \InvalidArgumentException("Record type $recordType's length of $recordLength does not match calculated length of $end");
+
+            // validate that our fieldId's are in sequence.
+            if ($idStart != $fieldOrder) {
+                throw new \InvalidArgumentException("Field Id $fieldOrder out of sequence. Expceted $idStart");
             }
-            if ($recordCount != $idEnd) {
-                throw new \InvalidArgumentException("Record type $recordType's field count of $recordCount does not match calculated count of $idEnd");
-            }
+
+            // calculate where the range should end. The end becomes the new currentPos.
+            $end = $position + $length;
+            $currentPos = $end;
+            $idEnd = $idStart;
+            $idStart++;
+        }
+
+        // validate record length and count
+        $recordLength = $recordArray[Record2::PROP_LENGTH];
+        $recordCount  = $recordArray[Record2::PROP_FIELDCOUNT];
+        $end -= 1; // move the end back one to correctly calculate.
+
+        // we validate against 
+        if ($recordLength != $end) {
+            throw new \InvalidArgumentException("Record type $recordType's length of $recordLength does not match calculated length of $end");
+        }
+        if ($recordCount != $idEnd) {
+            throw new \InvalidArgumentException("Record type $recordType's field count of $recordCount does not match calculated count of $idEnd");
         }
         
         //if we get here, everything is great.
         return true;
     }
 
+    public function generateRecord(string $recordData, string $dataType) {
+        $recordTypeRaw = substr($recordData, 0, 2);
+        
+        switch ($dataType) {
+            case X937File::DATA_ASCII:
+                $recordType = $recordTypeRaw;
+                break;
+            case X937File::DATA_EBCDIC:
+                if (PHP_OS == 'Linux') {
+                    $recordType = iconv(\X937\Util::DATA_EBCDIC, \X937\Util::DATA_ASCII, $recordTypeRaw);
+                } else {
+                    $recordType = \X937\Util::e2a($recordTypeRaw);
+                }
+                break;
+        default:
+            throw new \InvalidArgumentException("Bad dataType passed: $dataType");
+        }
+        
+        // check if we have a record type in our array for this record type, we should.
+        // the index of that record template should corespond with that record type
+        if (isset($this->recordsTemplateArray[$recordType])) {
+            $record = new Record2($this->recordsTemplateArray[$recordType]);
+            $record->parse($recordData, $dataType);
+            
+            return $record;
+        } else {
+            throw new \InvalidArgumentException("No matching record template for record type $recordType");
+        }
+    }
+    
     /**
      * Generates an appropriate X937 Record from the raw record data.
      * 
@@ -251,7 +326,7 @@ class Factory
                 break;
         default:
             throw new \InvalidArgumentException("Bad dataType passed: $dataType");
-    }
+        }
             
         return self::newRecord($recordType, $recordData, $dataType);
     }
@@ -385,82 +460,82 @@ class Factory
      * @throws InvalidArgumentException if given bad data
      */
     private static function newRecord($recordType, $recordData, $dataType = X937File::DATA_EBCDIC) {
-    if (array_key_exists($recordType, self::RECORD_TYPE_DEFINITIONS) === FALSE) {
-        throw new \InvalidArgumentException("Bad record type passed.");
-    }
-    
-    // convert the record data if necessary.
-    /**
-     * @todo consider how to handle binary data here? Or push this elsware.
-     * Currently it will warn on binary data, which we suppress.
-     */
-    if ($dataType === X937File::DATA_EBCDIC) {
-        if (PHP_OS == 'Linux') { 
-            $recordDataASCII = @iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordData);
-        } else {
-            $recordDataASCII = self::e2aConverter($recordData);
+        if (array_key_exists($recordType, self::RECORD_TYPE_DEFINITIONS) === FALSE) {
+            throw new \InvalidArgumentException("Bad record type passed.");
         }
-    } else {
-        $recordDataASCII = $recordData;
-    }
-        
-    switch ($recordType) {
-        // header Record
-        case RecordType::VALUE_FILE_HEADER:
-            return new FileHeader($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_CASH_LETTER_HEADER:
-            return new CashLetterHeader($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_BUNDLE_HEADER:
-            return new BundleHeader($recordType, $recordDataASCII, $recordData);
 
-        // check detail Record
-        case RecordType::VALUE_CHECK_DETAIL:
-            return new CheckDetail($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_A:
-            return new CheckDetailAddendumA($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_B:
-            return new VariableLength\CheckDetailAddendumB($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_C:
-            return new CheckDetailAddendumC($recordType, $recordDataASCII, $recordData);    
-        
-        // return detail Record
-        case RecordType::VALUE_RETURN_RECORD:
-            return new ReturnRecord($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_RETURN_ADDENDUM_A:
-            return new ReturnAddendumA($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_RETURN_ADDENDUM_B:
-            return new ReturnAddendumB($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_RETURN_ADDENDUM_C:
-            return new VariableLength\ReturnAddendumC($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_RETURN_ADDENDUM_D:
-            return new ReturnAddendumD($recordType, $recordDataASCII, $recordData);
-        
-        // image view Record
-        case RecordType::VALUE_IMAGE_VIEW_DETAIL:
-            return new ImageViewDetail($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_IMAGE_VIEW_DATA:
+        // convert the record data if necessary.
         /**
-         * @todo special data handling here for the binary data.
+         * @todo consider how to handle binary data here? Or push this elsware.
+         * Currently it will warn on binary data, which we suppress.
          */
-            return new VariableLength\ImageViewData($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_IMAGE_VIEW_ANALYSIS:
-            return new ImageViewAnalysis($recordType, $recordDataASCII, $recordData);
+        if ($dataType === X937File::DATA_EBCDIC) {
+            if (PHP_OS == 'Linux') { 
+                $recordDataASCII = @iconv(X937File::DATA_EBCDIC, X937File::DATA_ASCII, $recordData);
+            } else {
+                $recordDataASCII = self::e2aConverter($recordData);
+            }
+        } else {
+            $recordDataASCII = $recordData;
+        }
 
-        // control/summary Record
-        case RecordType::VALUE_BUNDLE_CONTROL:
-            return new BundleControl($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_BOX_SUMMARY:
-            return new BoxSummary($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_ROUTING_NUMBER_SUMMARY:
-            return new RoutingNumberSummary($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_CASH_LETTER_CONTROL:
-            return new CashLetterControl($recordType, $recordDataASCII, $recordData);
-        case RecordType::VALUE_FILE_CONTROL:
-            return new FileControl($recordType, $recordDataASCII, $recordData);
-        default:
-           // emmit notice, we shouldn't get any of these.
-            trigger_error('Invalid record passed, data is unhandled.');
-            return new Generic($recordType, $recordDataASCII, $recordData);
+        switch ($recordType) {
+            // header Record
+            case RecordType::VALUE_FILE_HEADER:
+                return new FileHeader($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_CASH_LETTER_HEADER:
+                return new CashLetterHeader($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_BUNDLE_HEADER:
+                return new BundleHeader($recordType, $recordDataASCII, $recordData);
+
+            // check detail Record
+            case RecordType::VALUE_CHECK_DETAIL:
+                return new CheckDetail($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_A:
+                return new CheckDetailAddendumA($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_B:
+                return new VariableLength\CheckDetailAddendumB($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_CHECK_DETAIL_ADDENDUM_C:
+                return new CheckDetailAddendumC($recordType, $recordDataASCII, $recordData);    
+
+            // return detail Record
+            case RecordType::VALUE_RETURN_RECORD:
+                return new ReturnRecord($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_RETURN_ADDENDUM_A:
+                return new ReturnAddendumA($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_RETURN_ADDENDUM_B:
+                return new ReturnAddendumB($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_RETURN_ADDENDUM_C:
+                return new VariableLength\ReturnAddendumC($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_RETURN_ADDENDUM_D:
+                return new ReturnAddendumD($recordType, $recordDataASCII, $recordData);
+
+            // image view Record
+            case RecordType::VALUE_IMAGE_VIEW_DETAIL:
+                return new ImageViewDetail($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_IMAGE_VIEW_DATA:
+            /**
+             * @todo special data handling here for the binary data.
+             */
+                return new VariableLength\ImageViewData($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_IMAGE_VIEW_ANALYSIS:
+                return new ImageViewAnalysis($recordType, $recordDataASCII, $recordData);
+
+            // control/summary Record
+            case RecordType::VALUE_BUNDLE_CONTROL:
+                return new BundleControl($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_BOX_SUMMARY:
+                return new BoxSummary($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_ROUTING_NUMBER_SUMMARY:
+                return new RoutingNumberSummary($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_CASH_LETTER_CONTROL:
+                return new CashLetterControl($recordType, $recordDataASCII, $recordData);
+            case RecordType::VALUE_FILE_CONTROL:
+                return new FileControl($recordType, $recordDataASCII, $recordData);
+            default:
+               // emmit notice, we shouldn't get any of these.
+                trigger_error('Invalid record passed, data is unhandled.');
+                return new Generic($recordType, $recordDataASCII, $recordData);
         }
     }
 }

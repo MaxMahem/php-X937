@@ -16,8 +16,8 @@ class Raw implements \X937\Writer\FieldInterface {
      * @param \X937\Fields\Field $field the field to write.
      * @return string formated field
      */
-    public function writeField(\X937\Fields\Field $field)
+    public function writeField(\X937\Fields\Field2 $field)
     {
-    return $field->getValue(\X937\Fields\Field::FORMAT_RAW);
+    return $field->getValue();
     }
 }

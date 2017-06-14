@@ -2,9 +2,6 @@
 
 namespace X937\Writer;
 
-use X937\Record as Record;
-use X937\Fields  as Fields;
-
 /**
  * Simple X937 Writer class, parses though a record and prints a human readable
  * readout of all Record.
@@ -33,7 +30,7 @@ class Human extends AbstractWriter
     $this->setOption(self::OPTION_OMIT_BLANKS, (bool) $value);
     }
     
-    public function writeRecord(Record\Record $record) {
+    public function writeRecord(\X937\Record\RecordInterface $record) {
     // initilise an array used for all the output.
     $outputArray = array();
     
@@ -42,7 +39,7 @@ class Human extends AbstractWriter
         // reset our field output array
         $fieldOutputArray = array();
         
-        $fieldOutputArray['name']        = $field->getName() . ':';
+        $fieldOutputArray['name']        = $field->name . ':';
             try {
                 $fieldOutputArray['value']       = $this->writeField($field);
             } catch (\Exception $e) {

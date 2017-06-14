@@ -10,14 +10,14 @@
  */
 class X937Writer extends AbstractWriter
 {
-    public function writeRecord(\X937\Record\Record $record) {    
+    public function writeRecord(\X937\Record\RecordInterface $record) {    
     $output = '';
         
-        $recordLengthData = pack('N', $record->getLength());
+        $recordLengthData = pack('N', $record->length);
         
         $output .= $recordLengthData;
         
-        $output .= $record->getDataRaw();
+        $output .= $record->getData(\X937\Util::DATA_EBCDIC);
     
     $this->resource->fwrite($output);
     }

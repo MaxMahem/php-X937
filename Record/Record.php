@@ -352,16 +352,15 @@ abstract class Record implements \IteratorAggregate, \Countable {
 
     abstract public static function defineFields();
     
-    protected function addFields()
-    {
-    $fields     = static::defineFields();
-    $fieldCount = count($fields);
-    
-    $this->fields = new \SplFixedArray($fieldCount);
-        
-    foreach ($fields as $field) {
-        $this->addField($field);
-    }
+    protected function addFields() {
+        $fields     = static::defineFields();
+        $fieldCount = count($fields);
+
+        $this->fields = new \SplFixedArray($fieldCount);
+
+        foreach ($fields as $field) {
+            $this->addField($field);
+        }
     }
 
     /**

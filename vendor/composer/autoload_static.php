@@ -27,6 +27,7 @@ class ComposerStaticInit39256cae5d53867bcd6979f81e230bde
         'X937\\Fields\\DateTime\\Time' => __DIR__ . '/../..' . '/Fields/DateTime/Time.php',
         'X937\\Fields\\DepositAccountNumber' => __DIR__ . '/../..' . '/Fields/FieldTypes.php',
         'X937\\Fields\\Field' => __DIR__ . '/../..' . '/Fields/Field.php',
+        'X937\\Fields\\Field2' => __DIR__ . '/../..' . '/Fields/Field2.php',
         'X937\\Fields\\FieldGeneric' => __DIR__ . '/../..' . '/Fields/FieldGeneric.php',
         'X937\\Fields\\FieldPhoneNumber' => __DIR__ . '/../..' . '/Fields/FieldPhoneNumber.php',
         'X937\\Fields\\FieldReserved' => __DIR__ . '/../..' . '/Fields/FieldReserved.php',
@@ -80,6 +81,8 @@ class ComposerStaticInit39256cae5d53867bcd6979f81e230bde
         'X937\\Record\\ImageViewDetail' => __DIR__ . '/../..' . '/Record/ImageViewDetail.php',
         'X937\\Record\\NonHitTotalsDetail' => __DIR__ . '/../..' . '/Record/RecordTypes.php',
         'X937\\Record\\Record' => __DIR__ . '/../..' . '/Record/Record.php',
+        'X937\\Record\\Record2' => __DIR__ . '/../..' . '/Record/Record2.php',
+        'X937\\Record\\RecordInterface' => __DIR__ . '/../..' . '/Record/RecordInterface.php',
         'X937\\Record\\ReturnAddendumA' => __DIR__ . '/../..' . '/Record/RecordTypes.php',
         'X937\\Record\\ReturnAddendumB' => __DIR__ . '/../..' . '/Record/RecordTypes.php',
         'X937\\Record\\ReturnAddendumD' => __DIR__ . '/../..' . '/Record/RecordTypes.php',
@@ -89,6 +92,7 @@ class ComposerStaticInit39256cae5d53867bcd6979f81e230bde
         'X937\\Record\\VariableLength\\ImageViewData' => __DIR__ . '/../..' . '/Record/VariableLength/ImageViewData.php',
         'X937\\Record\\VariableLength\\VariableLength' => __DIR__ . '/../..' . '/Record/VariableLength/VariableLength.php',
         'X937\\Record\\VariableLength\\X937RecordReturnAddendumC' => __DIR__ . '/../..' . '/Record/VariableLength/ReturnAddendumC.php',
+        'X937\\Util' => __DIR__ . '/../..' . '/Util.php',
         'X937\\Validator\\AbstractValidator' => __DIR__ . '/../..' . '/Validator.php',
         'X937\\Validator\\Validator' => __DIR__ . '/../..' . '/Validator.php',
         'X937\\Validator\\ValidatorDate' => __DIR__ . '/../..' . '/Validator.php',
@@ -118,6 +122,7 @@ class ComposerStaticInit39256cae5d53867bcd6979f81e230bde
         'X937\\Writer\\X937Writer' => __DIR__ . '/../..' . '/Writer/X937Writer.php',
         'X937\\Writer\\XML' => __DIR__ . '/../..' . '/Writer/XML.php',
         'X937\\X937File' => __DIR__ . '/../..' . '/File.php',
+        'X937\\X937File2' => __DIR__ . '/../..' . '/File2.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

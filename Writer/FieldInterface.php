@@ -11,5 +11,5 @@ namespace X937\Writer;
  */
 interface FieldInterface
 {
-    public function writeField(\X937\Fields\Field $field);
+    public function writeField(\X937\Fields\Field2 $field);
 }

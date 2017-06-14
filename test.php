@@ -3,40 +3,28 @@ $timeStart = microtime(true);
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$parser = new X937\Record\Factory(__DIR__ . DIRECTORY_SEPARATOR . 'record' . DIRECTORY_SEPARATOR . 'Specification.xml');
-
-//var_dump($parser);
-
-echo microtime(true) - $timeStart;
-
-die();
-$file = new X937\X937File('C:\PHP-Projects\x937\test4.X937');
+$file = new X937\X937File2('C:\PHP-Projects\x937\test4.X937');
 
 $fileFormat  = X937\Writer\Factory::FORMAT_FILE_HUMAN;
-$filename    = 'human.txt';
+$filename    = '..\human.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_STUB;
 
 $writerFlat = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
-// $writerFlat->setOptionOmitBlanks(true);
-// $writerFlat->writeAll($file);
+$writerFlat->setOptionOmitBlanks(true);
+$writerFlat->writeAll($file);
 
 $writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, 'C:\PHP-Projects\x937\new4.X937');
-//
 
 $count = 0;
 foreach($file as $record) {
-    if ($record->getType() == '25') {
-//        echo $record->getData() . PHP_EOL;
-        $onus = $record->getFieldByNumber('6')->getValue();
-        $position = $record->getFieldByNumber('6')->getPosition();
+    if ($record->type == '25') {
+        $onusField = $record['6'];
+        $onusValue = $onusField->getValue();
         
-        if (preg_match('/\/[0-9]{1,3}$/', $onus)) {
-            echo "'$onus' BOGUS";
-
-            $rawData = $record->getDataRaw();
-            $data = $record->getData();
+        if (preg_match('/\/[0-9]{1,3}$/', $onusValue)) {
+            echo "'$onusValue' BOGUS";
             
-            $onusNoSpace = str_replace(' ', '', $onus);
+            $onusNoSpace = str_replace(' ', '', $onusValue);
             
             // split the string into an array at the /
             $onusExploded = explode('/', $onusNoSpace);
@@ -65,23 +53,20 @@ foreach($file as $record) {
                 $onusCheckNum = '';
             }
             
-            
             // glue back together and pad.
             $onusGlued = $onusAccountNum . '/' . $onusCheckNum;
             $onusPadded = str_pad($onusGlued, 20, ' ', STR_PAD_LEFT);
             
             $onusDataLength = strlen($onusPadded);
             
-            if ($onusDataLength > 20) {
+            if ($onusDataLength > $onusField->length) {
                 echo "onus to long, aborting!" . PHP_EOL;
                 continue;
             }
             
             echo ' - ' . "'$onusPadded' FIXED" . PHP_EOL;
             
-            $newData = substr_replace($data, $onusPadded, $position-1, 20);
-            
-            $record->setData($newData);
+            $onusField->set($onusPadded);
         }        
     }
     
