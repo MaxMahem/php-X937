@@ -66,19 +66,19 @@ class Factory {
     // build our binary handler.
     switch ($binaryFormat) {
         case self::FORMAT_BINARY_BASE64:
-        $binaryWriter = new FieldWriter\Binary\Base64();
-        break;
+            $binaryWriter = new FieldWriter\Binary\Base64();
+            break;
         case self::FORMAT_BINARY_NONE:
-        $binaryWriter = new FieldWriter\None();
-        break;
+            $binaryWriter = new FieldWriter\None();
+            break;
         case self::FORMAT_BINARY_STUB:
-        $binaryWriter = new FieldWriter\Formated();
-                break;
-            case self::FORMAT_BINARY_RAW:
-                $binaryWriter = new FieldWriter\Binary\Binary();
-                break;
-            default:
-                $binaryWriter = new FieldWriter\Binary\Binary();
+            $binaryWriter = new FieldWriter\Formated();
+            break;
+        case self::FORMAT_BINARY_RAW:
+            $binaryWriter = new FieldWriter\Binary\Binary();
+            break;
+        default:
+            $binaryWriter = new FieldWriter\Binary\Binary();
     }
     
     // build our normal field handler.

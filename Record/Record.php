@@ -2,7 +2,6 @@
 
 namespace X937\Record;
 
-use X937\Fields\Predefined\RecordType;
 use X937\Fields\Field;
 
 /**
@@ -12,228 +11,7 @@ use X937\Fields\Field;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley
  */
-abstract class Record implements \IteratorAggregate, \Countable {
-    const DATA_ASCII  = 'ASCII';
-    const DATA_EBCDIC = 'EBCDIC-US';
-    
-    const EBCDIC_2_ASCII_TABLE = array(
-        '40' => ' ',
-        '4A' => '¢',
-        '4B' => '.',
-        '4C' => '<',
-        '4D' => '(',
-        '4E' => '+',
-        '4F' => '|',
-        '5A' => '!',
-        '5B' => '$',
-        '5C' => '*',
-        '5D' => ')',
-        '5E' => ';',
-        '5F' => '¬',
-        '60' => '-',
-        '61' => '/',
-        '6A' => '¦',
-        '6B' => ',',
-        '6C' => '%',
-        '6D' => '_',
-        '6E' => '>',
-        '6F' => '?',
-        '79' => '`',
-        '7A' => ':',
-        '7B' => '#',
-        '7C' => '@',
-        '7D' => '\'',
-        '7E' => '=',
-        '7F' => '\"',
-        '81' => 'a',
-        '82' => 'b',
-        '83' => 'c',
-        '84' => 'd',
-        '85' => 'e',
-        '86' => 'f',
-        '87' => 'g',
-        '88' => 'h',
-        '89' => 'i',
-        '91' => 'j',
-        '92' => 'k',
-        '93' => 'l',
-        '94' => 'm',
-        '95' => 'n',
-        '96' => 'o',
-        '97' => 'p',
-        '98' => 'q',
-        '99' => 'r',
-        'A1' => '~',
-        'A2' => 's',
-        'A3' => 't',
-        'A4' => 'u',
-        'A5' => 'v',
-        'A6' => 'w',
-        'A7' => 'x',
-        'A8' => 'y',
-        'A9' => 'z',
-        'C0' => '{',
-        'C1' => 'A',
-        'C2' => 'B',
-        'C3' => 'C',
-        'C4' => 'D',
-        'C5' => 'E',
-        'C6' => 'F',
-        'C7' => 'G',
-        'C8' => 'H',
-        'C9' => 'I',
-        'D0' => '}',
-        'D1' => 'J',
-        'D2' => 'K',
-        'D3' => 'L',
-        'D4' => 'M',
-        'D5' => 'N',
-        'D6' => 'O',
-        'D7' => 'P',
-        'D8' => 'Q',
-        'D9' => 'R',
-        'E0' => '\\',
-        'E2' => 'S',
-        'E3' => 'T',
-        'E4' => 'U',
-        'E5' => 'V',
-        'E6' => 'W',
-        'E7' => 'X',
-        'E8' => 'Y',
-        'E9' => 'Z',
-        'F0' => '0',
-        'F1' => '1',
-        'F2' => '2',
-        'F3' => '3',
-        'F4' => '4',
-        'F5' => '5',
-        'F6' => '6',
-        'F7' => '7',
-        'F8' => '8',
-        'F9' => '9',  
-    );
-    
-    const ASCII_2_EBCDIC_TABLE = array(
-        ' ' => '40',
-        '¢' => '4A',
-        '.' => '4B',
-        '<' => '4C',
-        '(' => '4D',
-        '+' => '4E',
-        '|' => '4F',
-        '!' => '5A',
-        '$' => '5B',
-        '*' => '5C',
-        ')' => '5D',
-        ';' => '5E',
-        '¬' => '5F',
-        '-' => '60',
-        '/' => '61',
-        '¦' => '6A',
-        ',' => '6B',
-        '%' => '6C',
-        '_' => '6D',
-        '>' => '6E',
-        '?' => '6F',
-        '`' => '79',
-        ':' => '7A',
-        '#' => '7B',
-        '@' => '7C',
-        '\'' => '7D',
-        '=' => '7E',
-        '"' => '7F',
-        'a' => '81',
-        'b' => '82',
-        'c' => '83',
-        'd' => '84',
-        'e' => '85',
-        'f' => '86',
-        'g' => '87',
-        'h' => '88',
-        'i' => '89',
-        'j' => '91',
-        'k' => '92',
-        'l' => '93',
-        'm' => '94',
-        'n' => '95',
-        'o' => '96',
-        'p' => '97',
-        'q' => '98',
-        'r' => '99',
-        '~' => 'A1',
-        's' => 'A2',
-        't' => 'A3',
-        'u' => 'A4',
-        'v' => 'A5',
-        'w' => 'A6',
-        'x' => 'A7',
-        'y' => 'A8',
-        'z' => 'A9',
-        '{' => 'C0',
-        'A' => 'C1',
-        'B' => 'C2',
-        'C' => 'C3',
-        'D' => 'C4',
-        'E' => 'C5',
-        'F' => 'C6',
-        'G' => 'C7',
-        'H' => 'C8',
-        'I' => 'C9',
-        '}' => 'D0',
-        'J' => 'D1',
-        'K' => 'D2',
-        'L' => 'D3',
-        'M' => 'D4',
-        'N' => 'D5',
-        'O' => 'D6',
-        'P' => 'D7',
-        'Q' => 'D8',
-        'R' => 'D9',
-        '\\' => 'E0',
-        'S' => 'E2',
-        'T' => 'E3',
-        'U' => 'E4',
-        'V' => 'E5',
-        'W' => 'E6',
-        'X' => 'E7',
-        'Y' => 'E8',
-        'Z' => 'E9',
-        '0' => 'F0',
-        '1' => 'F1',
-        '2' => 'F2',
-        '3' => 'F3',
-        '4' => 'F4',
-        '5' => 'F5',
-        '6' => 'F6',
-        '7' => 'F7',
-        '8' => 'F8',
-        '9' => 'F9',
-    );
-        
-    /**
-     * The type of the record. Should be one of the class constants.
-     * @var int
-     */
-    protected $recordType;
-
-    /**
-     * The raw record string. Generally EBCDIC data, possibly binary or ASCII.
-     * @var string
-     */
-    protected $recordData;
-    
-    /**
-     * The raw record data, preserved so we can have it for binary fields.
-     * @var string
-     */
-    protected $recordDataRaw;
-    
-    /**
-     * The length of the record. In bytes
-     * @var int 
-     */
-    protected $recordLength;
-
+class Record implements \X937\Record\RecordInterface {
     /**
      * Contains all the field in the record.
      * @var SplFixedArray
@@ -245,86 +23,242 @@ abstract class Record implements \IteratorAggregate, \Countable {
      * @var array
      */
     protected $fieldsRef;
+    
+    // record properties names (leaf)
+    const PROP_NAME           = 'name';
+    const PROP_TYPE           = 'type';
+    const PROP_USAGE          = 'usage';
+    const PROP_VALIDATION     = 'validation';
+    const PROP_LENGTH         = 'length';
+    const PROP_VARIABLELENGTH = 'variableLength';
+    const PROP_FIELDCOUNT     = 'fieldCount';
+    
+    // record properties names (branch)
+    const PROP_FIELDS         = 'fields';
+
+    // record properties
+    const LEAF_PROPERTIES = [
+        self::PROP_NAME,
+        self::PROP_TYPE,
+        self::PROP_USAGE,
+        self::PROP_VALIDATION,
+        self::PROP_LENGTH,
+        self::PROP_VARIABLELENGTH,
+        self::PROP_FIELDCOUNT,
+    ];
+    
+    const PROPERTIES = self::LEAF_PROPERTIES + [self::PROP_FIELDS];
+    
+    protected $recordTemplate;
 
     /**
-     * Creates a X937Record. Basic input validation, currently ignores TIFF data.
-     * Calls addFields which should be overiden in a subclass to add all the
-     * fields to the record. And then calls all those fields parseValue function
-     * to parse in the data.
-     * @param string $recordType the type of the record, in ASCII.
-     * @param string $recordData the translated data for the record.
-     * @param string $recordDataRaw the raw (untranslated) data for the record.
-     * @throws InvalidArgumentException If given bad input.
+     * Creates a X937Record. 
+     * 
+     * @param array $recordTemplate a template with the 'bones' of the record.
      */
-    public function __construct($recordType, string $recordData, $recordDataRaw) {
-        // input validation
-        if (array_key_exists($recordType, RecordType::defineValues()) === FALSE) { 
-            throw new \InvalidArgumentException("Bad record: $recordData passed.");
+    public function __construct(array $recordTemplate) {
+        $this->recordTemplate = $recordTemplate;
+        
+        // build the SplFixedArray that will hold the fields
+        $fieldCount = $this->recordTemplate['fieldCount'];
+        $this->fields = new \SplFixedArray($fieldCount);
+        
+        // create the records fields
+        $fields = $recordTemplate[self::PROP_FIELDS];
+        
+        foreach ($fields as $id => $fieldTemplate) {
+            // since our fields are indexed by 1, and our array by 0, we need to subtract one            
+            $fieldIndex = $id - 1;
+            $fieldName  = $fieldTemplate[Field::PROP_NAME];
+            $this->fields[$fieldIndex] = new \X937\Fields\Field($fieldTemplate);
+            
+            // since objects are passed by reference, both indexes point to the same object
+            $this->fieldsRef[$fieldName] = $this->fields[$fieldIndex];
+        }        
+    }
+    
+    public function parse(string $data, string $dataType = X937\Util::DATA_EBCDIC): bool {
+        if (!array_key_exists($dataType, \X937\Util::DATA_TYPES)) {
+            throw new \InvalidArgumentException("Invalid data type: $dataType");
         }
         
-        $this->recordType    = $recordType;
-        $this->recordData    = $recordData;
-        $this->recordDataRaw = $recordDataRaw;
-        $this->recordLength  = strlen($recordDataRaw);
-
-        $this->addFields();
-    
-        // added error check because I seem to be missing some.
-        foreach($this->fields as $field) {
-            assert(($field instanceof Field), "Field" . ' ' . $this->fields->key() . ' ' . "undefined.");
-        }
-    
-        foreach($this->fields as $field) {
-            if ($field->getType() === Field::TYPE_BINARY) {
-                $field->parseValue($this->recordDataRaw);
-            } else {
-                $field->parseValue($this->recordData);
+        // $keyArray will hold sets of key Value pairs that tells us where the
+        // variable position are for our variable length fields. the $key is in
+        // the record spec, while the value is in the parsed data.
+        $keyArray = array();
+        
+        foreach ($this->fields as $field) {
+            $fieldTemplate = $field->getTemplate();
+            $fieldPosition = $fieldTemplate[Field::PROP_POSITION] - 1;
+            $fieldSize     = $fieldTemplate[Field::PROP_LENGTH];
+            
+            if (isset($fieldTemplate[Field::PROP_VARIABLEPOSITION])) {
+                $positionArray = explode('+', $fieldTemplate[Field::PROP_VARIABLEPOSITION]);
+                
+                $fieldPosition = 0;
+                foreach($positionArray as $positionItem) {
+                    if (is_numeric($positionItem)) {
+                        $fieldPosition += $positionItem;
+                    } else {
+                        $fieldPosition += $keyArray[$positionItem];
+                    }
+                }
+                
+                $fieldPosition -= 1;
             }
+            
+            if(isset($fieldTemplate[Field::PROP_VARIABLELENGTH])) {
+                $lengthVariable = $fieldTemplate[Field::PROP_VARIABLELENGTH];
+                $fieldSize = $keyArray[$lengthVariable];
+            }
+            
+            $rawValue = substr($data, $fieldPosition, $fieldSize);
+            
+            // if our data is binary we also do not want to translate it.
+            if (($dataType === \X937\Util::DATA_EBCDIC) && 
+                    ($fieldTemplate[Field::PROP_TYPE] != Field::TYPE_BINARY)) {
+                $asciiValue = \X937\Util::e2a($rawValue);
+            } else {
+                $asciiValue = $rawValue;
+            }
+            
+            // if we have a keyValue property, then the field indicates the 
+            // length of another field. So we set its value and key into our
+            // array for this purpose.
+            if (isset($fieldTemplate[Field::PROP_VALUEKEY])) {
+                $keyArray[$fieldTemplate[Field::PROP_VALUEKEY]] = $asciiValue;
+            }
+            
+            $field->set($asciiValue);
+        }
+        
+        return true;
+    }
+    
+    public function __get($name) {
+        if (isset($this->recordTemplate[$name])) {
+            return $this->recordTemplate[$name];
+        } else {
+            trigger_error("Attempted to get property $name which is undefined.");
+            return null;
         }
     }
     
     /**
+     * Performs internal sanity checking on the internally generated RecordTempalte
+     * to see if it violates constraints of field count, length, and overlap.
+     * 
+     * @return bool always returns True, because it will throw an exception otherwise.
+     * @throws \InvalidArgumentException If the recordTemplate doesn't validate.
+     */
+    public static function validateTemplate(array $recordArray): bool {
+        $recordType = $recordArray[self::PROP_TYPE];
+
+        // validate each field
+        $currentPos = $idStart = 1;
+        foreach ($recordArray['fields'] as $fieldOrder => $fieldArray) {            
+            $position = $fieldArray[Field::PROP_POSITION];
+            $length   = $fieldArray[Field::PROP_LENGTH];
+
+            // if the record start position doesn't equals our calculated currentPos, then we have a gap.
+            if ($position != $currentPos) {
+                throw new \InvalidArgumentException("Gap in record type $recordType at field $fieldOrder position $position expected position $currentPos");
+            }
+
+            // validate that our fieldId's are in sequence.
+            if ($idStart != $fieldOrder) {
+                throw new \InvalidArgumentException("Field Id $fieldOrder out of sequence. Expceted $idStart");
+            }
+
+            // calculate where the range should end. The end becomes the new currentPos.
+            $end = $position + $length;
+            $currentPos = $end;
+            $idEnd = $idStart;
+            $idStart++;
+        }
+
+        // validate record length and count
+        $recordLength = $recordArray[self::PROP_LENGTH];
+        $recordCount  = $recordArray[self::PROP_FIELDCOUNT];
+        $end -= 1; // move the end back one to correctly calculate.
+
+        // we validate against 
+        if ($recordLength != $end) {
+            throw new \InvalidArgumentException("Record type $recordType's length of $recordLength does not match calculated length of $end");
+        }
+        if ($recordCount != $idEnd) {
+            throw new \InvalidArgumentException("Record type $recordType's field count of $recordCount does not match calculated count of $idEnd");
+        }
+        
+        //if we get here, everything is great.
+        return true;
+    }
+    
+    public function __isset($name) {
+        return isset($this->recordTemplate[$name]);
+    }
+    
+    public function getData(string $dataType = \X937\Util::DATA_ASCII): string {
+        $data = '';
+        foreach ($this->fields as $field) {
+            $data .= $field->getValue();
+        }
+        
+        return $data;
+    }
+    
+    /**
      * Returns an Array Iterator object of the fields (natively a SplFixedArray),
-     * this lets X937Record implement tranversiable.
+     * this lets X937Record implement tranversible.
      * @return ArrayIterator
      */
     public function getIterator() { return $this->fields; }
     
     /**
      * Returns a count of the number of fields. For Countable.
+     * 
      * @return int
      */
-    public function count() { return count($this->fields); }
+    public function count(): int { return count($this->fields); }
+    
+    public function offsetExists($offset) {
+        if (is_numeric($offset)) {
+            return isset($this->fields[$offset]);
+        } else {
+            return isset($this->fieldsRef[$offset]);
+        }
+    }
+    
+    public function offsetUnset($offset) { throw new \InvalidArgumentException("Set access by constructor only"); }
+    
+    public function offsetSet($offset, $value) { throw new \InvalidArgumentException("Set access by constructor only"); }
+    
+    public function offsetGet($offset) {
+        // check if our access is valid for one of the two arrays, and if so return it.
+        if (is_numeric($offset)) {
+            if (isset($this->fields[$offset])) {
+                return $this->fields[$offset - 1];
+            }
+        } else {
+            if (isset($this->fieldsRef[$offset])) { 
+                return $this->fieldsRef[$offset];
+            }
+        }
+        
+        // otherwise, return null.
+        trigger_error("Attempted to get field $offset, which does not exist");
+        return null;
+    }
     
     public function validate() {
-    foreach ($this->fields as $field) {
-        echo $field->validate();
-    }
-    }
-
-    /**
-     * Get the Record Type, should be one of the class constents.
-     * @return int The record type of the record.
-     */
-    public function getType() { return $this->recordType; }
-    
-    /**
-     * Get the record length. Should be the same for raw and translated data, I hope.
-     * @return int The current length of the record.
-     */
-    public function getLength() { return strlen($this->recordDataRaw); }
-    
-    /**
-     * Get the raw Record data
-     * @return string Translated Record Data
-     */
-    public function getData() { return $this->recordData; }
+        foreach ($this->fields as $field) {
+            $field->validate();
+        }
         
-    /**
-     * Get the raw Record data
-     * @return string Raw (untranslated) Record Data
-     */
-    public function getDataRaw() { return $this->recordDataRaw; }
+        /**
+         * @todo Do record level validation.
+         */
+    }
 
     /**
      * Gets the field according to its field number (1 indexed)
@@ -341,67 +275,7 @@ abstract class Record implements \IteratorAggregate, \Countable {
      */
     public function getFieldByName($fieldName) 
     {
-    $fieldNumber = $this->fieldsRef[$fieldName];
-    return $this->fields[$fieldNumber];
-    }
-    
-    public function setData($data, $dataType = self::DATA_ASCII) {
-        $this->recordData = $data;
-        $this->recordDataRaw = self::a2eConverter($data);
-    }
-
-    abstract public static function defineFields();
-    
-    protected function addFields() {
-        $fields     = static::defineFields();
-        $fieldCount = count($fields);
-
-        $this->fields = new \SplFixedArray($fieldCount);
-
-        foreach ($fields as $field) {
-            $this->addField($field);
-        }
-    }
-
-    /**
-     * Adds a X937Field (or one of it's subclasses) to the Record.
-     * @param X937Field $field
-     */
-    protected function addField(\X937\Fields\Field $field) {
-    // since field numbers are 1 indexed and the array 0 indexed, we need to
-    // subtract one to correlate.
-    $fieldNumber = $field->getNumber() - 1;
-    
-    // assign our field to the array.
-        $this->fields[$fieldNumber] = $field;
-    
-    // update fieldRef with a key to correct position.
-    $this->fieldsRef[$field->getName()] = $fieldNumber;
-    }
-    
-    /**
-     * Converts a string of ASCII into EBCDIC
-     * @param string $aString ASCII string
-     * @return string EBCDIC string
-     */
-    public static function a2eConverter($aString) {
-        // loop though string converting to EBCDIC
-        $eOut = "";    
-        while(strlen($aString)>=1)
-        {
-            $thisASCII = substr($aString, 0, 1);
-
-            if (array_key_exists($thisASCII, self::ASCII_2_EBCDIC_TABLE)) {
-                $eOut = $eOut . hex2bin(self::ASCII_2_EBCDIC_TABLE[$thisASCII]);
-            } else {
-                $eOut .= hex2bin(self::ASCII_2_EBCDIC_TABLE[' ']);
-                trigger_error("Unhandled ASCII Character " . bin2hex($thisASCII));
-                echo $aString;
-            }
-            $aString = substr($aString, 1);
-
-        }    
-
-        return $eOut;
+        $fieldNumber = $this->fieldsRef[$fieldName];
+        return $this->fields[$fieldNumber];
     }
 }

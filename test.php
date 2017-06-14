@@ -3,14 +3,19 @@ $timeStart = microtime(true);
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$file = new X937\X937File2('C:\PHP-Projects\x937\test4.X937');
+$file = new X937\File('C:\PHP-Projects\x937\test4.X937');
 
 $fileFormat  = X937\Writer\Factory::FORMAT_FILE_HUMAN;
 $filename    = '..\human.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_STUB;
+$writerHuman = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
+$writerHuman->setOptionOmitBlanks(true);
+$writerHuman->writeAll($file);
 
-$writerFlat = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
-$writerFlat->setOptionOmitBlanks(true);
+$fileFormat  = X937\Writer\Factory::FORMAT_FILE_FLAT;
+$filename    = '..\flat.txt';
+$imageFormat = X937\Writer\Factory::FORMAT_BINARY_NONE;
+$writerFlat  = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
 $writerFlat->writeAll($file);
 
 $writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, 'C:\PHP-Projects\x937\new4.X937');

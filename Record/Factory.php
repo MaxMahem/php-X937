@@ -2,9 +2,8 @@
 
 namespace X937\Record;
 
-use X937\X937File;
 use X937\Fields\Predefined\RecordType;
-use X937\Fields\Field2;
+use X937\Fields\Field;
 
 /**
  * A factor class to generate new X937Record from different sorts of input.
@@ -115,31 +114,31 @@ class Factory
         
         // variableLength can be in the form, ###+X+Y, and if so we need
         // to get the static part of the length, which must be index 0.
-        if (isset($propertyArray[Field2::PROP_VARIABLELENGTH])) {
-            $lengthArray = explode('+', $propertyArray[Field2::PROP_VARIABLELENGTH]);
+        if (isset($propertyArray[Field::PROP_VARIABLELENGTH])) {
+            $lengthArray = explode('+', $propertyArray[Field::PROP_VARIABLELENGTH]);
             if (is_numeric($lengthArray[0])) {
-                $propertyArray[Field2::PROP_LENGTH] = $lengthArray[0];
+                $propertyArray[Field::PROP_LENGTH] = $lengthArray[0];
             } else {
-                $propertyArray[Field2::PROP_LENGTH] = 0;
+                $propertyArray[Field::PROP_LENGTH] = 0;
             }
         }
         
         // variablePosition must be in the form, ###+X+Y, and if so we need
         // to get the static part of the length, which must be index 0.
-        if (isset($propertyArray[Field2::PROP_VARIABLEPOSITION])) {
-            $positionArray = explode('+', $propertyArray[Field2::PROP_VARIABLEPOSITION]);
-            $propertyArray[Field2::PROP_POSITION] = $positionArray[0];
+        if (isset($propertyArray[Field::PROP_VARIABLEPOSITION])) {
+            $positionArray = explode('+', $propertyArray[Field::PROP_VARIABLEPOSITION]);
+            $propertyArray[Field::PROP_POSITION] = $positionArray[0];
         }
         
         return $propertyArray;    
     }
     
     protected function parseField(\DOMElement $fieldDOM): array {
-        $fieldArray = self::parseProperties($fieldDOM, \X937\Fields\Field2::LEAF_PROPERTIES);
+        $fieldArray = self::parseProperties($fieldDOM, \X937\Fields\Field::LEAF_PROPERTIES);
                 
         // parse the dictonary values
         $dictonaryArray = array();
-        $dictonaryDOM   = $fieldDOM->getElementsByTagName(Field2::PROP_DICTONARY)->item(0);
+        $dictonaryDOM   = $fieldDOM->getElementsByTagName(Field::PROP_DICTONARY)->item(0);
 
         // if a field does not have a dictonary (allowed), then the above will return null, so we catch that case.
         if ($dictonaryDOM !== NULL) {
@@ -151,7 +150,7 @@ class Factory
                 $dictonaryArray = self::parseDictonary($dictonaryDOM);
             }
 
-            $fieldArray[Field2::PROP_DICTONARY] = $dictonaryArray;
+            $fieldArray[Field::PROP_DICTONARY] = $dictonaryArray;
         }
 
         return $fieldArray;        
@@ -188,7 +187,7 @@ class Factory
         $recordDOMList = $specXPath->query('/records/record|forbidden');
         foreach ($recordDOMList as $recordDOM) {
             // parse the root level record properties
-            $recordArray = self::parseProperties($recordDOM, Record2::LEAF_PROPERTIES);
+            $recordArray = self::parseProperties($recordDOM, Record::LEAF_PROPERTIES);
             
             // parse the field properties
             $fieldsArray = array();
@@ -213,7 +212,7 @@ class Factory
                     break;
                 case 'record':
                     $recordArray['fields']     = $fieldsArray;
-                    Record2::validateTemplate($recordArray);
+                    Record::validateTemplate($recordArray);
                     break;
             }
             
@@ -231,13 +230,13 @@ class Factory
      * @throws \InvalidArgumentException If the recordTemplate doesn't validate.
      */
     protected function validateRecordTemplate(array $recordArray): bool {
-        $recordType = $recordArray[Record2::PROP_TYPE];
+        $recordType = $recordArray[Record::PROP_TYPE];
 
         // validate each field
         $currentPos = $idStart = 1;
         foreach ($recordArray['fields'] as $fieldOrder => $fieldArray) {            
-            $position = $fieldArray[Field2::PROP_POSITION];
-            $length   = $fieldArray[Field2::PROP_LENGTH];
+            $position = $fieldArray[Field::PROP_POSITION];
+            $length   = $fieldArray[Field::PROP_LENGTH];
 
             // if the record start position doesn't equals our calculated currentPos, then we have a gap.
             if ($position != $currentPos) {
@@ -257,8 +256,8 @@ class Factory
         }
 
         // validate record length and count
-        $recordLength = $recordArray[Record2::PROP_LENGTH];
-        $recordCount  = $recordArray[Record2::PROP_FIELDCOUNT];
+        $recordLength = $recordArray[Record::PROP_LENGTH];
+        $recordCount  = $recordArray[Record::PROP_FIELDCOUNT];
         $end -= 1; // move the end back one to correctly calculate.
 
         // we validate against 
@@ -277,10 +276,10 @@ class Factory
         $recordTypeRaw = substr($recordData, 0, 2);
         
         switch ($dataType) {
-            case X937File::DATA_ASCII:
+            case \X937\File::DATA_ASCII:
                 $recordType = $recordTypeRaw;
                 break;
-            case X937File::DATA_EBCDIC:
+            case \X937\File::DATA_EBCDIC:
                 if (PHP_OS == 'Linux') {
                     $recordType = iconv(\X937\Util::DATA_EBCDIC, \X937\Util::DATA_ASCII, $recordTypeRaw);
                 } else {
@@ -294,7 +293,7 @@ class Factory
         // check if we have a record type in our array for this record type, we should.
         // the index of that record template should corespond with that record type
         if (isset($this->recordsTemplateArray[$recordType])) {
-            $record = new Record2($this->recordsTemplateArray[$recordType]);
+            $record = new Record($this->recordsTemplateArray[$recordType]);
             $record->parse($recordData, $dataType);
             
             return $record;

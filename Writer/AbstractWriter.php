@@ -69,7 +69,7 @@ abstract class AbstractWriter implements WriterInterface {
      * Shortcut function, write's all records in the file.
      * @param \X937\X937File $file
      */
-    public function writeAll(\X937\X937File2 $file)
+    public function writeAll(\X937\File $file)
     {    
     foreach ($file as $record) {
         $this->writeRecord($record);
@@ -82,9 +82,9 @@ abstract class AbstractWriter implements WriterInterface {
      * @param \X937\Fields\Field $field the Field to be writen
      * @return string the field data formated appropriately.
      */
-    protected function writeField(Fields\Field2 $field)
+    protected function writeField(Fields\Field $field)
     {
-    if ($field->type === Fields\Field2::TYPE_BINARY) {
+    if ($field->type === Fields\Field::TYPE_BINARY) {
         return $this->binaryFieldWriter->writeField($field);
     } else {
         return $this->fieldWriter->writeField($field);

@@ -11,5 +11,5 @@ namespace X937\Writer;
  */
 interface WriterInterface {
     public function writeRecord(\X937\Record\RecordInterface $record);
-    public function writeAll(\X937\X937File2 $file);
+    public function writeAll(\X937\File $file);
 }

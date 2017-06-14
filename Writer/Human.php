@@ -53,11 +53,11 @@ class Human extends AbstractWriter
          * @todo Simply this logic, should be able to do it with one if.
          */
         if ($this->options[self::OPTION_OMIT_BLANKS] === true) {
-        if (($fieldOutputArray['value'] !== '')) {
-            $outputArray[] = implode(' ', $fieldOutputArray);
-        }
+            if ((trim($fieldOutputArray['value']) !== '')) {
+                $outputArray[] = implode(' ', $fieldOutputArray);
+            }
         } else {
-        $outputArray[] = implode(' ', $fieldOutputArray);
+            $outputArray[] = implode(' ', $fieldOutputArray);
         }
     }
     

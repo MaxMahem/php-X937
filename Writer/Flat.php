@@ -12,7 +12,7 @@ namespace X937\Writer;
  */
 class Flat extends AbstractWriter
 {
-    public function writeRecord(x937\Record\Record $record) {    
+    public function writeRecord(\X937\Record\RecordInterface $record) {    
     $output = '';
     
     foreach ($record as $field) {
