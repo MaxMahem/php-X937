@@ -190,15 +190,16 @@ class Field
                 $validationResult = $this->validator->validate($value);
                 if ($validationResult) {
                     $this->value = $value;
-                    return true;
                 } else {
                     return false;
                 }
                 break;
             default:
                 $this->value = $value;
-                return true;
         }
+        
+        $this->fieldTemplate[self::PROP_LENGTH] = strlen($value);
+        return true;
     }
 
     // validate
@@ -235,7 +236,7 @@ class Field
                 if ($this->fieldTemplate[self::PROP_TYPE] === self::TYPE_BINARY) {
                     return $this->value;
                 } else {
-                    retrun \X937\Util::a2e($this->value);
+                    return \X937\Util::a2e($this->value);
                 }
             default:
                 throw new \InvalidArgumentException("getValue called with invalid data type, $dataType");

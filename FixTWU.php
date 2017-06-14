@@ -1,9 +1,8 @@
 <?php
 
-require_once 'File.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Writer' .  DIRECTORY_SEPARATOR . 'Factory.php';
-
 // Program expect to get an input path, and an output path.
+
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $inputDirectory  = new DirectoryIterator($argv[0]);
 $outputDirectory = $argv[1];

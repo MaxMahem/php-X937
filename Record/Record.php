@@ -110,6 +110,9 @@ class Record implements \X937\Record\RecordInterface {
             if(isset($fieldTemplate[Field::PROP_VARIABLELENGTH])) {
                 $lengthVariable = $fieldTemplate[Field::PROP_VARIABLELENGTH];
                 $fieldSize = $keyArray[$lengthVariable];
+                
+                // need to increase the default record size by the field length.
+                $this->recordTemplate[self::PROP_LENGTH] += $fieldSize;
             }
             
             $rawValue = substr($data, $fieldPosition, $fieldSize);
@@ -201,7 +204,7 @@ class Record implements \X937\Record\RecordInterface {
     public function getData(string $dataType = \X937\Util::DATA_ASCII): string {
         $data = '';
         foreach ($this->fields as $field) {
-            $data .= $field->getValue();
+            $data .= $field->getValue($dataType);
         }
         
         return $data;

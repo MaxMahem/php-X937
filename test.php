@@ -10,18 +10,19 @@ $filename    = '..\human.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_STUB;
 $writerHuman = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
 $writerHuman->setOptionOmitBlanks(true);
-$writerHuman->writeAll($file);
+// $writerHuman->writeAll($file);
 
 $fileFormat  = X937\Writer\Factory::FORMAT_FILE_FLAT;
 $filename    = '..\flat.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_NONE;
 $writerFlat  = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
-$writerFlat->writeAll($file);
+// $writerFlat->writeAll($file);
 
-$writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, 'C:\PHP-Projects\x937\new4.X937');
+$writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, '..\new4.X937');
 
 $count = 0;
 foreach($file as $record) {
+
     if ($record->type == '25') {
         $onusField = $record['6'];
         $onusValue = $onusField->getValue();
