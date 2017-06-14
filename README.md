@@ -4,24 +4,16 @@ A php based X937 file library.
 
 Features
 --------
-* Able to read and parse all record types of the  X937-2003.
-  * ASCII and EBCDIC file support.
+* Able to parse 'arbitrary' variations on the X937 specification, so long as it is provided a proper XML specification file.
+* Supports both ASCII and EBCDIC information, with translation between the two.
 * Rudimentary validation of file values according to spec.
-* Translation of some Predefined Field values (~50% coverage).
 * Object Oriented, Iterator based Access.
 * Sample Human readable writer.
 * Sample ASCII writer.
-* Sample Image writer.
-* Sample XML writer
+* Able to perform modifications to records.
 
 To Do
 -----
-* File Writing Support
-  * Ability to Generate Dummy Record
 * Perform automated IQA on image files.
-* Increased coverage of fields with predefined values (~50% coverage, 114/272).
 * Cash Letter, Bundle, and Check sub-types (composite of X937File probably)
-* More Iterator options.
 * Indexed File Option.
-* UCD Support
-* X100 Support
