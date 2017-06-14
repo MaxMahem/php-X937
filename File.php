@@ -60,7 +60,7 @@ class File implements \Iterator {
      * @param string $filename the path to the X937File
      * @throws InvalidArgumentException
      */
-    public function __construct(string $filename) {
+    public function __construct(string $filename, string $specFilename = 'Specification.xml') {
         // input validation        
         // check for existance of our file
         if (!file_exists($filename)) {
@@ -77,7 +77,7 @@ class File implements \Iterator {
         $this->dataType = $this->readFileDataType();
 
         // build our factory
-        $this->recordFactory = new \X937\Record\Factory(__DIR__ . DIRECTORY_SEPARATOR . 'record' . DIRECTORY_SEPARATOR . 'Specification.xml');
+        $this->recordFactory = new \X937\Record\Factory($specFilename);
 
         // pull the first record, this should always be the file header record.
         $this->fileHeaderRecord = $this->current();

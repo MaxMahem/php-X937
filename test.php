@@ -10,13 +10,13 @@ $filename    = '..\human.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_STUB;
 $writerHuman = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
 $writerHuman->setOptionOmitBlanks(true);
-// $writerHuman->writeAll($file);
+$writerHuman->writeAll($file);
 
 $fileFormat  = X937\Writer\Factory::FORMAT_FILE_FLAT;
 $filename    = '..\flat.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_NONE;
 $writerFlat  = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
-// $writerFlat->writeAll($file);
+$writerFlat->writeAll($file);
 
 $writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, '..\new4.X937');
 
@@ -27,11 +27,16 @@ foreach($file as $record) {
         $onusField = $record['6'];
         $onusValue = $onusField->getValue();
         
+        // we want to catch all records ending with /### which may be suspect.
         if (preg_match('/\/[0-9]{1,3}$/', $onusValue)) {
             echo "'$onusValue' BOGUS";
             
             $onusNoSpace = str_replace(' ', '', $onusValue);
             
+            // it's possible that the onus could have more than 1 onus symbol, 
+            // in which case we wan't the *last* section of it. This does that.
+            // the last part we will call the 'check number' and the first part
+            // the account number.
             // split the string into an array at the /
             $onusExploded = explode('/', $onusNoSpace);
             // we want the last part which we pop off the array.
@@ -46,12 +51,12 @@ foreach($file as $record) {
             }
             
             // if the first part of the account number matches the check number,
-            // delete it and continue.
+            // delete it.
             if (preg_match("/^$onusCheckNum/", $onusAccountNum)) {
                 echo ' - ' . "deleting checknum from start";
                 $onusAccountNum = preg_replace("/^$onusCheckNum/", '', $onusAccountNum);
                 
-                // pad the number out to 4 digits.
+                // and pad the number out to 4 digits.
                 $onusCheckNum = str_pad($onusCheckNum, 4, '0', STR_PAD_LEFT);
             } else {
                 // check number is suspect, nuke it?
@@ -59,9 +64,9 @@ foreach($file as $record) {
                 $onusCheckNum = '';
             }
             
-            // glue back together and pad.
+            // glue back together and pad out to field length
             $onusGlued = $onusAccountNum . '/' . $onusCheckNum;
-            $onusPadded = str_pad($onusGlued, 20, ' ', STR_PAD_LEFT);
+            $onusPadded = str_pad($onusGlued, $onusField->length, ' ', STR_PAD_LEFT);
             
             $onusDataLength = strlen($onusPadded);
             
@@ -76,10 +81,9 @@ foreach($file as $record) {
         }        
     }
     
+    // write the file with our changes.
     $writerX937->writeRecord($record);
-    
-    
-//    if ($count > 100) { break; }
+
     $count++;
 }
 

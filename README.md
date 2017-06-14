@@ -17,3 +17,7 @@ To Do
 * Perform automated IQA on image files.
 * Cash Letter, Bundle, and Check sub-types (composite of X937File probably)
 * Indexed File Option.
+* Better handling of decoration and validation options
+* Add query methods?
+
+Check test.php for example usage.
