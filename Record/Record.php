@@ -11,7 +11,7 @@ use X937\Fields\Field;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley
  */
-class Record implements \X937\Record\RecordInterface {
+class Record extends \X937\Container implements \X937\Record\RecordInterface {
     /**
      * Contains all the field in the record.
      * @var SplFixedArray
@@ -24,7 +24,7 @@ class Record implements \X937\Record\RecordInterface {
      */
     protected $fieldsRef;
     
-    // record properties names (leaf)
+    // record properties names (leaf, parsed)
     const PROP_NAME           = 'name';
     const PROP_TYPE           = 'type';
     const PROP_USAGE          = 'usage';
@@ -35,9 +35,12 @@ class Record implements \X937\Record\RecordInterface {
     
     // record properties names (branch)
     const PROP_FIELDS         = 'fields';
+    
+    // record properties name (infered)
+    const PROP_VARIABLE       = 'variable';
 
     // record properties
-    const LEAF_PROPERTIES = [
+    const PARSED_PROPERTIES = [
         self::PROP_NAME,
         self::PROP_TYPE,
         self::PROP_USAGE,
@@ -47,9 +50,7 @@ class Record implements \X937\Record\RecordInterface {
         self::PROP_FIELDCOUNT,
     ];
     
-    const PROPERTIES = self::LEAF_PROPERTIES + [self::PROP_FIELDS];
-    
-    protected $recordTemplate;
+    const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_FIELDS, self::PROP_VARIABLE];
 
     /**
      * Creates a X937Record. 
@@ -57,10 +58,10 @@ class Record implements \X937\Record\RecordInterface {
      * @param array $recordTemplate a template with the 'bones' of the record.
      */
     public function __construct(array $recordTemplate) {
-        $this->recordTemplate = $recordTemplate;
+        $this->template = $recordTemplate;
         
         // build the SplFixedArray that will hold the fields
-        $fieldCount = $this->recordTemplate['fieldCount'];
+        $fieldCount = $this->template[self::PROP_FIELDCOUNT];
         $this->fields = new \SplFixedArray($fieldCount);
         
         // create the records fields
@@ -74,7 +75,7 @@ class Record implements \X937\Record\RecordInterface {
             
             // since objects are passed by reference, both indexes point to the same object
             $this->fieldsRef[$fieldName] = $this->fields[$fieldIndex];
-        }        
+        }
     }
     
     public function parse(string $data, string $dataType = X937\Util::DATA_EBCDIC): bool {
@@ -112,7 +113,7 @@ class Record implements \X937\Record\RecordInterface {
                 $fieldSize = $keyArray[$lengthVariable];
                 
                 // need to increase the default record size by the field length.
-                $this->recordTemplate[self::PROP_LENGTH] += $fieldSize;
+                $this->template[self::PROP_LENGTH] += $fieldSize;
             }
             
             $rawValue = substr($data, $fieldPosition, $fieldSize);
@@ -138,15 +139,6 @@ class Record implements \X937\Record\RecordInterface {
         return true;
     }
     
-    public function __get($name) {
-        if (isset($this->recordTemplate[$name])) {
-            return $this->recordTemplate[$name];
-        } else {
-            trigger_error("Attempted to get property $name which is undefined.");
-            return null;
-        }
-    }
-    
     /**
      * Performs internal sanity checking on the internally generated RecordTempalte
      * to see if it violates constraints of field count, length, and overlap.
@@ -155,7 +147,8 @@ class Record implements \X937\Record\RecordInterface {
      * @throws \InvalidArgumentException If the recordTemplate doesn't validate.
      */
     public static function validateTemplate(array $recordArray): bool {
-        $recordType = $recordArray[self::PROP_TYPE];
+        $recordType     = $recordArray[self::PROP_TYPE];
+        $recordVariable = $recordArray[self::PROP_VARIABLE];
 
         // validate each field
         $currentPos = $idStart = 1;
@@ -178,6 +171,11 @@ class Record implements \X937\Record\RecordInterface {
             $currentPos = $end;
             $idEnd = $idStart;
             $idStart++;
+            
+            // check if our field is variable and the record is not.
+            if (($recordVariable == false) && ($fieldArray[Field::PROP_VARIABLE] == true)) {
+                throw new \InvalidArgumentException("Record type $recordType has a variable field $fieldOrder but the record is not infered variable.");
+            }
         }
 
         // validate record length and count
@@ -196,11 +194,7 @@ class Record implements \X937\Record\RecordInterface {
         //if we get here, everything is great.
         return true;
     }
-    
-    public function __isset($name) {
-        return isset($this->recordTemplate[$name]);
-    }
-    
+       
     public function getData(string $dataType = \X937\Util::DATA_ASCII): string {
         $data = '';
         foreach ($this->fields as $field) {
@@ -253,32 +247,28 @@ class Record implements \X937\Record\RecordInterface {
         return null;
     }
     
-    public function validate() {
-        foreach ($this->fields as $field) {
-            $field->validate();
+    public function validate(): string {
+        $error = '';
+        $fieldErrors = array();
+        
+        foreach ($this->fields as $order => $field) {
+            $fieldValidation = $field->validate();
+            if(!empty($fieldValidation)) {
+                $fieldErrors[] = $fieldValidation;
+            }
         }
         
         /**
          * @todo Do record level validation.
          */
-    }
-
-    /**
-     * Gets the field according to its field number (1 indexed)
-     * @param int $fieldNumber the number of the field (1 indexed)
-     * @return field the field requested
-     */
-    public function getFieldByNumber($fieldNumber) { return $this->fields[$fieldNumber-1]; }
-    
-    /**
-     * Returns the field named.
-     * @todo more elegant handling of out of range fields.
-     * @param string $fieldName
-     * @return \X937\Fields\Field the field named.
-     */
-    public function getFieldByName($fieldName) 
-    {
-        $fieldNumber = $this->fieldsRef[$fieldName];
-        return $this->fields[$fieldNumber];
+        
+        if (!empty($fieldErrors)) {
+            $name = $this->template[self::PROP_NAME];
+            $errorBase  = "Error validating Record $name:";
+            $errorField = implode(PHP_EOL . '  ', $fieldErrors);
+            $error      = $errorBase . PHP_EOL . '  ' . $errorField . PHP_EOL;
+        }
+        
+        return $error;
     }
 }

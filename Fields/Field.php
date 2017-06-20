@@ -1,38 +1,15 @@
 <?php namespace X937\Fields;
 
-use X937\Validator as Validator;
+use Respect\Validation\Validator;
+Validator::with('X937\\Validation\\Rules');
 
 /**
  * Contains a specific X937Field
  *
  * @author astanley
  */
-class Field
-{
-    // Usage Types
-    const USAGE_CONDITIONAL = 'C';
-    const USAGE_MANDATORY   = 'M';
-    const USAGE_OPTIONAL    = 'O';
-    const USAGE_FORBIDDEN   = 'F';
-    
-    const USAGES = array(
-        self::USAGE_CONDITIONAL => 'Conditional',
-        self::USAGE_MANDATORY   => 'Mandatory',
-        self::USAGE_OPTIONAL    => 'Optional',
-        self::USAGE_FORBIDDEN   => 'Forbidden',
-    );
-    
-    // Validation Types
-    const VALIDATION_REQUIRED = 'Required';
-    const VALIDATION_PRESENT  = 'Required if Present';
-    const VALIDATION_NONE     = 'None';
-    
-    const VALIDATION = array(
-        self::VALIDATION_REQUIRED => 'Required',
-        self::VALIDATION_PRESENT  => 'Required if Present',
-        self::VALIDATION_NONE     => 'None',
-    );
-    
+class Field extends \X937\Container
+{   
     // field types
     const TYPE_ALPHABETIC                  = 'A';
     const TYPE_NUMERIC                     = 'N';
@@ -74,10 +51,11 @@ class Field
         self::SUBTYPE_AMOUNT        => 'Amount',
     );
     
-    protected $fieldTemplate;
+    protected $template;
     
     // field properties names (leaf)
     const PROP_NAME             = 'name';
+    const PROP_ORDER            = 'order';
     const PROP_TYPE             = 'type';
     const PROP_SUBTYPE          = 'subtype';
     const PROP_USAGE            = 'usage';
@@ -90,9 +68,12 @@ class Field
     
     // field properties names (branch)
     const PROP_DICTONARY        = 'dictonary';
+    
+    // field properties names (infered)
+    const PROP_VARIABLE         = 'variable';
 
     // field property array
-    const LEAF_PROPERTIES = [
+    const PARSED_PROPERTIES = [
         self::PROP_NAME,
         self::PROP_TYPE,
         self::PROP_SUBTYPE,
@@ -105,7 +86,7 @@ class Field
         self::PROP_VALUEKEY,
     ];
     
-    const PROPERTIES = self::LEAF_PROPERTIES + [self::PROP_DICTONARY];
+    const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_DICTONARY, self::PROP_VARIABLE, self::PROP_ORDER];
     
     /**
      * Field Validator used to validate the field.
@@ -122,7 +103,7 @@ class Field
     protected $value;
     
     public function __construct(array $fieldTemplate) {
-        $this->fieldTemplate = $fieldTemplate;
+        $this->template = $fieldTemplate;
         
         $this->addValidators();
     }
@@ -132,44 +113,50 @@ class Field
      */
     protected function addValidators() {
         // initialize validator
-        $this->validator = new Validator\Validator();
+        $this->validator = new Validator;
 
         // add validator based on usage.
-        if ($this->fieldTemplate['usage'] === Field::USAGE_MANDATORY) {
-            $this->validator->addValidator(new Validator\ValidatorUsageManditory());
+        if ($this->template[Field::PROP_USAGE] === Field::USAGE_MANDATORY) {
+            $this->validator->addRule(Validator::buildRule('customNotBlank'));
         }
 
         // add validator based on size.
-        $this->validator->addValidator(new Validator\ValidatorSize((int) $this->fieldTemplate['length']));
+        $length = (int) $this->template[Field::PROP_LENGTH];
+        $this->validator->addRule(Validator::buildRule('length', array($length, $length)));
 
         // add validator based on type.
-        switch ($this->fieldTemplate['type']) {
+        switch ($this->template[Field::PROP_TYPE]) {
             case Field::TYPE_ALPHABETIC:
-                $this->validator->addValidator(new Validator\ValidatorTypeAlphabetic());
+                $this->validator->addRule(Validator::buildRule('alpha'));
                 break;
             case Field::TYPE_NUMERIC:
-                $this->validator->addValidator(new Validator\ValidatorTypeNumeric());
+                $this->validator->addRule(Validator::buildRule('numeric'));
                 break;
             case Field::TYPE_BLANK:
-                $this->validator->addValidator(new Validator\ValidatorTypeBlank());
                 break;
             case Field::TYPE_SPECIAL:
                 // insert validators
                 break;
             case Field::TYPE_ALPHAMERIC:
-                $this->validator->addValidator(new Validator\ValidatorTypeAlphameric());
+                $this->validator->addRule(Validator::buildRule('alnum'));
                 break;
-            /**
-             * @todo add rest of validators.
-             */
+            case Field::TYPE_NUMERICBLANK:
+                $this->validator->addRule(Validator::buildRule('digit'));
+                break;
+            case Field::TYPE_NUMERICBLANKSPECIALMICR:
+                $this->validator->addRule(Validator::buildRule('digit', array('-*')));
+                break;
+            case Field::TYPE_NUMERICBLANKSPECIALMICR:
+                $this->validator->addRule(Validator::buildRule('digit', array('-*/')));
+                break;
             default:
                 // possibly throw error here?
                 break;
         }
         
         // add validator based on subtype.
-        if (isset($this->fieldTemplate['subtype'])) {
-            switch ($this->fieldTemplate['subtype']) {
+        if (isset($this->template['subtype'])) {
+            switch ($this->template['subtype']) {
                 case Field::SUBTYPE_ROUTINGNUMBER:
                     /**
                      * @todo handle it.
@@ -182,45 +169,45 @@ class Field
         }
     }
     
-    public function set(string $value): bool {
-        switch ($this->fieldTemplate['validation']) {
-            case self::VALIDATION_PRESENT:
-            case self::VALIDATION_REQUIRED:
-                // deliberate fall through
-                $validationResult = $this->validator->validate($value);
-                if ($validationResult) {
-                    $this->value = $value;
-                } else {
-                    return false;
-                }
-                break;
-            default:
-                $this->value = $value;
+    public function set(string $value) {
+        // if our length is variable we need to reset our field length when we set
+        if ($this->template[self::PROP_VARIABLE]) {        
+            $this->template[self::PROP_LENGTH] = strlen($value);
+            $this->addValidators(); // to re-add the length validator.
         }
         
-        $this->fieldTemplate[self::PROP_LENGTH] = strlen($value);
-        return true;
+        $this->value = $value;
     }
 
-    // validate
-    public function validate() {
-        return $this->validator->validate($this->value);
-    }
-
-    // getters
-    public function getTemplate()   { return $this->fieldTemplate; }
-    
-    public function __get($name) {
-        if (isset($this->fieldTemplate[$name])) {
-            return $this->fieldTemplate[$name];
-        } else {
-            trigger_error("Attempted to get property $name which is undefined.");
-            return null;
+    /**
+     * Validates our items and returns an array of our errors.
+     * 
+     * @return array Errors.
+     */
+    public function validate(): string {
+        $error = '';
+        switch ($this->template[self::PROP_VALIDATION]) {
+            case self::VALIDATION_PRESENT:
+            case self::VALIDATION_REQUIRED:                
+                // deliberate fall through
+                try {
+                    $this->validator->assert($this->value);
+                } catch (\Respect\Validation\Exceptions\ValidationException $exception) {
+                    $name  = $this->template[self::PROP_NAME];
+                    $order = $this->template[self::PROP_ORDER];
+                    $value = $this->value;
+                    
+                    $errorBase  = "Field $order $name:";
+                    $errorRules = implode(' and ', $exception->getMessages());
+                    $error      = $errorBase . ' ' . $errorRules;
+                }
+            default:
+                // do nothing;
+                break;
         }
-    }
-    
-    public function __isset($name) {
-        return isset($this->recordTemplate[$name]);
+        
+        // if we get here, it's all gravy.
+        return $error;
     }
     
     /**
@@ -233,7 +220,7 @@ class Field
             case \X937\Util::DATA_ASCII:
                 return $this->value;
             case \X937\Util::DATA_EBCDIC:
-                if ($this->fieldTemplate[self::PROP_TYPE] === self::TYPE_BINARY) {
+                if ($this->template[self::PROP_TYPE] === self::TYPE_BINARY) {
                     return $this->value;
                 } else {
                     return \X937\Util::a2e($this->value);

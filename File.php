@@ -102,22 +102,20 @@ class File implements \Iterator {
         $this->rewind();
     }
 
-    public function getFileInfo()        { return $this->fileInfo; }
-
     public function getFileTotalAmount() { 
-    return $this->fileControlRecord->getFieldByNumber(5)->getValue()/100;
+        return $this->fileControlRecord[5]->getValue()/100;
     }
     
     public function getFileItemCount(){ 
-    return $this->fileControlRecord->getFieldByNumber(4)->getValue();
+        return $this->fileControlRecord[4]->getValue();
     }
     
     /**
      * Rewind to the first record.
      */
     public function rewind() {
-    // rewind file pointer.
-    rewind($this->fileHandle);
+        // rewind file pointer.
+        rewind($this->fileHandle);
     }
     
     /**
@@ -127,7 +125,7 @@ class File implements \Iterator {
      * @return int Key for the record, it's position in the file (in bytes)
      */
     public function key(): int {
-    return ftell($this->fileHandle);
+        return ftell($this->fileHandle);
     }
     
     /**
@@ -149,11 +147,11 @@ class File implements \Iterator {
      * Advance to the next record in the file.
      */
     public function next() {
-    // get the current record length
-    $currentRecordLength = $this->readRecordLength();
-    
-    // seek to the next record position
-    fseek($this->fileHandle, $currentRecordLength + 4, SEEK_CUR);
+        // get the current record length
+        $currentRecordLength = $this->readRecordLength();
+
+        // seek to the next record position
+        fseek($this->fileHandle, $currentRecordLength + 4, SEEK_CUR);
     }
     
     /**
@@ -161,16 +159,16 @@ class File implements \Iterator {
      * @return bool True if end of record set. False if not.
      */
     public function valid(): bool {
-    // if we are at the last record our file handle should point to the eof.
-    // feof will return true in this case, we wan't the opposite.
-    $currentPosition = ftell($this->fileHandle);
-    $size            = $this->fileInfo->getSize();
-    
-    if ($currentPosition >= $size) {
-        return false;
-    } else {
-        return true;
-    }
+        // if we are at the last record our file handle should point to the eof.
+        // feof will return true in this case, we wan't the opposite.
+        $currentPosition = ftell($this->fileHandle);
+        $size            = $this->fileInfo->getSize();
+
+        if ($currentPosition >= $size) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function __destruct() {

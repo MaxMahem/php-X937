@@ -3,5 +3,8 @@
         "psr-4" : {
             "X937\\" : ""
         }
+    },
+    "require": {
+        "respect/validation": "^1.1"
     }
 }

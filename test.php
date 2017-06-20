@@ -10,20 +10,30 @@ $filename    = '..\human.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_STUB;
 $writerHuman = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
 $writerHuman->setOptionOmitBlanks(true);
-$writerHuman->writeAll($file);
+// $writerHuman->writeAll($file);
 
 $fileFormat  = X937\Writer\Factory::FORMAT_FILE_FLAT;
 $filename    = '..\flat.txt';
 $imageFormat = X937\Writer\Factory::FORMAT_BINARY_NONE;
 $writerFlat  = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
-$writerFlat->writeAll($file);
+// $writerFlat->writeAll($file);
 
 $writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, '..\new4.X937');
 
 $count = 0;
 foreach($file as $record) {
-
+    $result = $record->validate();   
+    echo $result;
+        
     if ($record->type == '25') {
+        $record[4]->set('NOTANUMBERDINGUS');
+        
+//        try {
+//            $record[4]->validate();
+//        } catch (\Exception $exception) {
+//            trigger_error(implode(PHP_EOL, $exception->getMessages()));
+//        }
+        
         $onusField = $record['6'];
         $onusValue = $onusField->getValue();
         
@@ -82,7 +92,7 @@ foreach($file as $record) {
     }
     
     // write the file with our changes.
-    $writerX937->writeRecord($record);
+    // $writerX937->writeRecord($record);
 
     $count++;
 }

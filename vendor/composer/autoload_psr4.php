@@ -7,4 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'X937\\' => array($baseDir . '/'),
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Respect\\Validation\\' => array($vendorDir . '/respect/validation/library'),
 );

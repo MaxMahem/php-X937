@@ -301,9 +301,9 @@
             <field order="14">
                 <name>Returns Indicator</name>
                 <usage>M</usage>
-                <type>AN</type>
+                <type>A</type>
                 <dictonary comprehensive="false"/>
-                <validation>R</validation>
+                <validation>P</validation>
                 <position>78</position>
                 <length>1</length>
             </field>
@@ -509,9 +509,9 @@
         </field>
         <field order="11">
           <name>MICR Valid Indicator</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
+          <usage>C</usage>
+          <type>NB</type>
+          <validation>P</validation>
           <position>75</position>
           <length>1</length>
         </field>
@@ -533,9 +533,9 @@
         </field>
         <field order="14">
           <name>Correction Indicator</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
+          <usage>C</usage>
+          <type>NB</type>
+          <validation>P</validation>
           <position>79</position>
           <length>1</length>
         </field>
