@@ -8,19 +8,19 @@ namespace X937\Validation\Exceptions;
 
 use Respect\Validation\Exceptions;
 
-class CustomNotBlankException extends Exceptions\ValidationException
+class RequiredException extends Exceptions\ValidationException
 {
     const STANDARD = 0;
     const NAMED = 1;
 
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
-            self::STANDARD => 'The value must not be blank',
-            self::NAMED => '{{name}} must not be blank',
+            self::STANDARD => 'The value must have a value',
+            self::NAMED => '{{name}} must have a value',
         ],
         self::MODE_NEGATIVE => [
-            self::STANDARD => 'The value must be blank',
-            self::NAMED => '{{name}} must be blank',
+            self::STANDARD => 'The value must not have a value',
+            self::NAMED => '{{name}} must not have a value',
         ],
     ];
 

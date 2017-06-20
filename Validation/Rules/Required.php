@@ -11,7 +11,7 @@ use stdClass;
  *
  * @author astanley
  */
-class customNotBlank extends Rules\AbstractRule
+class Required extends Rules\AbstractRule
 {
     public function validate($input) {
         // 0's are valid, so we return false if we get a numeric value.

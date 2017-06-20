@@ -26,7 +26,8 @@ foreach($file as $record) {
     echo $result;
         
     if ($record->type == '25') {
-        $record[4]->set('NOTANUMBERDINGUS');
+//        $record[4]->set('NOTANUME');
+//        echo $record->validate();
         
 //        try {
 //            $record[4]->validate();

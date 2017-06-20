@@ -63,7 +63,7 @@ abstract class AbstractWriter implements WriterInterface {
     return array();
     }
 
-    abstract public function writeRecord(Record\RecordInterface $record);
+    abstract public function writeRecord(\X937\Record\Record $record);
     
     /**
      * Shortcut function, write's all records in the file.

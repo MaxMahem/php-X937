@@ -11,7 +11,7 @@ use X937\Fields\Field;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley
  */
-class Record extends \X937\Container implements \X937\Record\RecordInterface {
+class Record extends \X937\Container implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * Contains all the field in the record.
      * @var SplFixedArray
@@ -263,8 +263,9 @@ class Record extends \X937\Container implements \X937\Record\RecordInterface {
          */
         
         if (!empty($fieldErrors)) {
-            $name = $this->template[self::PROP_NAME];
-            $errorBase  = "Error validating Record $name:";
+            $name = $this->name;
+            $type = $this->type;
+            $errorBase  = "Error validating Record Type $type: $name:";
             $errorField = implode(PHP_EOL . '  ', $fieldErrors);
             $error      = $errorBase . PHP_EOL . '  ' . $errorField . PHP_EOL;
         }

@@ -10,6 +10,6 @@ namespace X937\Writer;
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
 interface WriterInterface {
-    public function writeRecord(\X937\Record\RecordInterface $record);
+    public function writeRecord(\X937\Record\Record $record);
     public function writeAll(\X937\File $file);
 }

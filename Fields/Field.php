@@ -117,40 +117,43 @@ class Field extends \X937\Container
 
         // add validator based on usage.
         if ($this->template[Field::PROP_USAGE] === Field::USAGE_MANDATORY) {
-            $this->validator->addRule(Validator::buildRule('customNotBlank'));
+            $this->validator->addRule(Validator::required());
         }
 
-        // add validator based on size.
-        $length = (int) $this->template[Field::PROP_LENGTH];
-        $this->validator->addRule(Validator::buildRule('length', array($length, $length)));
-
         // add validator based on type.
-        switch ($this->template[Field::PROP_TYPE]) {
+        $type = $this->type;
+        switch ($type) {
             case Field::TYPE_ALPHABETIC:
-                $this->validator->addRule(Validator::buildRule('alpha'));
+                $this->validator->addRule(Validator::alpha());
                 break;
             case Field::TYPE_NUMERIC:
-                $this->validator->addRule(Validator::buildRule('numeric'));
+                $this->validator->addRule(Validator::numeric());
                 break;
             case Field::TYPE_BLANK:
+                $this->validator->addRule(Validator::not(Validator::required()));
                 break;
             case Field::TYPE_SPECIAL:
                 // insert validators
                 break;
             case Field::TYPE_ALPHAMERIC:
-                $this->validator->addRule(Validator::buildRule('alnum'));
+                $this->validator->addRule(Validator::alnum());
                 break;
             case Field::TYPE_NUMERICBLANK:
-                $this->validator->addRule(Validator::buildRule('digit'));
+                $this->validator->addRule(Validator::digit());
                 break;
             case Field::TYPE_NUMERICBLANKSPECIALMICR:
-                $this->validator->addRule(Validator::buildRule('digit', array('-*')));
+                $this->validator->addRule(Validator::digit('-*'));
                 break;
-            case Field::TYPE_NUMERICBLANKSPECIALMICR:
-                $this->validator->addRule(Validator::buildRule('digit', array('-*/')));
+            case Field::TYPE_NUMERICBLANKSPECIALMICRONUS:
+                $this->validator->addRule(Validator::digit('-*/'));
+                break;
+            case Field::TYPE_BINARY:
+            case Field::TYPE_ALPHAMERICSPECIAL:
+                // delebriate fall through
+                // no validation is possible on these fields, so do nothing.
                 break;
             default:
-                // possibly throw error here?
+                trigger_error("Field type $type is unhandled by validation.");
                 break;
         }
         
@@ -170,10 +173,17 @@ class Field extends \X937\Container
     }
     
     public function set(string $value) {
+        $valueLen = strlen($value);
+        
         // if our length is variable we need to reset our field length when we set
         if ($this->template[self::PROP_VARIABLE]) {        
-            $this->template[self::PROP_LENGTH] = strlen($value);
-            $this->addValidators(); // to re-add the length validator.
+            $this->template[self::PROP_LENGTH] = $valueLen;
+        } else {
+            // check to see if our variable exceeds our field length. If so, exception.
+            $fixedLen = $this->length;
+            if($valueLen != $fixedLen) {
+                throw new \InvalidArgumentException("Value '$value' length of $valueLen does not match the field length of $fixedLen.");
+            }
         }
         
         $this->value = $value;
@@ -199,7 +209,7 @@ class Field extends \X937\Container
                     
                     $errorBase  = "Field $order $name:";
                     $errorRules = implode(' and ', $exception->getMessages());
-                    $error      = $errorBase . ' ' . $errorRules;
+                    $error      = $errorBase . ' ' . $errorRules . '.';
                 }
             default:
                 // do nothing;

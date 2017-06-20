@@ -32,6 +32,8 @@ abstract class Container {
         self::VALIDATION_NONE     => 'None',
     );
     
+    const PROPERTIES = array();
+    
     abstract function validate(): string;
     
     protected $template;

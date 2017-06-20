@@ -142,7 +142,7 @@
             <field order="11">File ID Modifier
                 <name>File ID Modifier</name>
                 <usage>C</usage>
-                <type>ANU</type>
+                <type>AN</type>
                 <validation>R</validation>
                 <position>73</position>
                 <length>1</length>
@@ -180,7 +180,7 @@
     </record>
     
     <record type="10">Cash Letter Header Record
-        <name>Cash Letter Header Recor</name>
+        <name>Cash Letter Header Record</name>
         <type>10</type>
         <usage>M</usage>
         <validation>R</validation>
@@ -319,7 +319,7 @@
             <field order="16">
                 <name>Reserved</name>
                 <usage>F</usage>
-                <type>Blank</type>
+                <type>B</type>
                 <validation>N</validation>
                 <position>80</position>
                 <length>1</length>
@@ -395,7 +395,7 @@
         <field order="9">
           <name>Cycle Number</name>
           <usage>O</usage>
-          <type>Blank</type>
+          <type>B</type>
           <validation>N</validation>
           <position>53</position>
           <length>2</length>
@@ -419,7 +419,7 @@
         <field order="12">
           <name>Reserved</name>
           <usage>F</usage>
-          <type>Blank</type>
+          <type>B</type>
           <validation>N</validation>
           <position>69</position>
           <length>12</length>
@@ -652,7 +652,7 @@
         <field order="13">
           <name>Field Reserved</name>
           <usage>C</usage>
-          <type>Blank</type>
+          <type>B</type>
           <validation>N</validation>
           <position>78</position>
           <length>3</length>
@@ -754,7 +754,7 @@
         <field order="11">
           <name>Field Reserved</name>
           <usage>C</usage>
-          <type>Blank</type>
+          <type>B</type>
           <validation>N</validation>
           <position>56</position>
           <length>15</length>
@@ -950,7 +950,7 @@
         <field order="19">
           <name>Reserved</name>
           <usage>M</usage>
-          <type>Blank</type>
+          <type>B</type>
           <validation>N</validation>
           <position>68</position>
           <length>13</length>
@@ -1490,7 +1490,7 @@
         <field order="46">
             <name>Reserved</name>
             <usage>F</usage>
-            <type>Blank</type>
+            <type>B</type>
             <validation>N</validation>
             <position>66</position>
             <length>15</length>
@@ -1552,7 +1552,7 @@
             <field order="7">
                 <name>Reserved</name>
                 <usage>C</usage>
-                <type>Blank</type>
+                <type>B</type>
                 <validation>N</validation>
                 <position>56</position>
                 <length>25</length>
@@ -1635,7 +1635,7 @@
             <field order="8">
                 <name>Reserved</name>
                 <usage>M</usage>
-                <type>Blank</type>
+                <type>B</type>
                 <validation>N</validation>
                 <position>66</position>
                 <length>15</length>

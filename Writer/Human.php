@@ -30,7 +30,7 @@ class Human extends AbstractWriter
     $this->setOption(self::OPTION_OMIT_BLANKS, (bool) $value);
     }
     
-    public function writeRecord(\X937\Record\RecordInterface $record) {
+    public function writeRecord(\X937\Record\Record $record) {
     // initilise an array used for all the output.
     $outputArray = array();
     
