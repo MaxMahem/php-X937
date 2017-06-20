@@ -24,7 +24,7 @@ $count = 0;
 foreach($file as $record) {
     $result = $record->validate();   
     echo $result;
-        
+            
     if ($record->type == '25') {
 //        $record[4]->set('NOTANUME');
 //        echo $record->validate();

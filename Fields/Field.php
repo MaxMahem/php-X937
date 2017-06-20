@@ -37,7 +37,7 @@ class Field extends \X937\Container
         self::TYPE_BINARY                      => 'Binary Data',
     );
     
-    const SUBTYPE_ROUTINGNUMBER = 'Routing Number';
+    const SUBTYPE_ROUTINGNUMBER = 'Routing';
     const SUBTYPE_DATE          = 'Date';
     const SUBTYPE_TIME          = 'Time';
     const SUBTYPE_PHONENUMBER   = 'Phone Number';
@@ -105,13 +105,6 @@ class Field extends \X937\Container
     public function __construct(array $fieldTemplate) {
         $this->template = $fieldTemplate;
         
-        $this->addValidators();
-    }
-
-    /**
-     * Adds the base Validators to the field, based on attributes we can pre-determine.
-     */
-    protected function addValidators() {
         // initialize validator
         $this->validator = new Validator;
 
@@ -158,12 +151,16 @@ class Field extends \X937\Container
         }
         
         // add validator based on subtype.
-        if (isset($this->template['subtype'])) {
-            switch ($this->template['subtype']) {
+        if (isset($this->subtype)) {
+            switch ($this->subtype) {
                 case Field::SUBTYPE_ROUTINGNUMBER:
-                    /**
-                     * @todo handle it.
-                     */
+                    $this->validator->addRule(Validator::routingNumber());
+                    break;
+                case Field::SUBTYPE_DATE:
+                    $this->validator->addRule(Validator::date('Ymd'));
+                    break;
+                case Field::SUBTYPE_TIME:
+                    $this->validator->addRule(Validator::date('hm'));
                     break;
                 default:
                     // do nothing
