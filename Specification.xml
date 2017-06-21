@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <records
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    xsi:noNamespaceSchemaLocation='X937Specification.xsd'>
+    xsi:noNamespaceSchemaLocation='Record\X937Specification.xsd'>
     
     <dictonaries>
         <dictonary comprehensive="true" id="dictRecordType">
@@ -47,6 +47,16 @@
             <value key="U">Unusable Image</value>
             <value key="V">Image Fails Security Check</value>
             <value key="W">Cannot Determine Amount</value>    
+        </dictonary>
+        <dictonary id="dictImagingTest" comprehensive="true">
+            <value key="0">Test not done</value>
+            <value key="1">Condition Present</value>
+            <value key="2">Condition not present</value>
+        </dictonary>
+        <dictonary id="dictImageUseability" comprehensive="true">
+            <value key="0">Test not done</value>
+            <value key="1">Area unusable</value>
+            <value key="2">Area usable</value>
         </dictonary>
     </dictonaries>
     
@@ -440,7 +450,8 @@
       </fields>
     </record>
     
-    <record type="25">Check Detail Record<name>Check Detail Record</name>
+    <record type="25">Check Detail Record
+        <name>Check Detail Record</name>
         <type>25</type>
         <usage>M</usage>
         <validation>R</validation>
@@ -600,7 +611,7 @@
         </field>
         <field order="5">
           <name>BOFD Item Sequence Number</name>
-          <usage>M</usage>
+          <usage>C</usage>
           <type>NB</type>
           <validation>P</validation>
           <position>21</position>
@@ -852,7 +863,7 @@
         <field order="7">
           <name>Image View Data Size</name>
           <usage>C</usage>
-          <type>N</type>
+          <type>NB</type>
           <validation>P</validation>
           <position>25</position>
           <length>7</length>
@@ -1175,6 +1186,7 @@
           <name>Partial Image</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictImagingTest" />
           <validation>P</validation>
           <position>6</position>
           <length>1</length>
@@ -1183,6 +1195,7 @@
           <name>Excessive Image Skew</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictImagingTest" />
           <validation>P</validation>
           <position>7</position>
           <length>1</length>
@@ -1191,6 +1204,7 @@
           <name>Piggyback Image</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictImagingTest" />
           <validation>P</validation>
           <position>8</position>
           <length>1</length>
@@ -1199,6 +1213,7 @@
           <name>Too Light or Too Dark</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictImagingTest" />
           <validation>P</validation>
           <position>9</position>
           <length>1</length>
@@ -1207,6 +1222,7 @@
           <name>Streaks or Bands</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictImagingTest" />
           <validation>P</validation>
           <position>10</position>
           <length>1</length>
@@ -1215,6 +1231,7 @@
           <name>Below Minimum Image Size</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictImagingTest" />
           <validation>P</validation>
           <position>11</position>
           <length>1</length>
@@ -1223,6 +1240,7 @@
           <name>Exceeds Maximum Image Size</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictImagingTest" />
           <validation>P</validation>
           <position>12</position>
           <length>1</length>
@@ -1349,97 +1367,109 @@
           <length>1</length>
         </field>
         <field order="27">
-          <name>Date</name>
+          <name>Date Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>28</position>
           <length>1</length>
         </field>
         <field order="28">
-          <name>Payee</name>
+          <name>Payee Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>29</position>
           <length>1</length>
         </field>
         <field order="29">
-          <name>Convenience Amount</name>
+          <name>Convenience Amount Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>30</position>
           <length>1</length>
         </field>
         <field order="30">
-          <name>Legal Amount</name>
+          <name>Legal Amount Useability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>31</position>
           <length>1</length>
         </field>
         <field order="31">
-          <name>Signature</name>
+          <name>Signature Useability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>32</position>
           <length>1</length>
         </field>
         <field order="32">
-          <name>Payor Name and Address</name>
+          <name>Payor Name and Address Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>33</position>
           <length>1</length>
         </field>
         <field order="33">
-          <name>MICR Line</name>
+          <name>MICR Line Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>34</position>
           <length>1</length>
         </field>
         <field order="34">
-          <name>Memo Line</name>
+          <name>Memo Line Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>35</position>
           <length>1</length>
         </field>
         <field order="35">
-          <name>Payor Bank Name and Address</name>
+          <name>Payor Bank Name and Address Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>36</position>
           <length>1</length>
         </field>
         <field order="36">
-          <name>Payee Endorsement</name>
+          <name>Payee Endorsement Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>37</position>
           <length>1</length>
         </field>
         <field order="37">
-          <name>BOFD Endorsement</name>
+          <name>BOFD Endorsement Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>38</position>
           <length>1</length>
         </field>
         <field order="38">
-          <name>Reserved</name>
+          <name>Transit Endorsement Usability</name>
           <usage>O</usage>
           <type>N</type>
+          <dictonary ref="dictImageUseability" comprehensive="true" />
           <validation>P</validation>
           <position>39</position>
           <length>1</length>
@@ -1447,48 +1477,48 @@
         <field order="39">
           <name>Reserved</name>
           <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
+          <type>NB</type>
+          <validation>N</validation>
           <position>40</position>
           <length>1</length>
         </field>
         <field order="40">
           <name>Reserved</name>
           <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
+          <type>NB</type>
+          <validation>N</validation>
           <position>41</position>
           <length>1</length>
         </field>
         <field order="41">
           <name>Reserved</name>
           <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
+          <type>NB</type>
+          <validation>N</validation>
           <position>42</position>
           <length>1</length>
         </field>
         <field order="42">
           <name>Reserved</name>
           <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
+          <type>NB</type>
+          <validation>N</validation>
           <position>43</position>
           <length>1</length>
         </field>
         <field order="43">
           <name>Reserved</name>
           <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
+          <type>NB</type>
+          <validation>N</validation>
           <position>44</position>
           <length>1</length>
         </field>
         <field order="44">
           <name>Reserved</name>
           <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
+          <type>NB</type>
+          <validation>N</validation>
           <position>45</position>
           <length>1</length>
         </field>
@@ -1725,5 +1755,3 @@
         </fields>
     </record>
 </records>
-
-

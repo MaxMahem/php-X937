@@ -1,5 +1,7 @@
 <?php namespace X937\Fields;
 
+use X937\Record\Record;
+
 use Respect\Validation\Validator;
 Validator::with('X937\\Validation\\Rules');
 
@@ -40,8 +42,9 @@ class Field extends \X937\Container
     const SUBTYPE_ROUTINGNUMBER = 'Routing';
     const SUBTYPE_DATE          = 'Date';
     const SUBTYPE_TIME          = 'Time';
-    const SUBTYPE_PHONENUMBER   = 'Phone Number';
+    const SUBTYPE_PHONENUMBER   = 'Phone';
     const SUBTYPE_AMOUNT        = 'Amount';
+    const SUBTYPE_BLANK         = 'Blank';
     
     const SUBTYPES = array(
         self::SUBTYPE_ROUTINGNUMBER => 'Routing Number (with check digit)',
@@ -49,6 +52,7 @@ class Field extends \X937\Container
         self::SUBTYPE_TIME          => 'Time, HHMM',
         self::SUBTYPE_PHONENUMBER   => 'Phone Number',
         self::SUBTYPE_AMOUNT        => 'Amount',
+        self::SUBTYPE_BLANK         => 'Blank',
     );
     
     protected $template;
@@ -90,6 +94,13 @@ class Field extends \X937\Container
     const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_DICTONARY, self::PROP_VARIABLE, self::PROP_ORDER];
     
     /**
+     * A reference back to the parent record.
+     * 
+     * @var \X937\Record\Record
+     */
+    protected $parent;
+    
+    /**
      * Field Validator used to validate the field.
      * 
      * @var Validator
@@ -103,14 +114,15 @@ class Field extends \X937\Container
      */
     protected $value;
     
-    public function __construct(array $fieldTemplate) {
+    public function __construct(array $fieldTemplate, Record $parent = null) {
         $this->template = $fieldTemplate;
+        $this->parent   = $parent;
         
         // initialize validator
         $this->validator = new Validator;
 
         // add validator based on usage.
-        if ($this->template[Field::PROP_USAGE] === Field::USAGE_MANDATORY) {
+        if ($this->usage === Field::USAGE_MANDATORY) {
             $this->validator->addRule(Validator::required());
         }
 
@@ -126,9 +138,6 @@ class Field extends \X937\Container
             case Field::TYPE_BLANK:
                 $this->validator->addRule(Validator::not(Validator::required()));
                 break;
-            case Field::TYPE_SPECIAL:
-                // insert validators
-                break;
             case Field::TYPE_ALPHAMERIC:
                 $this->validator->addRule(Validator::alnum());
                 break;
@@ -141,6 +150,7 @@ class Field extends \X937\Container
             case Field::TYPE_NUMERICBLANKSPECIALMICRONUS:
                 $this->validator->addRule(Validator::digit('-*/'));
                 break;
+            case Field::TYPE_SPECIAL:
             case Field::TYPE_BINARY:
             case Field::TYPE_ALPHAMERICSPECIAL:
                 // delebriate fall through
@@ -163,8 +173,18 @@ class Field extends \X937\Container
                 case Field::SUBTYPE_TIME:
                     $this->validator->addRule(Validator::date('hm'));
                     break;
+                case Field::SUBTYPE_AMOUNT:
+                    // no aditional validation necessary
+                    break;
+                case Field::SUBTYPE_PHONENUMBER:
+                    $this->validator->addRule(Validator::phone());
+                    break;
+                case Field::SUBTYPE_BLANK:
+                    $this->validator->addRule(Validator::not(Validator::required()));
+                    break;
                 default:
-                    // do nothing
+                    $subtype = $this->subtype;
+                    trigger_error("Field subtype $subtype is unhandled by validation");
                     break;
             }
         }
@@ -176,25 +196,35 @@ class Field extends \X937\Container
         }
     }
     
-    public function set(string $value) {
+    public function set(string $value, bool $updateParent = true) {
         $valueLen = strlen($value);
         
         // if our length is variable we need to reset our field length when we set
-        if ($this->template[self::PROP_VARIABLE]) {        
+        if ($this->variable) {        
             $this->template[self::PROP_LENGTH] = $valueLen;
-        } else {
-            // check to see if our variable exceeds our field length. If so, exception.
-            $fixedLen = $this->length;
-            if($valueLen != $fixedLen) {
-                throw new \InvalidArgumentException("Value '$value' length of $valueLen does not match the field length of $fixedLen.");
+            
+            if (isset($this->parent) && $updateParent) {
+                $key = $this->variableLength;
+                $this->parent->updateAssociatedField($key, $valueLen);
             }
         }
         
-        $this->value = $value;
+        // check to see if our variable exceeds our field length. If so, exception.
+        $fixedLen = $this->length;
+        if($valueLen > $fixedLen) {
+            throw new \InvalidArgumentException("Value '$value' length of $valueLen does not match the field length of $fixedLen.");
+        }
+        
+        // length might be short, so pad accordingly.
+        $pad         = ($this->type === Field::TYPE_NUMERIC) ? '0' : ' ';
+        $valuePadded = str_pad($value, $fixedLen, $pad, STR_PAD_LEFT);
+        
+        $this->value = $valuePadded;
     }
 
     /**
-     * Validates our items and returns an array of our errors.
+     * Validates our items and returns a string of our errors. An empty string 
+     * indicates no errors.
      * 
      * @return array Errors.
      */
@@ -220,7 +250,6 @@ class Field extends \X937\Container
                 break;
         }
         
-        // if we get here, it's all gravy.
         return $error;
     }
     

@@ -3,7 +3,7 @@ $timeStart = microtime(true);
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$file = new X937\File('C:\PHP-Projects\x937\test4.X937');
+$file = new X937\File('C:\PHP-Projects\x937\test3.X937');
 
 $fileFormat  = X937\Writer\Factory::FORMAT_FILE_HUMAN;
 $filename    = '..\human.txt';
@@ -24,6 +24,15 @@ $count = 0;
 foreach($file as $record) {
     $result = $record->validate();   
     echo $result;
+    
+    if ($record->type == '52') {
+
+//        echo $record->length . ' ' . substr($record->getData(), 0, 170) . PHP_EOL;
+//        echo $record->length . ' ' . strlen($record->getData()) . PHP_EOL;
+        $record[15]->set('asdf');
+//        echo $record->length . ' ' . substr($record->getData(), 0, 170) . PHP_EOL;
+//        echo $record->length . ' ' . strlen($record->getData()) . PHP_EOL;
+    }
             
     if ($record->type == '25') {
 //        $record[4]->set('NOTANUME');
@@ -93,7 +102,7 @@ foreach($file as $record) {
     }
     
     // write the file with our changes.
-    // $writerX937->writeRecord($record);
+    $writerX937->writeRecord($record);
 
     $count++;
 }

@@ -242,14 +242,10 @@ class Factory
                 $recordType = $recordTypeRaw;
                 break;
             case \X937\File::DATA_EBCDIC:
-                if (PHP_OS == 'Linux') {
-                    $recordType = iconv(\X937\Util::DATA_EBCDIC, \X937\Util::DATA_ASCII, $recordTypeRaw);
-                } else {
-                    $recordType = \X937\Util::e2a($recordTypeRaw);
-                }
+                $recordType = \X937\Util::e2a($recordTypeRaw);
                 break;
-        default:
-            throw new \InvalidArgumentException("Bad dataType passed: $dataType");
+            default:
+                throw new \InvalidArgumentException("Bad dataType passed: $dataType");
         }
         
         // check if we have a record type in our array for this record type, we should.

@@ -254,6 +254,7 @@ class Util {
             } else {
                 $asciiOut .= ' ';
                 trigger_error("Unhandled EBCDIC Character " . bin2hex($thisEBCDIC));
+                throw new \Exception("yep");
             }
             $eBinaryString = substr($eBinaryString, 1);
         }    
