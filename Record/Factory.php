@@ -81,9 +81,9 @@ class Factory
      * @param \DOMElement $dictonaryDOM the Dictonary to be parsed
      * @return array an array of key value pairs for the dictonary.
      */
-    protected function parseDictonary(\DOMElement $dictonaryDOM): array {  
-        $dictonaryArray['comprehensive'] = $dictonaryDOM->getAttribute('comprehensive');
-
+    protected function parseDictonary(\DOMElement $dictonaryDOM): array {
+        $dictonaryArray = array();
+        
         $valuesDOM = $dictonaryDOM->getElementsByTagName('value');
         foreach ($valuesDOM as $valueDOM) {
             $key = $valueDOM->getAttribute('key');
@@ -151,6 +151,8 @@ class Factory
 
         // if a field does not have a dictonary (allowed), then the above will return null, so we catch that case.
         if ($dictonaryDOM !== NULL) {
+            $fieldArray[Field::PROP_DICT_COVERAGE] = $dictonaryDOM->getAttribute(Field::PROP_DICT_COVERAGE);
+            
             // some dictonaries mearly point back to the global dictonaries, so handle that.
             $dictonaryRef = $dictonaryDOM->getAttribute('ref');
             if (array_key_exists($dictonaryRef, $this->globalPredefines)) {

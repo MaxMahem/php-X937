@@ -68,6 +68,7 @@ class Field extends \X937\Container
     
     // field properties names (branch)
     const PROP_DICTONARY        = 'dictonary';
+    const PROP_DICT_COVERAGE    = 'comprehensive';
     
     // field properties names (infered)
     const PROP_VARIABLE         = 'variable';
@@ -166,6 +167,12 @@ class Field extends \X937\Container
                     // do nothing
                     break;
             }
+        }
+        
+        // add dictonary validator
+        if (isset($this->dictonary) && $this->template[self::PROP_DICT_COVERAGE] === 'true') {
+            $dictonary = array_keys($this->dictonary);
+            $this->validator->addRule(Validator::in($dictonary));
         }
     }
     

@@ -7,6 +7,21 @@
         <dictonary comprehensive="true" id="dictRecordType">
             <value key="01">File Header Record</value>
             <value key="10">Cash Letter Header Record</value>
+            <value key="20">Bundle Header Record</value>
+            <value key="25">Check Detail Record</value>
+            <value key="26">Check Detail Addenedum A Record</value>
+            <value key="27">Check Detail Addenedum B Record</value>
+            <value key="28">Check Detail Addenedum C Record</value>
+            <value key="50">Image View Detail Record</value>
+            <value key="52">Image View Data Record</value>
+            <value key="54">Image View Analysis Record</value>
+            <value key="70">Bundle Control Record</value>
+            <value key="90">Cash Letter Control Record</value>
+            <value key="99">File Control Record</value>
+        </dictonary>
+        <dictonary comprehensive="true" id="dictCollectionType">
+            <value key='01'>Forward Presentment</value>
+            <value key='03'>Returns</value>
         </dictonary>
         <dictonary comprehensive="true" id="dictReturnCodes">
             <value key="A">NSF - Not Sufficent Funds'</value>
@@ -192,10 +207,7 @@
                 <name>Collection Type Indicator</name>
                 <usage>M</usage>
                 <type>N</type>
-                <dictonary comprehensive="false">
-                    <value key='01'>Forward Presentment</value>
-                    <value key='03'>Returns</value>
-                </dictonary>
+                <dictonary comprehensive="true" ref="dictCollectionType" />
                 <validation>R</validation>
                 <position>3</position>
                 <length>2</length>
@@ -340,6 +352,7 @@
           <name>Collection Type Indicator</name>
           <usage>M</usage>
           <type>N</type>
+          <dictonary comprehensive="true" ref="dictCollectionType" />
           <validation>R</validation>
           <position>3</position>
           <length>2</length>
