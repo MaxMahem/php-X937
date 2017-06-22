@@ -10,11 +10,18 @@ use X937\Fields\Field;
  * @author Austin Stanley <maxtmahem@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley
+ * @property-read string name The Name of the record
+ * @property-read string type The Type of the record (two digit numeric)
+ * @property-read string usage The Usage restriction of the record
+ * @property-read string validation The Validation restriction of the record
+ * @property-read string length The length of the record
+ * @property-read string variableLength The varible length formulation, if present
+ * @property-read string fieldCount The number of fields in the record
  */
 class Record extends \X937\Container implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * Contains all the field in the record.
-     * @var SplFixedArray
+     * @var array
      */
     protected $fields;
 
@@ -41,9 +48,6 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
     
     // record properties names (branch)
     const PROP_FIELDS         = 'fields';
-    
-    // record properties name (infered)
-    const PROP_VARIABLE       = 'variable';
 
     // record properties
     const PARSED_PROPERTIES = [
@@ -56,7 +60,7 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
         self::PROP_FIELDCOUNT,
     ];
     
-    const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_FIELDS, self::PROP_VARIABLE];
+    const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_FIELDS,];
 
     /**
      * Creates a X937Record. 
@@ -66,20 +70,16 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
     public function __construct(array $recordTemplate) {
         $this->template = $recordTemplate;
         
-        // build the SplFixedArray that will hold the fields
-        $fieldCount = $this->template[self::PROP_FIELDCOUNT];
-        $this->fields = new \SplFixedArray($fieldCount);
-        
         // create the records fields
         $fields = $recordTemplate[self::PROP_FIELDS];
-        foreach ($fields as $id => $fieldTemplate) {
+        foreach ($fields as $order => $fieldTemplate) {
             // since our fields are indexed by 1, and our array by 0, we need to subtract one            
-            $fieldIndex = $id - 1;
+            $fieldIndex = $order;
             $fieldName  = $fieldTemplate[Field::PROP_NAME];
             $this->fields[$fieldIndex] = new \X937\Fields\Field($fieldTemplate, $this);
             
             // since objects are passed by reference, both indexes point to the same object
-            $this->fieldsRef[$fieldName] = $this->fields[$fieldIndex];
+            $this->fields[$fieldName] = $this->fields[$fieldIndex];
             
             // populate our keyArray if necessary.
             if (isset($fieldTemplate[Field::PROP_VALUEKEY])) {
@@ -151,7 +151,7 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
      */
     protected function calculateLength() {
         // recalculation is only possible on variable length records.
-        if ($this->variable == 'true') {
+        if (isset($this->variableLength) == 'true') {
             $length = 0;
             foreach ($this->fields as $field) {
                 $length += $field->length;
@@ -213,65 +213,9 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
         }
         
         // if our record was a variable length one, we need to calculate its length.
-        if ($this->variable == 'true') {
+        if (isset($this->variableLength)) {
             $this->calculateLength();
         }
-        return true;
-    }
-    
-    /**
-     * Performs internal sanity checking on the internally generated RecordTempalte
-     * to see if it violates constraints of field count, length, and overlap.
-     * 
-     * @return bool always returns True, because it will throw an exception otherwise.
-     * @throws \InvalidArgumentException If the recordTemplate doesn't validate.
-     */
-    public static function validateTemplate(array $recordArray): bool {
-        $recordType     = $recordArray[self::PROP_TYPE];
-        $recordVariable = $recordArray[self::PROP_VARIABLE];
-
-        // validate each field
-        $currentPos = $idStart = 1;
-        foreach ($recordArray['fields'] as $fieldOrder => $fieldArray) {            
-            $position = $fieldArray[Field::PROP_POSITION];
-            $length   = $fieldArray[Field::PROP_LENGTH];
-
-            // if the record start position doesn't equals our calculated currentPos, then we have a gap.
-            if ($position != $currentPos) {
-                throw new \InvalidArgumentException("Gap in record type $recordType at field $fieldOrder position $position expected position $currentPos");
-            }
-
-            // validate that our fieldId's are in sequence.
-            if ($idStart != $fieldOrder) {
-                throw new \InvalidArgumentException("Field Id $fieldOrder out of sequence. Expceted $idStart");
-            }
-
-            // calculate where the range should end. The end becomes the new currentPos.
-            $end = $position + $length;
-            $currentPos = $end;
-            $idEnd = $idStart;
-            $idStart++;
-            
-            // check if our field is variable and the record is not.
-            if (($recordVariable == false) && ($fieldArray[Field::PROP_VARIABLE] == true)) {
-                throw new \InvalidArgumentException("Record type $recordType has a variable field $fieldOrder but the record is not infered variable.");
-            }
-        }
-
-        // validate record length and count
-        $recordLength = $recordArray[self::PROP_LENGTH];
-        $recordCount  = $recordArray[self::PROP_FIELDCOUNT];
-        $end -= 1; // move the end back one to correctly calculate.
-
-        // we validate against 
-        if ($recordLength != $end) {
-            throw new \InvalidArgumentException("Record type $recordType's length of $recordLength does not match calculated length of $end");
-        }
-        if ($recordCount != $idEnd) {
-            throw new \InvalidArgumentException("Record type $recordType's field count of $recordCount does not match calculated count of $idEnd");
-        }
-        
-        //if we get here, everything is great.
         return true;
     }
        
@@ -296,7 +240,7 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
      * 
      * @return ArrayIterator
      */
-    public function getIterator() { return $this->fields; }
+    public function getIterator() { return new \ArrayIterator($this->fields); }
     
     /**
      * Returns a count of the number of fields. For Countable.
@@ -309,15 +253,9 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
      * Tells if a given field is set or not.
      * 
      * @param type $offset Either the fields name or its order (1 indexed).
-     * @return type 
+     * @return bool
      */
-    public function offsetExists($offset): Field {
-        if (is_numeric($offset)) {
-            return isset($this->fields[$offset]);
-        } else {
-            return isset($this->fieldsRef[$offset]);
-        }
-    }
+    public function offsetExists($offset): bool { return isset($this->fields[$offset]); }
     
     /**
      * Does nothing, set access is not allowed.
@@ -340,24 +278,9 @@ class Record extends \X937\Container implements \ArrayAccess, \Countable, \Itera
      * Returns the Field specified by offset.
      * 
      * @param type $offset Either the fields name or its order (1 indexed).
-     * @return Field
+     * @return Field or null
      */
-    public function offsetGet($offset): Field {
-        // check if our access is valid for one of the two arrays, and if so return it.
-        if (is_numeric($offset)) {
-            if (isset($this->fields[$offset])) {
-                return $this->fields[$offset - 1];
-            }
-        } else {
-            if (isset($this->fieldsRef[$offset])) { 
-                return $this->fieldsRef[$offset];
-            }
-        }
-        
-        // otherwise, return null.
-        trigger_error("Attempted to get field $offset, which does not exist");
-        return null;
-    }
+    public function offsetGet($offset) { return $this->fields[$offset]; }
     
     /**
      * Calls all the validation routines for the records fields and the record itself.

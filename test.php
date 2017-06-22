@@ -20,7 +20,8 @@ $writerFlat  = X937\Writer\Factory::Generate($fileFormat, $filename, $imageForma
 
 $writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, '..\new4.X937');
 
-$count = 0;
+$cashletter = new \X937\CashLetter(array(1,2,3,4));
+
 foreach($file as $record) {
     $result = $record->validate();   
     echo $result;
@@ -29,7 +30,7 @@ foreach($file as $record) {
 
 //        echo $record->length . ' ' . substr($record->getData(), 0, 170) . PHP_EOL;
 //        echo $record->length . ' ' . strlen($record->getData()) . PHP_EOL;
-        $record[15]->set('asdf');
+        $record['Image Reference Key']->set('asdf');
 //        echo $record->length . ' ' . substr($record->getData(), 0, 170) . PHP_EOL;
 //        echo $record->length . ' ' . strlen($record->getData()) . PHP_EOL;
     }
@@ -103,8 +104,6 @@ foreach($file as $record) {
     
     // write the file with our changes.
     $writerX937->writeRecord($record);
-
-    $count++;
 }
 
 $timeEnd  = microtime(true);

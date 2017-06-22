@@ -2,7 +2,6 @@
 
 namespace X937\Record;
 
-use X937\Fields\Predefined\RecordType;
 use X937\Fields\Field;
 
 /**
@@ -121,8 +120,6 @@ class Factory
             } else {
                 $propertyArray[Field::PROP_LENGTH] = 0;
             }
-            
-            $propertyArray[Field::PROP_VARIABLE] = true;
         }
         
         // variablePosition must be in the form, ###+X+Y, and if so we need
@@ -130,14 +127,7 @@ class Factory
         if (isset($propertyArray[Field::PROP_VARIABLEPOSITION])) {
             $positionArray = explode('+', $propertyArray[Field::PROP_VARIABLEPOSITION]);
             $propertyArray[Field::PROP_POSITION] = $positionArray[0];
-            
-            $propertyArray[Field::PROP_VARIABLE] = true;
-        }
-        
-        // if we didn't set the record to variable above, we want to set it to false now
-        if (!isset($propertyArray[Field::PROP_VARIABLE])) {
-            $propertyArray[Field::PROP_VARIABLE] = false;
-        }        
+        }       
         
         return $propertyArray;    
     }
@@ -224,8 +214,8 @@ class Factory
                     // do nothing
                     break;
                 case 'record':
-                    $recordArray['fields']     = $fieldsArray;
-                    Record::validateTemplate($recordArray);
+                    $recordArray['fields'] = $fieldsArray;
+                    self::validateTemplate($recordArray);
                     break;
             }
             
@@ -258,5 +248,61 @@ class Factory
         } else {
             throw new \InvalidArgumentException("No matching record template for record type $recordType");
         }
+    }
+    
+    /**
+     * Performs internal sanity checking on the internally generated RecordTempalte
+     * to see if it violates constraints of field count, length, and overlap.
+     * 
+     * @return bool always returns True, because it will throw an exception otherwise.
+     * @throws \InvalidArgumentException If the recordTemplate doesn't validate.
+     */
+    public static function validateTemplate(array $recordArray): bool {
+        $recordType     = $recordArray[Record::PROP_TYPE];
+        $recordVariable = isset($recordArray[Record::PROP_VARIABLELENGTH]);
+
+        // validate each field
+        $currentPos = $idStart = 1;
+        foreach ($recordArray['fields'] as $fieldOrder => $fieldArray) {            
+            $position = $fieldArray[Field::PROP_POSITION];
+            $length   = $fieldArray[Field::PROP_LENGTH];
+
+            // if the record start position doesn't equals our calculated currentPos, then we have a gap.
+            if ($position != $currentPos) {
+                throw new \InvalidArgumentException("Gap in record type $recordType at field $fieldOrder position $position expected position $currentPos");
+            }
+
+            // validate that our fieldId's are in sequence.
+            if ($idStart != $fieldOrder) {
+                throw new \InvalidArgumentException("Field Id $fieldOrder out of sequence. Expceted $idStart");
+            }
+
+            // calculate where the range should end. The end becomes the new currentPos.
+            $end = $position + $length;
+            $currentPos = $end;
+            $idEnd = $idStart;
+            $idStart++;
+            
+            // check if our field is variable and the record is not.
+            if ((!$recordVariable) && (isset($fieldArray[Field::PROP_VARIABLEPOSITION]))) {
+                throw new \InvalidArgumentException("Record type $recordType has a variable field $fieldOrder but the record is not infered variable.");
+            }
+        }
+
+        // validate record length and count
+        $recordLength = $recordArray[Record::PROP_LENGTH];
+        $recordCount  = $recordArray[Record::PROP_FIELDCOUNT];
+        $end -= 1; // move the end back one to correctly calculate.
+
+        // we validate against 
+        if ($recordLength != $end) {
+            throw new \InvalidArgumentException("Record type $recordType's length of $recordLength does not match calculated length of $end");
+        }
+        if ($recordCount != $idEnd) {
+            throw new \InvalidArgumentException("Record type $recordType's field count of $recordCount does not match calculated count of $idEnd");
+        }
+        
+        //if we get here, everything is great.
+        return true;
     }
 }

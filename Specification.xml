@@ -96,7 +96,10 @@
                 <name>Test File Indicator</name>
                 <usage>M</usage>
                 <type>A</type>
-                <dictonary comprehensive="false"/>
+                <dictonary comprehensive="true">
+                    <value key="P">Production</value>
+                    <value key="T">Test</value>
+                </dictonary>
                 <validation>R</validation>
                 <position>5</position>
                 <length>1</length>
@@ -143,6 +146,7 @@
                 <type>A</type>
                 <dictonary comprehensive="true">
                     <value key="N">Original File</value>
+                    <value key="Y">Resent File</value>
                 </dictonary>
                 <validation>R</validation>
                 <position>36</position>

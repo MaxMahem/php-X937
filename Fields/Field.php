@@ -73,9 +73,6 @@ class Field extends \X937\Container
     // field properties names (branch)
     const PROP_DICTONARY        = 'dictonary';
     const PROP_DICT_COVERAGE    = 'comprehensive';
-    
-    // field properties names (infered)
-    const PROP_VARIABLE         = 'variable';
 
     // field property array
     const PARSED_PROPERTIES = [
@@ -91,7 +88,7 @@ class Field extends \X937\Container
         self::PROP_VALUEKEY,
     ];
     
-    const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_DICTONARY, self::PROP_VARIABLE, self::PROP_ORDER];
+    const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_DICTONARY, self::PROP_ORDER];
     
     /**
      * A reference back to the parent record.
@@ -200,7 +197,7 @@ class Field extends \X937\Container
         $valueLen = strlen($value);
         
         // if our length is variable we need to reset our field length when we set
-        if ($this->variable) {        
+        if (isset($this->variableLength)) {        
             $this->template[self::PROP_LENGTH] = $valueLen;
             
             if (isset($this->parent) && $updateParent) {
