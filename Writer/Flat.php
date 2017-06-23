@@ -12,15 +12,16 @@ namespace X937\Writer;
  */
 class Flat extends AbstractWriter
 {
-    public function writeRecord(\X937\Record\Record $record) {    
-    $output = '';
-    
-    foreach ($record as $field) {
-        $output .= $this->writeField($field);
-    }
-    
-    $output .= PHP_EOL;
-    
-    $this->resource->fwrite($output);
+    public function writeRecord(\X937\Records\Record $record)
+    {
+        $output = '';
+
+        foreach ($record as $field) {
+            $output .= $this->writeField($field);
+        }
+
+        $output .= PHP_EOL;
+
+        $this->resource->fwrite($output);
     }
 }

@@ -7,16 +7,16 @@
 
 namespace X937\Writer;
 
-use X937\Record as Record;
-use X937\Fields as Fields;
+use X937\Fields;
 
-abstract class AbstractWriter implements WriterInterface {
+abstract class AbstractWriter implements WriterInterface
+{
     /**
      * Options array
      * @var array
      */
     protected $options;
-    
+
     /**
      * Our resource for writing.
      * @var resource
@@ -28,9 +28,9 @@ abstract class AbstractWriter implements WriterInterface {
      * @var \X937\Writer\FieldInterface
      */
     protected $fieldWriter;
-    
+
     protected $binaryFieldWriter;
-    
+
     /**
      * Format for binary data.
      * @var stromg
@@ -42,39 +42,31 @@ abstract class AbstractWriter implements WriterInterface {
         FieldInterface $fieldWriter,
         FieldInterface $binaryWriter,
         $options = array()
-    ) {    
-    $this->resource          = $resource;
-    $this->fieldWriter       = $fieldWriter;
-    $this->binaryFieldWriter = $binaryWriter;
-    $this->options           = $options;
-    }
-    
-    public function getOptions()
+    )
     {
-    return $this->options;
-    }
-    
-    /**
-     * Define universal options. None currently.
-     * @return array
-     */
-    public function defineOptions()
-    {
-    return array();
+        $this->resource = $resource;
+        $this->fieldWriter = $fieldWriter;
+        $this->binaryFieldWriter = $binaryWriter;
+        $this->options = $options;
     }
 
-    abstract public function writeRecord(\X937\Record\Record $record);
-    
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
     /**
      * Shortcut function, write's all records in the file.
      * @param \X937\X937File $file
      */
     public function writeAll(\X937\File $file)
-    {    
-    foreach ($file as $record) {
-        $this->writeRecord($record);
+    {
+        foreach ($file as $record) {
+            $this->writeRecord($record);
+        }
     }
-    }
+
+    abstract public function writeRecord(\X937\Records\Record $record);
 
     /**
      * Calls the member fieldWriters to write the field as appropriate for its
@@ -84,23 +76,32 @@ abstract class AbstractWriter implements WriterInterface {
      */
     protected function writeField(Fields\Field $field)
     {
-    if ($field->type === Fields\Field::TYPE_BINARY) {
-        return $this->binaryFieldWriter->writeField($field);
-    } else {
-        return $this->fieldWriter->writeField($field);
+        if ($field->type === Fields\Field::TYPE_BINARY) {
+            return $this->binaryFieldWriter->writeField($field);
+        } else {
+            return $this->fieldWriter->writeField($field);
+        }
     }
-    }
-    
+
     /**
      * Set an option.
      * @param type $optionKey the option to set
      * @param type $value the option value
      */
-    protected function setOption($optionKey, $value)
+    protected function setOption(string $optionKey, $value)
     {
-    if (array_key_exists($optionKey, static::defineOptions()) === false) {
-        trigger_error('Set undefined option', E_USER_WARNING);
+        if (array_key_exists($optionKey, static::defineOptions()) === false) {
+            trigger_error('Set undefined option', E_USER_WARNING);
+        }
+        $this->options[$optionKey] = $value;
     }
-    $this->options[$optionKey] = $value;
+
+    /**
+     * Define universal options. None currently.
+     * @return array
+     */
+    public function defineOptions()
+    {
+        return array();
     }
 }

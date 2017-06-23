@@ -9,7 +9,8 @@ use Respect\Validation\Exceptions\ValidationException;
  *
  * @author astanley
  */
-class RoutingNumberException extends ValidationException {
+class RoutingNumberException extends ValidationException
+{
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
             self::STANDARD => '{{name}} must be a valid routing number',

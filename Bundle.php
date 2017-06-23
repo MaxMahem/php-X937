@@ -7,20 +7,23 @@ namespace X937;
  *
  * @author astanley
  */
-class Bundle extends Container {
+class Bundle extends Container
+{
     private $records;
-    
-    public function __construct(array $records) {
+
+    public function __construct(array $records)
+    {
         $this->records = $records;
     }
-    
-    public function validate(): string {
+
+    public function validate(): string
+    {
         $error = '';
-        
-        foreach($this->records as $record) {
+
+        foreach ($this->records as $record) {
             $error .= $record->validate();
         }
-        
+
         return $error;
     }
 }

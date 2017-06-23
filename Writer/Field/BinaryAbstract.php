@@ -11,7 +11,8 @@ use X937\Fields as Fields;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-abstract class BinaryAbstract implements \X937\Writer\FieldInterface {
+abstract class BinaryAbstract implements \X937\Writer\FieldInterface
+{
     /**
      * Returns a field formated appropriately.
      * @param \X937\Fields\Field $field the field to write.
@@ -19,8 +20,8 @@ abstract class BinaryAbstract implements \X937\Writer\FieldInterface {
      */
     public function writeField(Fields\Field $field)
     {
-    return $this->writeBinary($field);
+        return $this->writeBinary($field);
     }
-    
+
     abstract public function writeBinary(Fields\VariableLength\Binary\BinaryData $field);
 }

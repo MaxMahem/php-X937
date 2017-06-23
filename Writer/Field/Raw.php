@@ -10,7 +10,8 @@ namespace X937\Writer\Field;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Raw implements \X937\Writer\FieldInterface {
+class Raw implements \X937\Writer\FieldInterface
+{
     /**
      * Returns a raw field.
      * @param \X937\Fields\Field $field the field to write.
@@ -18,6 +19,6 @@ class Raw implements \X937\Writer\FieldInterface {
      */
     public function writeField(\X937\Fields\Field $field)
     {
-    return $field->getValue();
+        return $field->getValue();
     }
 }

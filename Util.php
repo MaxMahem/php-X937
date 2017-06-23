@@ -7,16 +7,17 @@ namespace X937;
  *
  * @author astanley
  */
-class Util {
-    
-    const DATA_ASCII  = 'ASCII';
+class Util
+{
+
+    const DATA_ASCII = 'ASCII';
     const DATA_EBCDIC = 'EBCDIC-US';
-    
+
     const DATA_TYPES = array(
-        self::DATA_ASCII  => self::DATA_ASCII,
+        self::DATA_ASCII => self::DATA_ASCII,
         self::DATA_EBCDIC => self::DATA_EBCDIC,
     );
-    
+
     const EBCDIC_2_ASCII_TABLE = array(
         '40' => ' ',
         '4A' => '¢',
@@ -111,9 +112,9 @@ class Util {
         'F6' => '6',
         'F7' => '7',
         'F8' => '8',
-        'F9' => '9',  
+        'F9' => '9',
     );
-    
+
     const ASCII_2_EBCDIC_TABLE = array(
         ' ' => '40',
         '¢' => '4A',
@@ -210,18 +211,18 @@ class Util {
         '8' => 'F8',
         '9' => 'F9',
     );
-    
+
     /**
      * Converts a string of ASCII into EBCDIC
-     * 
+     *
      * @param string $aString ASCII string
      * @return string EBCDIC string
      */
-    public static function a2e(string $aString): string {
+    public static function a2e(string $aString): string
+    {
         // loop though string converting to EBCDIC
-        $eOut = "";    
-        while(strlen($aString)>=1)
-        {
+        $eOut = "";
+        while (strlen($aString) >= 1) {
             $thisASCII = substr($aString, 0, 1);
 
             if (array_key_exists($thisASCII, self::ASCII_2_EBCDIC_TABLE)) {
@@ -232,22 +233,22 @@ class Util {
             }
             $aString = substr($aString, 1);
 
-        }    
+        }
 
         return $eOut;
     }
-    
+
     /**
      * Converts the dreaded EBCDIC to ASCII
-     * 
+     *
      * @param string $eBinaryString raw EBCDIC hex string, in the format \xF0\xF1...
      * @return string Decoded ASCII data
      */
-     public static function e2a(string $eBinaryString): string {
+    public static function e2a(string $eBinaryString): string
+    {
         // loop until there is no more conversion.
-        $asciiOut = "";    
-        while(strlen($eBinaryString)>=1)
-        {
+        $asciiOut = "";
+        while (strlen($eBinaryString) >= 1) {
             $thisEBCDIC = strtoupper(bin2hex(substr($eBinaryString, 0, 1)));
             if (array_key_exists($thisEBCDIC, self::EBCDIC_2_ASCII_TABLE)) {
                 $asciiOut .= self::EBCDIC_2_ASCII_TABLE[$thisEBCDIC];
@@ -257,7 +258,7 @@ class Util {
                 throw new \Exception("yep");
             }
             $eBinaryString = substr($eBinaryString, 1);
-        }    
+        }
 
         return $asciiOut;
     }

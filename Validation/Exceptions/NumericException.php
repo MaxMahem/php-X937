@@ -9,7 +9,8 @@ use \Respect\Validation\Exceptions\ValidationException;
  *
  * @author astanley
  */
-class NumericException extends ValidationException {
+class NumericException extends ValidationException
+{
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
             self::STANDARD => 'The value must contain only digits (0-9)',

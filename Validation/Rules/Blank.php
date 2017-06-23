@@ -9,14 +9,12 @@ use Respect\Validation\Rules;
  *
  * @author astanley
  */
-class Numeric extends Rules\AllOf
+class Blank extends Rules\Not
 {
     public function __construct()
     {
         parent::__construct(
-            new Rules\StringType(),
-            new Rules\NoWhitespace(),
-            new Rules\intVal()
+            new Required()
         );
     }
 }

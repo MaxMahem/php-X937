@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <records
-    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    xsi:noNamespaceSchemaLocation='Record\X937Specification.xsd'>
-    
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation='Records/X937Specification.xsd'>
+
     <dictonaries>
         <dictonary comprehensive="true" id="dictRecordType">
             <value key="01">File Header Record</value>
@@ -20,8 +20,39 @@
             <value key="99">File Control Record</value>
         </dictonary>
         <dictonary comprehensive="true" id="dictCollectionType">
+            <value key='00'>Preliminary Forward Information</value>
             <value key='01'>Forward Presentment</value>
+            <value key='02'>Forward Presentment - Same Day Settlement</value>
             <value key='03'>Returns</value>
+            <value key='04'>Return Notification</value>
+            <value key='05'>Preliminary Return Notification</value>
+            <value key='06'>Final Return Notification</value>
+            <value key='20'>No Detail</value>
+            <value key='99'>Bundles not the same collection type</value>
+        </dictonary>
+        <dictonary comprehensive="true" id="dictDocumentationType">
+            <value key="A">No image provided, paper provided separately</value>
+            <value key="B">No image provided, paper provided separately, image upon request</value>
+            <value key="C">Image provided separately, no paper provided</value>
+            <value key="D">Image provided separately, no paper provided, image upon request</value>
+            <value key="E">Image and paper provided separately</value>
+            <value key="F">Image and paper provided separately, image upon request</value>
+            <value key="G">Image included, no paper provided</value>
+            <value key="H">Image included, no paper provided, image upon request</value>
+            <value key="I">Image included, paper provided separately</value>
+            <value key="J">Image included, paper provided separately, image upon request</value>
+            <value key="K">No image provided, no paper provided</value>
+            <value key="L">No image provided, no paper provided, image upon request</value>
+            <value key="M">No image provided, Electronic Check provided separately</value>
+            <value key="Z">Not Same Type–Documentation associated with each item in Cash Letter will be different.
+            </value>
+        </dictonary>
+        <dictonary id="dictCorrectionIndicator" comprehensive="true">
+            <value key="0">No Repair</value>
+            <value key="1">Repaired (form of repair unknown)</value>
+            <value key="2">Repaired without Operator intervention</value>
+            <value key="3">Repaired with Operator intervention</value>
+            <value key="4">Undetermined if repair has been done or not</value>
         </dictonary>
         <dictonary comprehensive="true" id="dictReturnCodes">
             <value key="A">NSF - Not Sufficent Funds'</value>
@@ -46,7 +77,7 @@
             <value key="T">Stop Payment Suspect</value>
             <value key="U">Unusable Image</value>
             <value key="V">Image Fails Security Check</value>
-            <value key="W">Cannot Determine Amount</value>    
+            <value key="W">Cannot Determine Amount</value>
         </dictonary>
         <dictonary id="dictImagingTest" comprehensive="true">
             <value key="0">Test not done</value>
@@ -59,7 +90,7 @@
             <value key="2">Area usable</value>
         </dictonary>
     </dictonaries>
-    
+
     <predefines>
         <field order="1" id="fieldRecordType">Record Type
             <name>Record Type</name>
@@ -71,7 +102,7 @@
             <length>2</length>
         </field>
     </predefines>
-    
+
     <record type="01">File Header Record
         <name>File Header Record</name>
         <type>01</type>
@@ -86,6 +117,8 @@
                 <usage>M</usage>
                 <type>N</type>
                 <dictonary comprehensive="true">
+                    <value key="35">X9.100-187-2013/2016</value>
+                    <value key="30">X9.100-187-2008</value>
                     <value key="03">X9.100-197</value>
                 </dictonary>
                 <validation>R</validation>
@@ -207,7 +240,7 @@
             </field>
         </fields>
     </record>
-    
+
     <record type="10">Cash Letter Header Record
         <name>Cash Letter Header Record</name>
         <type>10</type>
@@ -221,7 +254,7 @@
                 <name>Collection Type Indicator</name>
                 <usage>M</usage>
                 <type>N</type>
-                <dictonary comprehensive="true" ref="dictCollectionType" />
+                <dictonary comprehensive="true" ref="dictCollectionType"/>
                 <validation>R</validation>
                 <position>3</position>
                 <length>2</length>
@@ -275,7 +308,14 @@
                 <name>Cash Letter Record Type Indicator</name>
                 <usage>M</usage>
                 <type>AN</type>
-                <dictonary comprehensive="false"/>
+                <dictonary comprehensive="true">
+                    <value key="N">No electronic check records or image records</value>
+                    <value key="E">Cash letter contains electronic check records with no images</value>
+                    <value key="I">Cash letter contains electronic check records</value>
+                    <value key="F">Cash letter contains electronic check records and image records that correspond to a
+                        previous cash letter
+                    </value>
+                </dictonary>
                 <validation>R</validation>
                 <position>43</position>
                 <length>1</length>
@@ -284,9 +324,7 @@
                 <name>Cash Letter Documentation Type Indicator</name>
                 <usage>M</usage>
                 <type>AN</type>
-                <dictonary comprehensive="false">
-                    <value key="C"/>
-                </dictonary>
+                <dictonary ref="dictDocumentationType" comprehensive="true"/>
                 <validation>R</validation>
                 <position>44</position>
                 <length>1</length>
@@ -328,7 +366,12 @@
                 <name>Returns Indicator</name>
                 <usage>M</usage>
                 <type>A</type>
-                <dictonary comprehensive="false"/>
+                <dictonary comprehensive="true">
+                    <value key=" ">Forward Presentment</value>
+                    <value key="E">Administrative</value>
+                    <value key="R">Customer</value>
+                    <value key="J">Reject Return</value>
+                </dictonary>
                 <validation>P</validation>
                 <position>78</position>
                 <length>1</length>
@@ -352,108 +395,108 @@
             </field>
         </fields>
     </record>
-    
+
     <record type="20">Bundle Header Record
         <name>Bundle Header Record</name>
         <type>20</type>
         <usage>M</usage>
-      <validation>R</validation>
-      <length>80</length>
-      <fieldCount>12</fieldCount>
+        <validation>R</validation>
+        <length>80</length>
+        <fieldCount>12</fieldCount>
         <fields>
-        <predefined order="1" ref="fieldRecordType">Record Type</predefined>
-        <field order="2">
-          <name>Collection Type Indicator</name>
-          <usage>M</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictCollectionType" />
-          <validation>R</validation>
-          <position>3</position>
-          <length>2</length>
-        </field>
-        <field order="3">
-          <name>Destination Routing Number</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>5</position>
-          <length>9</length>
-        </field>
-        <field order="4">
-          <name>Unique Customer Identifer</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>14</position>
-          <length>9</length>
-        </field>
-        <field order="5">
-          <name>Bundle Buisness Date</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>23</position>
-          <length>8</length>
-        </field>
-        <field order="6">
-          <name>Bundle Creation Date</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>31</position>
-          <length>8</length>
-        </field>
-        <field order="7">
-          <name>Bundle ID</name>
-          <usage>M</usage>
-          <type>AN</type>
-          <validation>R</validation>
-          <position>39</position>
-          <length>10</length>
-        </field>
-        <field order="8">
-          <name>Bundle Sequence Number</name>
-          <usage>M</usage>
-          <type>NB</type>
-          <validation>R</validation>
-          <position>49</position>
-          <length>4</length>
-        </field>
-        <field order="9">
-          <name>Cycle Number</name>
-          <usage>O</usage>
-          <type>B</type>
-          <validation>N</validation>
-          <position>53</position>
-          <length>2</length>
-        </field>
-        <field order="10">
-          <name>Reserved</name>
-          <usage>F</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>55</position>
-          <length>9</length>
-        </field>
-        <field order="11">
-          <name>User</name>User
-          <usage>O</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>64</position>
-          <length>5</length>
-        </field>
-        <field order="12">
-          <name>Reserved</name>
-          <usage>F</usage>
-          <type>B</type>
-          <validation>N</validation>
-          <position>69</position>
-          <length>12</length>
-        </field>
-      </fields>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>Collection Type Indicator</name>
+                <usage>M</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictCollectionType"/>
+                <validation>R</validation>
+                <position>3</position>
+                <length>2</length>
+            </field>
+            <field order="3">
+                <name>Destination Routing Number</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>5</position>
+                <length>9</length>
+            </field>
+            <field order="4">
+                <name>Unique Customer Identifer</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>14</position>
+                <length>9</length>
+            </field>
+            <field order="5">
+                <name>Bundle Buisness Date</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>23</position>
+                <length>8</length>
+            </field>
+            <field order="6">
+                <name>Bundle Creation Date</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>31</position>
+                <length>8</length>
+            </field>
+            <field order="7">
+                <name>Bundle ID</name>
+                <usage>M</usage>
+                <type>AN</type>
+                <validation>R</validation>
+                <position>39</position>
+                <length>10</length>
+            </field>
+            <field order="8">
+                <name>Bundle Sequence Number</name>
+                <usage>M</usage>
+                <type>NB</type>
+                <validation>R</validation>
+                <position>49</position>
+                <length>4</length>
+            </field>
+            <field order="9">
+                <name>Cycle Number</name>
+                <usage>O</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <position>53</position>
+                <length>2</length>
+            </field>
+            <field order="10">
+                <name>Reserved</name>
+                <usage>F</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>55</position>
+                <length>9</length>
+            </field>
+            <field order="11">
+                <name>User</name>User
+                <usage>O</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>64</position>
+                <length>5</length>
+            </field>
+            <field order="12">
+                <name>Reserved</name>
+                <usage>F</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <position>69</position>
+                <length>12</length>
+            </field>
+        </fields>
     </record>
-    
+
     <record type="25">Check Detail Record
         <name>Check Detail Record</name>
         <type>25</type>
@@ -462,122 +505,169 @@
         <length>80</length>
         <fieldCount>15</fieldCount>
         <fields>
-        <predefined order="1" ref="fieldRecordType">Record Type</predefined>
-        <field order="2">
-          <name>Auxiliary On-Us</name>
-          <usage>C</usage>
-          <type>NBSM</type>
-          <validation>P</validation>
-          <position>3</position>
-          <length>15</length>
-        </field>
-        <field order="3">
-          <name>External Processing Code</name>
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>P</validation>
-          <position>18</position>
-          <length>1</length>
-        </field>
-        <field order="4">
-          <name>Payor Bank Routing Number</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>19</position>
-          <length>8</length>
-        </field>
-        <field order="5">
-          <name>Payor Bank Routing Number Check Digit</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>27</position>
-          <length>1</length>
-        </field>
-        <field order="6">
-          <name>On-Us</name>
-          <usage>C</usage>
-          <type>NBSMOS</type>
-          <validation>P</validation>
-          <position>28</position>
-          <length>20</length>
-        </field>
-        <field order="7">
-          <name>Item Amount</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>48</position>
-          <length>10</length>
-        </field>
-        <field order="8">
-          <name>Institution Item Sequence Number</name>
-          <usage>M</usage>
-          <type>NB</type>
-          <validation>R</validation>
-          <position>58</position>
-          <length>15</length>
-        </field>
-        <field order="9">
-          <name>Documentation Type Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>P</validation>
-          <position>73</position>
-          <length>1</length>
-        </field>
-        <field order="10">
-          <name>Return Acceptance Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>P</validation>
-          <position>74</position>
-          <length>1</length>
-        </field>
-        <field order="11">
-          <name>MICR Valid Indicator</name>
-          <usage>C</usage>
-          <type>NB</type>
-          <validation>P</validation>
-          <position>75</position>
-          <length>1</length>
-        </field>
-        <field order="12">
-          <name>BOFD Indicator</name>
-          <usage>M</usage>
-          <type>A</type>
-          <validation>R</validation>
-          <position>76</position>
-          <length>1</length>
-        </field>
-        <field order="13">
-          <name>Check Detail Record Addendum Count</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>77</position>
-          <length>2</length>
-        </field>
-        <field order="14">
-          <name>Correction Indicator</name>
-          <usage>C</usage>
-          <type>NB</type>
-          <validation>P</validation>
-          <position>79</position>
-          <length>1</length>
-        </field>
-        <field order="15">
-          <name>Archive Type Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>N</validation>
-          <position>80</position>
-          <length>1</length>
-        </field>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>Auxiliary On-Us</name>
+                <usage>C</usage>
+                <type>NBSM</type>
+                <validation>P</validation>
+                <position>3</position>
+                <length>15</length>
+            </field>
+            <field order="3">
+                <name>External Processing Code</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>P</validation>
+                <position>18</position>
+                <length>1</length>
+            </field>
+            <field order="4">
+                <name>Payor Bank Routing Number</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>19</position>
+                <length>8</length>
+            </field>
+            <field order="5">
+                <name>Payor Bank Routing Number Check Digit</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>27</position>
+                <length>1</length>
+            </field>
+            <field order="6">
+                <name>On-Us</name>
+                <usage>C</usage>
+                <type>NBSMOS</type>
+                <validation>P</validation>
+                <position>28</position>
+                <length>20</length>
+            </field>
+            <field order="7">
+                <name>Item Amount</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>48</position>
+                <length>10</length>
+            </field>
+            <field order="8">
+                <name>Institution Item Sequence Number</name>
+                <usage>M</usage>
+                <type>NB</type>
+                <validation>R</validation>
+                <position>58</position>
+                <length>15</length>
+            </field>
+            <field order="9">
+                <name>Documentation Type Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <validation>P</validation>
+                <position>73</position>
+                <length>1</length>
+            </field>
+            <field order="10">
+                <name>Return Acceptance Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="true">
+                    <value key="0">Will not accept any electronic information</value>
+                    <value key="1">Will accept preliminary return notifications, returns, and final return notifications
+                    </value>
+                    <value key="2">Will accept preliminary return notifications and returns</value>
+                    <value key="3">Will accept preliminary return notifications and final return notifications</value>
+                    <value key="4">Will accept returns and final return notifications</value>
+                    <value key="5">Will accept preliminary return notifications only</value>
+                    <value key="6">Will accept returns only</value>
+                    <value key="7">Will accept final return notifications only</value>
+                    <value key="8">Will accept preliminary return notifications, returns, final return notifications,
+                        and
+                        image returns
+                    </value>
+                    <value key="9">Will accept preliminary return notifications, returns and image returns</value>
+                    <value key="A">Will accept preliminary return notifications, final return notifications and image
+                        returns
+                    </value>
+                    <value key="B">Will accept returns, final return notifications and image returns</value>
+                    <value key="C">Will accept preliminary return notifications and image returns</value>
+                    <value key="D">Will accept returns and image returns</value>
+                    <value key="E">Will accept final return notifications and image returns</value>
+                    <value key="F">Will accept image returns only</value>
+                </dictonary>
+                <validation>P</validation>
+                <position>74</position>
+                <length>1</length>
+            </field>
+            <field order="11">
+                <name>MICR Valid Indicator</name>
+                <usage>C</usage>
+                <type>N</type>
+                <dictonary comprehensive="true">
+                    <value key="1">Good read</value>
+                    <value key="2">Good read, missing field</value>
+                    <value key="3">Read error encountered</value>
+                    <value key="4">Missing field and read error encountered</value>
+                </dictonary>
+                <validation>P</validation>
+                <position>75</position>
+                <length>1</length>
+            </field>
+            <field order="12">
+                <name>BOFD Indicator</name>
+                <usage>M</usage>
+                <type>A</type>
+                <dictonary comprehensive="true">
+                    <value key="Y">ECE institution is BOFD</value>
+                    <value key="N">ECE institution is not BOFD</value>
+                    <value key="U">ECE institution relationship to BOFD is undetermined</value>
+                </dictonary>
+                <validation>R</validation>
+                <position>76</position>
+                <length>1</length>
+            </field>
+            <field order="13">
+                <name>Check Detail Record Addendum Count</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>77</position>
+                <length>2</length>
+            </field>
+            <field order="14">
+                <name>Correction Indicator</name>
+                <usage>C</usage>
+                <type>N</type>
+                <dictonary ref="dictCorrectionIndicator" comprehensive="true"/>
+                <validation>P</validation>
+                <position>79</position>
+                <length>1</length>
+            </field>
+            <field order="15">
+                <name>Archive Type Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="true">
+                    <value key="A">Microfilm</value>
+                    <value key="B">Image</value>
+                    <value key="C">Paper</value>
+                    <value key="D">Microfilm and image</value>
+                    <value key="E">Microfilm and paper</value>
+                    <value key="F">Image and paper</value>
+                    <value key="G">Microfilm, image and paper</value>
+                    <value key="H">Electronic Check Instrument</value>
+                    <value key="I">None</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>80</position>
+                <length>1</length>
+            </field>
         </fields>
     </record>
-    
+
     <record type="26">Check Detail Addendum A Record
         <name>Check Detail Addendum A Record</name>
         <type>26</type>
@@ -586,115 +676,131 @@
         <length>80</length>
         <fieldCount>13</fieldCount>
         <fields>
-        <predefined order="1" ref="fieldRecordType">Record Type</predefined>
-        <field order="2">
-          <name>Check Detail Addendum A Record Number</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>3</position>
-          <length>1</length>
-        </field>
-        <field order="3">
-          <name>Return Location Routing Number</name>
-          <usage>M</usage>
-          <type>N</type>
-          <subtype>Routing</subtype>
-          <validation>R</validation>
-          <position>4</position>
-          <length>9</length>
-        </field>
-        <field order="4">
-          <name>BOFD Endorsement Date</name>
-          <usage>M</usage>
-          <type>N</type>
-          <subtype>Date</subtype>
-          <validation>R</validation>
-          <position>13</position>
-          <length>8</length>
-        </field>
-        <field order="5">
-          <name>BOFD Item Sequence Number</name>
-          <usage>C</usage>
-          <type>NB</type>
-          <validation>P</validation>
-          <position>21</position>
-          <length>15</length>
-        </field>
-        <field order="6">
-          <name>Deposit Account Number at BOFD</name>
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>36</position>
-          <length>18</length>
-        </field>
-        <field order="7">
-          <name>BOFD Deposit Branch</name>
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>54</position>
-          <length>5</length>
-        </field>
-        <field order="8">
-          <name>Payee Name</name>
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>59</position>
-          <length>15</length>
-        </field>
-        <field order="9">
-          <name>Truncation Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>N</validation>
-          <position>74</position>
-          <length>1</length>
-        </field>
-        <field order="10">
-          <name>BOFD Conversion Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>N</validation>
-          <position>75</position>
-          <length>1</length>
-        </field>
-        <field order="11">
-          <name>BOFD Correction Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>N</validation>
-          <position>76</position>
-          <length>1</length>
-        </field>
-        <field order="12">
-          <name>User</name>User
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>77</position>
-          <length>1</length>
-        </field>
-        <field order="13">
-          <name>Field Reserved</name>
-          <usage>C</usage>
-          <type>B</type>
-          <validation>N</validation>
-          <position>78</position>
-          <length>3</length>
-        </field>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>Check Detail Addendum A Record Number</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>3</position>
+                <length>1</length>
+            </field>
+            <field order="3">
+                <name>Return Location Routing Number</name>
+                <usage>M</usage>
+                <type>N</type>
+                <subtype>Routing</subtype>
+                <validation>R</validation>
+                <position>4</position>
+                <length>9</length>
+            </field>
+            <field order="4">
+                <name>BOFD Endorsement Date</name>
+                <usage>M</usage>
+                <type>N</type>
+                <subtype>Date</subtype>
+                <validation>R</validation>
+                <position>13</position>
+                <length>8</length>
+            </field>
+            <field order="5">
+                <name>BOFD Item Sequence Number</name>
+                <usage>C</usage>
+                <type>NB</type>
+                <validation>P</validation>
+                <position>21</position>
+                <length>15</length>
+            </field>
+            <field order="6">
+                <name>Deposit Account Number at BOFD</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>36</position>
+                <length>18</length>
+            </field>
+            <field order="7">
+                <name>BOFD Deposit Branch</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>54</position>
+                <length>5</length>
+            </field>
+            <field order="8">
+                <name>Payee Name</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>59</position>
+                <length>15</length>
+            </field>
+            <field order="9">
+                <name>Truncation Indicator</name>
+                <usage>M</usage>
+                <type>A</type>
+                <dictonary comprehensive="true">
+                    <value key="Y">Truncated</value>
+                    <value key="N">Not Truncated</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>74</position>
+                <length>1</length>
+            </field>
+            <field order="10">
+                <name>BOFD Conversion Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="true">
+                    <value key="0">Did not convert physical document</value>
+                    <value key="1">Original paper converted to IRD</value>
+                    <value key="2">Original paper converted to image</value>
+                    <value key="3">IRD converted to another IRD</value>
+                    <value key="4">IRD converted to image of IRD</value>
+                    <value key="5">Image converted to an IRD</value>
+                    <value key="6">Image converted to another image (e.g., transcoded)</value>
+                    <value key="7">Did not convert image (e.g., same as source)</value>
+                    <value key="8">Undetermined</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>75</position>
+                <length>1</length>
+            </field>
+            <field order="11">
+                <name>BOFD Correction Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="true" ref="dictCorrectionIndicator"/>
+                <validation>N</validation>
+                <position>76</position>
+                <length>1</length>
+            </field>
+            <field order="12">
+                <name>User</name>User
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>77</position>
+                <length>1</length>
+            </field>
+            <field order="13">
+                <name>Field Reserved</name>
+                <usage>C</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <position>78</position>
+                <length>3</length>
+            </field>
         </fields>
     </record>
-    
+
     <forbidden type="27">
         <name>Check Detail Addendum B Record</name>
         <type>27</type>
         <usage>F</usage>
         <validation>N</validation>
     </forbidden>
-    
+
     <record type="28">Check Detail Addendum C Record
         <name>Check Detail Addendum C Record</name>
         <type>28</type>
@@ -703,93 +809,93 @@
         <length>70</length>
         <fieldCount>11</fieldCount>
         <fields>
-        <predefined order="1" ref="fieldRecordType">Record Type</predefined>
-        <field order="2">
-          <name>Check Detail Addendum C Record Number</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>3</position>
-          <length>2</length>
-        </field>
-        <field order="3">
-          <name>Endorsing Bank Routing Number</name>
-          <usage>C</usage>
-          <type>N</type>
-          <subtype>Routing</subtype>
-          <validation>P</validation>
-          <position>5</position>
-          <length>9</length>
-        </field>
-        <field order="4">
-          <name>Endorsing Bank Endorsement Date</name>
-          <usage>C</usage>
-          <type>N</type>
-          <subtype>Date</subtype>
-          <validation>P</validation>
-          <position>14</position>
-          <length>8</length>
-        </field>
-        <field order="5">
-          <name>Endorsing Bank Sequence Number</name>
-          <usage>C</usage>
-          <type>NB</type>
-          <validation>N</validation>
-          <position>22</position>
-          <length>15</length>
-        </field>
-        <field order="6">
-          <name>Truncation Indicator</name>
-          <usage>C</usage>
-          <type>A</type>
-          <validation>N</validation>
-          <position>37</position>
-          <length>1</length>
-        </field>
-        <field order="7">
-          <name>Endorsing Bank Conversion Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>N</validation>
-          <position>38</position>
-          <length>1</length>
-        </field>
-        <field order="8">
-          <name>Endorsing Bank Correction Indicator</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>39</position>
-          <length>1</length>
-        </field>
-        <field order="9">
-          <name>Return Reason</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <dictonary comprehensive="true" ref="dictReturnCodes"/>
-          <validation>N</validation>
-          <position>40</position>
-          <length>1</length>
-        </field>
-        <field order="10">
-          <name>User</name>User
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>41</position>
-          <length>15</length>
-        </field>
-        <field order="11">
-          <name>Field Reserved</name>
-          <usage>C</usage>
-          <type>B</type>
-          <validation>N</validation>
-          <position>56</position>
-          <length>15</length>
-        </field>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>Check Detail Addendum C Record Number</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>3</position>
+                <length>2</length>
+            </field>
+            <field order="3">
+                <name>Endorsing Bank Routing Number</name>
+                <usage>C</usage>
+                <type>N</type>
+                <subtype>Routing</subtype>
+                <validation>P</validation>
+                <position>5</position>
+                <length>9</length>
+            </field>
+            <field order="4">
+                <name>Endorsing Bank Endorsement Date</name>
+                <usage>C</usage>
+                <type>N</type>
+                <subtype>Date</subtype>
+                <validation>P</validation>
+                <position>14</position>
+                <length>8</length>
+            </field>
+            <field order="5">
+                <name>Endorsing Bank Sequence Number</name>
+                <usage>C</usage>
+                <type>NB</type>
+                <validation>N</validation>
+                <position>22</position>
+                <length>15</length>
+            </field>
+            <field order="6">
+                <name>Truncation Indicator</name>
+                <usage>C</usage>
+                <type>A</type>
+                <validation>N</validation>
+                <position>37</position>
+                <length>1</length>
+            </field>
+            <field order="7">
+                <name>Endorsing Bank Conversion Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <validation>N</validation>
+                <position>38</position>
+                <length>1</length>
+            </field>
+            <field order="8">
+                <name>Endorsing Bank Correction Indicator</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>39</position>
+                <length>1</length>
+            </field>
+            <field order="9">
+                <name>Return Reason</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="true" ref="dictReturnCodes"/>
+                <validation>N</validation>
+                <position>40</position>
+                <length>1</length>
+            </field>
+            <field order="10">
+                <name>User</name>User
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>41</position>
+                <length>15</length>
+            </field>
+            <field order="11">
+                <name>Field Reserved</name>
+                <usage>C</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <position>56</position>
+                <length>15</length>
+            </field>
         </fields>
     </record>
-    
+
     <forbidden type="40">
         <name>Account Totals Detail Record</name>
         <type>40</type>
@@ -802,7 +908,7 @@
         <usage>F</usage>
         <validation>N</validation>
     </forbidden>
-    
+
     <record type="50">Image View Detail Record
         <name>Image View Detail Record</name>
         <type>50</type>
@@ -811,181 +917,192 @@
         <length>80</length>
         <fieldCount>19</fieldCount>
         <fields>
-        <predefined order="1" ref="fieldRecordType">Record Type</predefined>
-        <field order="2">
-          <name>Image Indicator</name>
-          <usage>M</usage>
-          <type>N</type>
-          <dictonary comprehensive="false">
-              <value key="0">Image View not present.</value>
-              <value key="1">Image View is actual check</value>
-          </dictonary>
-          <validation>R</validation>
-          <position>3</position>
-          <length>1</length>
-        </field>
-        <field order="3">
-          <name>Image Creator Routing Number</name>
-          <usage>M</usage>
-          <type>N</type>
-          <subtype>Routing</subtype>
-          <validation>N</validation>
-          <position>4</position>
-          <length>9</length>
-        </field>
-        <field order="4">
-          <name>Image Creator Date</name>
-          <usage>C</usage>
-          <type>N</type>
-          <subtype>Date</subtype>
-          <validation>P</validation>
-          <position>13</position>
-          <length>8</length>
-        </field>
-        <field order="5">
-          <name>Image View Format Indicator</name>
-          <usage>C</usage>
-          <type>N</type>
-          <dictonary comprehensive="false">
-              <value key="00">TIFF 6</value>
-          </dictonary>
-          <validation>P</validation>
-          <position>21</position>
-          <length>2</length>
-        </field>
-        <field order="6">
-          <name>Image View Compression Algorithm Identifier</name>
-          <usage>C</usage>
-          <type>N</type>
-          <dictonary comprehensive="false">
-              <value key="00">Group 4 Facsimile (G4)</value>
-          </dictonary>
-          <validation>P</validation>
-          <position>23</position>
-          <length>2</length>
-        </field>
-        <field order="7">
-          <name>Image View Data Size</name>
-          <usage>C</usage>
-          <type>NB</type>
-          <validation>P</validation>
-          <position>25</position>
-          <length>7</length>
-        </field>
-        <field order="8">
-          <name>View Side Indicator</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>32</position>
-          <length>1</length>
-        </field>
-        <field order="9">
-          <name>View Descriptor</name>
-          <usage>M</usage>
-          <type>N</type>
-          <dictonary comprehensive="false">
-              <value key="00">Full View</value>
-          </dictonary>
-          <validation>N</validation>
-          <position>33</position>
-          <length>2</length>
-        </field>
-        <field order="10">
-          <name>Digital Signature Indicator</name>
-          <usage>C</usage>
-          <type>N</type>
-          <dictonary comprehensive="false">
-              <value key="0">Digital Signature is not present</value>
-          </dictonary>
-          <validation>P</validation>
-          <position>35</position>
-          <length>1</length>
-        </field>
-        <field order="11">
-          <name>Digital Signature Method</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>36</position>
-          <length>2</length>
-        </field>
-        <field order="12">
-          <name>Security Key Size</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>38</position>
-          <length>5</length>
-        </field>
-        <field order="13">
-          <name>Start of Protected Data</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>43</position>
-          <length>7</length>
-        </field>
-        <field order="14">
-          <name>Length of Protected Data</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>50</position>
-          <length>7</length>
-        </field>
-        <field order="15">
-          <name>Image Recreate Indicator</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>57</position>
-          <length>1</length>
-        </field>
-        <field order="16">
-          <name>User</name>User
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>58</position>
-          <length>8</length>
-        </field>
-        <field order="17">
-          <name>Image TIFF Variance Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <dictonary comprehensive="false">
-              <value key=" ">Blank, Image variance unknown.</value>
-              <value key="0">No variance</value>
-          </dictonary>
-          <validation>N</validation>
-          <position>66</position>
-          <length>1</length>
-        </field>
-        <field order="18">
-          <name>Override Indicator</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <dictonary comprehensive="false">
-              <value key=" ">No override information for this view or not applicable.</value>
-              <value key="0">No observed image test failure present.</value>
-              <value key="1">Imperfect Image Item exchanged under ECCHO rules.</value>
-          </dictonary>
-          <validation>N</validation>
-          <position>67</position>
-          <length>1</length>
-        </field>
-        <field order="19">
-          <name>Reserved</name>
-          <usage>M</usage>
-          <type>B</type>
-          <validation>N</validation>
-          <position>68</position>
-          <length>13</length>
-        </field>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>Image Indicator</name>
+                <usage>M</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="0">Image View not present.</value>
+                    <value key="1">Image View is actual check</value>
+                </dictonary>
+                <validation>R</validation>
+                <position>3</position>
+                <length>1</length>
+            </field>
+            <field order="3">
+                <name>Image Creator Routing Number</name>
+                <usage>M</usage>
+                <type>N</type>
+                <subtype>Routing</subtype>
+                <validation>N</validation>
+                <position>4</position>
+                <length>9</length>
+            </field>
+            <field order="4">
+                <name>Image Creator Date</name>
+                <usage>C</usage>
+                <type>N</type>
+                <subtype>Date</subtype>
+                <validation>P</validation>
+                <position>13</position>
+                <length>8</length>
+            </field>
+            <field order="5">
+                <name>Image View Format Indicator</name>
+                <usage>C</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="00">TIFF 6</value>
+                    <value key="01">IOCA FS 11</value>
+                    <value key="20">PNG</value>
+                    <value key="21">JFIF</value>
+                    <value key="22">SPIFF</value>
+                    <value key="23">JBIG</value>
+                    <value key="24">JPEG 2000</value>
+                </dictonary>
+                <validation>P</validation>
+                <position>21</position>
+                <length>2</length>
+            </field>
+            <field order="6">
+                <name>Image View Compression Algorithm Identifier</name>
+                <usage>C</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="00">Group 4 Facsimile (G4)</value>
+                </dictonary>
+                <validation>P</validation>
+                <position>23</position>
+                <length>2</length>
+            </field>
+            <field order="7">
+                <name>Image View Data Size</name>
+                <usage>C</usage>
+                <type>NB</type>
+                <validation>P</validation>
+                <position>25</position>
+                <length>7</length>
+            </field>
+            <field order="8">
+                <name>View Side Indicator</name>
+                <usage>M</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="0">Front</value>
+                    <value key="1">Back</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>32</position>
+                <length>1</length>
+            </field>
+            <field order="9">
+                <name>View Descriptor</name>
+                <usage>M</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="00">Full View</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>33</position>
+                <length>2</length>
+            </field>
+            <field order="10">
+                <name>Digital Signature Indicator</name>
+                <usage>C</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="0">Digital Signature is not present</value>
+                    <value key="1">Digital Signature is present</value>
+                </dictonary>
+                <validation>P</validation>
+                <position>35</position>
+                <length>1</length>
+            </field>
+            <field order="11">
+                <name>Digital Signature Method</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>36</position>
+                <length>2</length>
+            </field>
+            <field order="12">
+                <name>Security Key Size</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>38</position>
+                <length>5</length>
+            </field>
+            <field order="13">
+                <name>Start of Protected Data</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>43</position>
+                <length>7</length>
+            </field>
+            <field order="14">
+                <name>Length of Protected Data</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>50</position>
+                <length>7</length>
+            </field>
+            <field order="15">
+                <name>Image Recreate Indicator</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>57</position>
+                <length>1</length>
+            </field>
+            <field order="16">
+                <name>User</name>User
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>58</position>
+                <length>8</length>
+            </field>
+            <field order="17">
+                <name>Image TIFF Variance Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="false">
+                    <value key=" ">Blank, Image variance unknown.</value>
+                    <value key="0">No variance</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>66</position>
+                <length>1</length>
+            </field>
+            <field order="18">
+                <name>Override Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="false">
+                    <value key=" ">No override information for this view or not applicable.</value>
+                    <value key="0">No observed image test failure present.</value>
+                    <value key="1">Imperfect Image Item exchanged under ECCHO rules.</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>67</position>
+                <length>1</length>
+            </field>
+            <field order="19">
+                <name>Reserved</name>
+                <usage>M</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <position>68</position>
+                <length>13</length>
+            </field>
         </fields>
     </record>
-    
+
     <record type="52">Image View Data Record
         <name>Image View Data Record</name>
         <type>52</type>
@@ -994,165 +1111,165 @@
         <variableLength ref="imageReferenceKeyLength imageReferenceKeyLength imageDataLength">117+X+Y+Z</variableLength>
         <fieldCount>19</fieldCount>
         <fields>
-        <predefined order="1" ref="fieldRecordType">Record Type</predefined>
-        <field order="2">
-          <name>ECE Institution Routing Number</name>
-          <usage>M</usage>
-          <type>N</type>
-          <subtype>Routing</subtype>
-          <validation>R</validation>
-          <position>3</position>
-          <length>9</length>
-        </field>
-        <field order="3">
-          <name>Bundle Business Date</name>
-          <usage>M</usage>
-          <type>N</type>
-          <subtype>Date</subtype>
-          <validation>R</validation>
-          <position>12</position>
-          <length>8</length>
-        </field>
-        <field order="4">
-          <name>Cycle Number</name>
-          <usage>C</usage>
-          <type>AN</type>
-          <validation>N</validation>
-          <position>20</position>
-          <length>2</length>
-        </field>
-        <field order="5">
-          <name>Client Institution Item Sequence Number</name>
-          <usage>M</usage>
-          <type>NB</type>
-          <validation>R</validation>
-          <position>22</position>
-          <length>15</length>
-        </field>
-        <field order="6">
-          <name>Security Originator Name</name>
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>37</position>
-          <length>16</length>
-        </field>
-        <field order="7">
-          <name>Security Authenticator Name</name>
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>53</position>
-          <length>16</length>
-        </field>
-        <field order="8">
-          <name>Security Key Name</name>
-          <usage>C</usage>
-          <type>ANS</type>
-          <validation>N</validation>
-          <position>69</position>
-          <length>16</length>
-        </field>
-        <field order="9">
-          <name>Clipping Origin</name>
-          <usage>M</usage>
-          <type>NB</type>
-          <dictonary comprehensive='false'>
-              <value key='0'>Full View</value>
-          </dictonary>
-          <validation>R</validation>
-          <position>85</position>
-          <length>1</length>
-        </field>
-        <field order="10">
-          <name>Clipping Coordinate h1</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>86</position>
-          <length>4</length>
-        </field>
-        <field order="11">
-          <name>Clipping Coordinate h2</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>90</position>
-          <length>4</length>
-        </field>
-        <field order="12">
-          <name>Clipping Coordinate v1</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>94</position>
-          <length>4</length>
-        </field>
-        <field order="13">
-          <name>Clipping Coordinate v2</name>
-          <usage>C</usage>
-          <type>N</type>
-          <validation>N</validation>
-          <position>98</position>
-          <length>4</length>
-        </field>
-        <field order="14" id="imageReferenceKeyLength">
-          <name>Length of Image Reference Key</name>
-          <usage>M</usage>
-          <type>N</type>
-          <dictonary comprehensive="false">
-              <value key="0000">Image Reference Key Not Present</value>
-          </dictonary>
-          <validation>N</validation>
-          <position>102</position>
-          <length>4</length>
-          <valueKey>X</valueKey>
-        </field>
-        <field order="15">
-          <name>Image Reference Key</name>
-          <usage>C</usage>
-          <type>Binary</type>
-          <validation>N</validation>
-          <variablePosition>106+X</variablePosition>
-          <variableLength ref="imageReferenceKeyLength">X</variableLength>
-        </field>
-        <field order="16" id="digitalSignatureLength">
-          <name>Length of Digital Signature</name>
-          <usage>M</usage>
-          <type>NB</type>
-          <validation>R</validation>
-          <variablePosition>106+X</variablePosition>
-          <length>5</length>
-          <valueKey>Y</valueKey>
-        </field>
-        <field order="17">
-          <name>Digital Signature</name>
-          <usage>C</usage>
-          <type>Binary</type>
-          <validation>N</validation>
-          <variablePosition>111+X</variablePosition>
-          <variableLength ref="digitalSignatureLength">Y</variableLength>
-        </field>
-        <field order="18" id="imageDataLength">
-          <name>Length of Image Data</name>
-          <usage>M</usage>
-          <type>NB</type>
-          <validation>R</validation>
-          <variablePosition>111+X+Y</variablePosition>
-          <length>7</length>
-          <valueKey>Z</valueKey>
-        </field>
-        <field order="19">
-          <name>Image Data</name>
-          <usage>C</usage>
-          <type>Binary</type>
-          <validation>N</validation>
-          <variablePosition>118+X+Y</variablePosition>
-          <variableLength ref="imageDataLength">Z</variableLength>
-        </field>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>ECE Institution Routing Number</name>
+                <usage>M</usage>
+                <type>N</type>
+                <subtype>Routing</subtype>
+                <validation>R</validation>
+                <position>3</position>
+                <length>9</length>
+            </field>
+            <field order="3">
+                <name>Bundle Business Date</name>
+                <usage>M</usage>
+                <type>N</type>
+                <subtype>Date</subtype>
+                <validation>R</validation>
+                <position>12</position>
+                <length>8</length>
+            </field>
+            <field order="4">
+                <name>Cycle Number</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <validation>N</validation>
+                <position>20</position>
+                <length>2</length>
+            </field>
+            <field order="5">
+                <name>Client Institution Item Sequence Number</name>
+                <usage>M</usage>
+                <type>NB</type>
+                <validation>R</validation>
+                <position>22</position>
+                <length>15</length>
+            </field>
+            <field order="6">
+                <name>Security Originator Name</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>37</position>
+                <length>16</length>
+            </field>
+            <field order="7">
+                <name>Security Authenticator Name</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>53</position>
+                <length>16</length>
+            </field>
+            <field order="8">
+                <name>Security Key Name</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>69</position>
+                <length>16</length>
+            </field>
+            <field order="9">
+                <name>Clipping Origin</name>
+                <usage>M</usage>
+                <type>NB</type>
+                <dictonary comprehensive='false'>
+                    <value key='0'>Full View</value>
+                </dictonary>
+                <validation>R</validation>
+                <position>85</position>
+                <length>1</length>
+            </field>
+            <field order="10">
+                <name>Clipping Coordinate h1</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>86</position>
+                <length>4</length>
+            </field>
+            <field order="11">
+                <name>Clipping Coordinate h2</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>90</position>
+                <length>4</length>
+            </field>
+            <field order="12">
+                <name>Clipping Coordinate v1</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>94</position>
+                <length>4</length>
+            </field>
+            <field order="13">
+                <name>Clipping Coordinate v2</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>98</position>
+                <length>4</length>
+            </field>
+            <field order="14" id="imageReferenceKeyLength">
+                <name>Length of Image Reference Key</name>
+                <usage>M</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="0000">Image Reference Key Not Present</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>102</position>
+                <length>4</length>
+                <valueKey>X</valueKey>
+            </field>
+            <field order="15">
+                <name>Image Reference Key</name>
+                <usage>C</usage>
+                <type>Binary</type>
+                <validation>N</validation>
+                <variablePosition>106+X</variablePosition>
+                <variableLength ref="imageReferenceKeyLength">X</variableLength>
+            </field>
+            <field order="16" id="digitalSignatureLength">
+                <name>Length of Digital Signature</name>
+                <usage>M</usage>
+                <type>NB</type>
+                <validation>R</validation>
+                <variablePosition>106+X</variablePosition>
+                <length>5</length>
+                <valueKey>Y</valueKey>
+            </field>
+            <field order="17">
+                <name>Digital Signature</name>
+                <usage>C</usage>
+                <type>Binary</type>
+                <validation>N</validation>
+                <variablePosition>111+X</variablePosition>
+                <variableLength ref="digitalSignatureLength">Y</variableLength>
+            </field>
+            <field order="18" id="imageDataLength">
+                <name>Length of Image Data</name>
+                <usage>M</usage>
+                <type>NB</type>
+                <validation>R</validation>
+                <variablePosition>111+X+Y</variablePosition>
+                <length>7</length>
+                <valueKey>Z</valueKey>
+            </field>
+            <field order="19">
+                <name>Image Data</name>
+                <usage>C</usage>
+                <type>Binary</type>
+                <validation>N</validation>
+                <variablePosition>118+X+Y</variablePosition>
+                <variableLength ref="imageDataLength">Z</variableLength>
+            </field>
         </fields>
     </record>
-    
+
     <record type="54">Image View Analysis Record
         <name>Image View Analysis Record</name>
         <type>54</type>
@@ -1161,390 +1278,390 @@
         <length>80</length>
         <fieldCount>46</fieldCount>
         <fields>
-        <predefined order="1" ref="fieldRecordType">Record Type</predefined>
-          <field order="2">
-          <name>Global Image Qualilty</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>3</position>
-          <length>1</length>
-        </field>
-        <field order="3">
-          <name>Global Image Usability</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>R</validation>
-          <position>4</position>
-          <length>1</length>
-        </field>
-        <field order="4">
-          <name>Imaging Bank Specific Test</name>
-          <usage>M</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>5</position>
-          <length>1</length>
-        </field>
-        <field order="5">
-          <name>Partial Image</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictImagingTest" />
-          <validation>P</validation>
-          <position>6</position>
-          <length>1</length>
-        </field>
-        <field order="6">
-          <name>Excessive Image Skew</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictImagingTest" />
-          <validation>P</validation>
-          <position>7</position>
-          <length>1</length>
-        </field>
-        <field order="7">
-          <name>Piggyback Image</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictImagingTest" />
-          <validation>P</validation>
-          <position>8</position>
-          <length>1</length>
-        </field>
-        <field order="8">
-          <name>Too Light or Too Dark</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictImagingTest" />
-          <validation>P</validation>
-          <position>9</position>
-          <length>1</length>
-        </field>
-        <field order="9">
-          <name>Streaks or Bands</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictImagingTest" />
-          <validation>P</validation>
-          <position>10</position>
-          <length>1</length>
-        </field>
-        <field order="10">
-          <name>Below Minimum Image Size</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictImagingTest" />
-          <validation>P</validation>
-          <position>11</position>
-          <length>1</length>
-        </field>
-        <field order="11">
-          <name>Exceeds Maximum Image Size</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary comprehensive="true" ref="dictImagingTest" />
-          <validation>P</validation>
-          <position>12</position>
-          <length>1</length>
-        </field>
-        <field order="12">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>13</position>
-          <length>1</length>
-        </field>
-        <field order="13">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>14</position>
-          <length>1</length>
-        </field>
-        <field order="14">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>15</position>
-          <length>1</length>
-        </field>
-        <field order="15">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>16</position>
-          <length>1</length>
-        </field>
-        <field order="16">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>17</position>
-          <length>1</length>
-        </field>
-        <field order="17">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>18</position>
-          <length>1</length>
-        </field>
-        <field order="18">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>19</position>
-          <length>1</length>
-        </field>
-        <field order="19">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>20</position>
-          <length>1</length>
-        </field>
-        <field order="20">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>21</position>
-          <length>1</length>
-        </field>
-        <field order="21">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>22</position>
-          <length>1</length>
-        </field>
-        <field order="22">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>23</position>
-          <length>1</length>
-        </field>
-        <field order="23">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>24</position>
-          <length>1</length>
-        </field>
-        <field order="24">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>25</position>
-          <length>1</length>
-        </field>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>Global Image Qualilty</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>3</position>
+                <length>1</length>
+            </field>
+            <field order="3">
+                <name>Global Image Usability</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>R</validation>
+                <position>4</position>
+                <length>1</length>
+            </field>
+            <field order="4">
+                <name>Imaging Bank Specific Test</name>
+                <usage>M</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>5</position>
+                <length>1</length>
+            </field>
+            <field order="5">
+                <name>Partial Image</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictImagingTest"/>
+                <validation>P</validation>
+                <position>6</position>
+                <length>1</length>
+            </field>
+            <field order="6">
+                <name>Excessive Image Skew</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictImagingTest"/>
+                <validation>P</validation>
+                <position>7</position>
+                <length>1</length>
+            </field>
+            <field order="7">
+                <name>Piggyback Image</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictImagingTest"/>
+                <validation>P</validation>
+                <position>8</position>
+                <length>1</length>
+            </field>
+            <field order="8">
+                <name>Too Light or Too Dark</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictImagingTest"/>
+                <validation>P</validation>
+                <position>9</position>
+                <length>1</length>
+            </field>
+            <field order="9">
+                <name>Streaks or Bands</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictImagingTest"/>
+                <validation>P</validation>
+                <position>10</position>
+                <length>1</length>
+            </field>
+            <field order="10">
+                <name>Below Minimum Image Size</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictImagingTest"/>
+                <validation>P</validation>
+                <position>11</position>
+                <length>1</length>
+            </field>
+            <field order="11">
+                <name>Exceeds Maximum Image Size</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary comprehensive="true" ref="dictImagingTest"/>
+                <validation>P</validation>
+                <position>12</position>
+                <length>1</length>
+            </field>
+            <field order="12">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>13</position>
+                <length>1</length>
+            </field>
+            <field order="13">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>14</position>
+                <length>1</length>
+            </field>
+            <field order="14">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>15</position>
+                <length>1</length>
+            </field>
+            <field order="15">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>16</position>
+                <length>1</length>
+            </field>
+            <field order="16">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>17</position>
+                <length>1</length>
+            </field>
+            <field order="17">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>18</position>
+                <length>1</length>
+            </field>
+            <field order="18">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>19</position>
+                <length>1</length>
+            </field>
+            <field order="19">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>20</position>
+                <length>1</length>
+            </field>
+            <field order="20">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>21</position>
+                <length>1</length>
+            </field>
+            <field order="21">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>22</position>
+                <length>1</length>
+            </field>
+            <field order="22">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>23</position>
+                <length>1</length>
+            </field>
+            <field order="23">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>24</position>
+                <length>1</length>
+            </field>
+            <field order="24">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>25</position>
+                <length>1</length>
+            </field>
 
-        <field order="25">
-          <name>Image-Enabled POD</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>26</position>
-          <length>1</length>
-        </field>
-        <field order="26">
-          <name>Source Document Bad</name>
-          <usage>O</usage>
-          <type>N</type>
-          <validation>P</validation>
-          <position>27</position>
-          <length>1</length>
-        </field>
-        <field order="27">
-          <name>Date Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>28</position>
-          <length>1</length>
-        </field>
-        <field order="28">
-          <name>Payee Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>29</position>
-          <length>1</length>
-        </field>
-        <field order="29">
-          <name>Convenience Amount Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>30</position>
-          <length>1</length>
-        </field>
-        <field order="30">
-          <name>Legal Amount Useability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>31</position>
-          <length>1</length>
-        </field>
-        <field order="31">
-          <name>Signature Useability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>32</position>
-          <length>1</length>
-        </field>
-        <field order="32">
-          <name>Payor Name and Address Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>33</position>
-          <length>1</length>
-        </field>
-        <field order="33">
-          <name>MICR Line Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>34</position>
-          <length>1</length>
-        </field>
-        <field order="34">
-          <name>Memo Line Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>35</position>
-          <length>1</length>
-        </field>
-        <field order="35">
-          <name>Payor Bank Name and Address Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>36</position>
-          <length>1</length>
-        </field>
-        <field order="36">
-          <name>Payee Endorsement Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>37</position>
-          <length>1</length>
-        </field>
-        <field order="37">
-          <name>BOFD Endorsement Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>38</position>
-          <length>1</length>
-        </field>
-        <field order="38">
-          <name>Transit Endorsement Usability</name>
-          <usage>O</usage>
-          <type>N</type>
-          <dictonary ref="dictImageUseability" comprehensive="true" />
-          <validation>P</validation>
-          <position>39</position>
-          <length>1</length>
-        </field>
-        <field order="39">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>NB</type>
-          <validation>N</validation>
-          <position>40</position>
-          <length>1</length>
-        </field>
-        <field order="40">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>NB</type>
-          <validation>N</validation>
-          <position>41</position>
-          <length>1</length>
-        </field>
-        <field order="41">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>NB</type>
-          <validation>N</validation>
-          <position>42</position>
-          <length>1</length>
-        </field>
-        <field order="42">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>NB</type>
-          <validation>N</validation>
-          <position>43</position>
-          <length>1</length>
-        </field>
-        <field order="43">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>NB</type>
-          <validation>N</validation>
-          <position>44</position>
-          <length>1</length>
-        </field>
-        <field order="44">
-          <name>Reserved</name>
-          <usage>O</usage>
-          <type>NB</type>
-          <validation>N</validation>
-          <position>45</position>
-          <length>1</length>
-        </field>
-        <field order="45">
-            <name>User</name>
-            <usage>O</usage>
-            <type>ANS</type>
-            <validation>N</validation>
-            <position>46</position>
-            <length>20</length>
-        </field>
-        <field order="46">
-            <name>Reserved</name>
-            <usage>F</usage>
-            <type>B</type>
-            <validation>N</validation>
-            <position>66</position>
-            <length>15</length>
-        </field>
+            <field order="25">
+                <name>Image-Enabled POD</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>26</position>
+                <length>1</length>
+            </field>
+            <field order="26">
+                <name>Source Document Bad</name>
+                <usage>O</usage>
+                <type>N</type>
+                <validation>P</validation>
+                <position>27</position>
+                <length>1</length>
+            </field>
+            <field order="27">
+                <name>Date Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>28</position>
+                <length>1</length>
+            </field>
+            <field order="28">
+                <name>Payee Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>29</position>
+                <length>1</length>
+            </field>
+            <field order="29">
+                <name>Convenience Amount Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>30</position>
+                <length>1</length>
+            </field>
+            <field order="30">
+                <name>Legal Amount Useability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>31</position>
+                <length>1</length>
+            </field>
+            <field order="31">
+                <name>Signature Useability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>32</position>
+                <length>1</length>
+            </field>
+            <field order="32">
+                <name>Payor Name and Address Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>33</position>
+                <length>1</length>
+            </field>
+            <field order="33">
+                <name>MICR Line Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>34</position>
+                <length>1</length>
+            </field>
+            <field order="34">
+                <name>Memo Line Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>35</position>
+                <length>1</length>
+            </field>
+            <field order="35">
+                <name>Payor Bank Name and Address Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>36</position>
+                <length>1</length>
+            </field>
+            <field order="36">
+                <name>Payee Endorsement Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>37</position>
+                <length>1</length>
+            </field>
+            <field order="37">
+                <name>BOFD Endorsement Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>38</position>
+                <length>1</length>
+            </field>
+            <field order="38">
+                <name>Transit Endorsement Usability</name>
+                <usage>O</usage>
+                <type>N</type>
+                <dictonary ref="dictImageUseability" comprehensive="true"/>
+                <validation>P</validation>
+                <position>39</position>
+                <length>1</length>
+            </field>
+            <field order="39">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>NB</type>
+                <validation>N</validation>
+                <position>40</position>
+                <length>1</length>
+            </field>
+            <field order="40">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>NB</type>
+                <validation>N</validation>
+                <position>41</position>
+                <length>1</length>
+            </field>
+            <field order="41">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>NB</type>
+                <validation>N</validation>
+                <position>42</position>
+                <length>1</length>
+            </field>
+            <field order="42">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>NB</type>
+                <validation>N</validation>
+                <position>43</position>
+                <length>1</length>
+            </field>
+            <field order="43">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>NB</type>
+                <validation>N</validation>
+                <position>44</position>
+                <length>1</length>
+            </field>
+            <field order="44">
+                <name>Reserved</name>
+                <usage>O</usage>
+                <type>NB</type>
+                <validation>N</validation>
+                <position>45</position>
+                <length>1</length>
+            </field>
+            <field order="45">
+                <name>User</name>
+                <usage>O</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>46</position>
+                <length>20</length>
+            </field>
+            <field order="46">
+                <name>Reserved</name>
+                <usage>F</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <position>66</position>
+                <length>15</length>
+            </field>
         </fields>
     </record>
-    
+
     <record type="70">Bundle Control Record
         <name>Bundle Control Record</name>
         <type>70</type>
@@ -1606,7 +1723,7 @@
             </field>
         </fields>
     </record>
-    
+
     <forbidden type="75">
         <name>Box Summary Record</name>
         <type>75</type>
@@ -1619,7 +1736,7 @@
         <usage>F</usage>
         <validation>N</validation>
     </forbidden>
-    
+
     <record type="90">Cash Letter Control Record
         <name>Cash Letter Control Record</name>
         <type>90</type>
@@ -1689,7 +1806,7 @@
             </field>
         </fields>
     </record>
-    
+
     <record type="99">File Control Record
         <name>File Control Record</name>
         <type>99</type>

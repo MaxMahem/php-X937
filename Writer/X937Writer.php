@@ -10,7 +10,8 @@
  */
 class X937Writer extends AbstractWriter
 {
-    public function writeRecord(\X937\Record\Record $record) {    
+    public function writeRecord(\X937\Records\Record $record)
+    {
         $output = '';
 
         $recordLengthData = pack('N', $record->length);
