@@ -4,7 +4,7 @@
         xsi:noNamespaceSchemaLocation='Records/X937Specification.xsd'>
 
     <dictonaries>
-        <dictonary comprehensive="true" id="dictRecordType">
+        <dictonary id="dictRecordType" comprehensive="true">
             <value key="01">File Header Record</value>
             <value key="10">Cash Letter Header Record</value>
             <value key="20">Bundle Header Record</value>
@@ -19,7 +19,7 @@
             <value key="90">Cash Letter Control Record</value>
             <value key="99">File Control Record</value>
         </dictonary>
-        <dictonary comprehensive="true" id="dictCollectionType">
+        <dictonary id="dictCollectionType" comprehensive="true">
             <value key='00'>Preliminary Forward Information</value>
             <value key='01'>Forward Presentment</value>
             <value key='02'>Forward Presentment - Same Day Settlement</value>
@@ -30,7 +30,7 @@
             <value key='20'>No Detail</value>
             <value key='99'>Bundles not the same collection type</value>
         </dictonary>
-        <dictonary comprehensive="true" id="dictDocumentationType">
+        <dictonary id="dictDocumentationType" comprehensive="true">
             <value key="A">No image provided, paper provided separately</value>
             <value key="B">No image provided, paper provided separately, image upon request</value>
             <value key="C">Image provided separately, no paper provided</value>
@@ -47,6 +47,21 @@
             <value key="Z">Not Same Type–Documentation associated with each item in Cash Letter will be different.
             </value>
         </dictonary>
+        <dictonary id="dictTruncationIndicator" comprehensive="true">
+            <value key="Y">Truncated</value>
+            <value key="N">Not Truncated</value>
+        </dictonary>
+        <dictonary id="dictConversionIndicator" comprehensive="true">
+            <value key="0">Did not convert physical document</value>
+            <value key="1">Original paper converted to IRD</value>
+            <value key="2">Original paper converted to image</value>
+            <value key="3">IRD converted to another IRD</value>
+            <value key="4">IRD converted to image of IRD</value>
+            <value key="5">Image converted to an IRD</value>
+            <value key="6">Image converted to another image (e.g., transcoded)</value>
+            <value key="7">Did not convert image (e.g., same as source)</value>
+            <value key="8">Undetermined</value>
+        </dictonary>
         <dictonary id="dictCorrectionIndicator" comprehensive="true">
             <value key="0">No Repair</value>
             <value key="1">Repaired (form of repair unknown)</value>
@@ -54,7 +69,7 @@
             <value key="3">Repaired with Operator intervention</value>
             <value key="4">Undetermined if repair has been done or not</value>
         </dictonary>
-        <dictonary comprehensive="true" id="dictReturnCodes">
+        <dictonary id="dictReturnCodes" comprehensive="true">
             <value key="A">NSF - Not Sufficent Funds'</value>
             <value key="B">UCF - Uncollected Funds Hold</value>
             <value key="C">Stop Payment</value>
@@ -88,6 +103,10 @@
             <value key="0">Test not done</value>
             <value key="1">Area unusable</value>
             <value key="2">Area usable</value>
+        </dictonary>
+        <dictonary id="dictCreditTotalIndicator" comprehensive="true">
+            <value key="0">Credit Items are not included in totals</value>
+            <value key="1">Credit Items are included in totals</value>
         </dictonary>
     </dictonaries>
 
@@ -219,7 +238,7 @@
                 <length>2</length>
             </field>
             <field order="13">User Field
-                <name>User</name>User
+                <name>User Field</name>
                 <usage>O</usage>
                 <type>ANS</type>
                 <subtype>Blank</subtype>
@@ -377,7 +396,7 @@
                 <length>1</length>
             </field>
             <field order="15">
-                <name>User</name>User
+                <name>User Field</name>
                 <usage>O</usage>
                 <type>ANS</type>
                 <subtype>Blank</subtype>
@@ -479,7 +498,7 @@
                 <length>9</length>
             </field>
             <field order="11">
-                <name>User</name>User
+                <name>User Field</name>
                 <usage>O</usage>
                 <type>ANS</type>
                 <validation>N</validation>
@@ -517,7 +536,10 @@
             <field order="3">
                 <name>External Processing Code</name>
                 <usage>C</usage>
-                <type>ANS</type>
+                <type>NS</type>
+                <dictonary comprehensive="false">
+                    <value key="*">Unable to interpret MICR</value>
+                </dictonary>
                 <validation>P</validation>
                 <position>18</position>
                 <length>1</length>
@@ -739,10 +761,7 @@
                 <name>Truncation Indicator</name>
                 <usage>M</usage>
                 <type>A</type>
-                <dictonary comprehensive="true">
-                    <value key="Y">Truncated</value>
-                    <value key="N">Not Truncated</value>
-                </dictonary>
+                <dictonary ref="dictTruncationIndicator" comprehensive="true" />
                 <validation>N</validation>
                 <position>74</position>
                 <length>1</length>
@@ -751,17 +770,7 @@
                 <name>BOFD Conversion Indicator</name>
                 <usage>C</usage>
                 <type>AN</type>
-                <dictonary comprehensive="true">
-                    <value key="0">Did not convert physical document</value>
-                    <value key="1">Original paper converted to IRD</value>
-                    <value key="2">Original paper converted to image</value>
-                    <value key="3">IRD converted to another IRD</value>
-                    <value key="4">IRD converted to image of IRD</value>
-                    <value key="5">Image converted to an IRD</value>
-                    <value key="6">Image converted to another image (e.g., transcoded)</value>
-                    <value key="7">Did not convert image (e.g., same as source)</value>
-                    <value key="8">Undetermined</value>
-                </dictonary>
+                <dictonary ref="dictConversionIndicator" comprehensive="true" />
                 <validation>N</validation>
                 <position>75</position>
                 <length>1</length>
@@ -776,7 +785,7 @@
                 <length>1</length>
             </field>
             <field order="12">
-                <name>User</name>User
+                <name>User Field</name>
                 <usage>C</usage>
                 <type>ANS</type>
                 <validation>N</validation>
@@ -794,12 +803,82 @@
         </fields>
     </record>
 
-    <forbidden type="27">
+    <record type="27">Check Detail Addendum B Record
         <name>Check Detail Addendum B Record</name>
         <type>27</type>
-        <usage>F</usage>
-        <validation>N</validation>
-    </forbidden>
+        <usage>C</usage>
+        <validation>P</validation>
+        <variableLength ref="CDABImageReferenceKeyLength">46+X</variableLength>
+        <fieldCount>8</fieldCount>
+        <fields>
+            <predefined order="1" ref="fieldRecordType">Record Type</predefined>
+            <field order="2">
+                <name>Image Reference Key Indicator</name>
+                <usage>M</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="0">Field 4 has Defined Value of 0034 and Field 5 contains the Item Reference Key</value>
+                    <value key="1">Field 4 contains a variable value other than Value '0034'</value>
+                </dictonary>
+                <validation>R</validation>
+                <position>3</position>
+                <length>1</length>
+            </field>
+            <field order="3">
+                <name>Microfilm Archive Sequence Number</name>
+                <usage>C</usage>
+                <type>NB</type>
+                <validation>P</validation>
+                <position>4</position>
+                <length>15</length>
+            </field>
+            <field order="4" id="CDABImageReferenceKeyLength">
+                <name>Length of Image Reference Key</name>
+                <usage>M</usage>
+                <type>N</type>
+                <dictonary comprehensive="false">
+                    <value key="0034">Field 5 Contains Item Reference Key</value>
+                    <value key="0000">Image Reference Key Not Present</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>19</position>
+                <length>4</length>
+                <valueKey>X</valueKey>
+            </field>
+            <field order="5">
+                <name>Image Reference Key</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <variablePosition>23+X</variablePosition>
+                <variableLength ref="CDABImageReferenceKeyLength">X</variableLength>
+            </field>
+            <field order="6">
+                <name>Description</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <variablePosition>23+X</variablePosition>
+                <length>15</length>
+            </field>
+            <field order="7">
+                <name>User Field</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <variablePosition>38+X</variablePosition>
+                <length>4</length>
+            </field>
+            <field order="8">
+                <name>Reserved</name>
+                <usage>M</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <variablePosition>42+X</variablePosition>
+                <length>5</length>
+            </field>
+        </fields>
+    </record>
 
     <record type="28">Check Detail Addendum C Record
         <name>Check Detail Addendum C Record</name>
@@ -848,6 +927,7 @@
                 <name>Truncation Indicator</name>
                 <usage>C</usage>
                 <type>A</type>
+                <dictonary ref="dictTruncationIndicator" comprehensive="true" />
                 <validation>N</validation>
                 <position>37</position>
                 <length>1</length>
@@ -856,6 +936,7 @@
                 <name>Endorsing Bank Conversion Indicator</name>
                 <usage>C</usage>
                 <type>AN</type>
+                <dictonary ref="dictConversionIndicator" comprehensive="true" />
                 <validation>N</validation>
                 <position>38</position>
                 <length>1</length>
@@ -864,6 +945,7 @@
                 <name>Endorsing Bank Correction Indicator</name>
                 <usage>C</usage>
                 <type>N</type>
+                <dictonary ref="dictCorrectionIndicator" comprehensive="true" />
                 <validation>N</validation>
                 <position>39</position>
                 <length>1</length>
@@ -878,7 +960,7 @@
                 <length>1</length>
             </field>
             <field order="10">
-                <name>User</name>User
+                <name>User Field</name>
                 <usage>C</usage>
                 <type>ANS</type>
                 <validation>N</validation>
@@ -1060,7 +1142,7 @@
                 <length>1</length>
             </field>
             <field order="16">
-                <name>User</name>User
+                <name>User Field</name>
                 <usage>C</usage>
                 <type>ANS</type>
                 <validation>N</validation>
@@ -1644,7 +1726,7 @@
                 <length>1</length>
             </field>
             <field order="45">
-                <name>User</name>
+                <name>User Field</name>
                 <usage>O</usage>
                 <type>ANS</type>
                 <validation>N</validation>
@@ -1668,7 +1750,7 @@
         <usage>M</usage>
         <validation>R</validation>
         <length>80</length>
-        <fieldCount>7</fieldCount>
+        <fieldCount>8</fieldCount>
         <fields>
             <predefined order="1" ref="fieldRecordType">Record Type</predefined>
             <field order="2">
@@ -1706,20 +1788,29 @@
                 <length>5</length>
             </field>
             <field order="6">User Field
-                <name>User</name>User
+                <name>User Field</name>
                 <usage>C</usage>
                 <type>ANS</type>
                 <validation>N</validation>
                 <position>36</position>
                 <length>20</length>
             </field>
-            <field order="7">
-                <name>Reserved</name>
+            <field order="7">Credit Total Indicator
+                <name>Credit Total Indicator</name>
                 <usage>C</usage>
+                <type>N</type>
+                <dictonary ref="dictCreditTotalIndicator" comprehensive="true" />
+                <validation>R</validation>
+                <position>56</position>
+                <length>1</length>
+            </field>
+            <field order="8">Reserved
+                <name>Reserved</name>
+                <usage>F</usage>
                 <type>B</type>
                 <validation>N</validation>
-                <position>56</position>
-                <length>25</length>
+                <position>57</position>
+                <length>24</length>
             </field>
         </fields>
     </record>
@@ -1743,7 +1834,7 @@
         <usage>M</usage>
         <validation>R</validation>
         <length>80</length>
-        <fieldCount>8</fieldCount>
+        <fieldCount>9</fieldCount>
         <fields>
             <predefined order="1" ref="fieldRecordType">Record Type</predefined>
             <field order="2">
@@ -1796,13 +1887,22 @@
                 <position>58</position>
                 <length>8</length>
             </field>
-            <field order="8">
+            <field order="8">Credit Total Indicator
+                <name>Credit Total Indicator</name>
+                <usage>C</usage>
+                <type>N</type>
+                <dictonary ref="dictCreditTotalIndicator" comprehensive="true" />
+                <validation>R</validation>
+                <position>66</position>
+                <length>1</length>
+            </field>
+            <field order="9">Reserved
                 <name>Reserved</name>
-                <usage>M</usage>
+                <usage>F</usage>
                 <type>B</type>
                 <validation>N</validation>
-                <position>66</position>
-                <length>15</length>
+                <position>67</position>
+                <length>14</length>
             </field>
         </fields>
     </record>
@@ -1813,7 +1913,7 @@
         <usage>M</usage>
         <validation>R</validation>
         <length>80</length>
-        <fieldCount>8</fieldCount>
+        <fieldCount>9</fieldCount>
         <fields>
             <predefined order="1" ref="fieldRecordType">Record Type</predefined>
             <field order="2">Cash Letter Count
@@ -1852,7 +1952,7 @@
                 <name>Immediate Origin Contact Name</name>
                 <usage>C</usage>
                 <type>ANS</type>
-                <validation>P</validation>
+                <validation>N</validation>
                 <position>41</position>
                 <length>14</length>
             </field>
@@ -1865,13 +1965,22 @@
                 <position>55</position>
                 <length>10</length>
             </field>
-            <field order="8">File Credit Total Amount
-                <name>File Credit Total Amount</name>
-                <usage>M</usage>
+            <field order="8">Credit Total Indicator
+                <name>Credit Total Indicator</name>
+                <usage>C</usage>
                 <type>N</type>
+                <dictonary ref="dictCreditTotalIndicator" comprehensive="true" />
                 <validation>R</validation>
                 <position>65</position>
-                <length>16</length>
+                <length>1</length>
+            </field>
+            <field order="9">Reserved
+                <name>Reserved</name>
+                <usage>F</usage>
+                <type>B</type>
+                <validation>N</validation>
+                <position>66</position>
+                <length>15</length>
             </field>
         </fields>
     </record>

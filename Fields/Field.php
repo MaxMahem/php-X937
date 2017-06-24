@@ -98,7 +98,6 @@ class Field extends \X937\Container
         // add validator based on usage.
         switch ($this->usage) {
             case Field::USAGE_MANDATORY:
-                $validators[] = Validator::required();
                 $this->validator = Validator::allOf(...$validators);
                 break;
             case Field::USAGE_CONDITIONAL:
@@ -130,6 +129,8 @@ class Field extends \X937\Container
                 return Validator::alnum();
             case Type::NUMERICBLANK:
                 return Validator::digit();
+            case Type::NUMERICSPECIAL:
+                return Validator::digit('*');
             case Type::NUMERICBLANKSPECIALMICR:
                 return Validator::digit('-*');
             case Type::NUMERICBLANKSPECIALMICRONUS:
