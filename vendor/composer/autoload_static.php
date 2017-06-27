@@ -40,7 +40,7 @@ class ComposerStaticInit39256cae5d53867bcd6979f81e230bde
         ),
     );
 
-    public static $classMap = array(
+    public static $classMap = array (
         'Respect\\Validation\\Exceptions\\AgeException' => __DIR__ . '/..' . '/respect/validation/library/Exceptions/AgeException.php',
         'Respect\\Validation\\Exceptions\\AllOfException' => __DIR__ . '/..' . '/respect/validation/library/Exceptions/AllOfException.php',
         'Respect\\Validation\\Exceptions\\AlnumException' => __DIR__ . '/..' . '/respect/validation/library/Exceptions/AlnumException.php',
@@ -859,16 +859,14 @@ class ComposerStaticInit39256cae5d53867bcd6979f81e230bde
         'X937\\Validation\\Rules\\Required' => __DIR__ . '/../..' . '/Validation/Rules/Required.php',
         'X937\\Validation\\Rules\\RoutingNumber' => __DIR__ . '/../..' . '/Validation/Rules/RoutingNumber.php',
         'X937\\Writer\\AbstractWriter' => __DIR__ . '/../..' . '/Writer/AbstractWriter.php',
-        'X937\\Writer\\Factory' => __DIR__ . '/../..' . '/Writer/Factory.php',
-        'X937\\Writer\\FieldInterface' => __DIR__ . '/../..' . '/Writer/FieldInterface.php',
-        'X937\\Writer\\Field\\BinaryAbstract' => __DIR__ . '/../..' . '/Writer/Field/BinaryAbstract.php',
-        'X937\\Writer\\Field\\Binary\\Base64' => __DIR__ . '/../..' . '/Writer/Field/Binary/Base64.php',
-        'X937\\Writer\\Field\\Binary\\Binary' => __DIR__ . '/../..' . '/Writer/Field/Binary/Binary.php',
-        'X937\\Writer\\Field\\Formated' => __DIR__ . '/../..' . '/Writer/Field/Formated.php',
-        'X937\\Writer\\Field\\None' => __DIR__ . '/../..' . '/Writer/Field/None.php',
-        'X937\\Writer\\Field\\Raw' => __DIR__ . '/../..' . '/Writer/Field/Raw.php',
-        'X937\\Writer\\Field\\Signifigant' => __DIR__ . '/../..' . '/Writer/Field/Signifigant.php',
         'X937\\Writer\\Flat' => __DIR__ . '/../..' . '/Writer/Flat.php',
+        'X937\\Writer\\Formater\\Binary\\Base64' => __DIR__ . '/../..' . '/Writer/Formater/Binary/Base64.php',
+        'X937\\Writer\\Formater\\Binary\\Stub' => __DIR__ . '/../..' . '/Writer/Formater/Binary/Stub.php',
+        'X937\\Writer\\Formater\\FormaterInterface' => __DIR__ . '/../..' . '/Writer/Formater/FormaterInterface.php',
+        'X937\\Writer\\Formater\\None' => __DIR__ . '/../..' . '/Writer/Formater/None.php',
+        'X937\\Writer\\Formater\\Raw' => __DIR__ . '/../..' . '/Writer/Formater/Raw.php',
+        'X937\\Writer\\Formater\\Text\\Formated' => __DIR__ . '/../..' . '/Writer/Formater/Text/Formated.php',
+        'X937\\Writer\\Formater\\Text\\Signifigant' => __DIR__ . '/../..' . '/Writer/Formater/Text/Signifigant.php',
         'X937\\Writer\\Human' => __DIR__ . '/../..' . '/Writer/Human.php',
         'X937\\Writer\\Image' => __DIR__ . '/../..' . '/Writer/Image.php',
         'X937\\Writer\\WriterInterface' => __DIR__ . '/../..' . '/Writer/WriterInterface.php',

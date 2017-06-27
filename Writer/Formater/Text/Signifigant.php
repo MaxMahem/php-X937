@@ -1,6 +1,8 @@
 <?php
 
-namespace X937\Writer\Field;
+namespace X937\Writer\Formater\Text;
+
+use X937\Fields;
 
 /**
  * Writes the signigant values of fields.
@@ -9,15 +11,16 @@ namespace X937\Writer\Field;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Signifigant implements \X937\Writer\FieldInterface
+class Signifigant implements \X937\Writer\Formater\FormaterInterface
 {
     /**
      * Returns a the signifigant values of the field.
      * @param \X937\Fields\Field $field the field to write.
      * @return string the signifigant values of the field.
      */
-    public function writeField(\X937\Fields\Field $field)
+    public function writeField(Fields\Field $field): string
     {
-        return $field->getValue(\X937\Fields\Field::FORMAT_SIGNIFIGANT);
+        $value = trim($field->getValue());    // space should not be signifigant on either side.
+        return ltrim($value, '0');      // 0's are not signifigant.
     }
 }

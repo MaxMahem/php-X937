@@ -1,7 +1,5 @@
 <?php
-
 namespace X937\Writer;
-
 /**
  * Outputs record data in ASCII, with system line-endings at end of record.
  * Binary data is discarded.
@@ -12,16 +10,19 @@ namespace X937\Writer;
  */
 class Flat extends AbstractWriter
 {
+    public function __construct($resource) {
+        $fieldWriter = new Formater\Raw();
+        $binaryWriter = new Formater\None();
+        parent::__construct($resource, $fieldWriter, $binaryWriter);
+    }
+    
     public function writeRecord(\X937\Records\Record $record)
     {
         $output = '';
-
         foreach ($record as $field) {
             $output .= $this->writeField($field);
         }
-
         $output .= PHP_EOL;
-
         $this->resource->fwrite($output);
     }
 }

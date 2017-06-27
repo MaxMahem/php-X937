@@ -12,12 +12,6 @@ use X937\Fields;
 abstract class AbstractWriter implements WriterInterface
 {
     /**
-     * Options array
-     * @var array
-     */
-    protected $options;
-
-    /**
      * Our resource for writing.
      * @var resource
      */
@@ -38,21 +32,14 @@ abstract class AbstractWriter implements WriterInterface
     protected $binaryFormat;
 
     public function __construct(
-        \SplFileObject $resource,
-        FieldInterface $fieldWriter,
-        FieldInterface $binaryWriter,
-        $options = array()
+        $resource,
+        \X937\Writer\Formater\FormaterInterface $fieldWriter,
+        \X937\Writer\Formater\FormaterInterface $binaryWriter
     )
     {
         $this->resource = $resource;
         $this->fieldWriter = $fieldWriter;
         $this->binaryFieldWriter = $binaryWriter;
-        $this->options = $options;
-    }
-
-    public function getOptions()
-    {
-        return $this->options;
     }
 
     /**
@@ -76,32 +63,10 @@ abstract class AbstractWriter implements WriterInterface
      */
     protected function writeField(Fields\Field $field)
     {
-        if ($field->type === Fields\Field::TYPE_BINARY) {
+        if ($field->type === Fields\Type::BINARY) {
             return $this->binaryFieldWriter->writeField($field);
         } else {
             return $this->fieldWriter->writeField($field);
         }
-    }
-
-    /**
-     * Set an option.
-     * @param type $optionKey the option to set
-     * @param type $value the option value
-     */
-    protected function setOption(string $optionKey, $value)
-    {
-        if (array_key_exists($optionKey, static::defineOptions()) === false) {
-            trigger_error('Set undefined option', E_USER_WARNING);
-        }
-        $this->options[$optionKey] = $value;
-    }
-
-    /**
-     * Define universal options. None currently.
-     * @return array
-     */
-    public function defineOptions()
-    {
-        return array();
     }
 }

@@ -1,5 +1,7 @@
 <?php namespace X937\Writer;
 
+use X937\Records;
+
 /**
  * Outputs record data as an XML file.
  * Binary data is discarded.
@@ -36,15 +38,16 @@ class XML extends AbstractWriter
      * @param boolean $indent to indent the file or not.
      */
     public function __construct(
-        \XMLWriter $xmlWriter,
-        array $options = array(),
-        \X937\Writer\Image $imageWriter = NULL
+        \XMLWriter $xmlWriter
     )
     {
         $xmlWriter->startDocument('1.0', 'UTF-8');
         $xmlWriter->setIndent(true);
+        
+        $fieldWriter = new Formater\Text\Formated();
+        $binaryWriter = new Formater\Binary\Stub();
 
-        parent::__construct($xmlWriter, $options, $imageWriter);
+        parent::__construct($xmlWriter, $fieldWriter, $binaryWriter);
     }
 
     public function __destruct()
@@ -54,64 +57,57 @@ class XML extends AbstractWriter
 
     public function writeRecord(Records\Record $record)
     {
-        $recordType = $record->getType();
-
-        // check for Record we current haven't implemented.
-        if (array_key_exists($recordType, Record\Factory::handledRecordTypes()) === FALSE) {
-            return PHP_EOL;
-        }
-
-        switch ($recordType) {
+        switch ($record->type) {
             // Header Record. Open the control element first and then write the
             // record elements.
-            case RecordType::VALUE_FILE_HEADER:
+            case Records\Type::FILE_HEADER:
                 $this->openElement(self::CONTROL_ELEMENT_FILE);
                 $this->writeElement($record);
                 break;
-            case RecordType::VALUE_CASH_LETTER_HEADER:
-                $idValue = $record->getFieldByName('Cash Letter ID')->getValue();
+            case Records\Type::CASH_LETTER_HEADER:
+                $idValue = $record['Cash Letter ID']->getValue();
                 $this->openElement(self::CONTROL_ELEMENT_CASH_LETTER, $idValue);
                 $this->writeElement($record);
                 break;
-            case RecordType::VALUE_BUNDLE_HEADER:
-                $idValue = $record->getFieldByName('Bundle ID')->getValue();
+            case Records\Type::BUNDLE_HEADER:
+                $idValue = $record['Bundle ID']->getValue();
                 $this->openElement(self::CONTROL_ELEMENT_BUNDLE, $idValue);
                 $this->writeElement($record);
                 break;
 
             // Item Record. There should only be one item detail record per
             // item group. Each new record marks the start of a new group.
-            case RecordType::VALUE_CHECK_DETAIL:
-            case RecordType::VALUE_RETURN_RECORD:
+            case Records\Type::CHECK_DETAIL:
+            case Records\Type::RETURN_RECORD:
                 // fall through
-                $idValue = $record->getFieldByName('ECE Institution Item Sequence Number')->getValue();
+                $idValue = $record['Institution Item Sequence Number']->getValue();
                 $this->openElement(self::CONTROL_ELEMENT_ITEM, $idValue);
                 $this->writeElement($record);
                 break;
 
             // Image view Record. There should only be one Image View Detail
             // each image view set (front and back).
-            case RecordType::VALUE_IMAGE_VIEW_DETAIL:
+            case Records\Type::IMAGE_VIEW_DETAIL:
                 $this->openElement(self::CONTROL_ELEMENT_VIEW);
                 $this->writeElement($record);
 
                 // imageWriter needs these for to get the extension/side.
-                $this->imageWriter->write($record);
+                // $this->imageWriter->write($record);
                 break;
 
             // Control record. Write the record element first and then close the
             // control element.
-            case RecordType::VALUE_BUNDLE_CONTROL:
+            case Records\Type::BUNDLE_CONTROL:
                 $this->closeBinaryElement();
                 $this->writeElement($record);
                 $this->closeElement(self::CONTROL_ELEMENT_BUNDLE);
                 break;
-            case RecordType::VALUE_CASH_LETTER_CONTROL:
+            case Records\Type::CASH_LETTER_CONTROL:
                 $this->closeBinaryElement();
                 $this->writeElement($record);
                 $this->closeElement(self::CONTROL_ELEMENT_CASH_LETTER);
                 break;
-            case RecordType::VALUE_FILE_CONTROL:
+            case Records\Type::FILE_CONTROL:
                 $this->closeBinaryElement();
                 $this->writeElement($record);
                 $this->closeElement(self::CONTROL_ELEMENT_FILE);
@@ -158,29 +154,39 @@ class XML extends AbstractWriter
             array_push($this->openElements, $openElement);
         }
     }
+    
+    public static function camelCase(string $string)
+    {
+        // non-alpha and non-numeric characters become spaces
+        $string = preg_replace('/[^a-z0-9]+/i', ' ', $string);
+        $string = trim($string);
+        // uppercase the first character of each word
+        $string = ucwords($string);
+        $string = str_replace(" ", "", $string);
 
-    private function writeElement(Record\Record $record)
+        return $string;
+    }
+
+    private function writeElement(Records\Record $record)
     {
         // get record name, turn space to underscores.
         /**
          * @todo change this function to a getName function... on record class
          */
-        $recordName = RecordType::translate($record->getType());
-        $elementName = str_replace(' ', '_', $recordName);
+        $recordName = self::camelCase($record->name);
 
         // start the record element
-        $this->resource->startElement($elementName);
+        $this->resource->startElement($recordName);
 
         // write all fields as element
         foreach ($record as $field) {
             // get name turn spaces to underscore
-            $fieldName = $field->getName();
-            $elementName = str_replace(' ', '_', $fieldName);
+            $fieldName = self::camelCase($field->name);
 
-            if ($field->getName() === 'Image Data') {
-                $this->imageWriter->write($record);
+            if ($field->type === \X937\Fields\Type::BINARY) {
+//                $this->imageWriter->write($record);
             } else {
-                $value = $field->getValue(X937\Fields\Field::FORMAT_SIGNIFIGANT);
+                $value = trim($field->getValue());
             }
 
             /**
@@ -188,7 +194,7 @@ class XML extends AbstractWriter
              */
             // if after trimming we have no data, then ommit the field.
             if ($value !== '') {
-                $this->resource->writeElement($elementName, $value);
+                $this->resource->writeElement($fieldName, $value);
             }
         }
 

@@ -10,6 +10,12 @@
  */
 class X937Writer extends AbstractWriter
 {
+    public function __construct($resource) {
+        $fieldWriter = new Formater\Raw();
+        $binaryWriter = new Formater\Raw();
+        parent::__construct($resource, $fieldWriter, $binaryWriter);
+    }
+    
     public function writeRecord(\X937\Records\Record $record)
     {
         $output = '';

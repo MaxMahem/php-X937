@@ -21,7 +21,7 @@ use X937\Util;
  * @property-read string variableLength The varible length formulation, if present
  * @property-read string fieldCount The number of fields in the record
  */
-class Record extends Container implements \ArrayAccess, \Countable
+class Record extends Container implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     const PROP_NAME = 'name';
     const PROP_TYPE = 'type';
@@ -120,14 +120,13 @@ class Record extends Container implements \ArrayAccess, \Countable
     protected function calculateLength()
     {
         // recalculation is only possible on variable length records.
-        if (isset($this->variableLength) == 'true') {
+        if (isset($this->variableLength)) {
             $length = 0;
             foreach ($this->fields as $field) {
                 $length += $field->length;
             }
         } else {
-            $type = $this->type;
-            trigger_error("recalculateLength called on record type $type with static length, nothing done.");
+            trigger_error("recalculateLength called on record type {$this->type} with static length, nothing done.");
         }
 
         $this->template[Record::PROP_LENGTH] = $length;
@@ -245,6 +244,8 @@ class Record extends Container implements \ArrayAccess, \Countable
 
         return $data;
     }
+    
+    public function getIterator() { return new \ArrayIterator($this->fields); }
 
     /**
      * Returns a count of the number of fields. For Countable.
@@ -320,9 +321,7 @@ class Record extends Container implements \ArrayAccess, \Countable
 
         $fieldErrors = array_filter($fieldErrors);
         if (!empty($fieldErrors)) {
-            $name = $this->name;
-            $type = $this->type;
-            $errorBase = "Error validating Record Type $type: $name:";
+            $errorBase = "Error validating Record Type {$this->type}: {$this->name}:";
             $errorField = implode(PHP_EOL . '  ', $fieldErrors);
             $error = $errorBase . PHP_EOL . '  ' . $errorField . PHP_EOL;
         } else {

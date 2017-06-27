@@ -12,23 +12,13 @@ namespace X937\Writer;
  */
 class Human extends AbstractWriter
 {
-    // type specific options.
-    const OPTION_OMIT_BLANKS = 'Omit';
-
-    public function defineOptions()
-    {
-        $parentOptions = parent::defineOptions();
-
-        $legalOptions = array(
-            self::OPTION_OMIT_BLANKS => 'Omit Blank Values: true/false',
-        );
-
-        return array_merge($parentOptions, $legalOptions);
-    }
-
-    public function setOptionOmitBlanks($value)
-    {
-        $this->setOption(self::OPTION_OMIT_BLANKS, (bool)$value);
+    private $omitBlanks;
+    
+    public function __construct($resource, bool $omitBlanks) {
+        $this->omitBlanks = $omitBlanks;
+        $fieldWriter = new Formater\Text\Translate();
+        $binaryWriter = new Formater\Binary\Stub();
+        parent::__construct($resource, $fieldWriter, $binaryWriter);
     }
 
     public function writeRecord(\X937\Records\Record $record)
@@ -42,19 +32,14 @@ class Human extends AbstractWriter
             $fieldOutputArray = array();
 
             $fieldOutputArray['name'] = $field->name . ':';
-            try {
-                $fieldOutputArray['value'] = $this->writeField($field);
-            } catch (\Exception $e) {
-                echo "Error: Record Type#" . $record->type . " Field: " . $field->name
-                    . ' ' . $e->getMessage() . PHP_EOL;
-            }
+            $fieldOutputArray['value'] = $this->writeField($field);
 
             // adding to the output array is optional, we dont' want to do it
             // for blank fields if the OMIT_BLANKS option is set.
             /**
              * @todo Simply this logic, should be able to do it with one if.
              */
-            if ($this->options[self::OPTION_OMIT_BLANKS] === true) {
+            if ($this->omitBlanks === true) {
                 if ((trim($fieldOutputArray['value']) !== '')) {
                     $outputArray[] = implode(' ', $fieldOutputArray);
                 }

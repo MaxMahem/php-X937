@@ -190,16 +190,13 @@ class Field extends \X937\Container
         }
 
         // check to see if our variable exceeds our field length. If so, exception.
-        $fixedLen = $this->length;
-        if ($valueLen > $fixedLen) {
-            throw new \InvalidArgumentException("Value '$value' length of $valueLen does not match the field length of $fixedLen.");
+        if ($valueLen > $this->length) {
+            throw new \InvalidArgumentException("Value '$value' length of $valueLen does not match the field length of {$this->length}.");
         }
 
         // length might be short, so pad accordingly.
         $pad = ($this->type === Type::NUMERIC) ? '0' : ' ';
-        $valuePadded = str_pad($value, $fixedLen, $pad, STR_PAD_LEFT);
-
-        $this->value = $valuePadded;
+        $this->value = str_pad($value, $this->length, $pad, STR_PAD_LEFT);
     }
 
     /**
@@ -218,10 +215,7 @@ class Field extends \X937\Container
                 try {
                     $this->validator->assert($this->value);
                 } catch (\Respect\Validation\Exceptions\ValidationException $exception) {
-                    $name = $this->name;
-                    $order = $this->order;
-
-                    $error = "Field $order $name: " . implode(' and ', $exception->getMessages());
+                    $error = "Field {$this->order} {$this->name}: " . implode(' and ', $exception->getMessages());
                 }
             default:
                 // do nothing;
@@ -240,6 +234,8 @@ class Field extends \X937\Container
     {
         switch ($dataType) {
             case \X937\Util::DATA_ASCII:
+            case \X937\Util::DATA_BINARY:
+                // deliberate fall through.
                 return $this->value;
             case \X937\Util::DATA_EBCDIC:
                 if ($this->template[self::PROP_TYPE] === Type::BINARY) {
@@ -250,61 +246,5 @@ class Field extends \X937\Container
             default:
                 throw new \InvalidArgumentException("getValue called with invalid data type, $dataType");
         }
-    }
-
-    /**
-     * Return the value, after calling the classes formating function. Nothing
-     * if blank.
-     * @return string
-     */
-    public function getValueFormated()
-    {
-        if ($this->type === Type::BINARY) {
-            return 'Binary Data';
-        }
-
-        $value = $this->getValueSignifigant();
-
-        // if value is blank we don't want to return that an not call the other
-        // format functions.
-        if ($value === '') {
-            return '';
-        }
-
-        return static::formatValue($value);
-    }
-
-    /**
-     * Return the signifigant parts of the value, but in raw. Generally leading
-     * 0's are not signifigant and are stripped. Binary data is stubbed.
-     * @return string
-     */
-    public function getValueSignifigant()
-    {
-        if ($this->type === Type::BINARY) {
-            return 'Binary Data';
-        }
-
-        $value = trim($this->value);
-        return ltrim($value, '0');
-    }
-
-    /**
-     * Returns the value formated. By default just a trim, but classes override.
-     * @param string $value
-     * @return string
-     */
-    protected static function formatValue($value)
-    {
-        return trim($value);
-    }
-
-    /**
-     * Returns the raw value.
-     * @return string
-     */
-    public function getValueRaw()
-    {
-        return $this->value;
     }
 }

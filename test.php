@@ -1,22 +1,31 @@
 <?php
-$timeStart = microtime(true);
+$time = microtime(true);
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $file = new X937\File('C:\PHP-Projects\x937\test.X937');
 
-$fileFormat = X937\Writer\Factory::FORMAT_FILE_HUMAN;
-$filename = '..\human.txt';
-$imageFormat = X937\Writer\Factory::FORMAT_BINARY_STUB;
-$writerHuman = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
-$writerHuman->setOptionOmitBlanks(true);
-// $writerHuman->writeAll($file);
+$humanFile = new SplFileObject('..\Human.txt', 'wb');
+$writerHuman = new X937\Writer\Human($humanFile, true);
+$writerHuman->writeAll($file);
+echo "Human written: ", microtime(true) - $time, PHP_EOL;
+$time = microtime(true);
 
-$fileFormat = X937\Writer\Factory::FORMAT_FILE_FLAT;
-$filename = '..\flat.txt';
-$imageFormat = X937\Writer\Factory::FORMAT_BINARY_NONE;
-$writerFlat = X937\Writer\Factory::Generate($fileFormat, $filename, $imageFormat);
-// $writerFlat->writeAll($file);
+$flatFile = new SplFileObject('..\Flat.txt', 'wb');
+$writerFlat = new X937\Writer\Flat($flatFile);
+$writerFlat->writeAll($file);
+echo "Flat written: ", microtime(true) - $time, PHP_EOL;
+$time = microtime(true);
+
+$filename = '..\xml.xml';
+$xmlObject = new \XMLWriter();
+$xmlObject->openUri($filename);
+$writerXML = new X937\Writer\XML($xmlObject, new X937\Writer\Formater\Text\Signifigant(), new X937\Writer\Formater\Binary\Stub());
+$writerXML->writeAll($file);
+echo "XML written: ", microtime(true) - $time, PHP_EOL;
+$time = microtime(true);
+
+die();
 
 $writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, '..\new4.X937');
 

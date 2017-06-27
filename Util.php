@@ -12,6 +12,7 @@ class Util
 
     const DATA_ASCII = 'ASCII';
     const DATA_EBCDIC = 'EBCDIC-US';
+    const DATA_BINARY = 'Binary';
 
     const DATA_TYPES = array(
         self::DATA_ASCII => self::DATA_ASCII,
