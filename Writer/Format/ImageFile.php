@@ -32,7 +32,7 @@ class ImageFile implements BinaryFormatInterface
         }
     }
     
-    public function writeField(\X937\Fields\Field $field, ?string $filename) {
+    public function format(\X937\Fields\Field $field, ?string $filename) {
         // if there is no data in this field, or if we didn't get a filename,
         // we don't want to write it to disk.
         if (empty($field->getValue()) || empty($filename)) {

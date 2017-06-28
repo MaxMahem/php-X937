@@ -17,7 +17,7 @@ class None implements TextFormatInterface, BinaryFormatInterface
      * @param \X937\Fields\Field $field the field to write.
      * @return void
      */
-    public function writeField(\X937\Fields\Field $field): string
+    public function format(\X937\Fields\Field $field): string
     {
         return '';
     }

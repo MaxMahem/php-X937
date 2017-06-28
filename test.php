@@ -10,6 +10,7 @@ $writerHuman = new X937\Writer\Human($humanFile, true);
 $writerHuman->writeAll($file);
 echo "Human written: ", microtime(true) - $time, PHP_EOL;
 $time = microtime(true);
+die();
 
 $flatFile = new SplFileObject('..\Flat.txt', 'wb');
 $writerFlat = new X937\Writer\Flat($flatFile);

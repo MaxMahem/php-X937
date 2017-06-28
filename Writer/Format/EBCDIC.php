@@ -18,7 +18,7 @@ class EBCDIC implements TextFormatInterface
      * @param \X937\Fields\Field $field the field to write.
      * @return string formated field
      */
-    public function writeField(\X937\Fields\Field $field): string
+    public function format(\X937\Fields\Field $field): string
     {
         return \X937\Util::a2e($field->getValue());
     }

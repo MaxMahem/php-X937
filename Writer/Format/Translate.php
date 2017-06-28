@@ -18,12 +18,12 @@ class Translate implements TextFormatInterface
      * @param \X937\Fields\Field $field the field to write.
      * @return string formated field
      */
-    public function writeField(\X937\Fields\Field $field): string
+    public function format(\X937\Fields\Field $field): string
     {
         if (isset($field->dictonary)) {
             $value = $field->getValue();
             $translation = isset($field->dictonary[$value]) ? $field->dictonary[$value] : 'No Translation';
-            return $value . ' ' . $translation;
+            return "'$value' $translation";
         } else {
             return trim($field->getValue());
         }

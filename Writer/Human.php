@@ -16,35 +16,23 @@ class Human extends AbstractWriter
     
     public function __construct($resource, bool $omitBlanks) {
         $this->omitBlanks = $omitBlanks;
-        $textWriter = new Format\Translate();
+        $textWriter = new Format\Formated();
         $binaryWriter = new Format\Stub();
         parent::__construct($resource, $textWriter, $binaryWriter);
     }
 
     public function writeRecord(\X937\Records\Record $record)
     {
-        // initilise an array used for all the output.
-        $outputArray = array();
-
         // parse over each field in the record.
         foreach ($record as $field) {
-            // reset our field output array
-            $fieldOutputArray = array();
-
-            $fieldOutputArray['name'] = $field->name . ':';
-            $fieldOutputArray['value'] = $this->writeField($field);
+            $value = $this->writeField($field);
 
             // adding to the output array is optional, we dont' want to do it
             // for blank fields if the OMIT_BLANKS option is set.
-            /**
-             * @todo Simply this logic, should be able to do it with one if.
-             */
-            if ($this->omitBlanks === true) {
-                if ((trim($fieldOutputArray['value']) !== '')) {
-                    $outputArray[] = implode(' ', $fieldOutputArray);
-                }
+            if (($this->omitBlanks === true) && empty(trim($value))) {
+                // do nothing
             } else {
-                $outputArray[] = implode(' ', $fieldOutputArray);
+                $outputArray[] = "{$field->name}: $value";
             }
         }
 

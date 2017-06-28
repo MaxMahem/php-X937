@@ -11,7 +11,7 @@ namespace X937\Writer\Format;
  */
 interface FormatInterface
 {
-    public function writeField(\X937\Fields\Field $field): string;
+    public function format(\X937\Fields\Field $field): string;
 }
 
 interface BinaryFormatInterface extends FormatInterface

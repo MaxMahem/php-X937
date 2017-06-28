@@ -18,7 +18,7 @@ class Signifigant implements TextFormatInterface
      * @param \X937\Fields\Field $field the field to write.
      * @return string the signifigant values of the field.
      */
-    public function writeField(Fields\Field $field): string
+    public function format(Fields\Field $field): string
     {
         $value = trim($field->getValue());    // space should not be signifigant on either side.
         return ltrim($value, '0');      // 0's are not signifigant.

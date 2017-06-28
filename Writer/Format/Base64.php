@@ -17,7 +17,7 @@ class Base64 implements BinaryFormatInterface
      * @param \X937\Fields\Field $field
      * @return string The binary data encoded Base64
      */
-    public function writeField(\X937\Fields\Field $field): string
+    public function format(\X937\Fields\Field $field): string
     {
         return base64_encode($field->getValue());
     }

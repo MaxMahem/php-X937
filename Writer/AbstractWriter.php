@@ -62,9 +62,9 @@ abstract class AbstractWriter implements WriterInterface
     protected function writeField(Fields\Field $field)
     {
         if ($field->type === Fields\Type::BINARY) {
-            return $this->binaryWriter->writeField($field);
+            return $this->binaryWriter->format($field);
         } else {
-            return $this->textWriter->writeField($field);
+            return $this->textWriter->format($field);
         }
     }
 }
