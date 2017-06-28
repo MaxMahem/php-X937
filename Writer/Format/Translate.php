@@ -1,8 +1,6 @@
 <?php
 
-namespace X937\Writer\Formater\Text;
-
-use X937\Fields;
+namespace X937\Writer\Format;
 
 /**
  * Writes the fields value Formated (human readable) fashion.
@@ -11,7 +9,7 @@ use X937\Fields;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Translate implements \X937\Writer\Formater\FormaterInterface
+class Translate implements TextFormatInterface
 {
     /**
      * Returns a formated field.

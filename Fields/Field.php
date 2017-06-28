@@ -230,21 +230,8 @@ class Field extends \X937\Container
      *
      * @return string
      */
-    public function getValue(string $dataType = \X937\Util::DATA_ASCII): string
+    public function getValue(): string
     {
-        switch ($dataType) {
-            case \X937\Util::DATA_ASCII:
-            case \X937\Util::DATA_BINARY:
-                // deliberate fall through.
-                return $this->value;
-            case \X937\Util::DATA_EBCDIC:
-                if ($this->template[self::PROP_TYPE] === Type::BINARY) {
-                    return $this->value;
-                } else {
-                    return \X937\Util::a2e($this->value);
-                }
-            default:
-                throw new \InvalidArgumentException("getValue called with invalid data type, $dataType");
-        }
+        return $this->value;
     }
 }

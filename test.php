@@ -20,14 +20,16 @@ $time = microtime(true);
 $filename = '..\xml.xml';
 $xmlObject = new \XMLWriter();
 $xmlObject->openUri($filename);
-$writerXML = new X937\Writer\XML($xmlObject, new X937\Writer\Formater\Text\Signifigant(), new X937\Writer\Formater\Binary\Stub());
+$writerXML = new X937\Writer\XML($xmlObject, new X937\Writer\Format\Signifigant(), new X937\Writer\Format\Stub());
 $writerXML->writeAll($file);
 echo "XML written: ", microtime(true) - $time, PHP_EOL;
 $time = microtime(true);
 
+$X937File = new SplFileObject('..\X937.x937', 'wb');
+$writerX937 = new X937\Writer\X937($X937File);
+$writerX937->writeAll($file);
+echo "X937 written: ", microtime(true) - $time, PHP_EOL;
 die();
-
-$writerX937 = X937\Writer\Factory::Generate(\X937\Writer\Factory::FORMAT_FILE_X937, '..\new4.X937');
 
 gc_collect_cycles();
 $startMem = memory_get_usage() / 1024;
@@ -40,7 +42,7 @@ echo "Starting Memory: $startMem" . PHP_EOL;
 //    echo implode(' ', $string) . PHP_EOL;
 //    $string = [];
 //    gc_collect_cycles();
-//    
+//
 ////    var_dump($cashletter);
 //}
 //
@@ -68,7 +70,7 @@ foreach ($file as $record) {
 
             $onusNoSpace = str_replace(' ', '', $onusValue);
 
-            // it's possible that the onus could have more than 1 onus symbol, 
+            // it's possible that the onus could have more than 1 onus symbol,
             // in which case we wan't the *last* section of it. This does that.
             // the last part we will call the 'check number' and the first part
             // the account number.

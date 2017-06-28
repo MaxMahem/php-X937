@@ -44,10 +44,10 @@ class XML extends AbstractWriter
         $xmlWriter->startDocument('1.0', 'UTF-8');
         $xmlWriter->setIndent(true);
         
-        $fieldWriter = new Formater\Text\Formated();
-        $binaryWriter = new Formater\Binary\Stub();
+        $textWriter = new Format\Formated();
+        $binaryWriter = new Format\Stub();
 
-        parent::__construct($xmlWriter, $fieldWriter, $binaryWriter);
+        parent::__construct($xmlWriter, $textWriter, $binaryWriter);
     }
 
     public function __destruct()

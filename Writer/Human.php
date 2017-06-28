@@ -16,9 +16,9 @@ class Human extends AbstractWriter
     
     public function __construct($resource, bool $omitBlanks) {
         $this->omitBlanks = $omitBlanks;
-        $fieldWriter = new Formater\Text\Translate();
-        $binaryWriter = new Formater\Binary\Stub();
-        parent::__construct($resource, $fieldWriter, $binaryWriter);
+        $textWriter = new Format\Translate();
+        $binaryWriter = new Format\Stub();
+        parent::__construct($resource, $textWriter, $binaryWriter);
     }
 
     public function writeRecord(\X937\Records\Record $record)

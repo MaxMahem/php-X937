@@ -235,7 +235,7 @@ class Record extends Container implements \ArrayAccess, \Countable, \IteratorAgg
      * @param string $dataType Either Util::DATA_ASCII or Util::DATA_EBCDIC
      * @return string The record data.
      */
-    public function getData(string $dataType = Util::DATA_ASCII): string
+    public function getData(): string
     {
         $data = '';
         foreach ($this->fields as $field) {

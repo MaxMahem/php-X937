@@ -1,6 +1,6 @@
 <?php
 
-namespace X937\Writer\Formater\Binary;
+namespace X937\Writer\Format;
 
 /**
  * Writes Binary Fields in Base64.
@@ -9,18 +9,16 @@ namespace X937\Writer\Formater\Binary;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Stub implements \X937\Writer\Formater\FormaterInterface
+class Base64 implements BinaryFormatInterface
 {
 
     /**
-     * Returns the Field data as a stub.
+     * Returns the Field Binary data Base64 encoded.
      * @param \X937\Fields\Field $field
      * @return string The binary data encoded Base64
      */
     public function writeField(\X937\Fields\Field $field): string
     {
-        $type = ($field->type == \X937\Fields\Type::BINARY) ? 'Binary Data' : 'Character Data';
-        $bytes = $field->length;
-        return "$type, $bytes bytes";
+        return base64_encode($field->getValue());
     }
 }

@@ -1,24 +1,25 @@
 <?php
 
-namespace X937\Writer\Formater;
+namespace X937\Writer\Format;
 
 /**
- * Doesn't write anything! Behavior for when we do NOT want to write field data.
- * (Mainly for binary data).
+ * Writes the fields value in EBCDIC.
  *
  * @author Austin Stanley <maxtmahem@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class None implements FormaterInterface
+class EBCDIC implements TextFormatInterface
 {
     /**
-     * Returns nothing. Does nothing.
+     * Returns a formated field.
+     * 
+     * @todo add more formating based on type!
      * @param \X937\Fields\Field $field the field to write.
-     * @return void
+     * @return string formated field
      */
     public function writeField(\X937\Fields\Field $field): string
     {
-        return '';
+        return \X937\Util::a2e($field->getValue());
     }
 }
