@@ -12,8 +12,15 @@ use X937\Records\Record;
  */
 class File implements \Iterator
 {
+    // data type constants
     const DATA_ASCII = 'ASCII';
     const DATA_EBCDIC = 'EBCDIC-US';
+    
+    // data type constat array
+    const DATA_TYPES = array(
+        self::DATA_ASCII => self::DATA_ASCII,
+        self::DATA_EBCDIC => self::DATA_EBCDIC,
+    );
 
     // file signature constants.
     const FILE_SIGNATURE_ASCII = '3031';
@@ -52,7 +59,7 @@ class File implements \Iterator
     /**
      * Factory for creating records.
      *
-     * @var Records\Factory
+     * @var Records\RecordFactory
      */
     private $recordFactory;
 
@@ -83,12 +90,12 @@ class File implements \Iterator
         $this->dataType = $this->readFileDataType();
 
         // build our factory
-        $this->recordFactory = new Records\Factory($specFilename);
+        $this->recordFactory = new Records\RecordFactory($specFilename);
 
         // pull the first record, this should always be the file header record.
         $this->fileHeaderRecord = $this->current();
 
-        if ($this->fileHeaderRecord->type !== Records\Type::FILE_HEADER) {
+        if ($this->fileHeaderRecord->type !== Records\RecordType::FILE_HEADER) {
             throw new \InvalidArgumentException('Bad file given, first record is not a File Header Records.');
         }
 
@@ -100,7 +107,7 @@ class File implements \Iterator
 
         // build our file record from this data.
         $this->fileControlRecord = $this->recordFactory->generateRecord($fileControlRecordData, $this->dataType);
-        if ($this->fileControlRecord->type !== Records\Type::FILE_CONTROL) {
+        if ($this->fileControlRecord->type !== Records\RecordType::FILE_CONTROL) {
             throw new \InvalidArgumentException('Bad file given, last record is not a File Control Records.');
         }
 

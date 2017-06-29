@@ -11,8 +11,8 @@
 class X937 extends AbstractWriter
 {
     public function __construct($resource) {
-        $textWriter = new Format\EBCDIC();
-        $binaryWriter = new Format\Raw();
+        $textWriter = new \X937\Fields\Format\FormatEBCDIC();
+        $binaryWriter = new \X937\Fields\Format\FormatRaw();
         parent::__construct($resource, $textWriter, $binaryWriter);
     }
     

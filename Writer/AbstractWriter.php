@@ -31,8 +31,8 @@ abstract class AbstractWriter implements WriterInterface
 
     public function __construct(
         $resource,
-        \X937\Writer\Format\TextFormatInterface $textWriter,
-        \X937\Writer\Format\BinaryFormatInterface $binaryWriter
+        \X937\Fields\Format\TextFormatInterface $textWriter,
+        \X937\Fields\Format\BinaryFormatInterface $binaryWriter
     )
     {
         $this->resource = $resource;
@@ -61,7 +61,7 @@ abstract class AbstractWriter implements WriterInterface
      */
     protected function writeField(Fields\Field $field)
     {
-        if ($field->type === Fields\Type::BINARY) {
+        if ($field->type === Fields\FieldType::BINARY) {
             return $this->binaryWriter->format($field);
         } else {
             return $this->textWriter->format($field);

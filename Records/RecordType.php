@@ -7,7 +7,7 @@ namespace X937\Records;
  *
  * @author astanley
  */
-class Type
+class RecordType
 {
     const FILE_HEADER = '01';
     const CASH_LETTER_HEADER = '10';

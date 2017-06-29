@@ -7,7 +7,7 @@ namespace X937\Fields;
  *
  * @author astanley
  */
-class SubType
+class FieldSubType
 {
     const ROUTINGNUMBER = 'Routing';
     const DATE = 'Date';
@@ -15,6 +15,8 @@ class SubType
     const PHONENUMBER = 'Phone';
     const AMOUNT = 'Amount';
     const BLANK = 'Blank';
+    const BYTES = 'Bytes';
+    const COUNT = 'Count';
 
     const SUBTYPES = array(
         self::ROUTINGNUMBER => 'Routing Number (with check digit)',
@@ -23,5 +25,7 @@ class SubType
         self::PHONENUMBER => 'Phone Number',
         self::AMOUNT => 'Amount',
         self::BLANK => 'Blank',
+        self::BYTES => 'Bytes', 
+        self::COUNT => 'Count',
     );
 }

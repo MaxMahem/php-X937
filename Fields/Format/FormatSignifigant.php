@@ -1,6 +1,6 @@
 <?php
 
-namespace X937\Writer\Format;
+namespace X937\Fields\Format;
 
 use X937\Fields;
 
@@ -11,7 +11,7 @@ use X937\Fields;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Signifigant implements TextFormatInterface
+class FormatSignifigant implements TextFormatInterface
 {
     /**
      * Returns a the signifigant values of the field.

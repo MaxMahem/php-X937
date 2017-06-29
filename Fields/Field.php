@@ -119,25 +119,25 @@ class Field extends \X937\Container
     protected static function getTypeValidators(string $type): ?Validator
     {
         switch ($type) {
-            case Type::ALPHABETIC:
+            case FieldType::ALPHABETIC:
                 return Validator::alpha();
-            case Type::NUMERIC:
+            case FieldType::NUMERIC:
                 return Validator::numeric();
-            case Type::BLANK:
+            case FieldType::BLANK:
                 return Validator::blank();
-            case Type::ALPHAMERIC:
+            case FieldType::ALPHAMERIC:
                 return Validator::alnum();
-            case Type::NUMERICBLANK:
+            case FieldType::NUMERICBLANK:
                 return Validator::digit();
-            case Type::NUMERICSPECIAL:
+            case FieldType::NUMERICSPECIAL:
                 return Validator::digit('*');
-            case Type::NUMERICBLANKSPECIALMICR:
+            case FieldType::NUMERICBLANKSPECIALMICR:
                 return Validator::digit('-*');
-            case Type::NUMERICBLANKSPECIALMICRONUS:
+            case FieldType::NUMERICBLANKSPECIALMICRONUS:
                 return Validator::digit('-*/');
-            case Type::SPECIAL:
-            case Type::BINARY:
-            case Type::ALPHAMERICSPECIAL:
+            case FieldType::SPECIAL:
+            case FieldType::BINARY:
+            case FieldType::ALPHAMERICSPECIAL:
                 // delebriate fall through
                 // no validation is possible on these fields, so do nothing.
                 return null;
@@ -154,18 +154,20 @@ class Field extends \X937\Container
     protected static function getSubTypeValidator(?string $subtype): ?Validator
     {
         switch ($subtype) {
-            case SubType::ROUTINGNUMBER:
+            case FieldSubType::ROUTINGNUMBER:
                 return Validator::routingNumber();
-            case SubType::DATE:
+            case FieldSubType::DATE:
                 return Validator::date('Ymd');
-            case SubType::TIME:
+            case FieldSubType::TIME:
                 return Validator::date('Hm');
-            case SubType::AMOUNT:
+            case FieldSubType::AMOUNT:
+            case FieldSubType::BYTES:
+            case FieldSubType::COUNT:
                 // no aditional validation necessary
                 return null;
-            case SubType::PHONENUMBER:
+            case FieldSubType::PHONENUMBER:
                 return Validator::phone();
-            case SubType::BLANK:
+            case FieldSubType::BLANK:
                 return Validator::blank();
             case null:
                 return null;
@@ -195,7 +197,7 @@ class Field extends \X937\Container
         }
 
         // length might be short, so pad accordingly.
-        $pad = ($this->type === Type::NUMERIC) ? '0' : ' ';
+        $pad = ($this->type === FieldType::NUMERIC) ? '0' : ' ';
         $this->value = str_pad($value, $this->length, $pad, STR_PAD_LEFT);
     }
 

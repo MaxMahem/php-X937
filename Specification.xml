@@ -453,6 +453,7 @@
                 <name>Bundle Buisness Date</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Date</subtype>
                 <validation>R</validation>
                 <position>23</position>
                 <length>8</length>
@@ -461,6 +462,7 @@
                 <name>Bundle Creation Date</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Date</subtype>
                 <validation>R</validation>
                 <position>31</position>
                 <length>8</length>
@@ -572,6 +574,7 @@
                 <name>Item Amount</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Amount</subtype>
                 <validation>R</validation>
                 <position>48</position>
                 <length>10</length>
@@ -655,6 +658,7 @@
                 <name>Check Detail Record Addendum Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>77</position>
                 <length>2</length>
@@ -1062,6 +1066,7 @@
                 <name>Image View Data Size</name>
                 <usage>C</usage>
                 <type>NB</type>
+                <subtype>Bytes</subtype>
                 <validation>P</validation>
                 <position>25</position>
                 <length>7</length>
@@ -1113,6 +1118,7 @@
                 <name>Security Key Size</name>
                 <usage>C</usage>
                 <type>N</type>
+                <subtype>Bytes</subtype>
                 <validation>N</validation>
                 <position>38</position>
                 <length>5</length>
@@ -1299,6 +1305,7 @@
                 <name>Length of Image Reference Key</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Bytes</subtype>
                 <dictonary comprehensive="false">
                     <value key="0000">Image Reference Key Not Present</value>
                 </dictonary>
@@ -1319,6 +1326,7 @@
                 <name>Length of Digital Signature</name>
                 <usage>M</usage>
                 <type>NB</type>
+                <subtype>Bytes</subtype>
                 <validation>R</validation>
                 <variablePosition>106+X</variablePosition>
                 <length>5</length>
@@ -1336,6 +1344,7 @@
                 <name>Length of Image Data</name>
                 <usage>M</usage>
                 <type>NB</type>
+                <subtype>Bytes</subtype>
                 <validation>R</validation>
                 <variablePosition>111+X+Y</variablePosition>
                 <length>7</length>
@@ -1757,6 +1766,7 @@
                 <name>Bundle Item Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>3</position>
                 <length>4</length>
@@ -1783,6 +1793,7 @@
                 <name>Images within Bundle Count</name>
                 <usage>C</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>N</validation>
                 <position>31</position>
                 <length>5</length>
@@ -1841,6 +1852,7 @@
                 <name>Bundle Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>3</position>
                 <length>6</length>
@@ -1849,6 +1861,7 @@
                 <name>Cash Letter Item Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>9</position>
                 <length>8</length>
@@ -1866,6 +1879,7 @@
                 <name>Cash Letter Image View Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>31</position>
                 <length>9</length>
@@ -1920,6 +1934,7 @@
                 <name>Cash Letter Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>3</position>
                 <length>6</length>
@@ -1928,6 +1943,7 @@
                 <name>Total Record Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>9</position>
                 <length>8</length>
@@ -1936,6 +1952,7 @@
                 <name>Total Item Count</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Count</subtype>
                 <validation>R</validation>
                 <position>17</position>
                 <length>8</length>
@@ -1944,6 +1961,7 @@
                 <name>Total Item Amount</name>
                 <usage>M</usage>
                 <type>N</type>
+                <subtype>Amount</subtype>
                 <validation>R</validation>
                 <position>25</position>
                 <length>16</length>

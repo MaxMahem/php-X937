@@ -44,8 +44,8 @@ class XML extends AbstractWriter
         $xmlWriter->startDocument('1.0', 'UTF-8');
         $xmlWriter->setIndent(true);
         
-        $textWriter = new Format\Formated();
-        $binaryWriter = new Format\Stub();
+        $textWriter = new \X937\Fields\Format\Formated();
+        $binaryWriter = new \X937\Fields\Format\FormatByteCount();
 
         parent::__construct($xmlWriter, $textWriter, $binaryWriter);
     }
@@ -60,16 +60,16 @@ class XML extends AbstractWriter
         switch ($record->type) {
             // Header Record. Open the control element first and then write the
             // record elements.
-            case Records\Type::FILE_HEADER:
+            case Records\RecordType::FILE_HEADER:
                 $this->openElement(self::CONTROL_ELEMENT_FILE);
                 $this->writeElement($record);
                 break;
-            case Records\Type::CASH_LETTER_HEADER:
+            case Records\RecordType::CASH_LETTER_HEADER:
                 $idValue = $record['Cash Letter ID']->getValue();
                 $this->openElement(self::CONTROL_ELEMENT_CASH_LETTER, $idValue);
                 $this->writeElement($record);
                 break;
-            case Records\Type::BUNDLE_HEADER:
+            case Records\RecordType::BUNDLE_HEADER:
                 $idValue = $record['Bundle ID']->getValue();
                 $this->openElement(self::CONTROL_ELEMENT_BUNDLE, $idValue);
                 $this->writeElement($record);
@@ -77,8 +77,8 @@ class XML extends AbstractWriter
 
             // Item Record. There should only be one item detail record per
             // item group. Each new record marks the start of a new group.
-            case Records\Type::CHECK_DETAIL:
-            case Records\Type::RETURN_RECORD:
+            case Records\RecordType::CHECK_DETAIL:
+            case Records\RecordType::RETURN_RECORD:
                 // fall through
                 $idValue = $record['Institution Item Sequence Number']->getValue();
                 $this->openElement(self::CONTROL_ELEMENT_ITEM, $idValue);
@@ -87,7 +87,7 @@ class XML extends AbstractWriter
 
             // Image view Record. There should only be one Image View Detail
             // each image view set (front and back).
-            case Records\Type::IMAGE_VIEW_DETAIL:
+            case Records\RecordType::IMAGE_VIEW_DETAIL:
                 $this->openElement(self::CONTROL_ELEMENT_VIEW);
                 $this->writeElement($record);
 
@@ -97,17 +97,17 @@ class XML extends AbstractWriter
 
             // Control record. Write the record element first and then close the
             // control element.
-            case Records\Type::BUNDLE_CONTROL:
+            case Records\RecordType::BUNDLE_CONTROL:
                 $this->closeBinaryElement();
                 $this->writeElement($record);
                 $this->closeElement(self::CONTROL_ELEMENT_BUNDLE);
                 break;
-            case Records\Type::CASH_LETTER_CONTROL:
+            case Records\RecordType::CASH_LETTER_CONTROL:
                 $this->closeBinaryElement();
                 $this->writeElement($record);
                 $this->closeElement(self::CONTROL_ELEMENT_CASH_LETTER);
                 break;
-            case Records\Type::FILE_CONTROL:
+            case Records\RecordType::FILE_CONTROL:
                 $this->closeBinaryElement();
                 $this->writeElement($record);
                 $this->closeElement(self::CONTROL_ELEMENT_FILE);
@@ -183,7 +183,7 @@ class XML extends AbstractWriter
             // get name turn spaces to underscore
             $fieldName = self::camelCase($field->name);
 
-            if ($field->type === \X937\Fields\Type::BINARY) {
+            if ($field->type === \X937\Fields\FieldType::BINARY) {
 //                $this->imageWriter->write($record);
             } else {
                 $value = trim($field->getValue());

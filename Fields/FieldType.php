@@ -7,7 +7,7 @@ namespace X937\Fields;
  *
  * @author astanley
  */
-class Type
+class FieldType
 {
     const ALPHABETIC = 'A';
     const NUMERIC = 'N';

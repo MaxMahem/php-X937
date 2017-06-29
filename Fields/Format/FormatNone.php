@@ -1,23 +1,24 @@
 <?php
 
-namespace X937\Writer\Format;
+namespace X937\Fields\Format;
 
 /**
- * Writes the field value in it's raw state without any adjustments.
+ * Doesn't write anything! Behavior for when we do NOT want to write field data.
+ * (Mainly for binary data).
  *
  * @author Austin Stanley <maxtmahem@gmail.com>
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Raw implements TextFormatInterface, BinaryFormatInterface
+class FormatNone implements TextFormatInterface, BinaryFormatInterface
 {
     /**
-     * Returns a raw field.
+     * Returns nothing. Does nothing.
      * @param \X937\Fields\Field $field the field to write.
-     * @return string formated field
+     * @return void
      */
     public function format(\X937\Fields\Field $field): string
     {
-        return $field->getValue();
+        return '';
     }
 }

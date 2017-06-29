@@ -100,6 +100,8 @@
                                 <xs:enumeration value="Phone"/>
                                 <xs:enumeration value="Blank"/>
                                 <xs:enumeration value="Amount"/>
+                                <xs:enumeration value="Count"/>
+                                <xs:enumeration value="Bytes"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>

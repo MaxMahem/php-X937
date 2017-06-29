@@ -1,6 +1,6 @@
 <?php
 
-namespace X937\Writer\Format;
+namespace X937\Fields\Format;
 
 /**
  * Writes the fields value Formated (human readable) fashion.

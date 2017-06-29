@@ -10,7 +10,6 @@ $writerHuman = new X937\Writer\Human($humanFile, true);
 $writerHuman->writeAll($file);
 echo "Human written: ", microtime(true) - $time, PHP_EOL;
 $time = microtime(true);
-die();
 
 $flatFile = new SplFileObject('..\Flat.txt', 'wb');
 $writerFlat = new X937\Writer\Flat($flatFile);
@@ -21,7 +20,7 @@ $time = microtime(true);
 $filename = '..\xml.xml';
 $xmlObject = new \XMLWriter();
 $xmlObject->openUri($filename);
-$writerXML = new X937\Writer\XML($xmlObject, new X937\Writer\Format\Signifigant(), new X937\Writer\Format\Stub());
+$writerXML = new X937\Writer\XML($xmlObject, new X937\Fields\Format\FormatSignifigant(), new X937\Fields\Format\FormatByteCount());
 $writerXML->writeAll($file);
 echo "XML written: ", microtime(true) - $time, PHP_EOL;
 $time = microtime(true);

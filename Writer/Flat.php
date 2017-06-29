@@ -11,8 +11,8 @@ namespace X937\Writer;
 class Flat extends AbstractWriter
 {
     public function __construct($resource) {
-        $textWriter = new Format\Raw();
-        $binaryWriter = new Format\None();
+        $textWriter = new \X937\Fields\Format\FormatRaw();
+        $binaryWriter = new \X937\Fields\Format\FormatNone();
         parent::__construct($resource, $textWriter, $binaryWriter);
     }
     

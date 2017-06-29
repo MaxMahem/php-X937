@@ -1,6 +1,6 @@
 <?php
 
-namespace X937\Writer\Format;
+namespace X937\Fields\Format;
 
 use X937\Fields;
 
@@ -24,13 +24,15 @@ class Formated implements TextFormatInterface
     {
         $value = $field->getValue();
         
+        // logic set here is complex, so we set some variables and check each state.
+        $valueIsBlank           = (trim($value) === '');
+        $fieldMandatory         = ($field->usage === Fields\Field::USAGE_MANDATORY);
+        
         // check first for a dictonary translation.
         if (isset($field->dictonary)) {
-            // logic set here is complex, so we set some variables and check each state.
+            // set more sate values;
             $comprehensiveDictonary = ($field->comprehensive === 'true');
             $haveTranslation        = (isset($field->dictonary[$value]));
-            $valueIsBlank           = (trim($value) === '');
-            $fieldMandatory         = ($field->usage === Fields\Field::USAGE_MANDATORY);
             
             // get our translation, if possible.
             $translation = ($haveTranslation) ? $field->dictonary[$value] : 'No Translation';
@@ -64,6 +66,23 @@ class Formated implements TextFormatInterface
             } else {
                 return $value;
             }
+        }
+        
+        if ($valueIsBlank && !$fieldMandatory) {
+            return '';
+        }
+        
+        switch ($field->subtype) {
+            case Fields\FieldSubType::DATE:
+                return Util::formatDate($value);
+            case Fields\FieldSubType::TIME:
+                return Util::formatTIme($value);
+            case Fields\FieldSubType::AMOUNT:
+                return Util::formatAmount($value);
+            case Fields\FieldSubType::BYTES:
+                return Util::formatBytes($value);
+            case Fields\FieldSubType::COUNT:
+                return Util::formatCount($value);
         }
         
         $value = trim($value);    // space should not be signifigant on either side.

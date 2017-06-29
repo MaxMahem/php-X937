@@ -1,6 +1,6 @@
 <?php
 
-namespace X937;
+namespace X937\Fields\Format;
 
 /**
  * Description of Util
@@ -12,7 +12,6 @@ class Util
 
     const DATA_ASCII = 'ASCII';
     const DATA_EBCDIC = 'EBCDIC-US';
-    const DATA_BINARY = 'Binary';
 
     const DATA_TYPES = array(
         self::DATA_ASCII => self::DATA_ASCII,
@@ -256,11 +255,62 @@ class Util
             } else {
                 $asciiOut .= ' ';
                 trigger_error("Unhandled EBCDIC Character " . bin2hex($thisEBCDIC));
-                throw new \Exception("yep");
             }
             $eBinaryString = substr($eBinaryString, 1);
         }
 
         return $asciiOut;
+    }
+    
+    public static function formatDate(string $date, string $outputFormat = 'Y-m-d', string $inputFormat = 'Ymd'): string
+    {
+        try {
+            $dateObject = \DateTime::createFromFormat($inputFormat, $date);
+        } catch (Exception $e) {
+            trigger_error($e->getMessage());
+            return $date;
+        }
+        
+        return $dateObject->format($outputFormat);
+    }
+    
+    public static function formatTime(string $time, string $outputFormat = 'H:m', string $inputFormat = 'Hi'): string {
+        return self::formatDate($time, $outputFormat, $inputFormat);
+    }
+    
+    public static function formatAmount(string $amount): string {
+        if (!is_numeric($amount)) {
+            return $amount;
+        }
+        
+        return '$' . number_format($amount/100, 2);
+    }
+    
+    public static function formatCount(string $count): string {
+        if (!is_numeric($count)) {
+            return $count;
+        }
+        
+        return number_format($count);
+    }
+    
+    public static function formatBytes(string $bytes): string {
+        if (!is_numeric($bytes)) {
+            return $bytes;
+        }
+        if ($bytes == 0) {
+            return '0 B';
+        }
+        
+        $units = array('B', 'KB', 'MB', 'GB', 'TB'); 
+
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
+        $pow = min($pow, count($units) - 1); 
+
+        $bytes /= pow(1024, $pow);
+        $precision = $pow * 3;
+
+        return round($bytes, $precision) . ' ' . $units[$pow]; 
     }
 }

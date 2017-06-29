@@ -142,7 +142,7 @@ class Record extends Container implements \ArrayAccess, \Countable, \IteratorAgg
      */
     public function parse(string $data, string $dataType = Util::DATA_EBCDIC): bool
     {
-        if (!array_key_exists($dataType, Util::DATA_TYPES)) {
+        if (!array_key_exists($dataType, \X937\File::DATA_TYPES)) {
             throw new \InvalidArgumentException("Invalid data type: $dataType");
         }
 
@@ -153,10 +153,10 @@ class Record extends Container implements \ArrayAccess, \Countable, \IteratorAgg
             $rawValue = substr($data, $position, $length);
 
             // if our data is binary we also do not want to translate it.
-            if (($dataType === Util::DATA_EBCDIC) &&
-                ($field->type != Fields\Type::BINARY)
+            if (($dataType === \X937\File::DATA_EBCDIC) &&
+                ($field->type != Fields\FieldType::BINARY)
             ) {
-                $asciiValue = Util::e2a($rawValue);
+                $asciiValue = Fields\Format\Util::e2a($rawValue);
             } else {
                 $asciiValue = $rawValue;
             }
