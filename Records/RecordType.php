@@ -26,6 +26,10 @@ class RecordType
     const IMAGE_VIEW_DETAIL = '50';
     const IMAGE_VIEW_DATA = '52';
     const IMAGE_VIEW_ANALYSIS = '54';
+    const CREDIT_RECONCILIATION_RECORD = '61';
+    const CREDIT_RECORD = '62';
+    const USER_RECORD = '68';
+    const USER_RECORD_FORMAT_001_VERSION_001 = '68001001';
     const BUNDLE_CONTROL = '70';
     const BOX_SUMMARY = '75';
     const ROUTING_NUMBER_SUMMARY = '85';
@@ -51,6 +55,10 @@ class RecordType
         self::IMAGE_VIEW_DETAIL => 'Image View Detail Records',
         self::IMAGE_VIEW_DATA => 'Image View Data Records',
         self::IMAGE_VIEW_ANALYSIS => 'Image View Analysis',
+        self::CREDIT_RECONCILIATION_RECORD => 'Cedit/Reconciliation Record',
+        self::CREDIT_RECORD => 'Credit Record',
+        self::USER_RECORD => 'User Record',
+        self::USER_RECORD_FORMAT001_VERSION001 => 'User Record Format Type 001 Version 001',
         self::BUNDLE_CONTROL => 'Bundle Control Records',
         self::BOX_SUMMARY => 'Box Summary Records',
         self::ROUTING_NUMBER_SUMMARY => 'Routing Number Summary Records',

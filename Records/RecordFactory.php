@@ -247,6 +247,20 @@ class RecordFactory
             default:
                 throw new \InvalidArgumentException("Bad dataType passed: $dataType");
         }
+        
+        // type 68, User Records need Form and Version data to decode them.
+        if ($recordType === RecordType::USER_RECORD) {
+            $formatVersion = substr($recordData, 32, 3) . substr($recordData, 35, 3);
+            switch ($dataType) {
+                case \X937\File::DATA_ASCII:
+                    $recordType .= $formatVersion;
+                    break;
+                case \X937\File::DATA_EBCDIC:
+                    $recordType .= \X937\Fields\Format\Util::e2a($formatVersion);
+                    break;
+            }
+            $recordType .= substr($recordData, 32, 3) . substr($recordData, 35, 3);
+        }
 
         // check if we have a record type in our array for this record type, we should.
         // the index of that record template should corespond with that record type

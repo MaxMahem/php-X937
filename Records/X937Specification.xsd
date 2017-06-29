@@ -11,7 +11,7 @@
 
     <xs:simpleType name="recordType">
         <xs:restriction base="xs:int">
-            <xs:pattern value="[0-9][0-9]"/>
+            <xs:pattern value="[0-9]{2,8}"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -194,11 +194,11 @@
             <xs:field xpath="@type"/>
         </xs:unique>
         <xs:unique name="uniqueRecordNames">
-            <xs:selector xpath="record|forbidden"/>
+            <xs:selector xpath="record|forbidden|undefined"/>
             <xs:field xpath="name"/>
         </xs:unique>
         <xs:unique name="uniqueRecordType">
-            <xs:selector xpath="record|forbidden"/>
+            <xs:selector xpath="record|forbidden|undefined"/>
             <xs:field xpath="type"/>
         </xs:unique>
 
@@ -219,6 +219,7 @@
     <xs:element name="recordGroup" abstract="true"/>
     <xs:element name="record" type="record" substitutionGroup="recordGroup"/>
     <xs:element name="forbidden" type="forbiddenRecord" substitutionGroup="recordGroup"/>
+    <xs:element name="undefined" type="forbiddenRecord" substitutionGroup="recordGroup"/>
 
 </xs:schema>
 
