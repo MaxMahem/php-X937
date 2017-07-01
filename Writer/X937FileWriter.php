@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class X937 extends AbstractWriter
+class X937FileWriter extends AbstractWriter
 {
     public function __construct($resource) {
         $textWriter = new \X937\Fields\Format\FormatEBCDIC();

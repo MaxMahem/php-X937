@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:simpleType name="Alphameric">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([a-zA-Z0-9 ])*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Alphanumeric">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([a-zA-Z0-9 ])*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ANS">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(.)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Numeric">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9])*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NumericBlank">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9 ])*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NS">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(.)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NBSM">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(.)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NBSMOS">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(.)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Binary">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(.)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Blank">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="( )*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="RecordType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{2,8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

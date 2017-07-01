@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+   <xs:complexType name="FileHeaderRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="StandardLevel" type="Numeric"/>
+         <xs:element name="TestFileIndicator" type="Alphameric"/>
+         <xs:element name="ImmediateDestinationRoutingNumber" type="Numeric"/>
+         <xs:element name="ImmediateOriginRoutingNumber" type="Numeric"/>
+         <xs:element name="FileCreationDate" type="Numeric"/>
+         <xs:element name="FileCreationTime" type="Numeric"/>
+         <xs:element name="ResendIndicator" type="Alphameric"/>
+         <xs:element name="ImmediateDestinationName" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="ImmediateOriginName" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="FileIDModifier" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="CountryCode" type="Alphameric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="CompanionDocumentVersionIndicator" type="Alphanumeric" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="CashLetterHeaderRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="CollectionTypeIndicator" type="Numeric"/>
+         <xs:element name="DestinationRoutingNumber" type="Numeric"/>
+         <xs:element name="ECEInstitutionRoutingNumber" type="Numeric"/>
+         <xs:element name="CashLetterBuisnessDate" type="Numeric"/>
+         <xs:element name="CashLetterCreationDate" type="Numeric"/>
+         <xs:element name="CashLetterCreationTime" type="Numeric"/>
+         <xs:element name="CashLetterRecordTypeIndicator" type="Alphanumeric"/>
+         <xs:element name="CashLetterDocumentationTypeIndicator" type="Alphanumeric"/>
+         <xs:element name="CashLetterID" type="Alphanumeric"/>
+         <xs:element name="OriginatorContactName" type="ANS" minOccurs="0"/>
+         <xs:element name="OriginatorContactPhone" type="Numeric" minOccurs="0"/>
+         <xs:element name="FedWorkType" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="ReturnsIndicator" type="Alphameric"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="BundleHeaderRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="CollectionTypeIndicator" type="Numeric"/>
+         <xs:element name="DestinationRoutingNumber" type="Numeric"/>
+         <xs:element name="UniqueCustomerIdentifer" type="Numeric"/>
+         <xs:element name="BundleBuisnessDate" type="Numeric"/>
+         <xs:element name="BundleCreationDate" type="Numeric"/>
+         <xs:element name="BundleID" type="Alphanumeric"/>
+         <xs:element name="BundleSequenceNumber" type="NumericBlank"/>
+         <xs:element name="CycleNumber" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="Reserved1" type="Numeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved2" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="CheckDetailRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="AuxiliaryOnUs" type="NBSM" minOccurs="0"/>
+         <xs:element name="ExternalProcessingCode" type="NS" minOccurs="0"/>
+         <xs:element name="PayorBankRoutingNumber" type="Numeric"/>
+         <xs:element name="PayorBankRoutingNumberCheckDigit" type="Numeric"/>
+         <xs:element name="OnUs" type="NBSMOS" minOccurs="0"/>
+         <xs:element name="ItemAmount" type="Numeric"/>
+         <xs:element name="InstitutionItemSequenceNumber" type="NumericBlank"/>
+         <xs:element name="DocumentationTypeIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="ReturnAcceptanceIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="MICRValidIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="BOFDIndicator" type="Alphameric"/>
+         <xs:element name="CheckDetailRecordAddendumCount" type="Numeric"/>
+         <xs:element name="CorrectionIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="ArchiveTypeIndicator" type="Alphanumeric" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="CheckDetailAddendumARecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="CheckDetailAddendumARecordNumber" type="Numeric"/>
+         <xs:element name="ReturnLocationRoutingNumber" type="Numeric"/>
+         <xs:element name="BOFDEndorsementDate" type="Numeric"/>
+         <xs:element name="BOFDItemSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="DepositAccountNumberAtBOFD" type="ANS" minOccurs="0"/>
+         <xs:element name="BOFDDepositBranch" type="ANS" minOccurs="0"/>
+         <xs:element name="PayeeName" type="ANS" minOccurs="0"/>
+         <xs:element name="TruncationIndicator" type="Alphameric"/>
+         <xs:element name="BOFDConversionIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="BOFDCorrectionIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="CheckDetailAddendumBRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="ImageReferenceKeyIndicator" type="Numeric"/>
+         <xs:element name="MicrofilmArchiveSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="LengthOfImageReferenceKey" type="Numeric"/>
+         <xs:element name="ImageReferenceKey" type="ANS" minOccurs="0"/>
+         <xs:element name="Description" type="ANS" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="CheckDetailAddendumCRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="CheckDetailAddendumCRecordNumber" type="Numeric"/>
+         <xs:element name="EndorsingBankRoutingNumber" type="Numeric" minOccurs="0"/>
+         <xs:element name="EndorsingBankEndorsementDate" type="Numeric" minOccurs="0"/>
+         <xs:element name="EndorsingBankSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="TruncationIndicator" type="Alphameric" minOccurs="0"/>
+         <xs:element name="EndorsingBankConversionIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="EndorsingBankCorrectionIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="ReturnReason" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ReturnRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="PayorBankRoutingNumber" type="Numeric"/>
+         <xs:element name="PayorBankRoutingNumberCheckDigit" type="Numeric"/>
+         <xs:element name="OnUs" type="NBSMOS" minOccurs="0"/>
+         <xs:element name="ItemAmount" type="Numeric"/>
+         <xs:element name="ReturnReason" type="Alphanumeric"/>
+         <xs:element name="ReturnRecordAddendumCount" type="Numeric"/>
+         <xs:element name="ReturnDocumentationTypeIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="ForwardBundleDate" type="Numeric" minOccurs="0"/>
+         <xs:element name="ECEInstiutionItemSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="ExternalProcessingCode" type="NS" minOccurs="0"/>
+         <xs:element name="ReturnNotificationIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="ArchiveTypeIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="NumberOfTimesReturned" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ReturnAddendumARecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="ReturnAddendumARecordNumber" type="Numeric"/>
+         <xs:element name="ReturnLocationRoutingNumber" type="Numeric"/>
+         <xs:element name="BOFDEndorsementDate" type="Numeric"/>
+         <xs:element name="BOFDItemSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="DepositAccountNumberAtBOFD" type="ANS" minOccurs="0"/>
+         <xs:element name="BOFDDepositBranch" type="ANS" minOccurs="0"/>
+         <xs:element name="PayeeName" type="ANS" minOccurs="0"/>
+         <xs:element name="TruncationIndicator" type="Alphameric"/>
+         <xs:element name="BOFDConversionIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="BOFDCorrectionIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ReturnAddendumBRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="PayorBankName" type="ANS" minOccurs="0"/>
+         <xs:element name="AuxiliaryOnUs" type="NBSM" minOccurs="0"/>
+         <xs:element name="PayorBankItemSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="PayorBankBusinessDate" type="Numeric" minOccurs="0"/>
+         <xs:element name="PayorAccountName" type="ANS" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ReturnAddendumCRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="ImageReferenceKeyIndicator" type="Numeric"/>
+         <xs:element name="MicrofilmArchiveSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="LengthOfImageReferenceKey" type="Numeric"/>
+         <xs:element name="ImageReferenceKey" type="ANS" minOccurs="0"/>
+         <xs:element name="Description" type="ANS" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ReturnAddendumDRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="ReturnAddendumDRecordNumber" type="Numeric"/>
+         <xs:element name="EndorsingBankRoutingNumber" type="Numeric"/>
+         <xs:element name="EndorsingBankEndorsementDate" type="Numeric"/>
+         <xs:element name="EndorsingBankItemSequenceNumber" type="NumericBlank"/>
+         <xs:element name="TruncationIndicator" type="Alphameric"/>
+         <xs:element name="EndorsingBankConversionIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="EndorsingBankCorrectionIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="ReturnReason" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="EndorsingBankIdentifier" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ImageViewDetailRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="ImageIndicator" type="Numeric"/>
+         <xs:element name="ImageCreatorRoutingNumber" type="Numeric"/>
+         <xs:element name="ImageCreatorDate" type="Numeric" minOccurs="0"/>
+         <xs:element name="ImageViewFormatIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="ImageViewCompressionAlgorithmIdentifier" type="Numeric" minOccurs="0"/>
+         <xs:element name="ImageViewDataSize" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="ViewSideIndicator" type="Numeric"/>
+         <xs:element name="ViewDescriptor" type="Numeric"/>
+         <xs:element name="DigitalSignatureIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="DigitalSignatureMethod" type="Numeric" minOccurs="0"/>
+         <xs:element name="SecurityKeySize" type="Numeric" minOccurs="0"/>
+         <xs:element name="StartOfProtectedData" type="Numeric" minOccurs="0"/>
+         <xs:element name="LengthOfProtectedData" type="Numeric" minOccurs="0"/>
+         <xs:element name="ImageRecreateIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="ImageTIFFVarianceIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="OverrideIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ImageViewDataRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="ECEInstitutionRoutingNumber" type="Numeric"/>
+         <xs:element name="BundleBusinessDate" type="Numeric"/>
+         <xs:element name="CycleNumber" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="ClientInstitutionItemSequenceNumber" type="NumericBlank"/>
+         <xs:element name="SecurityOriginatorName" type="ANS" minOccurs="0"/>
+         <xs:element name="SecurityAuthenticatorName" type="ANS" minOccurs="0"/>
+         <xs:element name="SecurityKeyName" type="ANS" minOccurs="0"/>
+         <xs:element name="ClippingOrigin" type="NumericBlank"/>
+         <xs:element name="ClippingCoordinateh1" type="Numeric" minOccurs="0"/>
+         <xs:element name="ClippingCoordinateh2" type="Numeric" minOccurs="0"/>
+         <xs:element name="ClippingCoordinatev1" type="Numeric" minOccurs="0"/>
+         <xs:element name="ClippingCoordinatev2" type="Numeric" minOccurs="0"/>
+         <xs:element name="LengthOfImageReferenceKey" type="Numeric"/>
+         <xs:element name="ImageReferenceKey" type="Binary" minOccurs="0"/>
+         <xs:element name="LengthOfDigitalSignature" type="NumericBlank"/>
+         <xs:element name="DigitalSignature" type="Binary" minOccurs="0"/>
+         <xs:element name="LengthOfImageData" type="NumericBlank"/>
+         <xs:element name="ImageData" type="Binary" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="ImageViewAnalysisRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="GlobalImageQualilty" type="Numeric"/>
+         <xs:element name="GlobalImageUsability" type="Numeric"/>
+         <xs:element name="ImagingBankSpecificTest" type="Numeric"/>
+         <xs:element name="PartialImage" type="Numeric" minOccurs="0"/>
+         <xs:element name="ExcessiveImageSkew" type="Numeric" minOccurs="0"/>
+         <xs:element name="PiggybackImage" type="Numeric" minOccurs="0"/>
+         <xs:element name="TooLightorTooDark" type="Numeric" minOccurs="0"/>
+         <xs:element name="StreaksorBands" type="Numeric" minOccurs="0"/>
+         <xs:element name="BelowMinimumImageSize" type="Numeric" minOccurs="0"/>
+         <xs:element name="ExceedsMaximumImageSize" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved1" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved2" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved3" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved4" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved5" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved6" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved7" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved8" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved9" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved10" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved11" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved12" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved13" type="Numeric" minOccurs="0"/>
+         <xs:element name="Image-EnabledPOD" type="Numeric" minOccurs="0"/>
+         <xs:element name="SourceDocumentBad" type="Numeric" minOccurs="0"/>
+         <xs:element name="DateUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="PayeeUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="ConvenienceAmountUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="LegalAmountUseability" type="Numeric" minOccurs="0"/>
+         <xs:element name="SignatureUseability" type="Numeric" minOccurs="0"/>
+         <xs:element name="PayorNameandAddressUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="MICRLineUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="MemoLineUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="PayorBankNameandAddressUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="PayeeEndorsementUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="BOFDEndorsementUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="TransitEndorsementUsability" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved14" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="Reserved15" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="Reserved16" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="Reserved17" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="Reserved18" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="Reserved19" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="CreditRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="AuxiliaryOnUs" type="NBSM" minOccurs="0"/>
+         <xs:element name="ExternalProcessingCode" type="NS" minOccurs="0"/>
+         <xs:element name="PayorBankRoutingNumber" type="Numeric"/>
+         <xs:element name="OnUs" type="NBSMOS" minOccurs="0"/>
+         <xs:element name="ItemAmount" type="Numeric"/>
+         <xs:element name="CreditItemSequenceNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="DocumentationTypeIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="TypeOfAccountCode" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="SourceOfWorkCode" type="Numeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="BundleControlRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="BundleItemCount" type="Numeric"/>
+         <xs:element name="BundleTotalAmount" type="Numeric"/>
+         <xs:element name="MICRValidTotalAmount" type="Numeric" minOccurs="0"/>
+         <xs:element name="ImagesWithinBundleCount" type="Numeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="CreditTotalIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="UserRecord-FormatType001-PayeeEndorsementRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="OwnerIdentifierIndicator" type="Alphanumeric"/>
+         <xs:element name="OwnerIdentifier" type="ANS" minOccurs="0"/>
+         <xs:element name="OwnerIdentifierModifier" type="ANS" minOccurs="0"/>
+         <xs:element name="UserRecordFormatType" type="Alphanumeric"/>
+         <xs:element name="FormatTypeVersionLevel" type="Numeric"/>
+         <xs:element name="LengthOfUserData" type="Numeric"/>
+         <xs:element name="NameOfPayee" type="ANS" minOccurs="0"/>
+         <xs:element name="EndorsementDate" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="BankRoutingNumber" type="Numeric" minOccurs="0"/>
+         <xs:element name="BankAccountNumber" type="ANS" minOccurs="0"/>
+         <xs:element name="CustomerIdentifier" type="ANS" minOccurs="0"/>
+         <xs:element name="CustomerContactInformation" type="ANS" minOccurs="0"/>
+         <xs:element name="StoreorMerchantorProcessingSiteNumber" type="ANS" minOccurs="0"/>
+         <xs:element name="InternalControlorSequenceNumber" type="ANS" minOccurs="0"/>
+         <xs:element name="Time" type="Numeric" minOccurs="0"/>
+         <xs:element name="OperatorNameorInitials" type="ANS" minOccurs="0"/>
+         <xs:element name="OperatorNumber" type="ANS" minOccurs="0"/>
+         <xs:element name="ManagerorSupervisorNameorInitials" type="ANS" minOccurs="0"/>
+         <xs:element name="ManagerorSupervisorNumber" type="ANS" minOccurs="0"/>
+         <xs:element name="EquipmentNumber" type="ANS" minOccurs="0"/>
+         <xs:element name="EndorsementIndicator" type="Alphanumeric" minOccurs="0"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="UserRecord-GeneralFormatRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="OwnerIdentifierIndicator" type="Alphanumeric"/>
+         <xs:element name="OwnerIdentifier" type="ANS" minOccurs="0"/>
+         <xs:element name="OwnerIdentifierModifier" type="ANS" minOccurs="0"/>
+         <xs:element name="UserRecordFormatType" type="Alphanumeric"/>
+         <xs:element name="FormatTypeVersionLevel" type="Numeric"/>
+         <xs:element name="LengthOfUserData" type="Numeric"/>
+         <xs:element name="UserData" type="ANS"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="RoutingNumberSummaryRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="RoutingNumberWithinCashLetter" type="Numeric"/>
+         <xs:element name="RoutingNumberTotalAmount" type="Numeric"/>
+         <xs:element name="RoutingNumberItemCount" type="Numeric"/>
+         <xs:element name="UserField" type="ANS" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="CashLetterControlRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="BundleCount" type="Numeric"/>
+         <xs:element name="CashLetterItemCount" type="Numeric"/>
+         <xs:element name="CashLetterTotalAmount" type="Numeric"/>
+         <xs:element name="CashLetterImageViewCount" type="Numeric"/>
+         <xs:element name="ECEInstituionName" type="ANS"/>
+         <xs:element name="SettlementDate" type="Numeric" minOccurs="0"/>
+         <xs:element name="CreditTotalIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+   <xs:complexType name="FileControlRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="Numeric"/>
+         <xs:element name="CashLetterCount" type="Numeric"/>
+         <xs:element name="TotalRecordCount" type="Numeric"/>
+         <xs:element name="TotalItemCount" type="Numeric"/>
+         <xs:element name="TotalItemAmount" type="Numeric"/>
+         <xs:element name="ImmediateOriginContactName" type="ANS" minOccurs="0"/>
+         <xs:element name="ImmediateOriginContactPhoneNumber" type="NumericBlank" minOccurs="0"/>
+         <xs:element name="CreditTotalIndicator" type="Numeric" minOccurs="0"/>
+         <xs:element name="Reserved" type="Blank" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+</xs:schema>

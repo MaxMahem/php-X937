@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:include schemaLocation="FieldTypes.xsd"/>
+    <xs:include schemaLocation="RecordTemplates.xsd"/>
+     <xs:element name="File">
+           <xs:complexType>
+                 <xs:sequence>
+                       <xs:element name="FileHeaderRecord" type="FileHeaderRecord" />
+                       <xs:element name="CashLetter">
+                             <xs:complexType>
+                                   <xs:sequence>
+                                         <xs:element name="CashLetterHeaderRecord" type="CashLetterHeaderRecord" />
+                                         <xs:element name="Bundle">
+                                               <xs:complexType>
+                                                     <xs:sequence>
+                                                           <xs:element name="BundleHeaderRecord" type="BundleHeaderRecord" />
+                                                           <xs:element name="Item" maxOccurs="unbounded">
+                                                                 <xs:complexType>
+                                                                       <xs:sequence>
+                                                                             <xs:element name="CheckDetailRecord" type="CheckDetailRecord" />
+                                                                             <xs:element name="CheckDetailAddendumARecord" type="CheckDetailAddendumARecord" minOccurs="0" maxOccurs="unbounded" />
+                                                                             <xs:element name="CheckDetailAddendumBRecord" type="CheckDetailAddendumBRecord" minOccurs="0" maxOccurs="1" />
+                                                                             <xs:element name="CheckDetailAddendumCRecord" type="CheckDetailAddendumCRecord" minOccurs="0" maxOccurs="unbounded" />
+                                                                             <xs:element name="View" maxOccurs="unbounded">
+                                                                                   <xs:complexType>
+                                                                                         <xs:sequence>
+                                                                                               <xs:element name="ImageViewDetailRecord" type="ImageViewDetailRecord" />
+                                                                                               <xs:element name="ImageViewDataRecord" type="ImageViewDataRecord" />
+                                                                                               <xs:element name="ImageViewAnalysisRecord" type="ImageViewAnalysisRecord" minOccurs="0"/>
+                                                                                         </xs:sequence>
+                                                                                   </xs:complexType>
+                                                                             </xs:element>
+                                                                       </xs:sequence>
+                                                                       <xs:attribute name="id" type="NumericBlank" />
+                                                                 </xs:complexType>
+                                                           </xs:element>
+                                                           <xs:element name="BundleControlRecord" type="BundleControlRecord" />
+                                                     </xs:sequence>
+                                                     <xs:attribute name="id" type="NumericBlank" />
+                                               </xs:complexType>
+                                         </xs:element>
+                                         <xs:element name="CashLetterControlRecord" type="CashLetterControlRecord" />
+                                   </xs:sequence>
+                                   <xs:attribute name="id" type="NumericBlank" />
+                             </xs:complexType>
+                       </xs:element>
+                       <xs:element name="RoutingNumberSummaryRecord" type="RoutingNumberSummaryRecord" minOccurs="0" maxOccurs="unbounded" />
+                       <xs:element name="FileControlRecord" type="FileControlRecord" />
+                 </xs:sequence>
+           </xs:complexType>
+     </xs:element>
+</xs:schema>

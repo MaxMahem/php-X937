@@ -10,7 +10,7 @@ namespace X937\Writer;
  * @license http://www.gnu.org/licenses/gpl.html GNU Public Licneses v3
  * @copyright Copyright (c) 2013, Austin Stanley <maxtmahem@gmail.com>
  */
-class Human extends AbstractWriter
+class HumanFileWriter extends AbstractWriter
 {
     private $omitBlanks;
     

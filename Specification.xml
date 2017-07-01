@@ -511,14 +511,14 @@
             </field>
             <field order="9">
                 <name>Cycle Number</name>
-                <usage>O</usage>
-                <type>B</type>
-                <validation>N</validation>
+                <usage>C</usage>
+                <type>AN</type>
+                <validation>P</validation>
                 <position>53</position>
                 <length>2</length>
             </field>
             <field order="10">
-                <name>Reserved</name>
+                <name>Reserved 1</name>
                 <usage>F</usage>
                 <type>N</type>
                 <validation>N</validation>
@@ -534,7 +534,7 @@
                 <length>5</length>
             </field>
             <field order="12">
-                <name>Reserved</name>
+                <name>Reserved 2</name>
                 <usage>F</usage>
                 <type>B</type>
                 <validation>N</validation>
@@ -554,7 +554,7 @@
         <fields>
             <predefined order="1" ref="fieldRecordType">Record Type</predefined>
             <field order="2">
-                <name>Auxiliary On-Us</name>
+                <name>Auxiliary OnUs</name>
                 <usage>C</usage>
                 <type>NBSM</type>
                 <validation>P</validation>
@@ -589,7 +589,7 @@
                 <length>1</length>
             </field>
             <field order="6">
-                <name>On-Us</name>
+                <name>OnUs</name>
                 <usage>C</usage>
                 <type>NBSMOS</type>
                 <validation>P</validation>
@@ -755,7 +755,7 @@
                 <length>15</length>
             </field>
             <field order="6">
-                <name>Deposit Account Number at BOFD</name>
+                <name>Deposit Account Number At BOFD</name>
                 <usage>C</usage>
                 <type>ANS</type>
                 <validation>N</validation>
@@ -854,7 +854,7 @@
                 <length>15</length>
             </field>
             <field order="4" id="CDABImageReferenceKeyLength">
-                <name>Length of Image Reference Key</name>
+                <name>Length Of Image Reference Key</name>
                 <usage>M</usage>
                 <type>N</type>
                 <dictonary comprehensive="false">
@@ -1025,7 +1025,7 @@
                 <length>1</length>
             </field>
             <field order="4">
-                <name>On-Us</name>
+                <name>OnUs</name>
                 <usage>C</usage>
                 <type>NBSMOS</type>
                 <validation>P</validation>
@@ -1118,7 +1118,7 @@
                 <length>1</length>
             </field>
             <field order="14">
-                <name>Number of Times Returned</name>
+                <name>Number Of Times Returned</name>
                 <usage>C</usage>
                 <type>N</type>
                 <dictonary comprehensive="true">
@@ -1185,7 +1185,7 @@
                 <length>15</length>
             </field>
             <field order="6">
-                <name>Deposit Account Number at BOFD</name>
+                <name>Deposit Account Number At BOFD</name>
                 <usage>C</usage>
                 <type>ANS</type>
                 <validation>N</validation>
@@ -1271,7 +1271,7 @@
                 <length>18</length>
             </field>
             <field order="3">
-                <name>Auxiliary On-Us</name>
+                <name>Auxiliary OnUs</name>
                 <usage>C</usage>
                 <type>NBSM</type>
                 <validation>P</validation>
@@ -1335,7 +1335,7 @@
                 <length>15</length>
             </field>
             <field order="4" id="RACImageReferenceKeyLength">
-                <name>Length of Image Reference Key</name>
+                <name>Length Of Image Reference Key</name>
                 <usage>M</usage>
                 <type>N</type>
                 <dictonary comprehensive="false">
@@ -1635,7 +1635,7 @@
                 <length>5</length>
             </field>
             <field order="13">
-                <name>Start of Protected Data</name>
+                <name>Start Of Protected Data</name>
                 <usage>C</usage>
                 <type>N</type>
                 <validation>N</validation>
@@ -1643,7 +1643,7 @@
                 <length>7</length>
             </field>
             <field order="14">
-                <name>Length of Protected Data</name>
+                <name>Length Of Protected Data</name>
                 <usage>C</usage>
                 <type>N</type>
                 <validation>N</validation>
@@ -1817,7 +1817,7 @@
                 <length>4</length>
             </field>
             <field order="14" id="imageReferenceKeyLength">
-                <name>Length of Image Reference Key</name>
+                <name>Length Of Image Reference Key</name>
                 <usage>M</usage>
                 <type>N</type>
                 <subtype>Bytes</subtype>
@@ -1838,7 +1838,7 @@
                 <variableLength ref="imageReferenceKeyLength">X</variableLength>
             </field>
             <field order="16" id="digitalSignatureLength">
-                <name>Length of Digital Signature</name>
+                <name>Length Of Digital Signature</name>
                 <usage>M</usage>
                 <type>NB</type>
                 <subtype>Bytes</subtype>
@@ -1859,7 +1859,7 @@
                 <variableLength ref="digitalSignatureLength">Y</variableLength>
             </field>
             <field order="18" id="imageDataLength">
-                <name>Length of Image Data</name>
+                <name>Length Of Image Data</name>
                 <usage>M</usage>
                 <type>NB</type>
                 <subtype>Bytes</subtype>
@@ -1976,7 +1976,7 @@
                 <length>1</length>
             </field>
             <field order="12">
-                <name>Reserved</name>
+                <name>Reserved 1</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -1984,7 +1984,7 @@
                 <length>1</length>
             </field>
             <field order="13">
-                <name>Reserved</name>
+                <name>Reserved 2</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -1992,7 +1992,7 @@
                 <length>1</length>
             </field>
             <field order="14">
-                <name>Reserved</name>
+                <name>Reserved 3</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2000,7 +2000,7 @@
                 <length>1</length>
             </field>
             <field order="15">
-                <name>Reserved</name>
+                <name>Reserved 4</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2008,7 +2008,7 @@
                 <length>1</length>
             </field>
             <field order="16">
-                <name>Reserved</name>
+                <name>Reserved 5</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2016,7 +2016,7 @@
                 <length>1</length>
             </field>
             <field order="17">
-                <name>Reserved</name>
+                <name>Reserved 6</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2024,7 +2024,7 @@
                 <length>1</length>
             </field>
             <field order="18">
-                <name>Reserved</name>
+                <name>Reserved 7</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2032,7 +2032,7 @@
                 <length>1</length>
             </field>
             <field order="19">
-                <name>Reserved</name>
+                <name>Reserved 8</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2040,7 +2040,7 @@
                 <length>1</length>
             </field>
             <field order="20">
-                <name>Reserved</name>
+                <name>Reserved 9</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2048,7 +2048,7 @@
                 <length>1</length>
             </field>
             <field order="21">
-                <name>Reserved</name>
+                <name>Reserved 10</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2056,7 +2056,7 @@
                 <length>1</length>
             </field>
             <field order="22">
-                <name>Reserved</name>
+                <name>Reserved 11</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2064,7 +2064,7 @@
                 <length>1</length>
             </field>
             <field order="23">
-                <name>Reserved</name>
+                <name>Reserved 12</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2072,7 +2072,7 @@
                 <length>1</length>
             </field>
             <field order="24">
-                <name>Reserved</name>
+                <name>Reserved 13</name>
                 <usage>O</usage>
                 <type>N</type>
                 <validation>P</validation>
@@ -2205,7 +2205,7 @@
                 <length>1</length>
             </field>
             <field order="39">
-                <name>Reserved</name>
+                <name>Reserved 14</name>
                 <usage>O</usage>
                 <type>NB</type>
                 <validation>N</validation>
@@ -2213,7 +2213,7 @@
                 <length>1</length>
             </field>
             <field order="40">
-                <name>Reserved</name>
+                <name>Reserved 15</name>
                 <usage>O</usage>
                 <type>NB</type>
                 <validation>N</validation>
@@ -2221,7 +2221,7 @@
                 <length>1</length>
             </field>
             <field order="41">
-                <name>Reserved</name>
+                <name>Reserved 16</name>
                 <usage>O</usage>
                 <type>NB</type>
                 <validation>N</validation>
@@ -2229,7 +2229,7 @@
                 <length>1</length>
             </field>
             <field order="42">
-                <name>Reserved</name>
+                <name>Reserved 17</name>
                 <usage>O</usage>
                 <type>NB</type>
                 <validation>N</validation>
@@ -2237,7 +2237,7 @@
                 <length>1</length>
             </field>
             <field order="43">
-                <name>Reserved</name>
+                <name>Reserved 18</name>
                 <usage>O</usage>
                 <type>NB</type>
                 <validation>N</validation>
@@ -2245,7 +2245,7 @@
                 <length>1</length>
             </field>
             <field order="44">
-                <name>Reserved</name>
+                <name>Reserved 19</name>
                 <usage>O</usage>
                 <type>NB</type>
                 <validation>N</validation>
@@ -2288,7 +2288,7 @@
         <fields>
             <predefined order="1" ref="fieldRecordType">Record Type</predefined>
             <field order="2">
-                <name>Auxiliary On-Us</name>
+                <name>Auxiliary OnUs</name>
                 <usage>C</usage>
                 <type>NBSM</type>
                 <validation>P</validation>
@@ -2315,7 +2315,7 @@
                 <length>9</length>
             </field>
             <field order="5">
-                <name>On-Us</name>
+                <name>OnUs</name>
                 <usage>C</usage>
                 <type>NBSMOS</type>
                 <validation>P</validation>
@@ -2349,7 +2349,7 @@
                 <length>1</length>
             </field>
             <field order="9">
-                <name>Type of Account Code</name>
+                <name>Type Of Account Code</name>
                 <usage>C</usage>
                 <type>AN</type>
                 <dictonary comprehensive="false">
@@ -2366,7 +2366,7 @@
                 <length>1</length>
             </field>
             <field order="10">
-                <name>Source of Work Code</name>
+                <name>Source Of Work Code</name>
                 <usage>C</usage>
                 <type>N</type>
                 <dictonary comprehensive="false">
@@ -2443,7 +2443,7 @@
                 <length>12</length>
             </field>
             <field order="5">
-                <name>Images within Bundle Count</name>
+                <name>Images Within Bundle Count</name>
                 <usage>C</usage>
                 <type>N</type>
                 <subtype>Count</subtype>
@@ -2485,7 +2485,7 @@
         <usage>C</usage>
         <validation>P</validation>
         <length>335</length>
-        <fieldCount>8</fieldCount>
+        <fieldCount>23</fieldCount>
         <fields>
             <predefined order="1" ref="fieldRecordType">Record Type</predefined>
             <field order="2">
@@ -2544,7 +2544,7 @@
                 <length>3</length>
             </field>
             <field order="7">
-                <name>Length of User Data</name>
+                <name>Length Of User Data</name>
                 <usage>M</usage>
                 <type>N</type>
                 <dictonary comprehensive="true">
@@ -2555,12 +2555,142 @@
                 <length>7</length>
             </field>
             <field order="8">
-                <name>User Data</name>
-                <usage>M</usage>
+                <name>Name Of Payee</name>
+                <usage>C</usage>
                 <type>ANS</type>
                 <validation>N</validation>
                 <position>46</position>
-                <length>290</length>
+                <length>50</length>
+            </field>
+            <field order="9">
+                <name>Endorsement Date</name>
+                <usage>C</usage>
+                <type>NB</type>
+                <subtype>Date</subtype>
+                <validation>N</validation>
+                <position>96</position>
+                <length>8</length>
+            </field>
+            <field order="10">
+                <name>Bank Routing Number</name>
+                <usage>C</usage>
+                <type>N</type>
+                <subtype>Routing</subtype>
+                <validation>N</validation>
+                <position>104</position>
+                <length>9</length>
+            </field>
+            <field order="11">
+                <name>Bank Account Number</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>113</position>
+                <length>20</length>
+            </field>
+            <field order="12">
+                <name>Customer Identifier</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>133</position>
+                <length>20</length>
+            </field>
+            <field order="13">
+                <name>Customer Contact Information</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>153</position>
+                <length>50</length>
+            </field>
+            <field order="14">
+                <name>Store or Merchant or Processing Site Number</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>203</position>
+                <length>8</length>
+            </field>
+            <field order="15">
+                <name>Internal Control or Sequence Number</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>211</position>
+                <length>25</length>
+            </field>
+            <field order="16">
+                <name>Time</name>
+                <usage>C</usage>
+                <type>N</type>
+                <validation>N</validation>
+                <position>236</position>
+                <length>4</length>
+            </field>
+            <field order="17">
+                <name>Operator Name or Initials</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>240</position>
+                <length>30</length>
+            </field>
+            <field order="18">
+                <name>Operator Number</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>270</position>
+                <length>5</length>
+            </field>
+            <field order="19">
+                <name>Manager or Supervisor Name or Initials</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>275</position>
+                <length>30</length>
+            </field>
+            <field order="20">
+                <name>Manager or Supervisor Number</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>305</position>
+                <length>5</length>
+            </field>
+            <field order="21">
+                <name>Equipment Number</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>310</position>
+                <length>15</length>
+            </field>
+            <field order="22">
+                <name>Endorsement Indicator</name>
+                <usage>C</usage>
+                <type>AN</type>
+                <dictonary comprehensive="true">
+                    <value key="0">Endorsed in Blank</value>
+                    <value key="1">For Deposit Only</value>
+                    <value key="2">For Collection Only</value>
+                    <value key="3">Anomalous Endorsement</value>
+                    <value key="4">Restrictive Endorsement</value>
+                    <value key="5">Guaranteed Endorsement</value>
+                </dictonary>
+                <validation>N</validation>
+                <position>325</position>
+                <length>1</length>
+            </field>
+            <field order="23">
+                <name>User Field</name>
+                <usage>C</usage>
+                <type>ANS</type>
+                <validation>N</validation>
+                <position>326</position>
+                <length>10</length>
             </field>
         </fields>
     </record>
@@ -2615,7 +2745,7 @@
                 <length>3</length>
             </field>
             <field order="7" id="URGFLengthOfUserData">
-                <name>Length of User Data</name>
+                <name>Length Of User Data</name>
                 <usage>M</usage>
                 <type>N</type>
                 <validation>R</validation>

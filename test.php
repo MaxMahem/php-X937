@@ -5,28 +5,29 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'a
 
 $file = new X937\File('C:\PHP-Projects\x937\test.X937');
 
-$humanFile = new SplFileObject('..\Human.txt', 'wb');
-$writerHuman = new X937\Writer\Human($humanFile, true);
-$writerHuman->writeAll($file);
-echo "Human written: ", microtime(true) - $time, PHP_EOL;
-$time = microtime(true);
-
-$flatFile = new SplFileObject('..\Flat.txt', 'wb');
-$writerFlat = new X937\Writer\Flat($flatFile);
-$writerFlat->writeAll($file);
-echo "Flat written: ", microtime(true) - $time, PHP_EOL;
-$time = microtime(true);
+//$humanFile = new SplFileObject('..\Human.txt', 'wb');
+//$writerHuman = new X937\Writer\HumanFileWriter($humanFile, true);
+//$writerHuman->writeAll($file);
+//echo "Human written: ", microtime(true) - $time, PHP_EOL;
+//$time = microtime(true);
+//
+//$flatFile = new SplFileObject('..\Flat.txt', 'wb');
+//$writerFlat = new X937\Writer\FlatFileWriter($flatFile);
+//$writerFlat->writeAll($file);
+//echo "Flat written: ", microtime(true) - $time, PHP_EOL;
+//$time = microtime(true);
 
 $filename = '..\xml.xml';
 $xmlObject = new \XMLWriter();
 $xmlObject->openUri($filename);
-$writerXML = new X937\Writer\XML($xmlObject, new X937\Fields\Format\FormatSignifigant(), new X937\Fields\Format\FormatByteCount());
+$writerXML = new X937\Writer\XMLFileWriter($xmlObject, [X937\Writer\XMLFileWriter::OPTION_STUB => false]);
 $writerXML->writeAll($file);
 echo "XML written: ", microtime(true) - $time, PHP_EOL;
 $time = microtime(true);
+die();
 
 $X937File = new SplFileObject('..\X937.x937', 'wb');
-$writerX937 = new X937\Writer\X937($X937File);
+$writerX937 = new X937\Writer\X937FileWriter($X937File);
 $writerX937->writeAll($file);
 echo "X937 written: ", microtime(true) - $time, PHP_EOL;
 die();
