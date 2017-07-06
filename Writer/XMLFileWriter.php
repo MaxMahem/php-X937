@@ -29,7 +29,7 @@ class XMLFileWriter implements WriterInterface
         self::OPTION_SKIP_BLANKS => true,
         self::OPTION_STUB => false,
         self::OPTION_INDENT => true,
-        self::OPTION_INDENT_STRING => '  ',
+        self::OPTION_INDENT_STRING => '    ',
         self::OPTION_XSD => 'XMLStructure.xsd',
     );
     
@@ -201,8 +201,10 @@ class XMLFileWriter implements WriterInterface
     private function writeElement(Records\Record $record)
     {
         $recordName = self::camelCase($record->name);
-
-        // start the record element
+        // if we are writing stubs, append that.
+        $recordName .= ($this->options[self::OPTION_STUB]) ? 'Stub' : '';
+        
+        // start the record element        
         $this->XMLWriter->startElement($recordName);
         $this->XMLWriter->writeAttribute(Records\Record::PROP_TYPE, $record->type);
         
@@ -210,7 +212,6 @@ class XMLFileWriter implements WriterInterface
         if (!$this->options[self::OPTION_STUB]) {
             // write all fields as element
             foreach ($record as $field) {
-                // get name turn spaces to underscore
                 $fieldName = self::camelCase($field->name);
 
                 if ($field->type === \X937\Fields\FieldType::BINARY) {
@@ -220,7 +221,7 @@ class XMLFileWriter implements WriterInterface
                 }
 
                 // if after trimming we have no data, then ommit the field.
-                if (($value === '')
+                if ((trim($value) === '')
                         && ($this->options[self::OPTION_SKIP_BLANKS])
                         && ($field->usage !== \X937\Fields\Field::USAGE_MANDATORY))
                 {

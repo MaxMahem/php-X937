@@ -69,13 +69,14 @@ class File implements \Iterator
      * file and File Control Records at the end of the file. Throws exception if
      * these two mandatory Records are not present.
      * @param string $filename the path to the X937File
-     * @param string $specFilename the path to the x937 specification xml
+     * @param string $recordSpecFilename the path to the x937 specification xml
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $filename, string $specFilename = 'Specification.xml')
+    public function __construct(string $filename, string $recordSpecFilename)
     {
         // input validation        
         // check for existance of our file
+        $filename = realpath($filename);
         if (!file_exists($filename)) {
             throw new \InvalidArgumentException("X937File created with file that does not exist, filename: $filename");
         }
@@ -90,7 +91,8 @@ class File implements \Iterator
         $this->dataType = $this->readFileDataType();
 
         // build our factory
-        $this->recordFactory = new Records\RecordFactory($specFilename);
+        $recordSpecFilename = realpath($recordSpecFilename);
+        $this->recordFactory = new Records\RecordFactory($recordSpecFilename);
 
         // pull the first record, this should always be the file header record.
         $this->fileHeaderRecord = $this->current();

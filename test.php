@@ -3,7 +3,12 @@ $time = microtime(true);
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$file = new X937\File('C:\PHP-Projects\x937\test.X937');
+$file = new X937\File('..\test.X937', '.\ANSI-X9-100-187-Records.xml');
+
+$fieldFactory = new X937\Fields\FieldFactory();
+//
+//$fieldTemplate['type'] = 'ANS';
+//$field = $fieldFactory->generateField($fieldTemplate);
 
 //$humanFile = new SplFileObject('..\Human.txt', 'wb');
 //$writerHuman = new X937\Writer\HumanFileWriter($humanFile, true);

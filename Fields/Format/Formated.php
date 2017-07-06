@@ -28,44 +28,11 @@ class Formated implements TextFormatInterface
         $valueIsBlank           = (trim($value) === '');
         $fieldMandatory         = ($field->usage === Fields\Field::USAGE_MANDATORY);
         
-        // check first for a dictonary translation.
-        if (isset($field->dictonary)) {
-            // set more sate values;
-            $comprehensiveDictonary = ($field->comprehensive === 'true');
-            $haveTranslation        = (isset($field->dictonary[$value]));
-            
-            // get our translation, if possible.
-            $translation = ($haveTranslation) ? $field->dictonary[$value] : 'No Translation';
-            
-            // first check if we have a translation, if we have one, we always
-            // want to return it.
-            if ($haveTranslation) {
-                // if we have a translation, we want to wrap the value if it is blank
-                if ($valueIsBlank) {
-                    $value = "'$value'";
-                }
-            
-                return "$value - $translation";
-            }
-            
-            // here we do not have a translation of our value.
-            // if the value is blank, and the field is not mandatory, then we return an empty string.
-            if ($valueIsBlank && !$fieldMandatory) {
-                return '';
-            }
-            
-            // here we do not have a translation of our value, and the value is mandatory.
-            // if the dictonary is comprehensive, we want to indicate that there
-            // should be a translation and there is not. Otherwise, we just return the value.
-            if ($comprehensiveDictonary) {
-                // if we have should have a translation, we want to wrap the value if it is blank
-                if ($valueIsBlank) {
-                    $value = "'$value'";
-                }
-                return "$value - $translation";
-            } else {
-                return $value;
-            }
+        // translate our value
+        $translatedValue = FormatTranslate::formatTranslate($field);
+        // if the translated value is different then the normal value, return it.
+        if ($translatedValue !== $value) {
+            return $translatedValue;
         }
         
         if ($valueIsBlank && !$fieldMandatory) {

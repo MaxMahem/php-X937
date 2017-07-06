@@ -32,7 +32,9 @@ class Record extends Container implements \ArrayAccess, \Countable, \IteratorAgg
     const PROP_LENGTH = 'length';
     const PROP_VARIABLELENGTH = 'variableLength';
     const PROP_FIELDCOUNT = 'fieldCount';
+    
     protected const PROP_FIELDS = 'fields';
+    
     const PARSED_PROPERTIES = [
         self::PROP_NAME,
         self::PROP_TYPE,

@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:simpleType name="Alphameric">
+    <xs:simpleType name="A">
         <xs:restriction base="xs:string">
-            <xs:pattern value="([a-zA-Z0-9 ])*"/>
+            <xs:pattern value="([a-zA-Z ])*"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Alphanumeric">
+    <xs:simpleType name="AN">
         <xs:restriction base="xs:string">
             <xs:pattern value="([a-zA-Z0-9 ])*"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="ANS">
         <xs:restriction base="xs:string">
-            <xs:pattern value="(.)*"/>
+            <xs:pattern value="([ !-~])*"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Numeric">
+    <xs:simpleType name="N">
         <xs:restriction base="xs:string">
             <xs:pattern value="([0-9])*"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="NumericBlank">
+    <xs:simpleType name="NB">
         <xs:restriction base="xs:string">
             <xs:pattern value="([0-9 ])*"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="NS">
         <xs:restriction base="xs:string">
-            <xs:pattern value="(.)*"/>
+            <xs:pattern value="([!-@'-\[\{-~])*"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="NBSM">
         <xs:restriction base="xs:string">
-            <xs:pattern value="(.)*"/>
+            <xs:pattern value="([ 0-9\-*])*"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="NBSMOS">
         <xs:restriction base="xs:string">
-            <xs:pattern value="(.)*"/>
+            <xs:pattern value="([ 0-9\-/*])*"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="Binary">
@@ -45,7 +45,7 @@
             <xs:pattern value="(.)*"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Blank">
+    <xs:simpleType name="B">
         <xs:restriction base="xs:string">
             <xs:pattern value="( )*"/>
         </xs:restriction>

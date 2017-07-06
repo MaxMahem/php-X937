@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="1.0"
+           elementFormDefault="qualified">
+
+    <xs:simpleType name="recordName">
+        <xs:restriction base="xs:Name">
+            <xs:pattern value="(.)+Record"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="usage">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="M"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="F"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="validation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="N"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="maxOccurs">
+    <xs:union>
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:minInclusive value="0"/>
+            </xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType>
+            <xs:restriction base="xs:NMTOKEN">
+                <xs:enumeration value="unbounded" />
+            </xs:restriction>
+        </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    
+    <xs:complexType name="control">
+        <xs:sequence>
+            <xs:element name="record" type="record" maxOccurs="unbounded" />
+            <xs:element name="control" type="control" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="record" type="record" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:Name" use="required" />
+        <xs:attribute name="usage" type="usage" use="required" />
+        <xs:attribute name="maxOccurs" type="maxOccurs" use="optional" />
+    </xs:complexType>
+    
+    <xs:complexType name="record">
+        <xs:attribute name="name" type="recordName" use="required" />
+        <xs:attribute name="usage" type="usage" use="required" />
+        <xs:attribute name="maxOccurs" type="maxOccurs" use="optional" />
+    </xs:complexType>
+
+    <xs:element name="file">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="control" type="control" maxOccurs="1" />
+            </xs:sequence>
+            <xs:attribute name="filenameRoot" use="required" />
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

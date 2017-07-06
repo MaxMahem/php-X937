@@ -29,7 +29,7 @@ class RecordFactory
         if (!$specDOM->load($specXMLFile)) {
             throw new \InvalidArgumentException("Loading of XML file $specXMLFile failed.");
         }
-        if (!$specDOM->schemaValidate(__DIR__ . DIRECTORY_SEPARATOR . 'X937Specification.xsd')) {
+        if (!$specDOM->schemaValidate(__DIR__ . DIRECTORY_SEPARATOR . 'X937Records.xsd')) {
             throw new \InvalidArgumentException("$specXMLFile failed schema validation.");
         }
 

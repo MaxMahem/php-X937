@@ -1,0 +1,3188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!--***************************-->
+<!-- Record Subsitution Groups -->
+<!--***************************-->
+<!--FileHeaderRecord-->
+   <xs:element name="FileHeaderRecordAbstract" abstract="true"/>
+   <xs:element name="FileHeaderRecord" type="FileHeaderRecord" substitutionGroup="FileHeaderRecordAbstract"/>
+   <xs:element name="FileHeaderRecordStub" type="stubRecord" substitutionGroup="FileHeaderRecordAbstract"/>
+
+<!--CashLetterHeaderRecord-->
+   <xs:element name="CashLetterHeaderRecordAbstract" abstract="true"/>
+   <xs:element name="CashLetterHeaderRecord" type="CashLetterHeaderRecord" substitutionGroup="CashLetterHeaderRecordAbstract"/>
+   <xs:element name="CashLetterHeaderRecordStub" type="stubRecord" substitutionGroup="CashLetterHeaderRecordAbstract"/>
+
+<!--BundleHeaderRecord-->
+   <xs:element name="BundleHeaderRecordAbstract" abstract="true"/>
+   <xs:element name="BundleHeaderRecord" type="BundleHeaderRecord" substitutionGroup="BundleHeaderRecordAbstract"/>
+   <xs:element name="BundleHeaderRecordStub" type="stubRecord" substitutionGroup="BundleHeaderRecordAbstract"/>
+
+<!--CheckDetailRecord-->
+   <xs:element name="CheckDetailRecordAbstract" abstract="true"/>
+   <xs:element name="CheckDetailRecord" type="CheckDetailRecord" substitutionGroup="CheckDetailRecordAbstract"/>
+   <xs:element name="CheckDetailRecordStub" type="stubRecord" substitutionGroup="CheckDetailRecordAbstract"/>
+
+<!--CheckDetailAddendumARecord-->
+   <xs:element name="CheckDetailAddendumARecordAbstract" abstract="true"/>
+   <xs:element name="CheckDetailAddendumARecord" type="CheckDetailAddendumARecord" substitutionGroup="CheckDetailAddendumARecordAbstract"/>
+   <xs:element name="CheckDetailAddendumARecordStub" type="stubRecord" substitutionGroup="CheckDetailAddendumARecordAbstract"/>
+
+<!--CheckDetailAddendumBRecord-->
+   <xs:element name="CheckDetailAddendumBRecordAbstract" abstract="true"/>
+   <xs:element name="CheckDetailAddendumBRecord" type="CheckDetailAddendumBRecord" substitutionGroup="CheckDetailAddendumBRecordAbstract"/>
+   <xs:element name="CheckDetailAddendumBRecordStub" type="stubRecord" substitutionGroup="CheckDetailAddendumBRecordAbstract"/>
+
+<!--CheckDetailAddendumCRecord-->
+   <xs:element name="CheckDetailAddendumCRecordAbstract" abstract="true"/>
+   <xs:element name="CheckDetailAddendumCRecord" type="CheckDetailAddendumCRecord" substitutionGroup="CheckDetailAddendumCRecordAbstract"/>
+   <xs:element name="CheckDetailAddendumCRecordStub" type="stubRecord" substitutionGroup="CheckDetailAddendumCRecordAbstract"/>
+
+<!--ReturnRecord-->
+   <xs:element name="ReturnRecordAbstract" abstract="true"/>
+   <xs:element name="ReturnRecord" type="ReturnRecord" substitutionGroup="ReturnRecordAbstract"/>
+   <xs:element name="ReturnRecordStub" type="stubRecord" substitutionGroup="ReturnRecordAbstract"/>
+
+<!--ReturnAddendumARecord-->
+   <xs:element name="ReturnAddendumARecordAbstract" abstract="true"/>
+   <xs:element name="ReturnAddendumARecord" type="ReturnAddendumARecord" substitutionGroup="ReturnAddendumARecordAbstract"/>
+   <xs:element name="ReturnAddendumARecordStub" type="stubRecord" substitutionGroup="ReturnAddendumARecordAbstract"/>
+
+<!--ReturnAddendumBRecord-->
+   <xs:element name="ReturnAddendumBRecordAbstract" abstract="true"/>
+   <xs:element name="ReturnAddendumBRecord" type="ReturnAddendumBRecord" substitutionGroup="ReturnAddendumBRecordAbstract"/>
+   <xs:element name="ReturnAddendumBRecordStub" type="stubRecord" substitutionGroup="ReturnAddendumBRecordAbstract"/>
+
+<!--ReturnAddendumCRecord-->
+   <xs:element name="ReturnAddendumCRecordAbstract" abstract="true"/>
+   <xs:element name="ReturnAddendumCRecord" type="ReturnAddendumCRecord" substitutionGroup="ReturnAddendumCRecordAbstract"/>
+   <xs:element name="ReturnAddendumCRecordStub" type="stubRecord" substitutionGroup="ReturnAddendumCRecordAbstract"/>
+
+<!--ReturnAddendumDRecord-->
+   <xs:element name="ReturnAddendumDRecordAbstract" abstract="true"/>
+   <xs:element name="ReturnAddendumDRecord" type="ReturnAddendumDRecord" substitutionGroup="ReturnAddendumDRecordAbstract"/>
+   <xs:element name="ReturnAddendumDRecordStub" type="stubRecord" substitutionGroup="ReturnAddendumDRecordAbstract"/>
+
+<!--ImageViewDetailRecord-->
+   <xs:element name="ImageViewDetailRecordAbstract" abstract="true"/>
+   <xs:element name="ImageViewDetailRecord" type="ImageViewDetailRecord" substitutionGroup="ImageViewDetailRecordAbstract"/>
+   <xs:element name="ImageViewDetailRecordStub" type="stubRecord" substitutionGroup="ImageViewDetailRecordAbstract"/>
+
+<!--ImageViewDataRecord-->
+   <xs:element name="ImageViewDataRecordAbstract" abstract="true"/>
+   <xs:element name="ImageViewDataRecord" type="ImageViewDataRecord" substitutionGroup="ImageViewDataRecordAbstract"/>
+   <xs:element name="ImageViewDataRecordStub" type="stubRecord" substitutionGroup="ImageViewDataRecordAbstract"/>
+
+<!--ImageViewAnalysisRecord-->
+   <xs:element name="ImageViewAnalysisRecordAbstract" abstract="true"/>
+   <xs:element name="ImageViewAnalysisRecord" type="ImageViewAnalysisRecord" substitutionGroup="ImageViewAnalysisRecordAbstract"/>
+   <xs:element name="ImageViewAnalysisRecordStub" type="stubRecord" substitutionGroup="ImageViewAnalysisRecordAbstract"/>
+
+<!--CreditRecord-->
+   <xs:element name="CreditRecordAbstract" abstract="true"/>
+   <xs:element name="CreditRecord" type="CreditRecord" substitutionGroup="CreditRecordAbstract"/>
+   <xs:element name="CreditRecordStub" type="stubRecord" substitutionGroup="CreditRecordAbstract"/>
+
+<!--BundleControlRecord-->
+   <xs:element name="BundleControlRecordAbstract" abstract="true"/>
+   <xs:element name="BundleControlRecord" type="BundleControlRecord" substitutionGroup="BundleControlRecordAbstract"/>
+   <xs:element name="BundleControlRecordStub" type="stubRecord" substitutionGroup="BundleControlRecordAbstract"/>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord-->
+   <xs:element name="UserRecord-FormatType001-PayeeEndorsementRecordAbstract" abstract="true"/>
+   <xs:element name="UserRecord-FormatType001-PayeeEndorsementRecord" type="UserRecord-FormatType001-PayeeEndorsementRecord" substitutionGroup="UserRecord-FormatType001-PayeeEndorsementRecordAbstract"/>
+   <xs:element name="UserRecord-FormatType001-PayeeEndorsementRecordStub" type="stubRecord" substitutionGroup="UserRecord-FormatType001-PayeeEndorsementRecordAbstract"/>
+
+<!--UserRecord-GeneralFormatRecord-->
+   <xs:element name="UserRecord-GeneralFormatRecordAbstract" abstract="true"/>
+   <xs:element name="UserRecord-GeneralFormatRecord" type="UserRecord-GeneralFormatRecord" substitutionGroup="UserRecord-GeneralFormatRecordAbstract"/>
+   <xs:element name="UserRecord-GeneralFormatRecordStub" type="stubRecord" substitutionGroup="UserRecord-GeneralFormatRecordAbstract"/>
+
+<!--RoutingNumberSummaryRecord-->
+   <xs:element name="RoutingNumberSummaryRecordAbstract" abstract="true"/>
+   <xs:element name="RoutingNumberSummaryRecord" type="RoutingNumberSummaryRecord" substitutionGroup="RoutingNumberSummaryRecordAbstract"/>
+   <xs:element name="RoutingNumberSummaryRecordStub" type="stubRecord" substitutionGroup="RoutingNumberSummaryRecordAbstract"/>
+
+<!--CashLetterControlRecord-->
+   <xs:element name="CashLetterControlRecordAbstract" abstract="true"/>
+   <xs:element name="CashLetterControlRecord" type="CashLetterControlRecord" substitutionGroup="CashLetterControlRecordAbstract"/>
+   <xs:element name="CashLetterControlRecordStub" type="stubRecord" substitutionGroup="CashLetterControlRecordAbstract"/>
+
+<!--FileControlRecord-->
+   <xs:element name="FileControlRecordAbstract" abstract="true"/>
+   <xs:element name="FileControlRecord" type="FileControlRecord" substitutionGroup="FileControlRecordAbstract"/>
+   <xs:element name="FileControlRecordStub" type="stubRecord" substitutionGroup="FileControlRecordAbstract"/>
+
+<!--*****************************-->
+<!-- Stub Record Type Definition -->
+<!--*****************************-->
+   <xs:complexType name="stubRecord">
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+
+<!--*************************-->
+<!-- Record Type Definitions -->
+<!--*************************-->
+<!--FileHeaderRecord-->
+   <xs:complexType name="FileHeaderRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--FileHeaderRecord/StandardLevel-->
+         <xs:element name="StandardLevel">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+                  <xs:enumeration value="35"/>
+                  <xs:enumeration value="30"/>
+                  <xs:enumeration value="03"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/TestFileIndicator-->
+         <xs:element name="TestFileIndicator">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="P"/>
+                  <xs:enumeration value="T"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/ImmediateDestinationRoutingNumber-->
+         <xs:element name="ImmediateDestinationRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/ImmediateOriginRoutingNumber-->
+         <xs:element name="ImmediateOriginRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/FileCreationDate-->
+         <xs:element name="FileCreationDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/FileCreationTime-->
+         <xs:element name="FileCreationTime">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/ResendIndicator-->
+         <xs:element name="ResendIndicator">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="N"/>
+                  <xs:enumeration value="Y"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/ImmediateDestinationName-->
+         <xs:element name="ImmediateDestinationName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="18"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/ImmediateOriginName-->
+         <xs:element name="ImmediateOriginName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="18"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/FileIDModifier-->
+         <xs:element name="FileIDModifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/CountryCode-->
+         <xs:element name="CountryCode" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileHeaderRecord/CompanionDocumentVersionIndicator-->
+         <xs:element name="CompanionDocumentVersionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--FileHeaderRecord End-->
+
+<!--CashLetterHeaderRecord-->
+   <xs:complexType name="CashLetterHeaderRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--CashLetterHeaderRecord/CollectionTypeIndicator-->
+         <xs:element name="CollectionTypeIndicator">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+                  <xs:enumeration value="00"/>
+                  <xs:enumeration value="01"/>
+                  <xs:enumeration value="02"/>
+                  <xs:enumeration value="03"/>
+                  <xs:enumeration value="04"/>
+                  <xs:enumeration value="05"/>
+                  <xs:enumeration value="06"/>
+                  <xs:enumeration value="20"/>
+                  <xs:enumeration value="99"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/DestinationRoutingNumber-->
+         <xs:element name="DestinationRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/ECEInstitutionRoutingNumber-->
+         <xs:element name="ECEInstitutionRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/CashLetterBuisnessDate-->
+         <xs:element name="CashLetterBuisnessDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/CashLetterCreationDate-->
+         <xs:element name="CashLetterCreationDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/CashLetterCreationTime-->
+         <xs:element name="CashLetterCreationTime">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/CashLetterRecordTypeIndicator-->
+         <xs:element name="CashLetterRecordTypeIndicator">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="N"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="F"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/CashLetterDocumentationTypeIndicator-->
+         <xs:element name="CashLetterDocumentationTypeIndicator">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="J"/>
+                  <xs:enumeration value="K"/>
+                  <xs:enumeration value="L"/>
+                  <xs:enumeration value="M"/>
+                  <xs:enumeration value="Z"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/CashLetterID-->
+         <xs:element name="CashLetterID">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/OriginatorContactName-->
+         <xs:element name="OriginatorContactName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="14"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/OriginatorContactPhone-->
+         <xs:element name="OriginatorContactPhone" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="10"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/FedWorkType-->
+         <xs:element name="FedWorkType" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/ReturnsIndicator-->
+         <xs:element name="ReturnsIndicator">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value=" "/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="R"/>
+                  <xs:enumeration value="J"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterHeaderRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--CashLetterHeaderRecord End-->
+
+<!--BundleHeaderRecord-->
+   <xs:complexType name="BundleHeaderRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--BundleHeaderRecord/CollectionTypeIndicator-->
+         <xs:element name="CollectionTypeIndicator">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+                  <xs:enumeration value="00"/>
+                  <xs:enumeration value="01"/>
+                  <xs:enumeration value="02"/>
+                  <xs:enumeration value="03"/>
+                  <xs:enumeration value="04"/>
+                  <xs:enumeration value="05"/>
+                  <xs:enumeration value="06"/>
+                  <xs:enumeration value="20"/>
+                  <xs:enumeration value="99"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/DestinationRoutingNumber-->
+         <xs:element name="DestinationRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/UniqueCustomerIdentifer-->
+         <xs:element name="UniqueCustomerIdentifer">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/BundleBuisnessDate-->
+         <xs:element name="BundleBuisnessDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/BundleCreationDate-->
+         <xs:element name="BundleCreationDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/BundleID-->
+         <xs:element name="BundleID">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="10"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/BundleSequenceNumber-->
+         <xs:element name="BundleSequenceNumber">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/CycleNumber-->
+         <xs:element name="CycleNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/Reserved1-->
+         <xs:element name="Reserved1" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleHeaderRecord/Reserved2-->
+         <xs:element name="Reserved2" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="12"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--BundleHeaderRecord End-->
+
+<!--CheckDetailRecord-->
+   <xs:complexType name="CheckDetailRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--CheckDetailRecord/AuxiliaryOnUs-->
+         <xs:element name="AuxiliaryOnUs" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NBSM">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/ExternalProcessingCode-->
+         <xs:element name="ExternalProcessingCode" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NS">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/PayorBankRoutingNumber-->
+         <xs:element name="PayorBankRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/PayorBankRoutingNumberCheckDigit-->
+         <xs:element name="PayorBankRoutingNumberCheckDigit">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/OnUs-->
+         <xs:element name="OnUs" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NBSMOS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/ItemAmount-->
+         <xs:element name="ItemAmount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="10"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/InstitutionItemSequenceNumber-->
+         <xs:element name="InstitutionItemSequenceNumber">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/DocumentationTypeIndicator-->
+         <xs:element name="DocumentationTypeIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="J"/>
+                  <xs:enumeration value="K"/>
+                  <xs:enumeration value="L"/>
+                  <xs:enumeration value="M"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/ReturnAcceptanceIndicator-->
+         <xs:element name="ReturnAcceptanceIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+                  <xs:enumeration value="5"/>
+                  <xs:enumeration value="6"/>
+                  <xs:enumeration value="7"/>
+                  <xs:enumeration value="8"/>
+                  <xs:enumeration value="9"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/MICRValidIndicator-->
+         <xs:element name="MICRValidIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/BOFDIndicator-->
+         <xs:element name="BOFDIndicator">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="Y"/>
+                  <xs:enumeration value="N"/>
+                  <xs:enumeration value="U"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/CheckDetailRecordAddendumCount-->
+         <xs:element name="CheckDetailRecordAddendumCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/CorrectionIndicator-->
+         <xs:element name="CorrectionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailRecord/ArchiveTypeIndicator-->
+         <xs:element name="ArchiveTypeIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--CheckDetailRecord End-->
+
+<!--CheckDetailAddendumARecord-->
+   <xs:complexType name="CheckDetailAddendumARecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--CheckDetailAddendumARecord/CheckDetailAddendumARecordNumber-->
+         <xs:element name="CheckDetailAddendumARecordNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/ReturnLocationRoutingNumber-->
+         <xs:element name="ReturnLocationRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/BOFDEndorsementDate-->
+         <xs:element name="BOFDEndorsementDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/BOFDItemSequenceNumber-->
+         <xs:element name="BOFDItemSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/DepositAccountNumberAtBOFD-->
+         <xs:element name="DepositAccountNumberAtBOFD" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="18"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/BOFDDepositBranch-->
+         <xs:element name="BOFDDepositBranch" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/PayeeName-->
+         <xs:element name="PayeeName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/TruncationIndicator-->
+         <xs:element name="TruncationIndicator">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="Y"/>
+                  <xs:enumeration value="N"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/BOFDConversionIndicator-->
+         <xs:element name="BOFDConversionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+                  <xs:enumeration value="5"/>
+                  <xs:enumeration value="6"/>
+                  <xs:enumeration value="7"/>
+                  <xs:enumeration value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/BOFDCorrectionIndicator-->
+         <xs:element name="BOFDCorrectionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumARecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="3"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--CheckDetailAddendumARecord End-->
+
+<!--CheckDetailAddendumBRecord-->
+   <xs:complexType name="CheckDetailAddendumBRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--CheckDetailAddendumBRecord/ImageReferenceKeyIndicator-->
+         <xs:element name="ImageReferenceKeyIndicator">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumBRecord/MicrofilmArchiveSequenceNumber-->
+         <xs:element name="MicrofilmArchiveSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumBRecord/LengthOfImageReferenceKey-->
+         <xs:element name="LengthOfImageReferenceKey">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumBRecord/ImageReferenceKey-->
+         <xs:element name="ImageReferenceKey" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS"/>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumBRecord/Description-->
+         <xs:element name="Description" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumBRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumBRecord/Reserved-->
+         <xs:element name="Reserved">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--CheckDetailAddendumBRecord End-->
+
+<!--CheckDetailAddendumCRecord-->
+   <xs:complexType name="CheckDetailAddendumCRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--CheckDetailAddendumCRecord/CheckDetailAddendumCRecordNumber-->
+         <xs:element name="CheckDetailAddendumCRecordNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/EndorsingBankRoutingNumber-->
+         <xs:element name="EndorsingBankRoutingNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/EndorsingBankEndorsementDate-->
+         <xs:element name="EndorsingBankEndorsementDate" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/EndorsingBankSequenceNumber-->
+         <xs:element name="EndorsingBankSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/TruncationIndicator-->
+         <xs:element name="TruncationIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="Y"/>
+                  <xs:enumeration value="N"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/EndorsingBankConversionIndicator-->
+         <xs:element name="EndorsingBankConversionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+                  <xs:enumeration value="5"/>
+                  <xs:enumeration value="6"/>
+                  <xs:enumeration value="7"/>
+                  <xs:enumeration value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/EndorsingBankCorrectionIndicator-->
+         <xs:element name="EndorsingBankCorrectionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/ReturnReason-->
+         <xs:element name="ReturnReason" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="J"/>
+                  <xs:enumeration value="K"/>
+                  <xs:enumeration value="L"/>
+                  <xs:enumeration value="M"/>
+                  <xs:enumeration value="N"/>
+                  <xs:enumeration value="O"/>
+                  <xs:enumeration value="P"/>
+                  <xs:enumeration value="Q"/>
+                  <xs:enumeration value="R"/>
+                  <xs:enumeration value="S"/>
+                  <xs:enumeration value="T"/>
+                  <xs:enumeration value="U"/>
+                  <xs:enumeration value="V"/>
+                  <xs:enumeration value="W"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CheckDetailAddendumCRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--CheckDetailAddendumCRecord End-->
+
+<!--ReturnRecord-->
+   <xs:complexType name="ReturnRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ReturnRecord/PayorBankRoutingNumber-->
+         <xs:element name="PayorBankRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/PayorBankRoutingNumberCheckDigit-->
+         <xs:element name="PayorBankRoutingNumberCheckDigit">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/OnUs-->
+         <xs:element name="OnUs" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NBSMOS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ItemAmount-->
+         <xs:element name="ItemAmount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="10"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ReturnReason-->
+         <xs:element name="ReturnReason">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="J"/>
+                  <xs:enumeration value="K"/>
+                  <xs:enumeration value="L"/>
+                  <xs:enumeration value="M"/>
+                  <xs:enumeration value="N"/>
+                  <xs:enumeration value="O"/>
+                  <xs:enumeration value="P"/>
+                  <xs:enumeration value="Q"/>
+                  <xs:enumeration value="R"/>
+                  <xs:enumeration value="S"/>
+                  <xs:enumeration value="T"/>
+                  <xs:enumeration value="U"/>
+                  <xs:enumeration value="V"/>
+                  <xs:enumeration value="W"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ReturnRecordAddendumCount-->
+         <xs:element name="ReturnRecordAddendumCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ReturnDocumentationTypeIndicator-->
+         <xs:element name="ReturnDocumentationTypeIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="J"/>
+                  <xs:enumeration value="K"/>
+                  <xs:enumeration value="L"/>
+                  <xs:enumeration value="M"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ForwardBundleDate-->
+         <xs:element name="ForwardBundleDate" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ECEInstiutionItemSequenceNumber-->
+         <xs:element name="ECEInstiutionItemSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ExternalProcessingCode-->
+         <xs:element name="ExternalProcessingCode" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NS">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ReturnNotificationIndicator-->
+         <xs:element name="ReturnNotificationIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/ArchiveTypeIndicator-->
+         <xs:element name="ArchiveTypeIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/NumberOfTimesReturned-->
+         <xs:element name="NumberOfTimesReturned" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ReturnRecord End-->
+
+<!--ReturnAddendumARecord-->
+   <xs:complexType name="ReturnAddendumARecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ReturnAddendumARecord/ReturnAddendumARecordNumber-->
+         <xs:element name="ReturnAddendumARecordNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/ReturnLocationRoutingNumber-->
+         <xs:element name="ReturnLocationRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/BOFDEndorsementDate-->
+         <xs:element name="BOFDEndorsementDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/BOFDItemSequenceNumber-->
+         <xs:element name="BOFDItemSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/DepositAccountNumberAtBOFD-->
+         <xs:element name="DepositAccountNumberAtBOFD" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="18"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/BOFDDepositBranch-->
+         <xs:element name="BOFDDepositBranch" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/PayeeName-->
+         <xs:element name="PayeeName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/TruncationIndicator-->
+         <xs:element name="TruncationIndicator">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="Y"/>
+                  <xs:enumeration value="N"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/BOFDConversionIndicator-->
+         <xs:element name="BOFDConversionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+                  <xs:enumeration value="5"/>
+                  <xs:enumeration value="6"/>
+                  <xs:enumeration value="7"/>
+                  <xs:enumeration value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/BOFDCorrectionIndicator-->
+         <xs:element name="BOFDCorrectionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumARecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="3"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ReturnAddendumARecord End-->
+
+<!--ReturnAddendumBRecord-->
+   <xs:complexType name="ReturnAddendumBRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ReturnAddendumBRecord/PayorBankName-->
+         <xs:element name="PayorBankName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="18"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumBRecord/AuxiliaryOnUs-->
+         <xs:element name="AuxiliaryOnUs" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NBSM">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumBRecord/PayorBankItemSequenceNumber-->
+         <xs:element name="PayorBankItemSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumBRecord/PayorBankBusinessDate-->
+         <xs:element name="PayorBankBusinessDate" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumBRecord/PayorAccountName-->
+         <xs:element name="PayorAccountName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="22"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ReturnAddendumBRecord End-->
+
+<!--ReturnAddendumCRecord-->
+   <xs:complexType name="ReturnAddendumCRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ReturnAddendumCRecord/ImageReferenceKeyIndicator-->
+         <xs:element name="ImageReferenceKeyIndicator">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumCRecord/MicrofilmArchiveSequenceNumber-->
+         <xs:element name="MicrofilmArchiveSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumCRecord/LengthOfImageReferenceKey-->
+         <xs:element name="LengthOfImageReferenceKey">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumCRecord/ImageReferenceKey-->
+         <xs:element name="ImageReferenceKey" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS"/>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumCRecord/Description-->
+         <xs:element name="Description" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumCRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumCRecord/Reserved-->
+         <xs:element name="Reserved">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ReturnAddendumCRecord End-->
+
+<!--ReturnAddendumDRecord-->
+   <xs:complexType name="ReturnAddendumDRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ReturnAddendumDRecord/ReturnAddendumDRecordNumber-->
+         <xs:element name="ReturnAddendumDRecordNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/EndorsingBankRoutingNumber-->
+         <xs:element name="EndorsingBankRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/EndorsingBankEndorsementDate-->
+         <xs:element name="EndorsingBankEndorsementDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/EndorsingBankItemSequenceNumber-->
+         <xs:element name="EndorsingBankItemSequenceNumber">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/TruncationIndicator-->
+         <xs:element name="TruncationIndicator">
+            <xs:simpleType>
+               <xs:restriction base="A">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="Y"/>
+                  <xs:enumeration value="N"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/EndorsingBankConversionIndicator-->
+         <xs:element name="EndorsingBankConversionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+                  <xs:enumeration value="5"/>
+                  <xs:enumeration value="6"/>
+                  <xs:enumeration value="7"/>
+                  <xs:enumeration value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/EndorsingBankCorrectionIndicator-->
+         <xs:element name="EndorsingBankCorrectionIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/ReturnReason-->
+         <xs:element name="ReturnReason" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="J"/>
+                  <xs:enumeration value="K"/>
+                  <xs:enumeration value="L"/>
+                  <xs:enumeration value="M"/>
+                  <xs:enumeration value="N"/>
+                  <xs:enumeration value="O"/>
+                  <xs:enumeration value="P"/>
+                  <xs:enumeration value="Q"/>
+                  <xs:enumeration value="R"/>
+                  <xs:enumeration value="S"/>
+                  <xs:enumeration value="T"/>
+                  <xs:enumeration value="U"/>
+                  <xs:enumeration value="V"/>
+                  <xs:enumeration value="W"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="19"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/EndorsingBankIdentifier-->
+         <xs:element name="EndorsingBankIdentifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ReturnAddendumDRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ReturnAddendumDRecord End-->
+
+<!--ImageViewDetailRecord-->
+   <xs:complexType name="ImageViewDetailRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ImageViewDetailRecord/ImageIndicator-->
+         <xs:element name="ImageIndicator">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ImageCreatorRoutingNumber-->
+         <xs:element name="ImageCreatorRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ImageCreatorDate-->
+         <xs:element name="ImageCreatorDate" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ImageViewFormatIndicator-->
+         <xs:element name="ImageViewFormatIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ImageViewCompressionAlgorithmIdentifier-->
+         <xs:element name="ImageViewCompressionAlgorithmIdentifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ImageViewDataSize-->
+         <xs:element name="ImageViewDataSize" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="7"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ViewSideIndicator-->
+         <xs:element name="ViewSideIndicator">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ViewDescriptor-->
+         <xs:element name="ViewDescriptor">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/DigitalSignatureIndicator-->
+         <xs:element name="DigitalSignatureIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/DigitalSignatureMethod-->
+         <xs:element name="DigitalSignatureMethod" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/SecurityKeySize-->
+         <xs:element name="SecurityKeySize" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/StartOfProtectedData-->
+         <xs:element name="StartOfProtectedData" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="7"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/LengthOfProtectedData-->
+         <xs:element name="LengthOfProtectedData" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="7"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ImageRecreateIndicator-->
+         <xs:element name="ImageRecreateIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/ImageTIFFVarianceIndicator-->
+         <xs:element name="ImageTIFFVarianceIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/OverrideIndicator-->
+         <xs:element name="OverrideIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDetailRecord/Reserved-->
+         <xs:element name="Reserved">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="13"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ImageViewDetailRecord End-->
+
+<!--ImageViewDataRecord-->
+   <xs:complexType name="ImageViewDataRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ImageViewDataRecord/ECEInstitutionRoutingNumber-->
+         <xs:element name="ECEInstitutionRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/BundleBusinessDate-->
+         <xs:element name="BundleBusinessDate">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/CycleNumber-->
+         <xs:element name="CycleNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ClientInstitutionItemSequenceNumber-->
+         <xs:element name="ClientInstitutionItemSequenceNumber">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/SecurityOriginatorName-->
+         <xs:element name="SecurityOriginatorName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="16"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/SecurityAuthenticatorName-->
+         <xs:element name="SecurityAuthenticatorName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="16"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/SecurityKeyName-->
+         <xs:element name="SecurityKeyName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="16"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ClippingOrigin-->
+         <xs:element name="ClippingOrigin">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ClippingCoordinateh1-->
+         <xs:element name="ClippingCoordinateh1" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ClippingCoordinateh2-->
+         <xs:element name="ClippingCoordinateh2" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ClippingCoordinatev1-->
+         <xs:element name="ClippingCoordinatev1" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ClippingCoordinatev2-->
+         <xs:element name="ClippingCoordinatev2" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/LengthOfImageReferenceKey-->
+         <xs:element name="LengthOfImageReferenceKey">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ImageReferenceKey-->
+         <xs:element name="ImageReferenceKey" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="Binary"/>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/LengthOfDigitalSignature-->
+         <xs:element name="LengthOfDigitalSignature">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/DigitalSignature-->
+         <xs:element name="DigitalSignature" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="Binary"/>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/LengthOfImageData-->
+         <xs:element name="LengthOfImageData">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="7"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewDataRecord/ImageData-->
+         <xs:element name="ImageData" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="Binary"/>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ImageViewDataRecord End-->
+
+<!--ImageViewAnalysisRecord-->
+   <xs:complexType name="ImageViewAnalysisRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--ImageViewAnalysisRecord/GlobalImageQualilty-->
+         <xs:element name="GlobalImageQualilty">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/GlobalImageUsability-->
+         <xs:element name="GlobalImageUsability">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/ImagingBankSpecificTest-->
+         <xs:element name="ImagingBankSpecificTest">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/PartialImage-->
+         <xs:element name="PartialImage" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/ExcessiveImageSkew-->
+         <xs:element name="ExcessiveImageSkew" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/PiggybackImage-->
+         <xs:element name="PiggybackImage" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/TooLightorTooDark-->
+         <xs:element name="TooLightorTooDark" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/StreaksorBands-->
+         <xs:element name="StreaksorBands" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/BelowMinimumImageSize-->
+         <xs:element name="BelowMinimumImageSize" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/ExceedsMaximumImageSize-->
+         <xs:element name="ExceedsMaximumImageSize" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved1-->
+         <xs:element name="Reserved1" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved2-->
+         <xs:element name="Reserved2" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved3-->
+         <xs:element name="Reserved3" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved4-->
+         <xs:element name="Reserved4" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved5-->
+         <xs:element name="Reserved5" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved6-->
+         <xs:element name="Reserved6" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved7-->
+         <xs:element name="Reserved7" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved8-->
+         <xs:element name="Reserved8" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved9-->
+         <xs:element name="Reserved9" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved10-->
+         <xs:element name="Reserved10" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved11-->
+         <xs:element name="Reserved11" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved12-->
+         <xs:element name="Reserved12" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved13-->
+         <xs:element name="Reserved13" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Image-EnabledPOD-->
+         <xs:element name="Image-EnabledPOD" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/SourceDocumentBad-->
+         <xs:element name="SourceDocumentBad" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/DateUsability-->
+         <xs:element name="DateUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/PayeeUsability-->
+         <xs:element name="PayeeUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/ConvenienceAmountUsability-->
+         <xs:element name="ConvenienceAmountUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/LegalAmountUseability-->
+         <xs:element name="LegalAmountUseability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/SignatureUseability-->
+         <xs:element name="SignatureUseability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/PayorNameandAddressUsability-->
+         <xs:element name="PayorNameandAddressUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/MICRLineUsability-->
+         <xs:element name="MICRLineUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/MemoLineUsability-->
+         <xs:element name="MemoLineUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/PayorBankNameandAddressUsability-->
+         <xs:element name="PayorBankNameandAddressUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/PayeeEndorsementUsability-->
+         <xs:element name="PayeeEndorsementUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/BOFDEndorsementUsability-->
+         <xs:element name="BOFDEndorsementUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/TransitEndorsementUsability-->
+         <xs:element name="TransitEndorsementUsability" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved14-->
+         <xs:element name="Reserved14" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved15-->
+         <xs:element name="Reserved15" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved16-->
+         <xs:element name="Reserved16" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved17-->
+         <xs:element name="Reserved17" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved18-->
+         <xs:element name="Reserved18" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved19-->
+         <xs:element name="Reserved19" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--ImageViewAnalysisRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--ImageViewAnalysisRecord End-->
+
+<!--CreditRecord-->
+   <xs:complexType name="CreditRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--CreditRecord/AuxiliaryOnUs-->
+         <xs:element name="AuxiliaryOnUs" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NBSM">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/ExternalProcessingCode-->
+         <xs:element name="ExternalProcessingCode" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NS">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/PayorBankRoutingNumber-->
+         <xs:element name="PayorBankRoutingNumber">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/OnUs-->
+         <xs:element name="OnUs" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NBSMOS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/ItemAmount-->
+         <xs:element name="ItemAmount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="14"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/CreditItemSequenceNumber-->
+         <xs:element name="CreditItemSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/DocumentationTypeIndicator-->
+         <xs:element name="DocumentationTypeIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="A"/>
+                  <xs:enumeration value="B"/>
+                  <xs:enumeration value="C"/>
+                  <xs:enumeration value="D"/>
+                  <xs:enumeration value="E"/>
+                  <xs:enumeration value="F"/>
+                  <xs:enumeration value="G"/>
+                  <xs:enumeration value="H"/>
+                  <xs:enumeration value="I"/>
+                  <xs:enumeration value="J"/>
+                  <xs:enumeration value="K"/>
+                  <xs:enumeration value="L"/>
+                  <xs:enumeration value="M"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/TypeOfAccountCode-->
+         <xs:element name="TypeOfAccountCode" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/SourceOfWorkCode-->
+         <xs:element name="SourceOfWorkCode" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="2"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="16"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CreditRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--CreditRecord End-->
+
+<!--BundleControlRecord-->
+   <xs:complexType name="BundleControlRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--BundleControlRecord/BundleItemCount-->
+         <xs:element name="BundleItemCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleControlRecord/BundleTotalAmount-->
+         <xs:element name="BundleTotalAmount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="12"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleControlRecord/MICRValidTotalAmount-->
+         <xs:element name="MICRValidTotalAmount" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="12"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleControlRecord/ImagesWithinBundleCount-->
+         <xs:element name="ImagesWithinBundleCount" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleControlRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleControlRecord/CreditTotalIndicator-->
+         <xs:element name="CreditTotalIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--BundleControlRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="24"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--BundleControlRecord End-->
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord-->
+   <xs:complexType name="UserRecord-FormatType001-PayeeEndorsementRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/OwnerIdentifierIndicator-->
+         <xs:element name="OwnerIdentifierIndicator">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/OwnerIdentifier-->
+         <xs:element name="OwnerIdentifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="9"/>
+                  <xs:enumeration value="000000001"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/OwnerIdentifierModifier-->
+         <xs:element name="OwnerIdentifierModifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="20"/>
+                  <xs:enumeration value="100-187"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/UserRecordFormatType-->
+         <xs:element name="UserRecordFormatType">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="3"/>
+                  <xs:enumeration value="001"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/FormatTypeVersionLevel-->
+         <xs:element name="FormatTypeVersionLevel">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="3"/>
+                  <xs:enumeration value="001"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/LengthOfUserData-->
+         <xs:element name="LengthOfUserData">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="7"/>
+                  <xs:enumeration value="0000290"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/NameOfPayee-->
+         <xs:element name="NameOfPayee" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="50"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/EndorsementDate-->
+         <xs:element name="EndorsementDate" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/BankRoutingNumber-->
+         <xs:element name="BankRoutingNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/BankAccountNumber-->
+         <xs:element name="BankAccountNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/CustomerIdentifier-->
+         <xs:element name="CustomerIdentifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/CustomerContactInformation-->
+         <xs:element name="CustomerContactInformation" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="50"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/StoreorMerchantorProcessingSiteNumber-->
+         <xs:element name="StoreorMerchantorProcessingSiteNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/InternalControlorSequenceNumber-->
+         <xs:element name="InternalControlorSequenceNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="25"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/Time-->
+         <xs:element name="Time" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="4"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/OperatorNameorInitials-->
+         <xs:element name="OperatorNameorInitials" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="30"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/OperatorNumber-->
+         <xs:element name="OperatorNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/ManagerorSupervisorNameorInitials-->
+         <xs:element name="ManagerorSupervisorNameorInitials" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="30"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/ManagerorSupervisorNumber-->
+         <xs:element name="ManagerorSupervisorNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/EquipmentNumber-->
+         <xs:element name="EquipmentNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/EndorsementIndicator-->
+         <xs:element name="EndorsementIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+                  <xs:enumeration value="2"/>
+                  <xs:enumeration value="3"/>
+                  <xs:enumeration value="4"/>
+                  <xs:enumeration value="5"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-FormatType001-PayeeEndorsementRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="10"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--UserRecord-FormatType001-PayeeEndorsementRecord End-->
+
+<!--UserRecord-GeneralFormatRecord-->
+   <xs:complexType name="UserRecord-GeneralFormatRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--UserRecord-GeneralFormatRecord/OwnerIdentifierIndicator-->
+         <xs:element name="OwnerIdentifierIndicator">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-GeneralFormatRecord/OwnerIdentifier-->
+         <xs:element name="OwnerIdentifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-GeneralFormatRecord/OwnerIdentifierModifier-->
+         <xs:element name="OwnerIdentifierModifier" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="20"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-GeneralFormatRecord/UserRecordFormatType-->
+         <xs:element name="UserRecordFormatType">
+            <xs:simpleType>
+               <xs:restriction base="AN">
+                  <xs:maxLength value="3"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-GeneralFormatRecord/FormatTypeVersionLevel-->
+         <xs:element name="FormatTypeVersionLevel">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="3"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-GeneralFormatRecord/LengthOfUserData-->
+         <xs:element name="LengthOfUserData">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="7"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--UserRecord-GeneralFormatRecord/UserData-->
+         <xs:element name="UserData">
+            <xs:simpleType>
+               <xs:restriction base="ANS"/>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--UserRecord-GeneralFormatRecord End-->
+
+<!--RoutingNumberSummaryRecord-->
+   <xs:complexType name="RoutingNumberSummaryRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--RoutingNumberSummaryRecord/RoutingNumberWithinCashLetter-->
+         <xs:element name="RoutingNumberWithinCashLetter">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--RoutingNumberSummaryRecord/RoutingNumberTotalAmount-->
+         <xs:element name="RoutingNumberTotalAmount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="14"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--RoutingNumberSummaryRecord/RoutingNumberItemCount-->
+         <xs:element name="RoutingNumberItemCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="6"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--RoutingNumberSummaryRecord/UserField-->
+         <xs:element name="UserField" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="24"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--RoutingNumberSummaryRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="25"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--RoutingNumberSummaryRecord End-->
+
+<!--CashLetterControlRecord-->
+   <xs:complexType name="CashLetterControlRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--CashLetterControlRecord/BundleCount-->
+         <xs:element name="BundleCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="6"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterControlRecord/CashLetterItemCount-->
+         <xs:element name="CashLetterItemCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterControlRecord/CashLetterTotalAmount-->
+         <xs:element name="CashLetterTotalAmount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="14"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterControlRecord/CashLetterImageViewCount-->
+         <xs:element name="CashLetterImageViewCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="9"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterControlRecord/ECEInstituionName-->
+         <xs:element name="ECEInstituionName">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="18"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterControlRecord/SettlementDate-->
+         <xs:element name="SettlementDate" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterControlRecord/CreditTotalIndicator-->
+         <xs:element name="CreditTotalIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--CashLetterControlRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="14"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--CashLetterControlRecord End-->
+
+<!--FileControlRecord-->
+   <xs:complexType name="FileControlRecord">
+      <xs:sequence>
+         <xs:element name="RecordType" type="N"/>
+<!--FileControlRecord/CashLetterCount-->
+         <xs:element name="CashLetterCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="6"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileControlRecord/TotalRecordCount-->
+         <xs:element name="TotalRecordCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileControlRecord/TotalItemCount-->
+         <xs:element name="TotalItemCount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="8"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileControlRecord/TotalItemAmount-->
+         <xs:element name="TotalItemAmount">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="16"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileControlRecord/ImmediateOriginContactName-->
+         <xs:element name="ImmediateOriginContactName" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="ANS">
+                  <xs:maxLength value="14"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileControlRecord/ImmediateOriginContactPhoneNumber-->
+         <xs:element name="ImmediateOriginContactPhoneNumber" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="NB">
+                  <xs:maxLength value="10"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileControlRecord/CreditTotalIndicator-->
+         <xs:element name="CreditTotalIndicator" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="N">
+                  <xs:maxLength value="1"/>
+                  <xs:enumeration value="0"/>
+                  <xs:enumeration value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+<!--FileControlRecord/Reserved-->
+         <xs:element name="Reserved" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="B">
+                  <xs:maxLength value="15"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="type" type="RecordType" use="required"/>
+   </xs:complexType>
+<!--FileControlRecord End-->
+
+</xs:schema>

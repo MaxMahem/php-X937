@@ -30,6 +30,7 @@ class Field extends \X937\Container
 
     // field properties names (branch)
     const PROP_DICT_COVERAGE = 'comprehensive';
+    
     const PARSED_PROPERTIES = [
         self::PROP_NAME,
         self::PROP_TYPE,
@@ -42,9 +43,22 @@ class Field extends \X937\Container
         self::PROP_VARIABLEPOSITION,
         self::PROP_VALUEKEY,
     ];
-
-    // field property array
-    const PROPERTIES = self::PARSED_PROPERTIES + [self::PROP_DICTONARY, self::PROP_ORDER];
+    
+    const PROPERTIES = [
+        self::PROP_NAME,
+        self::PROP_TYPE,
+        self::PROP_SUBTYPE,
+        self::PROP_USAGE,
+        self::PROP_VALIDATION,
+        self::PROP_LENGTH,
+        self::PROP_VARIABLELENGTH,
+        self::PROP_POSITION,
+        self::PROP_VARIABLEPOSITION,
+        self::PROP_VALUEKEY,
+        self::PROP_DICTONARY,
+        self::PROP_ORDER,
+        self::PROP_DICT_COVERAGE,
+        ];
     /**
      * template that defines how the field should be laid out.
      *
@@ -73,7 +87,6 @@ class Field extends \X937\Container
     protected $value;
 
     /**
-     * Field constructor.
      * @param array $fieldTemplate
      * @param Record|null $parent The parent record of this field
      */
@@ -205,7 +218,7 @@ class Field extends \X937\Container
      * Validates our items and returns a string of our errors. An empty string
      * indicates no errors.
      *
-     * @return array Errors.
+     * @return string Errors.
      */
     public function validate(): ?string
     {
@@ -227,11 +240,6 @@ class Field extends \X937\Container
         return $error;
     }
 
-    /**
-     * Return the value.
-     *
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;

@@ -43,8 +43,13 @@ abstract class Container
         if (array_key_exists($name, $this->template)) {
             return $this->template[$name];
         } else {
-            trigger_error("Attempted to get property $name which is undefined.");
-            return null;
+            if (in_array($name, static::PROPERTIES)) {
+                // class property, we just didn't have it.
+                return null;
+            } else {
+                trigger_error("Attempted to get property $name which is undefined.");
+                return null;
+            }
         }
     }
 

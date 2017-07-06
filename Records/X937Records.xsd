@@ -8,6 +8,11 @@
             <xs:pattern value="[a-zA-Z0-9 \-]+"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="recordName">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9 \-]+ Record"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="recordType">
         <xs:restriction base="xs:int">
@@ -124,7 +129,7 @@
 
     <xs:complexType name="abstractRecord" mixed="true">
         <xs:sequence>
-            <xs:element name="name" type="name"/>
+            <xs:element name="name" type="recordName"/>
             <xs:element name="type" type="recordType"/>
             <xs:element name="usage" type="usage"/>
             <xs:element name="validation" type="validation"/>
@@ -187,6 +192,7 @@
                 <xs:element ref="recordGroup" maxOccurs="unbounded"/>
 
             </xs:sequence>
+            <xs:attribute name="filenameRoot" use="required" />
         </xs:complexType>
 
         <xs:unique name="uniqueRecordTypeAttribute">

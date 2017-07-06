@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:include schemaLocation="Fields\FieldTypes.xsd"/>
+<xs:include schemaLocation="ANSI-X9-100-187-Records.xsd"/>
+<xs:element name="File">
+<!--File start-->
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="FileHeaderRecordAbstract"/>
+<xs:element name="CashLetter" maxOccurs="unbounded">
+<!--CashLetter start-->
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="CashLetterHeaderRecordAbstract"/>
+<xs:element name="Bundle" maxOccurs="unbounded">
+<!--Bundle start-->
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="BundleHeaderRecordAbstract"/>
+<xs:element name="Item" maxOccurs="unbounded">
+<!--Item start-->
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="CheckDetailRecordAbstract"/>
+<xs:element ref="CheckDetailAddendumARecordAbstract" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element ref="CheckDetailAddendumBRecordAbstract" minOccurs="0" maxOccurs="1"/>
+<xs:element ref="CheckDetailAddendumCRecordAbstract" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="View" minOccurs="0" maxOccurs="unbounded">
+<!--View start-->
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="ImageViewDetailRecordAbstract"/>
+<xs:element ref="ImageViewDataRecordAbstract"/>
+<xs:element ref="ImageViewAnalysisRecordAbstract" minOccurs="0"/>
+</xs:sequence>
+<xs:attribute name="id" use="optional"/>
+</xs:complexType>
+</xs:element>
+<!--View end-->
+</xs:sequence>
+<xs:attribute name="id" use="optional"/>
+</xs:complexType>
+</xs:element>
+<!--Item end-->
+<xs:element ref="BundleControlRecordAbstract"/>
+</xs:sequence>
+<xs:attribute name="id" use="optional"/>
+</xs:complexType>
+</xs:element>
+<!--Bundle end-->
+<xs:element ref="CashLetterControlRecordAbstract"/>
+</xs:sequence>
+<xs:attribute name="id" use="optional"/>
+</xs:complexType>
+</xs:element>
+<!--CashLetter end-->
+<xs:element ref="RoutingNumberSummaryRecordAbstract" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element ref="FileControlRecordAbstract"/>
+</xs:sequence>
+<xs:attribute name="id" use="optional"/>
+</xs:complexType>
+</xs:element>
+<!--File end-->
+</xs:schema>

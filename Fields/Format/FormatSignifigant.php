@@ -20,6 +20,12 @@ class FormatSignifigant implements TextFormatInterface
      */
     public function format(Fields\Field $field): string
     {
+        // if our field is a comprehensive dictonary, we want to return the
+        // exact value and not trim
+        if ($field->comprehensive === 'true') {
+            return $field->getValue();
+        }
+        
         $value = trim($field->getValue());    // space should not be signifigant on either side.
         return ltrim($value, '0');      // 0's are not signifigant.
     }

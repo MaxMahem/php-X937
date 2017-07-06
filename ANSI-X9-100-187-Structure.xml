@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file 
+    xsi:noNamespaceSchemaLocation='X937Structure.xsd'
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    filenameRoot='ANSI-X9-100-187'>
+    <control name="File" usage="M">
+        <record name="FileHeaderRecord" usage="M" />
+        <!-- Credit Item Records and User Records can occur anywhere between here
+             and the file control record. The presence of these records is currently
+             not allowed -->
+        <control name="CashLetter" usage="M" maxOccurs="unbounded">
+            <record name="CashLetterHeaderRecord" usage="M" />
+            <control name="Bundle" usage="M" maxOccurs="unbounded">
+                <record name="BundleHeaderRecord" usage="M" />
+                <control name="Item" usage="M" maxOccurs="unbounded">
+                    <record name="CheckDetailRecord" usage="M" />
+                    <record name="CheckDetailAddendumARecord" usage="C" maxOccurs="unbounded" />
+                    <!-- CheckDetailAddenedumBRecords have an additional constraint that they must be preceded by
+                         a CheckDetailAddenedumARecord if they occur. That constraint is not enforced here -->
+                    <record name="CheckDetailAddendumBRecord" usage="C" maxOccurs="1" />
+                    <record name="CheckDetailAddendumCRecord" usage="C" maxOccurs="unbounded" />
+                    <control name="View" usage="C" maxOccurs="unbounded">
+                        <record name="ImageViewDetailRecord" usage="M" />
+                        <record name="ImageViewDataRecord" usage="M" />
+                        <record name="ImageViewAnalysisRecord" usage="C"/>
+                    </control>
+                </control>
+                <record name="BundleControlRecord" usage="M" />
+            </control>
+            <record name="CashLetterControlRecord" usage="M" />
+        </control>
+        <record name="RoutingNumberSummaryRecord" usage="C" maxOccurs="unbounded"/>
+        <record name="FileControlRecord" usage="M" />
+    </control>
+</file>
