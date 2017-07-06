@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <records
         xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-        xsi:noNamespaceSchemaLocation='X937Records.xsd'
+        xsi:noNamespaceSchemaLocation='Records\X937Records.xsd'
         filenameRoot='ANSI-X9-100-187'>
 
     <dictonaries>

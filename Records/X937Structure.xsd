@@ -49,6 +49,8 @@
         <xs:attribute name="name" type="xs:Name" use="required" />
         <xs:attribute name="usage" type="usage" use="required" />
         <xs:attribute name="maxOccurs" type="maxOccurs" use="optional" />
+        <xs:attribute name="id" use="optional" />
+        <xs:attribute name="scope" use="optional" />
     </xs:complexType>
     
     <xs:complexType name="record">

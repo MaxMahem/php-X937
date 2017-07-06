@@ -30,7 +30,7 @@ class XMLFileWriter implements WriterInterface
         self::OPTION_STUB => false,
         self::OPTION_INDENT => true,
         self::OPTION_INDENT_STRING => '    ',
-        self::OPTION_XSD => 'XMLStructure.xsd',
+        self::OPTION_XSD => 'ANSI-X9-100-187-Structure.xsd',
     );
     
     /**
@@ -132,7 +132,7 @@ class XMLFileWriter implements WriterInterface
                 $this->writeElement($record);
                 break;
             case Records\RecordType::BUNDLE_HEADER:
-                $idValue = $record['Bundle ID']->getValue();
+//                $idValue = $record['Bundle ID']->getValue();
                 $this->openElement(self::CONTROL_ELEMENT_BUNDLE, $idValue);
                 $this->writeElement($record);
                 break;
