@@ -607,7 +607,7 @@
                 <length>10</length>
             </field>
             <field order="8">
-                <name>Institution Item Sequence Number</name>
+                <name>ECE Institution Item Sequence Number</name>
                 <usage>M</usage>
                 <type>NB</type>
                 <validation>R</validation>
@@ -1739,7 +1739,7 @@
                 <length>2</length>
             </field>
             <field order="5">
-                <name>Client Institution Item Sequence Number</name>
+                <name>ECE Institution Item Sequence Number</name>
                 <usage>M</usage>
                 <type>NB</type>
                 <validation>R</validation>

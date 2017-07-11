@@ -42,10 +42,21 @@
                     <!-- lookout! Recurion occurs here -->
                     <xsl:apply-templates />
                 </xs:sequence>
-                
-                <!-- all controls can have an optional ID -->
-                <xs:attribute name="id" use="optional" />
+                <!-- if the control has an id, then the product must have one as well -->
+                <xsl:if test="@id">
+                    <xs:attribute name="id"/>
+                </xsl:if>
             </xs:complexType>
+            
+            <!-- if the control has a child control with an id we want to enforce a uniquness constraint -->
+            <xsl:if test="control/@id">
+                <xsl:comment><xsl:value-of select="control/@name"/> uniquness constraint</xsl:comment>
+                <xs:unique name="unique{control/@name}">
+                    <xs:selector xpath="{control/@name}"/>
+                    <xs:field xpath="@id"/>
+                </xs:unique>
+            </xsl:if>
+            
         </xs:element>
         
         <xsl:comment><xsl:value-of select="@name"/> end</xsl:comment>
@@ -59,6 +70,11 @@
             <!-- otherwise we don't need to do anything since the default is 1 -->
             <xsl:if test="@usage='C'">
                 <xsl:attribute name="minOccurs">0</xsl:attribute>
+            </xsl:if>
+            
+            <!-- if our record is forbidden, then it may not occur. Set maxOccurs to 0 -->
+            <xsl:if test="@usage='F'">
+                <xsl:attribute name="maxOccurs">0</xsl:attribute>
             </xsl:if>
             
             <!-- if our records has a maxOccurs, then we pass along its value. -->

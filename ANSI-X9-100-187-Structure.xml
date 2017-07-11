@@ -8,11 +8,11 @@
         <!-- Credit Item Records and User Records can occur anywhere between here
              and the file control record. The presence of these records is currently
              not allowed -->
-        <control name="CashLetter" usage="M" maxOccurs="unbounded" id="Cash Letter ID" scope="\">
+        <control name="CashLetter" usage="M" maxOccurs="unbounded" id="Cash Letter ID">
             <record name="CashLetterHeaderRecord" usage="M" />
             <control name="Bundle" usage="M" maxOccurs="unbounded">
                 <record name="BundleHeaderRecord" usage="M" />
-                <control name="Item" usage="M" maxOccurs="unbounded">
+                <control name="Item" usage="M" maxOccurs="unbounded" id="ECE Institution Item Sequence Number">
                     <record name="CheckDetailRecord" usage="M" />
                     <record name="CheckDetailAddendumARecord" usage="C" maxOccurs="unbounded" />
                     <!-- CheckDetailAddenedumBRecords have an additional constraint that they must be preceded by

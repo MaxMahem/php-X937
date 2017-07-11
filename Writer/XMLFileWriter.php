@@ -39,7 +39,6 @@ class XMLFileWriter implements WriterInterface
     private $options;
     
     /**
-     * XMLWriter object for writing XML!
      * @var \XMLWriter
      */
     private $XMLWriter;
@@ -51,13 +50,21 @@ class XMLFileWriter implements WriterInterface
     private $openElements = array();
     
     /**
-     *
+     * @var \DOMElement
+     */
+    private $openDOM;
+    
+    /**
+     * @var \DOMDocument
+     */
+    private $documentDOM;
+    
+    /**
      * @var \X937\Fields\Format\TextFormatInterface
      */
     protected $textWriter;
 
     /**
-     *
      * @var \X937\Fields\Format\BinaryFormatInterface
      */
     protected $binaryWriter;
@@ -133,7 +140,7 @@ class XMLFileWriter implements WriterInterface
                 break;
             case Records\RecordType::BUNDLE_HEADER:
 //                $idValue = $record['Bundle ID']->getValue();
-                $this->openElement(self::CONTROL_ELEMENT_BUNDLE, $idValue);
+                $this->openElement(self::CONTROL_ELEMENT_BUNDLE);
                 $this->writeElement($record);
                 break;
 
@@ -144,8 +151,8 @@ class XMLFileWriter implements WriterInterface
                 // fall through
                 $this->closeIfOpen([self::CONTROL_ELEMENT_VIEW, self::CONTROL_ELEMENT_ITEM]);
                 
-                $idValue = $record['Institution Item Sequence Number']->getValue();
-                $this->openElement(self::CONTROL_ELEMENT_ITEM, $idValue);
+                $idValue = $record['ECE Institution Item Sequence Number']->getValue();
+                $this->openElement(self::CONTROL_ELEMENT_ITEM, $idValue, $this->openDOM);
                 $this->writeElement($record);
                 break;
 
@@ -154,6 +161,11 @@ class XMLFileWriter implements WriterInterface
             case Records\RecordType::IMAGE_VIEW_DETAIL:
                 $this->closeIfOpen([self::CONTROL_ELEMENT_VIEW]);
                 $this->openElement(self::CONTROL_ELEMENT_VIEW);
+                $this->writeElement($record);
+                break;
+            
+            case Records\RecordType::IMAGE_VIEW_DATA:
+                $idValue = $record['ECE Institution Item Sequence Number']->getValue();
                 $this->writeElement($record);
                 break;
 
@@ -177,14 +189,13 @@ class XMLFileWriter implements WriterInterface
         }
     }
     
-    private function openElement($openElement, $id = NULL)
+    private function openElement(string $openElement, string $id = NULL)
     {
         // push our element onto the end of our stack.
         array_push($this->openElements, $openElement);
-
-        // open our element
+        
         $this->XMLWriter->startElement($openElement);
-
+        
         // write an ID atribute
         $id = ltrim(trim($id), '0');
         if ($id !== '') {

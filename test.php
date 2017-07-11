@@ -25,7 +25,7 @@ $fieldFactory = new X937\Fields\FieldFactory();
 $filename = '..\xml.xml';
 $xmlObject = new \XMLWriter();
 $xmlObject->openUri($filename);
-$writerXML = new X937\Writer\XMLFileWriter($xmlObject, [X937\Writer\XMLFileWriter::OPTION_STUB => false]);
+$writerXML = new X937\Writer\XMLFileWriter($xmlObject, [X937\Writer\XMLFileWriter::OPTION_STUB => true]);
 $writerXML->writeAll($file);
 echo "XML written: ", microtime(true) - $time, PHP_EOL;
 $time = microtime(true);

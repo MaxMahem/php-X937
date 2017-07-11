@@ -4,6 +4,10 @@
            elementFormDefault="qualified">
 
     <xs:simpleType name="recordName">
+        <xs:annotation>
+            <xs:documentation>Besides being a valid element name (handled by 
+                base type xs:Name, all records must end in 'Record'.</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:Name">
             <xs:pattern value="(.)+Record"/>
         </xs:restriction>
@@ -18,6 +22,9 @@
     </xs:simpleType>
 
     <xs:simpleType name="validation">
+        <xs:annotation>
+            <xs:documentation>Not currently used.</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="R"/>
             <xs:enumeration value="P"/>
@@ -26,17 +33,20 @@
     </xs:simpleType>
     
     <xs:simpleType name="maxOccurs">
-    <xs:union>
-        <xs:simpleType>
-            <xs:restriction base="xs:int">
-                <xs:minInclusive value="0"/>
-            </xs:restriction>
-        </xs:simpleType>
-        <xs:simpleType>
-            <xs:restriction base="xs:NMTOKEN">
-                <xs:enumeration value="unbounded" />
-            </xs:restriction>
-        </xs:simpleType>
+        <xs:annotation>
+            <xs:documentation>This should basically be a copy of the xsd type.</xs:documentation>
+        </xs:annotation>
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:int">
+                    <xs:minInclusive value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:NMTOKEN">
+                    <xs:enumeration value="unbounded" />
+                </xs:restriction>
+            </xs:simpleType>
         </xs:union>
     </xs:simpleType>
     
