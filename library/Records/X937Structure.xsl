@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                               xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <!-- paramaters we get should get from outside the doc -->
+    <xsl:param name="generated">unknown</xsl:param>
+    <xsl:param name="source">unknown</xsl:param>
 
-    <!-- some transformers do not seem to indent this right so we omit indentation -->
     <xsl:output method="xml" indent="yes"/>
-    <xsl:strip-space elements="*" />
     
     <!-- the root transformation -->
     <xsl:template match="/file">
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <!-- set some doc info -->
+            <xs:annotation>
+                <xs:appinfo>
+                    <generated><xsl:value-of select="$generated" /></generated>
+                    <source><xsl:value-of select="$source" /></source>
+                </xs:appinfo>
+            </xs:annotation>
+            
             <!-- include our dependant xsds -->
             <xs:include schemaLocation="Fields\FieldTypes.xsd"/>
             <xs:include schemaLocation="{@filenameRoot}-Records.xsd"/>

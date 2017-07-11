@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+<!-- paramaters we get should get from outside the doc -->
+<xsl:param name="generated">unknown</xsl:param>
+<xsl:param name="source">unknown</xsl:param>
+    
 <xsl:output method="xml" indent="yes"/>
 
 <xsl:template match="/records">
     
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
+    <!-- set some doc info -->
+    <xs:annotation>
+        <xs:appinfo>
+            <generated><xsl:value-of select="$generated" /></generated>
+            <source><xsl:value-of select="$source" /></source>
+        </xs:appinfo>
+    </xs:annotation>
+    
     <!-- Loop through all the records and generate subsitution groups -->
     <xsl:text>&#10;</xsl:text><xsl:comment>***************************</xsl:comment>
     <xsl:text>&#10;</xsl:text><xsl:comment> Record Subsitution Groups </xsl:comment>
@@ -14,7 +26,7 @@
     <xsl:for-each select="record">
         <!-- Spaces are not valid in element names, so strip them -->
         <xsl:variable name="recordName" select="translate(name, ' ', '')" />
-        <xsl:text>&#10;</xsl:text><xsl:comment><xsl:value-of select="$recordName" /></xsl:comment>
+        <xsl:comment><xsl:value-of select="$recordName" /></xsl:comment>
         <xs:element name="{translate(name, ' ', '')}Abstract" abstract="true" />
         <xs:element name="{translate(name, ' ', '')}" type="{translate(name, ' ', '')}" substitutionGroup="{translate(name, ' ', '')}Abstract" />
         <xs:element name="{translate(name, ' ', '')}Stub" type="stubRecord" substitutionGroup="{translate(name, ' ', '')}Abstract" />
@@ -37,7 +49,7 @@
     <xsl:for-each select="record">
         <!-- Spaces are not valid in element names, so strip them, store to a variable. -->
         <xsl:variable name="recordName" select="translate(name, ' ', '')" />
-        <xsl:text>&#10;</xsl:text><xsl:comment><xsl:value-of select="$recordName" /></xsl:comment>
+        <xsl:comment><xsl:value-of select="$recordName" /></xsl:comment>
         <xs:complexType name="{$recordName}">
             <xs:sequence>
                 <xs:element name="RecordType" type="N" />

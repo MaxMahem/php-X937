@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <file 
-    xsi:noNamespaceSchemaLocation='Records\X937Structure.xsd'
+    xsi:noNamespaceSchemaLocation='library\Records\X937Structure.xsd'
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     filenameRoot='ANSI-X9-100-187'>
     <control name="File" usage="M">
