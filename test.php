@@ -5,7 +5,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'a
 
 $file = new X937\File('..\test.X937', '.\ANSI-X9-100-187-Records.xml');
 
-$fieldFactory = new X937\Fields\FieldFactory();
+//$fieldFactory = new X937\Fields\FieldFactory();
 //
 //$fieldTemplate['type'] = 'ANS';
 //$field = $fieldFactory->generateField($fieldTemplate);

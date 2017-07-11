@@ -1,7 +1,7 @@
 {
   "autoload": {
     "psr-4": {
-      "X937\\": ""
+      "X937\\": "library"
     }
   },
   "require": {

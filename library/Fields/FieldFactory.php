@@ -24,7 +24,7 @@ class FieldFactory
 
     protected $globalPredefines;
 
-    public function __construct(string $specXMLFile = 'Fields\FieldTypes.xsd')
+    public function __construct(string $specXMLFile = 'FieldTypes.xsd')
     {
         // guard input
         $specDOM = new \DOMDocument();
