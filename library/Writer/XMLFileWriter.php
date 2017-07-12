@@ -36,7 +36,7 @@ class XMLFileWriter implements WriterInterface
     /**
      * @var array
      */
-    private $options;
+    private $options = array();
     
     /**
      * @var \XMLWriter
@@ -48,16 +48,6 @@ class XMLFileWriter implements WriterInterface
      * @var array
      */
     private $openElements = array();
-    
-    /**
-     * @var \DOMElement
-     */
-    private $openDOM;
-    
-    /**
-     * @var \DOMDocument
-     */
-    private $documentDOM;
     
     /**
      * @var \X937\Fields\Format\TextFormatInterface
@@ -123,7 +113,6 @@ class XMLFileWriter implements WriterInterface
 
     public function writeRecord(Records\Record $record)
     {
-        $lastOpenElement = end($this->openElements);
         switch ($record->type) {
             // Header Record. Open the control element first and then write the
             // record elements.
@@ -152,7 +141,6 @@ class XMLFileWriter implements WriterInterface
                 $this->closeIfOpen([self::CONTROL_ELEMENT_VIEW, self::CONTROL_ELEMENT_ITEM]);
                 
                 $idValue = $record['ECE Institution Item Sequence Number']->getValue();
-                $this->openElement(self::CONTROL_ELEMENT_ITEM, $idValue, $this->openDOM);
                 $this->writeElement($record);
                 break;
 
@@ -260,10 +248,4 @@ class XMLFileWriter implements WriterInterface
         $this->XMLWriter->endElement();
         $this->XMLWriter->flush();
     }
-    
-    private function flatten_array(array $array) {
-       $flattenedArray = array();
-       array_walk_recursive($array, function($item) use (&$flattenedArray) { $flattened_array[] = $item; });
-       return $flattenedArray;
-   }
 }

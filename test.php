@@ -7,7 +7,6 @@ $file = new X937\File('..\test.X937', '.\ANSI-X9-100-187-Records.xml');
 
 X937\X937Transform::transformRecordsXML('ANSI-X9-100-187-Records.xml');
 X937\X937Transform::transformStructureXML('ANSI-X9-100-187-Structure.xml');
-die();
 
 //$fieldFactory = new X937\Fields\FieldFactory();
 //
